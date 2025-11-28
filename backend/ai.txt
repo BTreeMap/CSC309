@@ -1,0 +1,1 @@
+I used generative AI to help look for documentation, write comments, and generate git commit messages.

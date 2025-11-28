@@ -1,0 +1,152 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  regular
+  cashier
+  manager
+  superuser
+}
+
+enum TransactionType {
+  purchase
+  redemption
+  adjustment
+  event
+  transfer
+}
+
+enum PromotionType {
+  automatic
+  onetime
+}
+
+model User {
+  id                   Int                @id @default(autoincrement())
+  utorid               String             @unique
+  email                String             @unique
+  name                 String?
+  birthday             DateTime?
+  role                 RoleType           @default(regular)
+  points               Int                @default(0)
+  isVerified           Boolean            @default(false)
+  suspicious           Boolean            @default(false)
+  avatarUrl            String?
+  createdAt            DateTime           @default(now())
+  lastLogin            DateTime?
+  passwordBcrypt       String
+  createdTransactions  Transaction[]      @relation("CreatedBy")
+  processedRedemptions Transaction[]      @relation("ProcessedBy")
+  transactions         Transaction[]
+  organizedEvents      EventOrganizer[]
+  eventGuests          EventGuest[]
+  usedPromotions       UserPromotionUse[]
+  resetTokens          ResetToken[]
+}
+
+model ResetToken {
+  id     Int      @id @default(autoincrement())
+  userId Int
+  user   User     @relation(fields: [userId], references: [id])
+  token  String   @unique
+  expiry DateTime
+}
+
+model Transaction {
+  id            Int                    @id @default(autoincrement())
+  user          User                   @relation(fields: [userId], references: [id])
+  userId        Int
+  type          TransactionType
+  amount        Int
+  spent         Float?
+  redeemed      Int?
+  processedAt   DateTime?
+  processedBy   User?                  @relation("ProcessedBy", fields: [processedById], references: [id])
+  processedById Int?
+  relatedId     Int?
+  suspicious    Boolean                @default(false)
+  remark        String?
+  createdBy     User                   @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById   Int
+  promotions    TransactionPromotion[]
+  createdAt     DateTime               @default(now())
+}
+
+model Promotion {
+  id           Int                    @id @default(autoincrement())
+  name         String
+  description  String
+  type         PromotionType
+  startTime    DateTime
+  endTime      DateTime
+  minSpending  Float?
+  rate         Float?
+  points       Int?
+  usedBy       UserPromotionUse[]
+  transactions TransactionPromotion[]
+}
+
+model UserPromotionUse {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
+  promotionId Int
+  usedAt      DateTime  @default(now())
+
+  @@unique([userId, promotionId])
+}
+
+model TransactionPromotion {
+  id            Int         @id @default(autoincrement())
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
+  promotion     Promotion   @relation(fields: [promotionId], references: [id])
+  promotionId   Int
+
+  @@unique([transactionId, promotionId])
+}
+
+model Event {
+  id            Int              @id @default(autoincrement())
+  name          String
+  description   String
+  location      String
+  startTime     DateTime
+  endTime       DateTime
+  capacity      Int?
+  pointsTotal   Int
+  pointsRemain  Int
+  pointsAwarded Int              @default(0)
+  published     Boolean          @default(false)
+  organizers    EventOrganizer[]
+  guests        EventGuest[]
+  createdAt     DateTime         @default(now())
+}
+
+model EventOrganizer {
+  id      Int   @id @default(autoincrement())
+  event   Event @relation(fields: [eventId], references: [id])
+  eventId Int
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int
+
+  @@unique([eventId, userId])
+}
+
+model EventGuest {
+  id        Int     @id @default(autoincrement())
+  event     Event   @relation(fields: [eventId], references: [id])
+  eventId   Int
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  confirmed Boolean @default(false)
+
+  @@unique([eventId, userId])
+}
