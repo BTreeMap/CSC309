@@ -40,7 +40,13 @@ if (!JWT_SECRET) {
     process.exit(1);
 }
 
-app.use(cors());
+// CORS configuration for React frontend
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 app.use(express.json());
 
 // In-memory rate limiting for password resets
@@ -871,7 +877,7 @@ app.get('/users/me', requireRole('regular'), async (req, res) => {
             utorid: user.utorid,
             name: user.name,
             email: user.email,
-            birthday: user.birthday.toLocaleDateString('en-CA'),
+            birthday: user.birthday ? user.birthday.toLocaleDateString('en-CA') : null,
             role: user.role,
             points: user.points,
             createdAt: user.createdAt,
@@ -955,7 +961,7 @@ app.patch('/users/me', requireRole('regular'), upload.single('avatar'), async (r
             utorid: user.utorid,
             name: user.name,
             email: user.email,
-            birthday: user.birthday.toLocaleDateString('en-CA'),
+            birthday: user.birthday ? user.birthday.toLocaleDateString('en-CA') : null,
             role: user.role,
             points: user.points,
             createdAt: user.createdAt,
