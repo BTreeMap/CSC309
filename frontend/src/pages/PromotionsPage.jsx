@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { promotionsAPI } from '../../api';
-import { useAuth } from '../../contexts/AuthContext';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
+import { promotionsAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './PromotionsPage.css';
 
 const PromotionsPage = () => {

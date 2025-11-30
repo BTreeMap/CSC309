@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { eventsAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
+import { eventsAPI } from '../api';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './ManageEventsPage.css';
 
 const ManageEventsPage = () => {

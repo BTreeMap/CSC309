@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { transactionsAPI } from '../../api';
-import { useAuth } from '../../contexts/AuthContext';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../../components/shared';
-import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../../utils/constants';
+import { transactionsAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
 import './MyTransactionsPage.css';
 
 const MyTransactionsPage = () => {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { transactionsAPI, usersAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
-import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../../utils/constants';
+import { transactionsAPI, usersAPI } from '../api';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
+import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
 import './AllTransactionsPage.css';
 
 const AllTransactionsPage = () => {

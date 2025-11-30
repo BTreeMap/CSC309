@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { eventsAPI } from '../../api';
-import { useAuth } from '../../contexts/AuthContext';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
+import { eventsAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './EventDetailPage.css';
 
 const EventDetailPage = () => {

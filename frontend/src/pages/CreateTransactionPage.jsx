@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { transactionsAPI, usersAPI, promotionsAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { useToast } from '../../components/shared/ToastContext';
-import { ConfirmDialog } from '../../components/shared';
+import { transactionsAPI, usersAPI, promotionsAPI } from '../api';
+import Layout from '../components/Layout';
+import { useToast } from '../components/shared/ToastContext';
+import { ConfirmDialog } from '../components/shared';
 import './CreateTransactionPage.css';
 
 const CreateTransactionPage = () => {

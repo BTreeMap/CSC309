@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usersAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { useToast } from '../../components/shared';
+import { usersAPI } from '../api';
+import Layout from '../components/Layout';
+import { useToast } from '../components/shared';
 import './ChangePasswordPage.css';
 
 const ChangePasswordPage = () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useAuth } from '../../contexts/AuthContext';
-import Layout from '../../components/Layout';
-import { LoadingSpinner } from '../../components/shared';
+import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import { LoadingSpinner } from '../components/shared';
 import './MyQRCodePage.css';
 
 const MyQRCodePage = () => {

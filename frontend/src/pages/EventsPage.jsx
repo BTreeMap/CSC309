@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { eventsAPI } from '../../api';
-import { useAuth } from '../../contexts/AuthContext';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../../components/shared';
+import { eventsAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
 import './EventsPage.css';
 
 const EventsPage = () => {

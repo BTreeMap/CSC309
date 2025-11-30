@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { transactionsAPI, usersAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
+import { transactionsAPI, usersAPI } from '../api';
+import Layout from '../components/Layout';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './ProcessRedemptionPage.css';
 
 const ProcessRedemptionPage = () => {

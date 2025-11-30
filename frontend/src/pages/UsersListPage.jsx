@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usersAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../../components/shared';
-import { useToast } from '../../components/shared/ToastContext';
-import { ROLE_LABELS } from '../../utils/constants';
+import { usersAPI } from '../api';
+import Layout from '../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
+import { ROLE_LABELS } from '../utils/constants';
 import './UsersListPage.css';
 
 const UsersListPage = () => {

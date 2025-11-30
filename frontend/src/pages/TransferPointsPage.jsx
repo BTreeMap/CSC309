@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { transactionsAPI, usersAPI } from '../../api';
-import Layout from '../../components/Layout';
-import { LoadingSpinner, useToast, ConfirmDialog } from '../../components/shared';
+import { useAuth } from '../contexts/AuthContext';
+import { transactionsAPI, usersAPI } from '../api';
+import Layout from '../components/Layout';
+import { LoadingSpinner, useToast, ConfirmDialog } from '../components/shared';
 import './TransferPointsPage.css';
 
 const TransferPointsPage = () => {
