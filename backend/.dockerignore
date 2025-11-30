@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Database files (will be created at runtime)
+prisma/*.db
+prisma/*.db-journal
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Test files
+*.test.js
+__tests__/
+coverage/
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Uploads (will be mounted as volume)
+uploads/
+
+# Misc
+README.md
+*.md
