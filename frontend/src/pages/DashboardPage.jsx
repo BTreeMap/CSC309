@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
-import { getMe } from '../api/auth';
+import { usersAPI } from '../api';
 import './DashboardPage.css';
 
 const DashboardPage = () => {
@@ -13,7 +13,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await getMe();
+        const userData = await usersAPI.getMe();
         updateUser(userData);
       } catch (error) {
         console.error('Error fetching user data:', error);
