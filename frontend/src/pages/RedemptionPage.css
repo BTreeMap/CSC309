@@ -1,0 +1,368 @@
+.redemption-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.redemption-header {
+    margin-bottom: 32px;
+}
+
+.redemption-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.redemption-header p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+.redemption-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.points-balance-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.balance-label {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.balance-value {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.redemption-form {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.input-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #c33;
+}
+
+.quick-amounts {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.quick-label {
+    font-size: 12px;
+    color: #666;
+}
+
+.quick-amount-button {
+    padding: 6px 12px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-amount-button:hover:not(:disabled) {
+    background-color: #e0e0e0;
+}
+
+.quick-amount-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white;
+}
+
+.quick-amount-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.redemption-summary {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.redemption-summary h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    color: #333;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.summary-row span:first-child {
+    color: #666;
+}
+
+.summary-row span:last-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.cancel-button {
+    padding: 12px 24px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-button:hover:not(:disabled) {
+    background-color: #e0e0e0;
+}
+
+.redeem-button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.redeem-button:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.redeem-button:disabled,
+.cancel-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.redemption-info {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.redemption-info h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.redemption-info ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.redemption-info li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Success View */
+.redemption-success {
+    background: white;
+    border-radius: 12px;
+    padding: 48px 32px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: white;
+    margin: 0 auto 24px;
+}
+
+.redemption-success h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.redemption-success>p {
+    margin: 0 0 32px 0;
+    color: #666;
+    font-size: 16px;
+}
+
+.redemption-details {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.detail-row span:first-child {
+    color: #666;
+}
+
+.detail-row span:last-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.status-pending {
+    color: #ff9800 !important;
+}
+
+.success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.view-qr-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.view-qr-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.view-transactions-button,
+.new-redemption-button {
+    padding: 12px 24px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.view-transactions-button:hover,
+.new-redemption-button:hover {
+    background-color: #e0e0e0;
+}
+
+@media (max-width: 480px) {
+    .points-balance-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-button,
+    .redeem-button {
+        width: 100%;
+    }
+}

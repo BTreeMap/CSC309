@@ -1,0 +1,435 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { eventsAPI } from '../../api';
+import Layout from '../../components/Layout';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../../components/shared';
+import { useToast } from '../../components/shared/ToastContext';
+import './ManageEventsPage.css';
+
+const ManageEventsPage = () => {
+    const navigate = useNavigate();
+    const { showToast } = useToast();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
+
+    // Modal states
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        location: '',
+        startTime: '',
+        endTime: '',
+        capacity: '',
+        points: '',
+    });
+    const [formLoading, setFormLoading] = useState(false);
+    const [formError, setFormError] = useState(null);
+
+    // Parse query params
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = 10;
+
+    const fetchEvents = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const params = { page, limit, showFull: true };
+            const data = await eventsAPI.getEvents(params);
+            setEvents(data.results || []);
+            setTotalCount(data.count || 0);
+        } catch (err) {
+            setError(err.response?.data?.error || 'Failed to load events');
+        } finally {
+            setLoading(false);
+        }
+    }, [page, limit]);
+
+    useEffect(() => {
+        fetchEvents();
+    }, [fetchEvents]);
+
+    const handlePageChange = (newPage) => {
+        const params = new URLSearchParams(searchParams);
+        params.set('page', newPage.toString());
+        setSearchParams(params);
+    };
+
+    const resetForm = () => {
+        setFormData({
+            name: '',
+            description: '',
+            location: '',
+            startTime: '',
+            endTime: '',
+            capacity: '',
+            points: '',
+        });
+        setFormError(null);
+    };
+
+    const openCreateModal = () => {
+        resetForm();
+        setShowCreateModal(true);
+    };
+
+    const openEditModal = (event) => {
+        setSelectedEvent(event);
+        setFormData({
+            name: event.name,
+            description: event.description || '',
+            location: event.location,
+            startTime: new Date(event.startTime).toISOString().slice(0, 16),
+            endTime: new Date(event.endTime).toISOString().slice(0, 16),
+            capacity: event.capacity?.toString() || '',
+            points: event.pointsAwarded?.toString() || '',
+        });
+        setFormError(null);
+        setShowEditModal(true);
+    };
+
+    const openDeleteConfirm = (event) => {
+        setSelectedEvent(event);
+        setShowDeleteConfirm(true);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setFormLoading(true);
+        setFormError(null);
+
+        try {
+            const payload = {
+                name: formData.name,
+                description: formData.description || undefined,
+                location: formData.location,
+                startTime: new Date(formData.startTime).toISOString(),
+                endTime: new Date(formData.endTime).toISOString(),
+            };
+
+            if (formData.capacity) payload.capacity = parseInt(formData.capacity, 10);
+            if (formData.points) payload.points = parseInt(formData.points, 10);
+
+            if (showEditModal && selectedEvent) {
+                await eventsAPI.updateEvent(selectedEvent.id, payload);
+                showToast('Event updated successfully!', 'success');
+            } else {
+                await eventsAPI.createEvent(payload);
+                showToast('Event created successfully!', 'success');
+            }
+
+            setShowCreateModal(false);
+            setShowEditModal(false);
+            fetchEvents();
+        } catch (err) {
+            setFormError(err.response?.data?.error || 'Failed to save event');
+        } finally {
+            setFormLoading(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!selectedEvent) return;
+
+        try {
+            await eventsAPI.deleteEvent(selectedEvent.id);
+            showToast('Event deleted successfully!', 'success');
+            setShowDeleteConfirm(false);
+            fetchEvents();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to delete event', 'error');
+        }
+    };
+
+    const getEventStatus = (event) => {
+        const now = new Date();
+        const startDate = new Date(event.startTime);
+        const endDate = new Date(event.endTime);
+
+        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming' };
+        if (now > endDate) return { label: 'Ended', className: 'status-ended' };
+        return { label: 'Active', className: 'status-active' };
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    };
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return (
+        <Layout>
+            <div className="manage-events-page">
+                <div className="page-header">
+                    <div className="header-left">
+                        <h1>Manage Events</h1>
+                        <p>Create and manage events</p>
+                    </div>
+                    <div className="header-right">
+                        <button onClick={openCreateModal} className="btn-primary">
+                            + Create Event
+                        </button>
+                    </div>
+                </div>
+
+                {loading ? (
+                    <LoadingSpinner text="Loading events..." />
+                ) : error ? (
+                    <ErrorMessage message={error} onRetry={fetchEvents} />
+                ) : events.length === 0 ? (
+                    <EmptyState
+                        icon="📅"
+                        title="No events yet"
+                        description="Create your first event to engage users."
+                        action={
+                            <button onClick={openCreateModal} className="btn-primary">
+                                Create Event
+                            </button>
+                        }
+                    />
+                ) : (
+                    <>
+                        <div className="events-table-container">
+                            <table className="events-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Location</th>
+                                        <th>Date</th>
+                                        <th>Attendance</th>
+                                        <th>Points</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {events.map((event) => {
+                                        const status = getEventStatus(event);
+                                        return (
+                                            <tr key={event.id}>
+                                                <td className="cell-id">#{event.id}</td>
+                                                <td className="cell-name">{event.name}</td>
+                                                <td className="cell-location">{event.location}</td>
+                                                <td className="cell-date">{formatDate(event.startTime)}</td>
+                                                <td className="cell-attendance">
+                                                    {event.numGuests}{event.capacity ? ` / ${event.capacity}` : ''}
+                                                </td>
+                                                <td className="cell-points">
+                                                    {event.pointsRemain > 0 ? (
+                                                        <span className="points-available">{event.pointsRemain} left</span>
+                                                    ) : (
+                                                        <span className="points-none">—</span>
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    <span className={`status-badge ${status.className}`}>
+                                                        {status.label}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div className="action-buttons">
+                                                        <button
+                                                            onClick={() => navigate(`/events/${event.id}`)}
+                                                            className="btn-action btn-view"
+                                                        >
+                                                            View
+                                                        </button>
+                                                        <button
+                                                            onClick={() => openEditModal(event)}
+                                                            className="btn-action btn-edit"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button
+                                                            onClick={() => navigate(`/events/${event.id}/guests`)}
+                                                            className="btn-action btn-guests"
+                                                        >
+                                                            Guests
+                                                        </button>
+                                                        <button
+                                                            onClick={() => openDeleteConfirm(event)}
+                                                            className="btn-action btn-delete"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <Pagination
+                            currentPage={page}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            totalItems={totalCount}
+                            itemsPerPage={limit}
+                        />
+                    </>
+                )}
+
+                {/* Create/Edit Modal */}
+                <Modal
+                    isOpen={showCreateModal || showEditModal}
+                    onClose={() => {
+                        setShowCreateModal(false);
+                        setShowEditModal(false);
+                    }}
+                    title={showEditModal ? 'Edit Event' : 'Create Event'}
+                    size="medium"
+                >
+                    <form onSubmit={handleSubmit} className="event-form">
+                        {formError && (
+                            <div className="form-error">{formError}</div>
+                        )}
+
+                        <div className="form-group">
+                            <label htmlFor="name">Event Name *</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="e.g., Tech Meetup"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="description">Description</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                rows={3}
+                                placeholder="Describe the event..."
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="location">Location *</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                value={formData.location}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="e.g., Room 101, Main Building"
+                            />
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="startTime">Start Date & Time *</label>
+                                <input
+                                    type="datetime-local"
+                                    id="startTime"
+                                    name="startTime"
+                                    value={formData.startTime}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="endTime">End Date & Time *</label>
+                                <input
+                                    type="datetime-local"
+                                    id="endTime"
+                                    name="endTime"
+                                    value={formData.endTime}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="capacity">Capacity</label>
+                                <input
+                                    type="number"
+                                    id="capacity"
+                                    name="capacity"
+                                    value={formData.capacity}
+                                    onChange={handleInputChange}
+                                    min="1"
+                                    placeholder="Leave empty for unlimited"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="points">Points to Award</label>
+                                <input
+                                    type="number"
+                                    id="points"
+                                    name="points"
+                                    value={formData.points}
+                                    onChange={handleInputChange}
+                                    min="0"
+                                    placeholder="0"
+                                />
+                                <span className="input-hint">Total points pool for attendees</span>
+                            </div>
+                        </div>
+
+                        <div className="form-actions">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowCreateModal(false);
+                                    setShowEditModal(false);
+                                }}
+                                className="btn-secondary"
+                                disabled={formLoading}
+                            >
+                                Cancel
+                            </button>
+                            <button type="submit" className="btn-primary" disabled={formLoading}>
+                                {formLoading ? 'Saving...' : showEditModal ? 'Update Event' : 'Create Event'}
+                            </button>
+                        </div>
+                    </form>
+                </Modal>
+
+                {/* Delete Confirmation */}
+                <ConfirmDialog
+                    isOpen={showDeleteConfirm}
+                    onClose={() => setShowDeleteConfirm(false)}
+                    onConfirm={handleDelete}
+                    title="Delete Event"
+                    message={`Are you sure you want to delete "${selectedEvent?.name}"? This action cannot be undone.`}
+                    confirmText="Delete"
+                    confirmVariant="danger"
+                />
+            </div>
+        </Layout>
+    );
+};
+
+export default ManageEventsPage;

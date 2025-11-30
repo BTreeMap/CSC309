@@ -1,0 +1,149 @@
+.qr-code-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.qr-code-header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.qr-code-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.qr-code-header p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+.qr-code-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.qr-code-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-code-wrapper {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    margin-bottom: 24px;
+}
+
+.qr-code-info {
+    width: 100%;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.user-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.user-info-row:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.user-info-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.user-info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.download-qr-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.download-qr-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.download-icon {
+    font-size: 18px;
+}
+
+.qr-code-instructions {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code-instructions h2 {
+    margin: 0 0 24px 0;
+    font-size: 20px;
+    color: #333;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.instruction-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.instruction-item:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.instruction-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.instruction-content h3 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.instruction-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .qr-code-container {
+        grid-template-columns: 1fr;
+    }
+}

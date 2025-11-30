@@ -1,29 +1,70 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { user, logout, hasRole } = useAuth();
+  const { user, logout, activeRole, switchRole, availableRoles } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showRoleMenu, setShowRoleMenu] = useState(false);
+  const userMenuRef = useRef(null);
+  const roleMenuRef = useRef(null);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
-  const isRegular = hasRole('regular');
-  const isCashier = hasRole('cashier');
-  const isManager = hasRole('manager');
-  const isSuperuser = hasRole('superuser');
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+      if (roleMenuRef.current && !roleMenuRef.current.contains(event.target)) {
+        setShowRoleMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const getRoleDisplayName = (role) => {
+    const names = {
+      regular: 'Regular User',
+      cashier: 'Cashier',
+      manager: 'Manager',
+      superuser: 'Superuser'
+    };
+    return names[role] || role;
+  };
+
+  const isActive = (path) => {
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
+
+  const handleRoleSwitch = (role) => {
+    switchRole(role);
+    setShowRoleMenu(false);
+    navigate('/dashboard');
+  };
+
+  // Check if current active role meets minimum role requirement
+  const hasActiveRole = (minRole) => {
+    const roleHierarchy = { regular: 1, cashier: 2, manager: 3, superuser: 4 };
+    return roleHierarchy[activeRole] >= roleHierarchy[minRole];
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/dashboard" className="brand-link">
+            <span className="brand-icon">🎁</span>
             Loyalty Program
           </Link>
         </div>
@@ -40,72 +81,137 @@ const Navbar = () => {
 
         <div className={`navbar-menu ${showMenu ? 'active' : ''}`}>
           <div className="navbar-links">
-            {isRegular && (
-              <>
-                <Link to="/dashboard" className="nav-link" onClick={() => setShowMenu(false)}>
-                  Dashboard
-                </Link>
-                <Link to="/my-points" className="nav-link" onClick={() => setShowMenu(false)}>
-                  My Points
-                </Link>
-                <Link to="/my-qr" className="nav-link" onClick={() => setShowMenu(false)}>
-                  My QR Code
-                </Link>
-                <Link to="/transfer" className="nav-link" onClick={() => setShowMenu(false)}>
-                  Transfer Points
-                </Link>
-                <Link to="/redemption" className="nav-link" onClick={() => setShowMenu(false)}>
-                  Redeem Points
-                </Link>
-                <Link to="/promotions" className="nav-link" onClick={() => setShowMenu(false)}>
-                  Promotions
-                </Link>
-                <Link to="/events" className="nav-link" onClick={() => setShowMenu(false)}>
-                  Events
-                </Link>
-                <Link to="/my-transactions" className="nav-link" onClick={() => setShowMenu(false)}>
-                  My Transactions
-                </Link>
-              </>
-            )}
+            <Link
+              to="/dashboard"
+              className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
+              onClick={() => setShowMenu(false)}
+            >
+              Dashboard
+            </Link>
 
-            {isCashier && (
-              <>
-                <Link to="/create-transaction" className="nav-link" onClick={() => setShowMenu(false)}>
+            {/* Regular User Links - Always visible */}
+            <div className="nav-group">
+              <Link
+                to="/promotions"
+                className={`nav-link ${isActive('/promotions') && !isActive('/promotions/manage') ? 'active' : ''}`}
+                onClick={() => setShowMenu(false)}
+              >
+                Promotions
+              </Link>
+              <Link
+                to="/events"
+                className={`nav-link ${isActive('/events') && !isActive('/events/manage') ? 'active' : ''}`}
+                onClick={() => setShowMenu(false)}
+              >
+                Events
+              </Link>
+              <Link
+                to="/transactions"
+                className={`nav-link ${isActive('/transactions') && !isActive('/transactions/all') ? 'active' : ''}`}
+                onClick={() => setShowMenu(false)}
+              >
+                Transactions
+              </Link>
+            </div>
+
+            {/* Cashier Links */}
+            {hasActiveRole('cashier') && (
+              <div className="nav-group cashier-links">
+                <span className="nav-group-label">Cashier</span>
+                <Link
+                  to="/cashier/transaction"
+                  className={`nav-link ${isActive('/cashier/transaction') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   Create Transaction
                 </Link>
-                <Link to="/process-redemption" className="nav-link" onClick={() => setShowMenu(false)}>
+                <Link
+                  to="/cashier/redemption"
+                  className={`nav-link ${isActive('/cashier/redemption') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   Process Redemption
                 </Link>
-              </>
+                <Link
+                  to="/register"
+                  className={`nav-link ${isActive('/register') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
+                  Register User
+                </Link>
+              </div>
             )}
 
-            {isManager && (
-              <>
-                <Link to="/users" className="nav-link" onClick={() => setShowMenu(false)}>
+            {/* Manager Links */}
+            {hasActiveRole('manager') && (
+              <div className="nav-group manager-links">
+                <span className="nav-group-label">Manager</span>
+                <Link
+                  to="/users"
+                  className={`nav-link ${isActive('/users') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   Users
                 </Link>
-                <Link to="/all-transactions" className="nav-link" onClick={() => setShowMenu(false)}>
+                <Link
+                  to="/transactions/all"
+                  className={`nav-link ${isActive('/transactions/all') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   All Transactions
                 </Link>
-                <Link to="/promotions-manage" className="nav-link" onClick={() => setShowMenu(false)}>
+                <Link
+                  to="/promotions/manage"
+                  className={`nav-link ${isActive('/promotions/manage') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   Manage Promotions
                 </Link>
-                <Link to="/events-manage" className="nav-link" onClick={() => setShowMenu(false)}>
+                <Link
+                  to="/events/manage"
+                  className={`nav-link ${isActive('/events/manage') ? 'active' : ''}`}
+                  onClick={() => setShowMenu(false)}
+                >
                   Manage Events
                 </Link>
-              </>
-            )}
-
-            {isSuperuser && (
-              <Link to="/user-management" className="nav-link" onClick={() => setShowMenu(false)}>
-                User Management
-              </Link>
+              </div>
             )}
           </div>
 
           <div className="navbar-user">
-            <div className="user-menu-container">
+            {/* Role Switcher - Only show if user has multiple roles */}
+            {availableRoles && availableRoles.length > 1 && (
+              <div className="role-switcher" ref={roleMenuRef}>
+                <button
+                  className="role-switcher-button"
+                  onClick={() => setShowRoleMenu(!showRoleMenu)}
+                  aria-label="Switch role"
+                >
+                  <span className="role-icon">🔄</span>
+                  <span className="role-name">{getRoleDisplayName(activeRole)}</span>
+                  <span className="dropdown-arrow">▼</span>
+                </button>
+
+                {showRoleMenu && (
+                  <div className="role-menu-dropdown">
+                    <div className="role-menu-header">Switch Role</div>
+                    {availableRoles.map((role) => (
+                      <button
+                        key={role}
+                        className={`role-menu-item ${activeRole === role ? 'active' : ''}`}
+                        onClick={() => handleRoleSwitch(role)}
+                      >
+                        {getRoleDisplayName(role)}
+                        {activeRole === role && <span className="check-mark">✓</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* User Menu */}
+            <div className="user-menu-container" ref={userMenuRef}>
               <button
                 className="user-menu-button"
                 onClick={() => setShowUserMenu(!showUserMenu)}
@@ -118,13 +224,25 @@ const Navbar = () => {
                     <span>{user?.name?.charAt(0)?.toUpperCase() || user?.utorid?.charAt(0)?.toUpperCase() || 'U'}</span>
                   )}
                 </div>
-                <span className="user-name">{user?.name || user?.utorid}</span>
-                <span className="user-role">{user?.role}</span>
+                <div className="user-info">
+                  <span className="user-name">{user?.name || user?.utorid}</span>
+                  <span className="user-points">{user?.points?.toLocaleString() || 0} pts</span>
+                </div>
                 <span className="dropdown-arrow">▼</span>
               </button>
 
               {showUserMenu && (
                 <div className="user-menu-dropdown">
+                  <div className="user-menu-header">
+                    <div className="user-menu-avatar">
+                      {user?.name?.charAt(0)?.toUpperCase() || user?.utorid?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                    <div className="user-menu-info">
+                      <span className="user-menu-name">{user?.name || user?.utorid}</span>
+                      <span className="user-menu-email">{user?.email}</span>
+                    </div>
+                  </div>
+                  <div className="user-menu-divider"></div>
                   <Link
                     to="/profile"
                     className="user-menu-item"
@@ -133,8 +251,43 @@ const Navbar = () => {
                       setShowMenu(false);
                     }}
                   >
+                    <span className="menu-icon">👤</span>
                     View Profile
                   </Link>
+                  <Link
+                    to="/my-qr"
+                    className="user-menu-item"
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      setShowMenu(false);
+                    }}
+                  >
+                    <span className="menu-icon">📱</span>
+                    My QR Code
+                  </Link>
+                  <Link
+                    to="/transfer"
+                    className="user-menu-item"
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      setShowMenu(false);
+                    }}
+                  >
+                    <span className="menu-icon">💸</span>
+                    Transfer Points
+                  </Link>
+                  <Link
+                    to="/redeem"
+                    className="user-menu-item"
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      setShowMenu(false);
+                    }}
+                  >
+                    <span className="menu-icon">🎯</span>
+                    Redeem Points
+                  </Link>
+                  <div className="user-menu-divider"></div>
                   <Link
                     to="/profile/edit"
                     className="user-menu-item"
@@ -143,16 +296,18 @@ const Navbar = () => {
                       setShowMenu(false);
                     }}
                   >
+                    <span className="menu-icon">✏️</span>
                     Edit Profile
                   </Link>
                   <Link
-                    to="/change-password"
+                    to="/profile/password"
                     className="user-menu-item"
                     onClick={() => {
                       setShowUserMenu(false);
                       setShowMenu(false);
                     }}
                   >
+                    <span className="menu-icon">🔒</span>
                     Change Password
                   </Link>
                   <div className="user-menu-divider"></div>
@@ -164,6 +319,7 @@ const Navbar = () => {
                       setShowMenu(false);
                     }}
                   >
+                    <span className="menu-icon">🚪</span>
                     Logout
                   </button>
                 </div>

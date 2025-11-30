@@ -1,0 +1,372 @@
+.process-redemption-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #764ba2;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+.redemption-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.processed-banner {
+    padding: 16px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    color: #2e7d32;
+    font-weight: 600;
+    text-align: center;
+}
+
+.redemption-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.redemption-id .label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.redemption-id .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.pending {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-badge.processed {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.customer-section {
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.customer-section h2,
+.redemption-details h2 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.customer-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
+
+.customer-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.customer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.customer-details h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.customer-utorid {
+    margin: 0 0 12px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.customer-stats {
+    display: flex;
+    gap: 24px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.stat-value.verified {
+    color: #2e7d32;
+}
+
+.stat-value.unverified {
+    color: #ef6c00;
+}
+
+.redemption-details {
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.detail-label {
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 16px;
+    color: #333;
+}
+
+.points-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f44336;
+}
+
+.action-section {
+    padding: 24px;
+    background-color: #f9f9f9;
+}
+
+.warning-note {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background-color: #fff3e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.warning-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.warning-note p {
+    margin: 0;
+    font-size: 14px;
+    color: #ef6c00;
+    line-height: 1.5;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-secondary {
+    padding: 14px 28px;
+    background-color: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #f5f5f5;
+}
+
+.btn-process {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-process:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.btn-process:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.not-found {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.not-found h2 {
+    margin: 0 0 12px 0;
+    color: #333;
+}
+
+.not-found p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.btn-back {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Confirm Dialog Content */
+.confirm-content {
+    text-align: left;
+}
+
+.confirm-content p {
+    margin: 8px 0;
+}
+
+.confirm-summary {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.confirm-summary p {
+    margin: 4px 0;
+}
+
+.confirm-warning {
+    color: #ef6c00;
+    font-size: 14px;
+    padding: 12px;
+    background-color: #fff3e0;
+    border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+    .redemption-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .customer-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .customer-stats {
+        justify-content: center;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons button {
+        width: 100%;
+    }
+}
