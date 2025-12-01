@@ -40,6 +40,11 @@ if (!JWT_SECRET) {
     process.exit(1);
 }
 
+// Health check endpoint (before other middleware for fast response)
+app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // CORS configuration for React frontend
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',

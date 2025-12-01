@@ -28,6 +28,9 @@ RUN npm prune --production
 ################################################################################
 FROM node:24-alpine AS production
 
+# Install tini for proper process management
+RUN apk add --no-cache tini
+
 # Security: run as non-root user
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 -G nodejs
@@ -70,5 +73,5 @@ EXPOSE 3000
 
 # Run database migrations and start the server
 # Port is passed as argument: docker run -p 3000:3000 image 3000
-ENTRYPOINT ["sh", "-c", "npx prisma migrate deploy && exec node index.js \"$@\"", "--"]
+ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "npx prisma migrate deploy && exec node index.js \"$@\"", "--"]
 CMD ["3000"]
