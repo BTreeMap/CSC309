@@ -13,6 +13,8 @@ services:
       - NODE_ENV=production
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - DATABASE_URL=file:/app/data/database.db
+      # CORS: Set to your frontend URL (e.g., https://your-app.pages.dev)
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
     volumes:
       # Persist SQLite database
       - backend-data:/app/data
