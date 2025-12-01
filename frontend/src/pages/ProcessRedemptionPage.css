@@ -1,372 +1,286 @@
+/* ProcessRedemptionPage - Cashier Redemption Processing */
 .process-redemption-page {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px 0;
+  padding: var(--space-8);
+  max-width: var(--max-width-2xl);
+  margin: 0 auto;
+  animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.back-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    background: transparent;
-    border: none;
-    color: #667eea;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: color 0.2s;
+.process-redemption-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
 }
 
-.back-button:hover {
-    color: #764ba2;
+.process-redemption-header h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2) 0;
 }
 
-.page-header {
-    margin-bottom: 24px;
+.process-redemption-header p {
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
-.page-header h1 {
-    margin: 0 0 8px 0;
-    font-size: 28px;
-    color: #333;
-}
-
-.page-header p {
-    margin: 0;
-    color: #666;
-    font-size: 16px;
-}
-
+/* Redemption Card */
 .redemption-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
-.processed-banner {
-    padding: 16px;
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    color: #2e7d32;
-    font-weight: 600;
-    text-align: center;
-}
-
-.redemption-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px;
-    border-bottom: 1px solid #eee;
-}
-
-.redemption-id .label {
-    display: block;
-    font-size: 12px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-}
-
-.redemption-id .value {
-    font-size: 24px;
-    font-weight: 700;
-    color: #667eea;
-}
-
-.status-badge {
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.status-badge.pending {
-    background-color: #fff3e0;
-    color: #ef6c00;
-}
-
-.status-badge.processed {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
+/* Customer Info Section */
 .customer-section {
-    padding: 24px;
-    border-bottom: 1px solid #eee;
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: white;
 }
 
-.customer-section h2,
-.redemption-details h2 {
-    margin: 0 0 16px 0;
-    font-size: 16px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.customer-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 12px;
+.customer-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .customer-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.customer-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
 }
 
 .customer-details h3 {
-    margin: 0 0 4px 0;
-    font-size: 18px;
-    color: #333;
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  margin: 0 0 var(--space-1) 0;
 }
 
-.customer-utorid {
-    margin: 0 0 12px 0;
-    color: #666;
-    font-size: 14px;
+.customer-details p {
+  opacity: 0.9;
+  font-size: var(--text-sm);
+  margin: 0;
 }
 
-.customer-stats {
-    display: flex;
-    gap: 24px;
+.customer-balance {
+  margin-left: auto;
+  text-align: right;
 }
 
-.stat {
-    display: flex;
-    flex-direction: column;
+.customer-balance .label {
+  font-size: var(--text-xs);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.stat-label {
-    font-size: 11px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.customer-balance .amount {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
 }
 
-.stat-value {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+/* Redemption Form */
+.redemption-form {
+  padding: var(--space-6);
 }
 
-.stat-value.verified {
-    color: #2e7d32;
+.form-section {
+  margin-bottom: var(--space-6);
 }
 
-.stat-value.unverified {
-    color: #ef6c00;
+.form-section h4 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-.redemption-details {
-    padding: 24px;
-    border-bottom: 1px solid #eee;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
-.details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.form-group label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
 }
 
-.detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.form-group input,
+.form-group select {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
-.detail-item.full-width {
-    grid-column: 1 / -1;
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
 }
 
-.detail-label {
-    font-size: 12px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* Amount Display */
+.amount-display {
+  text-align: center;
+  padding: var(--space-6);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
 }
 
-.detail-value {
-    font-size: 16px;
-    color: #333;
+.amount-display .label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
 }
 
-.points-value {
-    font-size: 28px;
-    font-weight: 700;
-    color: #f44336;
+.amount-display .points {
+  font-family: var(--font-serif);
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
 }
 
-.action-section {
-    padding: 24px;
-    background-color: #f9f9f9;
+.amount-display .suffix {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  margin-left: var(--space-2);
 }
 
-.warning-note {
-    display: flex;
-    gap: 12px;
-    padding: 16px;
-    background-color: #fff3e0;
-    border-radius: 8px;
-    margin-bottom: 20px;
+/* Redemption Summary */
+.redemption-summary {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
-.warning-icon {
-    font-size: 20px;
-    flex-shrink: 0;
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
 }
 
-.warning-note p {
-    margin: 0;
-    font-size: 14px;
-    color: #ef6c00;
-    line-height: 1.5;
+.summary-row .label { color: var(--color-text-muted); }
+.summary-row .value { color: var(--color-text-primary); font-weight: var(--font-medium); }
+
+.summary-row.highlight {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
 }
 
-.action-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
+.summary-row.highlight .value {
+  color: var(--color-success);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
 }
 
-.btn-secondary {
-    padding: 14px 28px;
-    background-color: white;
-    color: #333;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+/* Action Buttons */
+.redemption-actions {
+  display: flex;
+  gap: var(--space-4);
 }
 
-.btn-secondary:hover {
-    background-color: #f5f5f5;
+.redemption-actions button {
+  flex: 1;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
 }
 
 .btn-process {
-    padding: 14px 28px;
-    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--color-success);
+  color: white;
+  border: none;
 }
 
 .btn-process:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  background: var(--color-success);
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-.btn-process:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+.btn-process:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-cancel {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
 }
 
-.not-found {
-    text-align: center;
-    padding: 60px 20px;
+.btn-cancel:hover { background: var(--color-bg-secondary); }
+
+/* Success State */
+.success-state {
+  text-align: center;
+  padding: var(--space-10);
 }
 
-.not-found h2 {
-    margin: 0 0 12px 0;
-    color: #333;
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-6);
+  background: var(--color-success-light);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-4xl);
+  color: var(--color-success);
 }
 
-.not-found p {
-    color: #666;
-    margin-bottom: 24px;
+.success-state h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2) 0;
 }
 
-.btn-back {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+.success-state p {
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-6) 0;
 }
 
-/* Confirm Dialog Content */
-.confirm-content {
-    text-align: left;
+/* Messages */
+.error-message {
+  background: var(--color-error-light);
+  color: var(--color-error);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
 }
 
-.confirm-content p {
-    margin: 8px 0;
-}
-
-.confirm-summary {
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    margin: 16px 0;
-}
-
-.confirm-summary p {
-    margin: 4px 0;
-}
-
-.confirm-warning {
-    color: #ef6c00;
-    font-size: 14px;
-    padding: 12px;
-    background-color: #fff3e0;
-    border-radius: 8px;
-}
-
-@media (max-width: 600px) {
-    .redemption-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .customer-card {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .customer-stats {
-        justify-content: center;
-    }
-
-    .details-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .action-buttons {
-        flex-direction: column;
-    }
-
-    .action-buttons button {
-        width: 100%;
-    }
+@media (max-width: 640px) {
+  .process-redemption-page { padding: var(--space-4); }
+  .customer-section { padding: var(--space-4); }
+  .customer-info { flex-wrap: wrap; }
+  .customer-balance { margin-left: 0; margin-top: var(--space-3); width: 100%; text-align: left; }
+  .redemption-form { padding: var(--space-4); }
+  .redemption-actions { flex-direction: column; }
 }

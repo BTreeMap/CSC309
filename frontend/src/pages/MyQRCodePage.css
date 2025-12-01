@@ -1,149 +1,168 @@
-.qr-code-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px 0;
+/* MyQRCodePage - QR Code Display */
+.qr-page {
+  padding: var(--space-8);
+  max-width: var(--max-width-2xl);
+  margin: 0 auto;
+  animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.qr-code-header {
-    margin-bottom: 32px;
-    text-align: center;
+.qr-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
 }
 
-.qr-code-header h1 {
-    margin: 0 0 8px 0;
-    font-size: 28px;
-    color: #333;
+.qr-header h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2) 0;
 }
 
-.qr-code-header p {
-    margin: 0;
-    color: #666;
-    font-size: 16px;
+.qr-header p {
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
-.qr-code-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-}
-
-.qr-code-card {
-    background: white;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.qr-container {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
 }
 
 .qr-code-wrapper {
-    background: white;
-    padding: 16px;
-    border-radius: 12px;
-    border: 2px solid #e0e0e0;
-    margin-bottom: 24px;
+  display: inline-block;
+  padding: var(--space-6);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-6);
 }
 
-.qr-code-info {
-    width: 100%;
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    margin-bottom: 24px;
+.qr-code-wrapper img,
+.qr-code-wrapper canvas,
+.qr-code-wrapper svg {
+  display: block;
+  max-width: 250px;
+  height: auto;
 }
 
-.user-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
+.qr-info {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border-light);
 }
 
-.user-info-row:not(:last-child) {
-    border-bottom: 1px solid #e0e0e0;
+.qr-info h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
 }
 
-.user-info-label {
-    font-size: 14px;
-    color: #666;
+.qr-info p {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  margin: 0 0 var(--space-4) 0;
 }
 
-.user-info-value {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
+.user-id-display {
+  display: inline-block;
+  background: var(--color-bg-secondary);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-family: monospace;
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  letter-spacing: 0.1em;
 }
 
-.download-qr-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.2s;
+.qr-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
 }
 
-.download-qr-button:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+.qr-actions button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
-.download-icon {
-    font-size: 18px;
+.qr-actions .btn-primary {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  border: none;
 }
 
-.qr-code-instructions {
-    background: white;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.qr-actions .btn-primary:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-.qr-code-instructions h2 {
-    margin: 0 0 24px 0;
-    font-size: 20px;
-    color: #333;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e0e0e0;
+.qr-actions .btn-secondary {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
 }
 
-.instruction-item {
-    display: flex;
-    gap: 16px;
-    padding: 16px 0;
+.qr-actions .btn-secondary:hover {
+  background: var(--color-accent-light);
 }
 
-.instruction-item:not(:last-child) {
-    border-bottom: 1px solid #f0f0f0;
+/* Instructions */
+.qr-instructions {
+  margin-top: var(--space-8);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
 }
 
-.instruction-icon {
-    font-size: 32px;
-    flex-shrink: 0;
+.qr-instructions h4 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4) 0;
 }
 
-.instruction-content h3 {
-    margin: 0 0 6px 0;
-    font-size: 16px;
-    color: #333;
+.qr-instructions ol {
+  margin: 0;
+  padding-left: var(--space-5);
 }
 
-.instruction-content p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
+.qr-instructions li {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-relaxed);
 }
 
-@media (max-width: 768px) {
-    .qr-code-container {
-        grid-template-columns: 1fr;
-    }
+.qr-instructions li:last-child {
+  margin-bottom: 0;
+}
+
+/* Loading */
+.loading-container {
+  padding: var(--space-16);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .qr-page { padding: var(--space-4); }
+  .qr-container { padding: var(--space-6); }
+  .qr-code-wrapper { padding: var(--space-4); }
+  .qr-actions { flex-direction: column; }
+  .qr-actions button { width: 100%; justify-content: center; }
 }
