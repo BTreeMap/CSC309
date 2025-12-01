@@ -63,6 +63,18 @@ jobs:
         run: npm test -- --run
 
   # ==========================================================================
+  # Trigger Cloudflare Pages Deployment
+  # ==========================================================================
+  deploy-frontend:
+    needs: [frontend-test]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Trigger Cloudflare Pages deploy
+        run: |
+          curl -X POST "${{ secrets.CF_PAGES_DEPLOY_HOOK }}"
+
+  # ==========================================================================
   # Backend Tests
   # ==========================================================================
   backend-test:
