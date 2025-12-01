@@ -1,0 +1,30 @@
+services:
+  backend:
+    image: ghcr.io/btreemap/csc309:latest
+    # Or build locally:
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    container_name: csc309-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
+      - DATABASE_URL=file:/app/data/database.db
+    volumes:
+      # Persist SQLite database
+      - backend-data:/app/data
+      # Persist uploaded files
+      - backend-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  backend-data:
+  backend-uploads:
