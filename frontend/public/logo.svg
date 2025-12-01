@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 
+      DESIGN SYSTEM: Balanced Integrity (Middle Ground)
+      Palette (Mid-Tone Slate Blue):
+      1. Top-Right: #8CA7CE (Calm Sky)
+      2. Bottom-Right: #5D87C1 (Clear Water)
+      3. Top-Left: #3868AA (Strong Blue)
+      4. Bottom-Left: #254C82 (Deep Anchor)
+    -->
+    
+    <g>
+        <!-- CIRCLE 1: Top-Right (Lightest) -->
+        <circle cx="46" cy="18" r="11" fill="#8CA7CE"/>
+        
+        <!-- CIRCLE 2: Bottom-Right -->
+        <circle cx="46" cy="46" r="11" fill="#5D87C1"/>
+        
+        <!-- CIRCLE 3: Top-Left -->
+        <circle cx="18" cy="18" r="11" fill="#3868AA"/>
+        
+        <!-- CIRCLE 4: Bottom-Left (Deepest) -->
+        <circle cx="18" cy="46" r="11" fill="#254C82"/>
+    </g>
+</svg>
