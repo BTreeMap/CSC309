@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CSSU Rewards",
+  "name": "CSSU Rewards - Loyalty Program",
+  "description": "A role-based loyalty program management system for the Computer Science Students Union",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,10 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#1a1a2e",
+  "background_color": "#ffffff",
+  "categories": [
+    "utilities",
+    "productivity"
+  ]
 }
