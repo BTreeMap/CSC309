@@ -8,28 +8,40 @@
    ========================================================================== */
 
 .create-transaction-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-2xl);
+  max-width: var(--container-lg);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.create-transaction-header {
-  text-align: center;
+/* Page Header - use same pattern as other pages */
+.create-transaction-page .page-header {
   margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-divider);
 }
 
-.create-transaction-header h1 {
+.create-transaction-page .page-header h1 {
   font-family: var(--font-serif);
-  font-size: var(--text-3xl);
+  font-size: var(--text-4xl);
   font-weight: var(--font-bold);
   color: var(--color-text-primary);
   margin: 0 0 var(--space-2) 0;
+  letter-spacing: var(--tracking-tight);
 }
 
-.create-transaction-header p {
+.create-transaction-page .page-header p {
   color: var(--color-text-muted);
   margin: 0;
+  font-size: var(--text-lg);
+}
+
+/* Transaction Form Container */
+.transaction-form-container {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
 }
 
 /* Step Indicator */
@@ -103,7 +115,17 @@
 }
 
 .form-section {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.form-section h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-5) 0;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .form-section h3 {
@@ -116,7 +138,132 @@
   border-bottom: 1px solid var(--color-border-light);
 }
 
-/* User Lookup */
+/* Customer Lookup */
+.customer-lookup {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.lookup-input-group {
+  display: flex;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 280px;
+}
+
+.lookup-input {
+  flex: 1;
+}
+
+/* Customer Info Card */
+.customer-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-4);
+}
+
+.customer-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xl);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.customer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customer-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.customer-details h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-1) 0;
+  border: none;
+  padding: 0;
+}
+
+.customer-utorid {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.customer-points {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.customer-points strong {
+  color: var(--color-accent);
+  font-weight: var(--font-semibold);
+}
+
+.unverified-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-2);
+}
+
+/* Amount Input */
+.amount-input-wrapper {
+  position: relative;
+  max-width: 300px;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  pointer-events: none;
+}
+
+.amount-input {
+  padding-left: var(--space-10);
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+}
+
+.points-preview {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.points-preview strong {
+  color: var(--color-accent);
+}
+
+/* Legacy classes for backward compatibility */
 .user-lookup {
   display: flex;
   gap: var(--space-3);
@@ -266,13 +413,138 @@
   padding: var(--space-4);
 }
 
+/* Promotions List */
+.promotions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.promotion-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.promotion-item:hover:not(.disabled) {
+  background: var(--color-accent-light);
+}
+
+.promotion-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.promotion-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.promotion-item.disabled input[type="checkbox"] {
+  cursor: not-allowed;
+}
+
+.promotion-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.promotion-name {
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+}
+
+.promotion-rate {
+  font-size: var(--text-sm);
+  color: var(--color-success);
+  font-weight: var(--font-semibold);
+}
+
+.min-spending {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.min-spending.met {
+  color: var(--color-success);
+}
+
+/* Confirm Dialog Details */
+.confirm-details {
+  text-align: left;
+}
+
+.confirm-details p {
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--text-sm);
+}
+
+.points-breakdown {
+  background: var(--color-bg-secondary);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-3);
+}
+
+.points-breakdown p {
+  margin: 0 0 var(--space-1) 0;
+}
+
+.points-breakdown .total-points {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .create-transaction-page .page-header h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .transaction-form-container {
+    padding: var(--space-5);
+  }
+
+  .customer-lookup {
+    flex-direction: column;
+  }
+
+  .lookup-input-group {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .customer-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 640px) {
   .create-transaction-page {
     padding: var(--space-4);
   }
 
-  .transaction-form-card {
-    padding: var(--space-5);
+  .transaction-form-card,
+  .transaction-form-container {
+    padding: var(--space-4);
   }
 
   .step-indicator {
