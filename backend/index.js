@@ -595,6 +595,14 @@ app.post('/auth/resets', async (req, res) => {
 
         const { utorid } = req.body;
 
+        // Security: Block password reset for default superuser account
+        // Since email verification is not implemented, password reset tokens are exposed in API responses
+        // This prevents unauthorized password resets for the system admin account
+        const DEFAULT_SUPERUSER_UTORID = 'superadm';
+        if (utorid === DEFAULT_SUPERUSER_UTORID) {
+            return res.status(403).json({ error: 'Password reset is disabled for this account' });
+        }
+
         // Rate limiting by IP
         const clientIp = req.ip;
         const now = Date.now();
@@ -3497,6 +3505,18 @@ const initializeSuperuser = async () => {
             console.log('IMPORTANT: Save this password now!');
             console.log('It will not be shown again.');
             console.log('Set SUPERUSER_PASSWORD env var to use a custom password.');
+        }
+        console.log('');
+        // Security warning for non-default superuser UTORid
+        const DEFAULT_SUPERUSER_UTORID = 'superadm';
+        if (SUPERUSER_UTORID !== DEFAULT_SUPERUSER_UTORID) {
+            console.log('⚠️  SECURITY WARNING:');
+            console.log(`   You are using a custom superuser UTORid '${SUPERUSER_UTORID}'.`);
+            console.log(`   Password reset is only disabled for the default '${DEFAULT_SUPERUSER_UTORID}' account.`);
+            console.log('   Since email verification is not implemented, password reset tokens');
+            console.log('   are exposed in API responses, which could allow unauthorized access.');
+            console.log('   Consider using the default UTORid or implementing email verification.');
+            console.log('');
         }
         console.log('========================================');
 
