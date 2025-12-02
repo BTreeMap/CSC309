@@ -8,7 +8,7 @@
     "seed": "node prisma/seed.js",
     "clean": "rm -rf prisma/dev.db* node_modules package-lock.json prisma/migrations/"
   },
-  "author": "CSC309 Student, Winter 2025",
+  "author": "CSC309 Student, Fall 2025",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.19.0",
