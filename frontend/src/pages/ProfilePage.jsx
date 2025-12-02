@@ -63,7 +63,7 @@ const ProfilePage = () => {
                             </span>
                         </div>
                     </div>
-                    <Link to="/profile/edit" className="edit-profile-button">
+                    <Link to="/profile/edit" className="btn btn-primary">
                         Edit Profile
                     </Link>
                 </div>

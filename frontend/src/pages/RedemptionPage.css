@@ -1,4 +1,9 @@
-/* RedemptionPage - Point Redemption */
+/* ==========================================================================
+   RedemptionPage - Point Redemption
+   Uses design system: .btn, .btn-primary, .btn-secondary, .form-label, 
+                       .form-input, .form-textarea
+   ========================================================================== */
+
 .redemption-page {
   padding: var(--space-8);
   max-width: var(--max-width-4xl);
@@ -56,7 +61,7 @@
   margin-top: var(--space-1);
 }
 
-/* Redemption Form */
+/* Redemption Form Card */
 .redemption-form-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
@@ -77,40 +82,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.form-group label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-}
-
-.form-group input,
-.form-group select {
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-family: var(--font-sans);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
-}
-
-.form-group .hint {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
 }
 
 /* Quick Amount Buttons */
@@ -165,52 +136,129 @@
   font-size: var(--text-base);
 }
 
-.summary-row .label { color: var(--color-text-muted); }
-.summary-row .value { color: var(--color-text-primary); font-weight: var(--font-medium); }
+.summary-row .label {
+  color: var(--color-text-muted);
+}
 
-/* Submit Button */
-.submit-redemption {
-  width: 100%;
-  padding: var(--space-4);
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
+.summary-row .value {
+  color: var(--color-text-primary);
+  font-weight: var(--font-medium);
+}
+
+/* Form Actions - Layout only, button styles from design system */
+.form-actions {
+  display: flex;
+  gap: var(--space-4);
   margin-top: var(--space-4);
 }
 
-.submit-redemption:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.form-actions .btn {
+  flex: 1;
 }
 
-.submit-redemption:disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* Messages */
-.error-message {
-  background: var(--color-error-light);
+/* Input Error */
+.input-error {
   color: var(--color-error);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }
 
-.success-message {
+/* Success View */
+.redemption-success {
+  text-align: center;
+  padding: var(--space-10);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+}
+
+.redemption-success .success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-6);
   background: var(--color-success-light);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-4xl);
   color: var(--color-success);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
+}
+
+.redemption-success h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+}
+
+.redemption-details {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin: var(--space-6) 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+}
+
+.status-pending {
+  color: var(--color-warning);
+  font-weight: var(--font-medium);
+}
+
+/* Success Actions - Layout only, button styles from design system */
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* Redemption Info Section */
+.redemption-info {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.redemption-info h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+}
+
+.redemption-info ol {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.redemption-info li {
+  color: var(--color-text-secondary);
   font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
 }
 
 @media (max-width: 640px) {
-  .redemption-page { padding: var(--space-4); }
-  .points-balance-card { padding: var(--space-6); }
-  .points-balance-card .balance { font-size: var(--text-4xl); }
-  .redemption-form-card { padding: var(--space-5); }
+  .redemption-page {
+    padding: var(--space-4);
+  }
+
+  .points-balance-card {
+    padding: var(--space-6);
+  }
+
+  .points-balance-card .balance {
+    font-size: var(--text-4xl);
+  }
+
+  .redemption-form-card {
+    padding: var(--space-5);
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

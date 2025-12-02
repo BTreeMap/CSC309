@@ -27,7 +27,7 @@ const ForgotPasswordPage = () => {
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to request password reset');
     }
-    
+
     setLoading(false);
   };
 
@@ -58,7 +58,7 @@ const ForgotPasswordPage = () => {
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to reset password');
     }
-    
+
     setLoading(false);
   };
 
@@ -71,14 +71,15 @@ const ForgotPasswordPage = () => {
 
         {step === 1 ? (
           <form onSubmit={handleRequestReset} className="forgot-password-form">
-            {error && <div className="error-message">{error}</div>}
-            {success && <div className="success-message">{success}</div>}
+            {error && <div className="alert-error">{error}</div>}
+            {success && <div className="alert-success">{success}</div>}
 
             <div className="form-group">
-              <label htmlFor="utorid">UTORid</label>
+              <label htmlFor="utorid" className="form-label">UTORid</label>
               <input
                 type="text"
                 id="utorid"
+                className="form-input"
                 value={utorid}
                 onChange={(e) => setUtorid(e.target.value)}
                 placeholder="Enter your UTORid"
@@ -86,9 +87,9 @@ const ForgotPasswordPage = () => {
               />
             </div>
 
-            <button 
-              type="submit" 
-              className="submit-button"
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
               disabled={loading}
             >
               {loading ? 'Requesting...' : 'Request Password Reset'}
@@ -96,14 +97,15 @@ const ForgotPasswordPage = () => {
           </form>
         ) : (
           <form onSubmit={handleResetPassword} className="forgot-password-form">
-            {error && <div className="error-message">{error}</div>}
-            {success && <div className="success-message">{success}</div>}
+            {error && <div className="alert-error">{error}</div>}
+            {success && <div className="alert-success">{success}</div>}
 
             <div className="form-group">
-              <label htmlFor="resetToken">Reset Token</label>
+              <label htmlFor="resetToken" className="form-label">Reset Token</label>
               <input
                 type="text"
                 id="resetToken"
+                className="form-input"
                 value={resetToken}
                 onChange={(e) => setResetToken(e.target.value)}
                 placeholder="Enter reset token"
@@ -112,10 +114,11 @@ const ForgotPasswordPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="newPassword">New Password</label>
+              <label htmlFor="newPassword" className="form-label">New Password</label>
               <input
                 type="password"
                 id="newPassword"
+                className="form-input"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="8-20 characters, include uppercase, lowercase, number and special character"
@@ -124,10 +127,11 @@ const ForgotPasswordPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm New Password</label>
+              <label htmlFor="confirmPassword" className="form-label">Confirm New Password</label>
               <input
                 type="password"
                 id="confirmPassword"
+                className="form-input"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter new password"
@@ -135,9 +139,9 @@ const ForgotPasswordPage = () => {
               />
             </div>
 
-            <button 
-              type="submit" 
-              className="submit-button"
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
               disabled={loading}
             >
               {loading ? 'Resetting...' : 'Reset Password'}

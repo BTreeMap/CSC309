@@ -78,7 +78,7 @@ const MyQRCodePage = () => {
                             </div>
                         </div>
 
-                        <button className="download-qr-button" onClick={handleDownload}>
+                        <button className="btn btn-primary download-qr-button" onClick={handleDownload}>
                             <span className="download-icon">📥</span>
                             Download QR Code
                         </button>

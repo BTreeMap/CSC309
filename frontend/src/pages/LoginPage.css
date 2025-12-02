@@ -1,5 +1,6 @@
 /* ==========================================================================
    Login Page - Modern Minimalist
+   Page-specific styles only - common components in design-system.css
    ========================================================================== */
 
 .login-page {
@@ -20,7 +21,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 80%, var(--color-accent-light) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, var(--color-accent-light) 0%, transparent 50%);
   pointer-events: none;
@@ -64,89 +65,10 @@
   gap: var(--space-5);
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.form-group label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-  letter-spacing: var(--tracking-wide);
-}
-
-.form-group input {
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-family: var(--font-sans);
-  color: var(--color-text-primary);
-  background-color: var(--color-surface);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.form-group input:hover {
-  border-color: var(--color-accent);
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
-}
-
-.form-group input::placeholder {
-  color: var(--color-text-muted);
-}
-
-.error-message {
-  background-color: var(--color-error-light);
-  color: var(--color-error);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  border: 1px solid rgba(184, 92, 92, 0.2);
-}
-
-.success-message {
-  background-color: var(--color-success-light);
-  color: var(--color-success);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  border: 1px solid rgba(74, 157, 124, 0.2);
-}
+/* Use design system .form-group, .form-input, .error-message, .success-message */
 
 .login-button {
-  background-color: var(--color-accent);
-  color: var(--color-text-inverse);
-  border: none;
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  font-family: var(--font-sans);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
   margin-top: var(--space-2);
-}
-
-.login-button:hover:not(:disabled) {
-  background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.login-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.login-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .login-footer {
@@ -176,7 +98,7 @@
   .login-container {
     padding: var(--space-6);
   }
-  
+
   .login-header h1 {
     font-size: var(--text-2xl);
   }

@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { ROLE_LABELS } from '../utils/constants';
+import '../styles/design-system.css';
 import './UsersListPage.css';
 
 const UsersListPage = () => {
@@ -129,31 +130,31 @@ const UsersListPage = () => {
                         <p>View and manage system users</p>
                     </div>
                     <div className="header-right">
-                        <button onClick={() => navigate('/users/create')} className="btn-primary">
+                        <button onClick={() => navigate('/users/create')} className="btn btn-primary">
                             + Create User
                         </button>
                     </div>
                 </div>
 
-                <div className="users-filters">
+                <div className="filters-bar">
                     <div className="filters-row">
                         <div className="filter-group search-group">
-                            <label>Search</label>
+                            <label className="form-label">Search</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => handleFilterChange('name', e.target.value)}
                                 placeholder="Search by name or UTORid..."
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label>Role</label>
+                            <label className="form-label">Role</label>
                             <select
                                 value={role}
                                 onChange={(e) => handleFilterChange('role', e.target.value)}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All Roles</option>
                                 <option value="regular">Regular</option>
@@ -164,11 +165,11 @@ const UsersListPage = () => {
                         </div>
 
                         <div className="filter-group">
-                            <label>Verified</label>
+                            <label className="form-label">Verified</label>
                             <select
                                 value={verified}
                                 onChange={(e) => handleFilterChange('verified', e.target.value)}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All</option>
                                 <option value="true">Verified</option>
@@ -177,11 +178,11 @@ const UsersListPage = () => {
                         </div>
 
                         <div className="filter-group">
-                            <label>Activated</label>
+                            <label className="form-label">Activated</label>
                             <select
                                 value={activated}
                                 onChange={(e) => handleFilterChange('activated', e.target.value)}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All</option>
                                 <option value="true">Activated</option>
@@ -190,7 +191,7 @@ const UsersListPage = () => {
                         </div>
 
                         {hasFilters && (
-                            <button onClick={clearFilters} className="clear-filters-btn">
+                            <button onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
                                 Clear
                             </button>
                         )}
@@ -208,7 +209,7 @@ const UsersListPage = () => {
                         description={hasFilters ? "No users match your filters." : "No users in the system."}
                         action={
                             hasFilters && (
-                                <button onClick={clearFilters} className="btn-secondary">
+                                <button onClick={clearFilters} className="btn btn-secondary">
                                     Clear Filters
                                 </button>
                             )
@@ -341,14 +342,14 @@ const UsersListPage = () => {
                             <div className="modal-actions">
                                 <button
                                     onClick={() => setShowAdjustModal(false)}
-                                    className="btn-secondary"
+                                    className="btn btn-secondary"
                                     disabled={adjustmentLoading}
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleAdjustPoints}
-                                    className="btn-primary"
+                                    className="btn btn-primary"
                                     disabled={adjustmentLoading || !adjustmentAmount}
                                 >
                                     {adjustmentLoading ? 'Adjusting...' : 'Adjust Points'}

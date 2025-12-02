@@ -107,19 +107,19 @@ const RedemptionPage = () => {
 
                         <div className="success-actions">
                             <button
-                                className="view-qr-button"
+                                className="btn btn-primary view-qr-button"
                                 onClick={() => navigate(`/redemption/${redemptionResult.id}/qr`)}
                             >
                                 <span>📱</span> View QR Code
                             </button>
                             <button
-                                className="view-transactions-button"
+                                className="btn btn-secondary view-transactions-button"
                                 onClick={() => navigate('/my-transactions')}
                             >
                                 View My Transactions
                             </button>
                             <button
-                                className="new-redemption-button"
+                                className="btn btn-secondary new-redemption-button"
                                 onClick={() => {
                                     setRedemptionResult(null);
                                     setAmount('');
@@ -151,10 +151,11 @@ const RedemptionPage = () => {
 
                     <form onSubmit={handleSubmit} className="redemption-form">
                         <div className="form-group">
-                            <label htmlFor="amount">Points to Redeem</label>
+                            <label htmlFor="amount" className="form-label">Points to Redeem</label>
                             <input
                                 type="number"
                                 id="amount"
+                                className="form-input"
                                 value={amount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
@@ -184,9 +185,10 @@ const RedemptionPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="remark">Remark (Optional)</label>
+                            <label htmlFor="remark" className="form-label">Remark (Optional)</label>
                             <textarea
                                 id="remark"
+                                className="form-textarea"
                                 value={remark}
                                 onChange={(e) => setRemark(e.target.value)}
                                 placeholder="Add a note for this redemption"
@@ -215,7 +217,7 @@ const RedemptionPage = () => {
                         <div className="form-actions">
                             <button
                                 type="button"
-                                className="cancel-button"
+                                className="btn btn-secondary"
                                 onClick={() => navigate(-1)}
                                 disabled={loading}
                             >
@@ -223,7 +225,7 @@ const RedemptionPage = () => {
                             </button>
                             <button
                                 type="submit"
-                                className="redeem-button"
+                                className="btn btn-primary"
                                 disabled={loading || !amount}
                             >
                                 {loading ? 'Processing...' : 'Create Redemption Request'}

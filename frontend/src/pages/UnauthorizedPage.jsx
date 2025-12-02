@@ -11,10 +11,10 @@ const UnauthorizedPage = () => {
           <h2>Access Denied</h2>
           <p>You do not have permission to access this page. Please ensure you are logged in and have the required permissions.</p>
           <div className="unauthorized-actions">
-            <Link to="/dashboard" className="back-button">
+            <Link to="/dashboard" className="btn btn-primary">
               Back to Dashboard
             </Link>
-            <Link to="/login" className="login-button">
+            <Link to="/login" className="btn btn-secondary">
               Login Again
             </Link>
           </div>

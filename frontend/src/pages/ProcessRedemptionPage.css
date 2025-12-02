@@ -1,4 +1,8 @@
-/* ProcessRedemptionPage - Cashier Redemption Processing */
+/* ==========================================================================
+   ProcessRedemptionPage - Cashier Redemption Processing
+   Uses design system: .btn, .btn-secondary, .btn-success, .btn-ghost
+   ========================================================================== */
+
 .process-redemption-page {
   padding: var(--space-8);
   max-width: var(--max-width-2xl);
@@ -22,6 +26,11 @@
 .process-redemption-header p {
   color: var(--color-text-muted);
   margin: 0;
+}
+
+/* Back Button - Additional styling */
+.back-button {
+  margin-bottom: var(--space-6);
 }
 
 /* Redemption Card */
@@ -49,7 +58,7 @@
   width: 64px;
   height: 64px;
   border-radius: var(--radius-full);
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +96,7 @@
   font-weight: var(--font-bold);
 }
 
-/* Redemption Form */
+/* Redemption Form Section */
 .redemption-form {
   padding: var(--space-6);
 }
@@ -105,36 +114,6 @@
   margin: 0 0 var(--space-4) 0;
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-border-light);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-}
-
-.form-group label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-}
-
-.form-group input,
-.form-group select {
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-family: var(--font-sans);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
 }
 
 /* Amount Display */
@@ -180,8 +159,14 @@
   font-size: var(--text-sm);
 }
 
-.summary-row .label { color: var(--color-text-muted); }
-.summary-row .value { color: var(--color-text-primary); font-weight: var(--font-medium); }
+.summary-row .label {
+  color: var(--color-text-muted);
+}
+
+.summary-row .value {
+  color: var(--color-text-primary);
+  font-weight: var(--font-medium);
+}
 
 .summary-row.highlight {
   border-top: 1px solid var(--color-border);
@@ -195,44 +180,73 @@
   font-weight: var(--font-semibold);
 }
 
-/* Action Buttons */
-.redemption-actions {
+/* Action Buttons - Layout only, button styles from design system */
+.redemption-actions,
+.action-buttons {
   display: flex;
   gap: var(--space-4);
 }
 
-.redemption-actions button {
+.redemption-actions .btn,
+.action-buttons .btn {
   flex: 1;
   padding: var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
 }
 
+/* Process Button - Additional styling */
 .btn-process {
-  background: var(--color-success);
-  color: white;
-  border: none;
+  font-size: var(--text-base);
 }
 
-.btn-process:hover:not(:disabled) {
-  background: var(--color-success);
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+/* Warning Note */
+.warning-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-warning-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
 }
 
-.btn-process:disabled { opacity: 0.5; cursor: not-allowed; }
+.warning-note .warning-icon {
+  font-size: var(--text-lg);
+}
 
-.btn-cancel {
-  background: transparent;
+.warning-note p {
+  margin: 0;
+  font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
 }
 
-.btn-cancel:hover { background: var(--color-bg-secondary); }
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.status-badge.processed {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+/* Processed Banner */
+.processed-banner {
+  padding: var(--space-4);
+  background: var(--color-success-light);
+  color: var(--color-success);
+  text-align: center;
+  font-weight: var(--font-medium);
+}
 
 /* Success State */
 .success-state {
@@ -266,21 +280,179 @@
   margin: 0 0 var(--space-6) 0;
 }
 
-/* Messages */
-.error-message {
-  background: var(--color-error-light);
-  color: var(--color-error);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.page-header h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.page-header p {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Redemption Header */
+.redemption-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.redemption-id .label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.redemption-id .value {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+}
+
+/* Customer Card */
+.customer-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+}
+
+.customer-stats {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-3);
+}
+
+.stat .stat-label {
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
+
+.stat .stat-value {
+  font-weight: var(--font-semibold);
+}
+
+/* Redemption Details */
+.redemption-details {
+  padding: var(--space-6);
+}
+
+.redemption-details h2 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
   margin-bottom: var(--space-4);
 }
 
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.detail-item {
+  padding: var(--space-3);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.detail-value {
+  font-weight: var(--font-medium);
+}
+
+.points-value {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-accent);
+}
+
+/* Action Section */
+.action-section {
+  padding: var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* Not Found */
+.not-found {
+  text-align: center;
+  padding: var(--space-10);
+}
+
+.not-found h2 {
+  font-family: var(--font-serif);
+  margin-bottom: var(--space-4);
+}
+
+/* Confirm Dialog Content */
+.confirm-content {
+  text-align: left;
+}
+
+.confirm-summary {
+  background: var(--color-bg-secondary);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin: var(--space-4) 0;
+}
+
+.confirm-warning {
+  color: var(--color-warning);
+  font-size: var(--text-sm);
+}
+
 @media (max-width: 640px) {
-  .process-redemption-page { padding: var(--space-4); }
-  .customer-section { padding: var(--space-4); }
-  .customer-info { flex-wrap: wrap; }
-  .customer-balance { margin-left: 0; margin-top: var(--space-3); width: 100%; text-align: left; }
-  .redemption-form { padding: var(--space-4); }
-  .redemption-actions { flex-direction: column; }
+  .process-redemption-page {
+    padding: var(--space-4);
+  }
+
+  .customer-section {
+    padding: var(--space-4);
+  }
+
+  .customer-info {
+    flex-wrap: wrap;
+  }
+
+  .customer-balance {
+    margin-left: 0;
+    margin-top: var(--space-3);
+    width: 100%;
+    text-align: left;
+  }
+
+  .redemption-form {
+    padding: var(--space-4);
+  }
+
+  .redemption-actions,
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
 }

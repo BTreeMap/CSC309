@@ -121,7 +121,7 @@ const RegisterPage = () => {
                             <div className="token-display">
                                 <code>{success.resetToken}</code>
                             </div>
-                            <button onClick={copyResetLink} className="btn-copy">
+                            <button onClick={copyResetLink} className="btn btn-secondary btn-copy">
                                 📋 Copy Reset Link
                             </button>
                             <p className="warning">
@@ -130,10 +130,10 @@ const RegisterPage = () => {
                         </div>
 
                         <div className="action-buttons">
-                            <button onClick={handleRegisterAnother} className="btn-primary">
+                            <button onClick={handleRegisterAnother} className="btn btn-primary">
                                 Register Another User
                             </button>
-                            <button onClick={() => navigate('/users')} className="btn-secondary">
+                            <button onClick={() => navigate('/users')} className="btn btn-secondary">
                                 Back to Users List
                             </button>
                         </div>
@@ -154,30 +154,32 @@ const RegisterPage = () => {
 
                     <form onSubmit={handleSubmit} className="register-form">
                         {error && (
-                            <div className="error-message">{error}</div>
+                            <div className="alert-error">{error}</div>
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="utorid">UTORid *</label>
+                            <label htmlFor="utorid" className="form-label">UTORid *</label>
                             <input
                                 type="text"
                                 id="utorid"
                                 name="utorid"
+                                className="form-input"
                                 value={formData.utorid}
                                 onChange={handleChange}
                                 placeholder="e.g., johnd123"
                                 required
                                 maxLength={8}
                             />
-                            <span className="input-hint">4-8 alphanumeric characters</span>
+                            <span className="form-helper">4-8 alphanumeric characters</span>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="name">Full Name *</label>
+                            <label htmlFor="name" className="form-label">Full Name *</label>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
+                                className="form-input"
                                 value={formData.name}
                                 onChange={handleChange}
                                 placeholder="e.g., John Doe"
@@ -186,17 +188,18 @@ const RegisterPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email">Email Address *</label>
+                            <label htmlFor="email" className="form-label">Email Address *</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
+                                className="form-input"
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="e.g., john.doe@mail.utoronto.ca"
                                 required
                             />
-                            <span className="input-hint">Preferably a UofT email address</span>
+                            <span className="form-helper">Preferably a UofT email address</span>
                         </div>
 
                         <div className="info-box">
@@ -208,10 +211,10 @@ const RegisterPage = () => {
                         </div>
 
                         <div className="form-actions">
-                            <button type="button" onClick={() => navigate(-1)} className="btn-secondary">
+                            <button type="button" onClick={() => navigate(-1)} className="btn btn-secondary">
                                 Cancel
                             </button>
-                            <button type="submit" className="btn-primary" disabled={loading}>
+                            <button type="submit" className="btn btn-primary" disabled={loading}>
                                 {loading ? 'Registering...' : 'Register User'}
                             </button>
                         </div>

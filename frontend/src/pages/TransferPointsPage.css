@@ -1,5 +1,13 @@
-/* TransferPointsPage - Point Transfer */
-.transfer-page {
+/* ==========================================================================
+   TransferPointsPage - Point Transfer
+   
+   Design System Classes Used:
+   - Buttons: .btn, .btn-primary, .btn-secondary
+   - Forms: .form-label
+   - Messages: Uses design system alert classes
+   ========================================================================== */
+
+.transfer-points-page {
   padding: var(--space-8);
   max-width: var(--max-width-2xl);
   margin: 0 auto;
@@ -25,35 +33,35 @@
 }
 
 /* Balance Card */
-.balance-card {
+.points-balance-card {
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   margin-bottom: var(--space-8);
   color: white;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
-.balance-info h3 {
+.balance-label {
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   opacity: 0.9;
-  margin: 0 0 var(--space-1) 0;
+  margin-bottom: var(--space-1);
 }
 
-.balance-info .amount {
+.balance-value {
   font-family: var(--font-serif);
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
-  margin: 0;
 }
 
 /* Transfer Form */
-.transfer-form-card {
+.transfer-content {
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-xl);
@@ -66,35 +74,14 @@
   gap: var(--space-6);
 }
 
-.form-section {
+/* Lookup Input Wrapper */
+.lookup-input-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
-.form-section-title {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: var(--space-2);
-  border-bottom: 1px solid var(--color-border-light);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.form-group label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-}
-
-.form-group input {
+.lookup-input-wrapper input {
+  flex: 1;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -103,51 +90,69 @@
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.form-group input:focus {
+.lookup-input-wrapper input:focus {
   outline: none;
   border-color: var(--color-accent);
   box-shadow: 0 0 0 3px var(--color-accent-light);
 }
 
-.form-group .hint {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
+.lookup-button {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  white-space: nowrap;
 }
 
-/* Recipient Preview */
-.recipient-preview {
+.lookup-button:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.lookup-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Input Error */
+.input-error {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+}
+
+/* Recipient Info */
+.recipient-info {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-4);
   background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
 }
 
-.recipient-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-full);
-  background: var(--color-accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.recipient-verified {
+  color: var(--color-success);
   font-weight: var(--font-semibold);
-  color: var(--color-accent);
 }
 
-.recipient-details h4 {
-  font-size: var(--text-base);
+.recipient-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipient-name {
   font-weight: var(--font-medium);
   color: var(--color-text-primary);
-  margin: 0;
 }
 
-.recipient-details p {
+.recipient-utorid {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  margin: 0;
 }
 
 /* Transfer Summary */
@@ -155,6 +160,14 @@
   background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+}
+
+.transfer-summary h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4) 0;
 }
 
 .summary-row {
@@ -171,74 +184,40 @@
   font-weight: var(--font-semibold);
 }
 
-.summary-row .label { color: var(--color-text-muted); }
-.summary-row .value { color: var(--color-text-primary); }
-
-/* Submit Button */
-.transfer-button {
-  width: 100%;
-  padding: var(--space-4);
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
-}
-
-.transfer-button:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.transfer-button:disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* Messages */
-.message {
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-}
-
-.message.error {
-  background: var(--color-error-light);
-  color: var(--color-error);
-}
-
-.message.success {
-  background: var(--color-success-light);
-  color: var(--color-success);
-}
-
-/* Recent Transfers */
-.recent-transfers {
-  margin-top: var(--space-8);
-}
-
-.recent-transfers h3 {
-  font-family: var(--font-serif);
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-4) 0;
-}
-
-.recent-transfer-item {
+/* Form Actions */
+.form-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.form-actions .btn {
+  flex: 1;
   padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-2);
 }
 
 @media (max-width: 640px) {
-  .transfer-page { padding: var(--space-4); }
-  .balance-card { flex-direction: column; text-align: center; gap: var(--space-3); }
-  .transfer-form-card { padding: var(--space-5); }
+  .transfer-points-page {
+    padding: var(--space-4);
+  }
+
+  .points-balance-card {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .transfer-content {
+    padding: var(--space-5);
+  }
+
+  .lookup-input-wrapper {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

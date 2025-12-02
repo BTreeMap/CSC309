@@ -190,7 +190,7 @@ const ManagePromotionsPage = () => {
                         <p>Create and manage promotional campaigns</p>
                     </div>
                     <div className="header-right">
-                        <button onClick={openCreateModal} className="btn-primary">
+                        <button onClick={openCreateModal} className="btn btn-primary">
                             + Create Promotion
                         </button>
                     </div>
@@ -206,7 +206,7 @@ const ManagePromotionsPage = () => {
                         title="No promotions yet"
                         description="Create your first promotion to engage customers."
                         action={
-                            <button onClick={openCreateModal} className="btn-primary">
+                            <button onClick={openCreateModal} className="btn btn-primary">
                                 Create Promotion
                             </button>
                         }
@@ -305,11 +305,11 @@ const ManagePromotionsPage = () => {
                 >
                     <form onSubmit={handleSubmit} className="promotion-form">
                         {formError && (
-                            <div className="form-error">{formError}</div>
+                            <div className="alert-error">{formError}</div>
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name">Promotion Name *</label>
+                            <label htmlFor="name" className="form-label">Promotion Name *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -318,11 +318,12 @@ const ManagePromotionsPage = () => {
                                 onChange={handleInputChange}
                                 required
                                 placeholder="e.g., Summer Sale"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <label htmlFor="description" className="form-label">Description</label>
                             <textarea
                                 id="description"
                                 name="description"
@@ -330,17 +331,19 @@ const ManagePromotionsPage = () => {
                                 onChange={handleInputChange}
                                 rows={3}
                                 placeholder="Describe the promotion..."
+                                className="form-textarea"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="type">Type *</label>
+                            <label htmlFor="type" className="form-label">Type *</label>
                             <select
                                 id="type"
                                 name="type"
                                 value={formData.type}
                                 onChange={handleInputChange}
                                 required
+                                className="form-select"
                             >
                                 <option value="automatic">Automatic (Rate-based)</option>
                                 <option value="one-time">One-Time Code</option>
@@ -349,7 +352,7 @@ const ManagePromotionsPage = () => {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="startTime">Start Date *</label>
+                                <label htmlFor="startTime" className="form-label">Start Date *</label>
                                 <input
                                     type="datetime-local"
                                     id="startTime"
@@ -357,11 +360,12 @@ const ManagePromotionsPage = () => {
                                     value={formData.startTime}
                                     onChange={handleInputChange}
                                     required
+                                    className="form-input"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="endTime">End Date *</label>
+                                <label htmlFor="endTime" className="form-label">End Date *</label>
                                 <input
                                     type="datetime-local"
                                     id="endTime"
@@ -369,6 +373,7 @@ const ManagePromotionsPage = () => {
                                     value={formData.endTime}
                                     onChange={handleInputChange}
                                     required
+                                    className="form-input"
                                 />
                             </div>
                         </div>
@@ -376,7 +381,7 @@ const ManagePromotionsPage = () => {
                         {formData.type === 'automatic' ? (
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="rate">Bonus Rate *</label>
+                                    <label htmlFor="rate" className="form-label">Bonus Rate *</label>
                                     <input
                                         type="number"
                                         id="rate"
@@ -388,12 +393,13 @@ const ManagePromotionsPage = () => {
                                         max="10"
                                         placeholder="e.g., 0.5 for 50%"
                                         required={formData.type === 'automatic'}
+                                        className="form-input"
                                     />
-                                    <span className="input-hint">Enter as decimal (0.5 = 50%)</span>
+                                    <span className="form-helper">Enter as decimal (0.5 = 50%)</span>
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="minSpending">Min Spending ($)</label>
+                                    <label htmlFor="minSpending" className="form-label">Min Spending ($)</label>
                                     <input
                                         type="number"
                                         id="minSpending"
@@ -403,12 +409,13 @@ const ManagePromotionsPage = () => {
                                         min="0"
                                         step="0.01"
                                         placeholder="0"
+                                        className="form-input"
                                     />
                                 </div>
                             </div>
                         ) : (
                             <div className="form-group">
-                                <label htmlFor="points">Points *</label>
+                                <label htmlFor="points" className="form-label">Points *</label>
                                 <input
                                     type="number"
                                     id="points"
@@ -418,6 +425,7 @@ const ManagePromotionsPage = () => {
                                     min="1"
                                     placeholder="e.g., 100"
                                     required={formData.type === 'one-time'}
+                                    className="form-input"
                                 />
                             </div>
                         )}
@@ -429,12 +437,12 @@ const ManagePromotionsPage = () => {
                                     setShowCreateModal(false);
                                     setShowEditModal(false);
                                 }}
-                                className="btn-secondary"
+                                className="btn btn-secondary"
                                 disabled={formLoading}
                             >
                                 Cancel
                             </button>
-                            <button type="submit" className="btn-primary" disabled={formLoading}>
+                            <button type="submit" className="btn btn-primary" disabled={formLoading}>
                                 {formLoading ? 'Saving...' : showEditModal ? 'Update Promotion' : 'Create Promotion'}
                             </button>
                         </div>

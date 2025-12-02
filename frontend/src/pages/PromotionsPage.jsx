@@ -106,20 +106,20 @@ const PromotionsPage = () => {
                     </div>
                     {isManager && (
                         <div className="header-right">
-                            <Link to="/promotions/manage" className="btn-primary">
+                            <Link to="/promotions/manage" className="btn btn-primary">
                                 Manage Promotions
                             </Link>
                         </div>
                     )}
                 </div>
 
-                <div className="promotions-filters">
+                <div className="filters-bar">
                     <div className="filter-group">
-                        <label>Type</label>
+                        <label className="form-label">Type</label>
                         <select
                             value={type}
                             onChange={(e) => handleFilterChange('type', e.target.value)}
-                            className="filter-select"
+                            className="form-select"
                         >
                             <option value="">All Types</option>
                             <option value="automatic">Automatic</option>
@@ -128,7 +128,7 @@ const PromotionsPage = () => {
                     </div>
 
                     <div className="filter-group">
-                        <label>Status</label>
+                        <label className="form-label">Status</label>
                         <select
                             value={started && !ended ? 'active' : ended === 'true' ? 'ended' : started === 'false' ? 'upcoming' : ''}
                             onChange={(e) => {
@@ -148,7 +148,7 @@ const PromotionsPage = () => {
                                 params.set('page', '1');
                                 setSearchParams(params);
                             }}
-                            className="filter-select"
+                            className="form-select"
                         >
                             <option value="">All Statuses</option>
                             <option value="active">Active</option>
@@ -158,7 +158,7 @@ const PromotionsPage = () => {
                     </div>
 
                     {hasFilters && (
-                        <button onClick={clearFilters} className="clear-filters-btn">
+                        <button onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
                             Clear Filters
                         </button>
                     )}
@@ -175,7 +175,7 @@ const PromotionsPage = () => {
                         description={hasFilters ? "No promotions match your filters." : "There are no active promotions at the moment."}
                         action={
                             hasFilters && (
-                                <button onClick={clearFilters} className="btn-secondary">
+                                <button onClick={clearFilters} className="btn btn-secondary">
                                     Clear Filters
                                 </button>
                             )

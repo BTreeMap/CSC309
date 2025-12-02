@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
 import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
+import '../styles/design-system.css';
 import './MyTransactionsPage.css';
 
 const MyTransactionsPage = () => {
@@ -108,13 +109,13 @@ const MyTransactionsPage = () => {
                     </div>
                 </div>
 
-                <div className="transactions-filters">
+                <div className="filters-bar">
                     <div className="filter-group">
-                        <label>Filter by type:</label>
+                        <label className="form-label">Filter by type:</label>
                         <select
                             value={type}
                             onChange={(e) => handleFilterChange(e.target.value)}
-                            className="filter-select"
+                            className="form-select"
                         >
                             <option value="">All Types</option>
                             <option value="purchase">Purchase</option>
@@ -137,7 +138,7 @@ const MyTransactionsPage = () => {
                         description={type ? `No ${type} transactions found.` : "You don't have any transactions yet."}
                         action={
                             <button
-                                className="clear-filter-button"
+                                className="btn btn-ghost btn-danger btn-sm"
                                 onClick={() => handleFilterChange('')}
                             >
                                 Clear Filters

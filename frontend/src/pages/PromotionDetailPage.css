@@ -1,4 +1,11 @@
-/* PromotionDetailPage - Promotion Details */
+/* ==========================================================================
+   PromotionDetailPage - Promotion Details
+   
+   Design System Classes Used:
+   - .btn, .btn-primary, .btn-secondary
+   - .alert-error, .alert-success (via shared components)
+   ========================================================================== */
+
 .promotion-detail-page {
   padding: var(--space-8);
   max-width: var(--max-width-4xl);
@@ -21,7 +28,9 @@
   color: var(--color-accent);
 }
 
-.back-link::after { display: none; }
+.back-link::after {
+  display: none;
+}
 
 /* Promotion Header */
 .promotion-detail-header {
@@ -197,34 +206,30 @@
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.btn-claim {
-  background: var(--color-accent);
-  color: white;
-  border: none;
+/* Manager Actions */
+.manager-actions {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
 }
 
-.btn-claim:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
+.manager-actions h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-.btn-claim:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-edit {
-  background: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
-
-.btn-edit:hover { background: var(--color-accent-light); }
-
-.btn-delete {
-  background: transparent;
-  color: var(--color-error);
-  border: 1px solid var(--color-error);
-}
-
-.btn-delete:hover { background: var(--color-error-light); }
 
 /* Loading */
 .loading-container {
@@ -233,15 +238,28 @@
 }
 
 @media (max-width: 1024px) {
-  .promotion-sections { grid-template-columns: 1fr; }
+  .promotion-sections {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .promotion-detail-page { padding: var(--space-4); }
-  .promotion-detail-header { grid-template-columns: 1fr; }
-  .promotion-stats { grid-template-columns: repeat(3, 1fr); }
+  .promotion-detail-page {
+    padding: var(--space-4);
+  }
+
+  .promotion-detail-header {
+    grid-template-columns: 1fr;
+  }
+
+  .promotion-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
-  .promotion-stats { grid-template-columns: 1fr; gap: var(--space-3); }
+  .promotion-stats {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
 }

@@ -142,7 +142,7 @@ const EventDetailPage = () => {
                 <div className="not-found">
                     <h2>Event Not Found</h2>
                     <p>The event you're looking for doesn't exist or has been removed.</p>
-                    <button onClick={() => navigate('/events')} className="btn-back">
+                    <button onClick={() => navigate('/events')} className="btn btn-secondary">
                         Back to Events
                     </button>
                 </div>
@@ -270,7 +270,7 @@ const EventDetailPage = () => {
                                         {status.canRSVP && (
                                             <button
                                                 onClick={() => setShowCancelConfirm(true)}
-                                                className="btn-cancel"
+                                                className="btn btn-danger-outline"
                                                 disabled={rsvpLoading}
                                             >
                                                 Cancel RSVP
@@ -280,7 +280,7 @@ const EventDetailPage = () => {
                                 ) : status.canRSVP && !full ? (
                                     <button
                                         onClick={handleRSVP}
-                                        className="btn-rsvp"
+                                        className="btn btn-primary btn-block"
                                         disabled={rsvpLoading}
                                     >
                                         {rsvpLoading ? 'Processing...' : 'RSVP Now'}
@@ -309,13 +309,13 @@ const EventDetailPage = () => {
                                     <div className="manager-actions">
                                         <button
                                             onClick={() => navigate(`/events/${event.id}/edit`)}
-                                            className="btn-manager"
+                                            className="btn btn-secondary btn-block"
                                         >
                                             ✏️ Edit Event
                                         </button>
                                         <button
                                             onClick={() => navigate(`/events/${event.id}/guests`)}
-                                            className="btn-manager"
+                                            className="btn btn-secondary btn-block"
                                         >
                                             👥 Manage Guests
                                         </button>

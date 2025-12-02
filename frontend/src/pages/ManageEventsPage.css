@@ -1,4 +1,12 @@
-/* ManageEventsPage - Admin Event Management */
+/* ==========================================================================
+   ManageEventsPage - Admin Event Management
+   
+   Design System Classes Used:
+   - Buttons: .btn, .btn-primary, .btn-secondary
+   - Forms: .form-label, .form-input, .form-textarea, .form-helper
+   - Messages: .alert-error
+   ========================================================================== */
+
 .manage-events-page {
   padding: var(--space-8);
   max-width: var(--max-width-7xl);
@@ -208,7 +216,9 @@
   border: 1px solid var(--color-accent);
 }
 
-.btn-view:hover { background: var(--color-accent-light); }
+.btn-view:hover {
+  background: var(--color-accent-light);
+}
 
 .btn-edit {
   background: var(--color-accent);
@@ -216,7 +226,9 @@
   border: none;
 }
 
-.btn-edit:hover { background: var(--color-accent-hover); }
+.btn-edit:hover {
+  background: var(--color-accent-hover);
+}
 
 .btn-delete {
   background: transparent;
@@ -224,7 +236,32 @@
   border: 1px solid var(--color-error);
 }
 
-.btn-delete:hover { background: var(--color-error-light); }
+.btn-delete:hover {
+  background: var(--color-error-light);
+}
+
+.btn-guests {
+  background: transparent;
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+.btn-guests:hover {
+  background: var(--color-info-light);
+}
+
+.btn-action {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
 
 /* Table View */
 .events-table-container {
@@ -256,7 +293,9 @@
   font-size: var(--text-sm);
 }
 
-.events-table tr:hover { background: var(--color-bg-secondary); }
+.events-table tr:hover {
+  background: var(--color-bg-secondary);
+}
 
 /* Status Badge */
 .status-badge {
@@ -283,31 +322,54 @@
   opacity: 0.7;
 }
 
-/* Empty State */
-.empty-events {
-  padding: var(--space-16);
-  text-align: center;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-lg);
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
 }
 
-.empty-events h3 {
-  font-family: var(--font-serif);
-  font-size: var(--text-xl);
-  color: var(--color-text-primary);
-  margin: var(--space-4) 0 var(--space-2) 0;
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border-light);
 }
 
-.empty-events p {
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-6) 0;
+.form-actions .btn {
+  flex: 1;
 }
 
 @media (max-width: 768px) {
-  .manage-events-page { padding: var(--space-4); }
-  .manage-events-header { flex-direction: column; align-items: stretch; }
-  .events-toolbar { flex-direction: column; align-items: stretch; }
-  .events-filters { flex-wrap: wrap; }
-  .events-grid { grid-template-columns: 1fr; }
+  .manage-events-page {
+    padding: var(--space-4);
+  }
+
+  .manage-events-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .events-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .events-filters {
+    flex-wrap: wrap;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

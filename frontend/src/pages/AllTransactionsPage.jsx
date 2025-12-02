@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
+import '../styles/design-system.css';
 import './AllTransactionsPage.css';
 
 const AllTransactionsPage = () => {
@@ -155,14 +156,14 @@ const AllTransactionsPage = () => {
                     <p>View and manage all system transactions</p>
                 </div>
 
-                <div className="transactions-filters">
+                <div className="filters-bar">
                     <div className="filters-row">
                         <div className="filter-group">
-                            <label>Type</label>
+                            <label className="form-label">Type</label>
                             <select
                                 value={type}
                                 onChange={(e) => handleFilterChange('type', e.target.value)}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All Types</option>
                                 <option value="purchase">Purchase</option>
@@ -174,33 +175,33 @@ const AllTransactionsPage = () => {
                         </div>
 
                         <div className="filter-group">
-                            <label>User ID</label>
+                            <label className="form-label">User ID</label>
                             <input
                                 type="text"
                                 value={userId}
                                 onChange={(e) => handleFilterChange('userId', e.target.value)}
                                 placeholder="e.g. john_doe"
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label>Related ID</label>
+                            <label className="form-label">Related ID</label>
                             <input
                                 type="text"
                                 value={relatedId}
                                 onChange={(e) => handleFilterChange('relatedId', e.target.value)}
                                 placeholder="e.g. transfer user"
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label>Suspicious</label>
+                            <label className="form-label">Suspicious</label>
                             <select
                                 value={suspicious}
                                 onChange={(e) => handleFilterChange('suspicious', e.target.value)}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All</option>
                                 <option value="true">Suspicious Only</option>
@@ -211,12 +212,12 @@ const AllTransactionsPage = () => {
 
                     <div className="filters-row">
                         <div className="filter-group filter-amount">
-                            <label>Amount</label>
+                            <label className="form-label">Amount</label>
                             <div className="amount-filter">
                                 <select
                                     value={operator}
                                     onChange={(e) => handleFilterChange('operator', e.target.value)}
-                                    className="filter-select operator-select"
+                                    className="form-select operator-select"
                                 >
                                     <option value="gte">≥</option>
                                     <option value="lte">≤</option>
@@ -226,24 +227,24 @@ const AllTransactionsPage = () => {
                                     value={amount}
                                     onChange={(e) => handleFilterChange('amount', e.target.value)}
                                     placeholder="Points"
-                                    className="filter-input amount-input"
+                                    className="form-input amount-input"
                                 />
                             </div>
                         </div>
 
                         <div className="filter-group">
-                            <label>Promotion ID</label>
+                            <label className="form-label">Promotion ID</label>
                             <input
                                 type="text"
                                 value={promotionId}
                                 onChange={(e) => handleFilterChange('promotionId', e.target.value)}
                                 placeholder="e.g. 123"
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         {hasActiveFilters && (
-                            <button onClick={clearAllFilters} className="clear-all-button">
+                            <button onClick={clearAllFilters} className="btn btn-ghost btn-danger btn-sm">
                                 Clear All Filters
                             </button>
                         )}
@@ -261,7 +262,7 @@ const AllTransactionsPage = () => {
                         description={hasActiveFilters ? "No transactions match your filters." : "No transactions in the system yet."}
                         action={
                             hasActiveFilters && (
-                                <button onClick={clearAllFilters} className="btn-secondary">
+                                <button onClick={clearAllFilters} className="btn btn-secondary">
                                     Clear Filters
                                 </button>
                             )

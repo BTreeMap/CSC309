@@ -1,5 +1,9 @@
 /* ==========================================================================
    Profile Page - Modern Minimalist
+   
+   Design System Classes Used:
+   - .btn, .btn-primary, .btn-secondary
+   - .alert-error, .alert-success (via shared components)
    ========================================================================== */
 
 .profile-page {
@@ -87,10 +91,21 @@
   color: var(--color-text-inverse);
 }
 
-.badge-regular { background-color: var(--color-info); }
-.badge-cashier { background-color: var(--color-success); }
-.badge-manager { background-color: var(--color-warning); }
-.badge-superuser { background-color: #9333ea; }
+.badge-regular {
+  background-color: var(--color-info);
+}
+
+.badge-cashier {
+  background-color: var(--color-success);
+}
+
+.badge-manager {
+  background-color: var(--color-warning);
+}
+
+.badge-superuser {
+  background-color: #9333ea;
+}
 
 .badge-verified {
   background-color: var(--color-success-light);
@@ -157,7 +172,7 @@
   word-break: break-all;
 }
 
-/* Profile Actions */
+/* Profile Actions Section */
 .profile-actions-section {
   margin-top: var(--space-6);
 }
@@ -166,43 +181,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-}
-
-.profile-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: var(--color-text-primary);
-  font-weight: var(--font-medium);
-  font-size: var(--text-sm);
-  transition: all var(--duration-normal) var(--ease-out);
-  cursor: pointer;
-  font-family: var(--font-sans);
-}
-
-.profile-action-btn::after { display: none; }
-
-.profile-action-btn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.profile-action-btn.primary {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-text-inverse);
-}
-
-.profile-action-btn.primary:hover {
-  background-color: var(--color-accent-hover);
-  color: var(--color-text-inverse);
 }
 
 .action-icon {
@@ -217,24 +195,20 @@
     text-align: center;
     padding: var(--space-6);
   }
-  
+
   .profile-header-info h1 {
     font-size: var(--text-2xl);
   }
-  
+
   .profile-badges {
     justify-content: center;
   }
-  
+
   .profile-info-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .profile-actions {
     flex-direction: column;
-  }
-  
-  .profile-action-btn {
-    justify-content: center;
   }
 }

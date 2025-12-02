@@ -1,21 +1,27 @@
 /* ==========================================================================
-   Layout Component Styles
+   Layout Component Styles - Sidebar Layout
    ========================================================================== */
 
 .layout {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   background-color: var(--color-bg-primary);
 }
 
 .layout-content {
   flex: 1;
-  padding: var(--space-8) var(--space-6);
-  max-width: var(--container-2xl);
-  margin: 0 auto;
+  margin-left: var(--sidebar-width);
+  padding: var(--space-8) var(--space-8);
+  max-width: calc(var(--container-2xl) + var(--sidebar-width));
   width: 100%;
   animation: fadeIn var(--duration-normal) var(--ease-out);
+  transition: margin-left var(--sidebar-transition, 200ms var(--ease-out));
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed~.layout-content,
+.layout:has(.sidebar.collapsed) .layout-content {
+  margin-left: var(--sidebar-width-collapsed);
 }
 
 /* Strategic whitespace for content breathing room */
@@ -78,13 +84,17 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
   .layout-content {
+    margin-left: 0;
     padding: var(--space-6) var(--space-5);
+    padding-top: calc(var(--space-6) + 60px);
+    /* Account for mobile toggle */
   }
 }
 
 @media (max-width: 768px) {
   .layout-content {
     padding: var(--space-5) var(--space-4);
+    padding-top: calc(var(--space-5) + 60px);
   }
 
   .page-header {
@@ -104,5 +114,6 @@
 @media (max-width: 480px) {
   .layout-content {
     padding: var(--space-4) var(--space-3);
+    padding-top: calc(var(--space-4) + 60px);
   }
 }

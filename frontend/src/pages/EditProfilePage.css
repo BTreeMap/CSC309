@@ -1,4 +1,6 @@
 /* EditProfilePage - Modern Minimalist */
+/* Uses design system: .form-group, .form-label, .form-input, .btn, .btn-primary, .btn-secondary */
+
 .edit-profile-page {
   max-width: var(--container-sm);
   margin: 0 auto;
@@ -6,13 +8,13 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.page-header {
+.edit-profile-header {
   margin-bottom: var(--space-8);
   padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--color-divider);
 }
 
-.page-header h1 {
+.edit-profile-header h1 {
   font-family: var(--font-serif);
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
@@ -20,7 +22,7 @@
   color: var(--color-text-primary);
 }
 
-.page-header p {
+.edit-profile-header p {
   color: var(--color-text-muted);
   margin: 0;
 }
@@ -32,6 +34,7 @@
   border: 1px solid var(--color-border-light);
 }
 
+/* Avatar section */
 .avatar-section {
   display: flex;
   align-items: center;
@@ -66,15 +69,16 @@
   font-weight: var(--font-semibold);
 }
 
-.avatar-actions {
+.avatar-upload {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.avatar-upload-btn {
+.avatar-upload-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   background: var(--color-surface);
@@ -85,39 +89,45 @@
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.avatar-upload-btn:hover {
+.avatar-upload-button:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
 
-.form-group {
-  margin-bottom: var(--space-5);
+.avatar-input {
+  display: none;
 }
 
-.form-group label {
+.avatar-hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Disabled input styling */
+.input-disabled {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-text-muted) !important;
+  cursor: not-allowed !important;
+}
+
+/* Input hint text */
+.input-hint {
   display: block;
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
 }
 
-.form-group input, .form-group select {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-family: var(--font-sans);
-  transition: all var(--duration-fast) var(--ease-out);
+/* Input error message */
+.input-error {
+  display: block;
+  color: var(--color-error);
+  font-size: var(--text-xs);
+  margin-top: var(--space-1);
 }
 
-.form-group input:focus, .form-group select:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
-}
-
+/* Form actions */
 .form-actions {
   display: flex;
   gap: var(--space-3);
@@ -126,41 +136,6 @@
   border-top: 1px solid var(--color-border-light);
 }
 
-.save-btn {
+.form-actions .btn {
   flex: 1;
-  padding: var(--space-4);
-  background: var(--color-accent);
-  color: var(--color-text-inverse);
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
 }
-
-.save-btn:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.cancel-btn {
-  padding: var(--space-4) var(--space-6);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  text-align: center;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.cancel-btn:hover {
-  border-color: var(--color-text-muted);
-}
-
-.cancel-btn::after { display: none; }

@@ -119,39 +119,39 @@ const EventsPage = () => {
                     </div>
                     {isManager && (
                         <div className="header-right">
-                            <Link to="/events/manage" className="btn-primary">
+                            <Link to="/events/manage" className="btn btn-primary">
                                 Manage Events
                             </Link>
                         </div>
                     )}
                 </div>
 
-                <form className="events-filters" onSubmit={handleSearch}>
+                <form className="filters-bar" onSubmit={handleSearch}>
                     <div className="filters-row">
                         <div className="filter-group search-group">
-                            <label>Search</label>
+                            <label className="form-label">Search</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => handleFilterChange('name', e.target.value)}
                                 placeholder="Search by event name..."
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label>Location</label>
+                            <label className="form-label">Location</label>
                             <input
                                 type="text"
                                 value={location}
                                 onChange={(e) => handleFilterChange('location', e.target.value)}
                                 placeholder="Search by location..."
-                                className="filter-input"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label>Status</label>
+                            <label className="form-label">Status</label>
                             <select
                                 value={started && !ended ? 'active' : ended === 'true' ? 'ended' : started === 'false' ? 'upcoming' : ''}
                                 onChange={(e) => {
@@ -171,7 +171,7 @@ const EventsPage = () => {
                                     params.set('page', '1');
                                     setSearchParams(params);
                                 }}
-                                className="filter-select"
+                                className="form-select"
                             >
                                 <option value="">All Events</option>
                                 <option value="active">Happening Now</option>
@@ -193,7 +193,7 @@ const EventsPage = () => {
                     </div>
 
                     {hasFilters && (
-                        <button type="button" onClick={clearFilters} className="clear-filters-btn">
+                        <button type="button" onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
                             Clear Filters
                         </button>
                     )}
@@ -210,7 +210,7 @@ const EventsPage = () => {
                         description={hasFilters ? "No events match your filters." : "There are no events at the moment."}
                         action={
                             hasFilters && (
-                                <button onClick={clearFilters} className="btn-secondary">
+                                <button onClick={clearFilters} className="btn btn-secondary">
                                     Clear Filters
                                 </button>
                             )

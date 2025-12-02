@@ -84,7 +84,7 @@ const RedemptionQRPage = () => {
                 <div className="redemption-qr-page">
                     <ErrorMessage message={error} />
                     <div className="error-actions">
-                        <button className="back-button" onClick={() => navigate(-1)}>
+                        <button className="btn btn-secondary" onClick={() => navigate(-1)}>
                             Go Back
                         </button>
                     </div>
@@ -121,7 +121,7 @@ const RedemptionQRPage = () => {
                                         className="redemption-qr-svg"
                                     />
                                 </div>
-                                <button className="download-qr-button" onClick={handleDownload}>
+                                <button className="btn btn-primary download-qr-button" onClick={handleDownload}>
                                     <span className="download-icon">📥</span>
                                     Download QR Code
                                 </button>

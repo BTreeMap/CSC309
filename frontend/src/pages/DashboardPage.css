@@ -1,5 +1,13 @@
 /* ==========================================================================
    Dashboard Page - Modern Minimalist
+   
+   Design System Classes Used:
+   - .btn, .btn-primary, .btn-secondary (available if needed)
+   - .card, .card-hover (available if needed)
+   - .alert-error, .alert-success (via shared components)
+   
+   Note: Dashboard uses custom stat-card and quick-action-card styles
+   that are specific to the dashboard layout.
    ========================================================================== */
 
 .dashboard-page {
@@ -239,19 +247,19 @@
   .dashboard-header h1 {
     font-size: var(--text-3xl);
   }
-  
+
   .dashboard-subtitle {
     font-size: var(--text-base);
   }
-  
+
   .stat-card {
     padding: var(--space-5);
   }
-  
+
   .stat-value {
     font-size: var(--text-xl);
   }
-  
+
   .quick-actions-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
@@ -261,7 +269,7 @@
   .dashboard-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .quick-actions-grid {
     grid-template-columns: repeat(2, 1fr);
   }

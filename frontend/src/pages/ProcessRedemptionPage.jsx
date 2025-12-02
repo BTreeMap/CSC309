@@ -93,7 +93,7 @@ const ProcessRedemptionPage = () => {
             <Layout>
                 <div className="process-redemption-page">
                     <ErrorMessage message={error} />
-                    <button onClick={() => navigate(-1)} className="btn-back">
+                    <button onClick={() => navigate(-1)} className="btn btn-secondary">
                         ← Go Back
                     </button>
                 </div>
@@ -108,7 +108,7 @@ const ProcessRedemptionPage = () => {
                     <div className="not-found">
                         <h2>Redemption Not Found</h2>
                         <p>The redemption request could not be found.</p>
-                        <button onClick={() => navigate(-1)} className="btn-back">
+                        <button onClick={() => navigate(-1)} className="btn btn-secondary">
                             ← Go Back
                         </button>
                     </div>
@@ -123,7 +123,7 @@ const ProcessRedemptionPage = () => {
     return (
         <Layout>
             <div className="process-redemption-page">
-                <button onClick={() => navigate(-1)} className="back-button">
+                <button onClick={() => navigate(-1)} className="btn btn-ghost back-button">
                     ← Back
                 </button>
 
@@ -214,13 +214,13 @@ const ProcessRedemptionPage = () => {
                             <div className="action-buttons">
                                 <button
                                     onClick={() => navigate(-1)}
-                                    className="btn-secondary"
+                                    className="btn btn-secondary"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={() => setShowConfirm(true)}
-                                    className="btn-process"
+                                    className="btn btn-success btn-process"
                                     disabled={processing}
                                 >
                                     {processing ? 'Processing...' : 'Process Redemption'}

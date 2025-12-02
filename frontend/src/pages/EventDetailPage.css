@@ -1,4 +1,11 @@
-/* EventDetailPage - Event Details */
+/* ==========================================================================
+   EventDetailPage - Event Details
+   
+   Design System Classes Used:
+   - .btn, .btn-primary, .btn-secondary, .btn-danger-outline, .btn-block
+   - .alert-error, .alert-success (via shared components)
+   ========================================================================== */
+
 .event-detail-page {
   padding: var(--space-8);
   max-width: var(--max-width-4xl);
@@ -17,8 +24,13 @@
   transition: color var(--duration-fast);
 }
 
-.back-link:hover { color: var(--color-accent); }
-.back-link::after { display: none; }
+.back-link:hover {
+  color: var(--color-accent);
+}
+
+.back-link::after {
+  display: none;
+}
 
 /* Event Hero */
 .event-hero {
@@ -52,7 +64,7 @@
   left: 0;
   right: 0;
   padding: var(--space-8);
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
   color: white;
 }
 
@@ -74,7 +86,7 @@
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-1) var(--space-3);
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
@@ -226,43 +238,26 @@
   margin-top: var(--space-2);
 }
 
-/* Action Buttons */
-.event-actions {
+/* Manager Actions Card */
+.manager-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.manager-card h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.manager-actions {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
-
-.event-actions button {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  cursor: pointer;
-  transition: all var(--duration-fast);
-}
-
-.btn-register {
-  background: var(--color-accent);
-  color: white;
-  border: none;
-}
-
-.btn-register:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
-}
-
-.btn-register:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-cancel {
-  background: transparent;
-  color: var(--color-error);
-  border: 1px solid var(--color-error);
-}
-
-.btn-cancel:hover { background: var(--color-error-light); }
 
 /* Organizer Info */
 .organizer-info {
@@ -294,13 +289,29 @@
 }
 
 @media (max-width: 1024px) {
-  .event-content { grid-template-columns: 1fr; }
-  .event-sidebar { order: -1; }
+  .event-content {
+    grid-template-columns: 1fr;
+  }
+
+  .event-sidebar {
+    order: -1;
+  }
 }
 
 @media (max-width: 768px) {
-  .event-detail-page { padding: var(--space-4); }
-  .event-hero-overlay { padding: var(--space-5); }
-  .event-hero-overlay h1 { font-size: var(--text-2xl); }
-  .event-details-grid { grid-template-columns: 1fr; }
+  .event-detail-page {
+    padding: var(--space-4);
+  }
+
+  .event-hero-overlay {
+    padding: var(--space-5);
+  }
+
+  .event-hero-overlay h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .event-details-grid {
+    grid-template-columns: 1fr;
+  }
 }

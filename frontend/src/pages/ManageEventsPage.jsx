@@ -184,7 +184,7 @@ const ManageEventsPage = () => {
                         <p>Create and manage events</p>
                     </div>
                     <div className="header-right">
-                        <button onClick={openCreateModal} className="btn-primary">
+                        <button onClick={openCreateModal} className="btn btn-primary">
                             + Create Event
                         </button>
                     </div>
@@ -200,7 +200,7 @@ const ManageEventsPage = () => {
                         title="No events yet"
                         description="Create your first event to engage users."
                         action={
-                            <button onClick={openCreateModal} className="btn-primary">
+                            <button onClick={openCreateModal} className="btn btn-primary">
                                 Create Event
                             </button>
                         }
@@ -302,11 +302,11 @@ const ManageEventsPage = () => {
                 >
                     <form onSubmit={handleSubmit} className="event-form">
                         {formError && (
-                            <div className="form-error">{formError}</div>
+                            <div className="alert-error">{formError}</div>
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name">Event Name *</label>
+                            <label htmlFor="name" className="form-label">Event Name *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -315,11 +315,12 @@ const ManageEventsPage = () => {
                                 onChange={handleInputChange}
                                 required
                                 placeholder="e.g., Tech Meetup"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <label htmlFor="description" className="form-label">Description</label>
                             <textarea
                                 id="description"
                                 name="description"
@@ -327,11 +328,12 @@ const ManageEventsPage = () => {
                                 onChange={handleInputChange}
                                 rows={3}
                                 placeholder="Describe the event..."
+                                className="form-textarea"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="location">Location *</label>
+                            <label htmlFor="location" className="form-label">Location *</label>
                             <input
                                 type="text"
                                 id="location"
@@ -340,12 +342,13 @@ const ManageEventsPage = () => {
                                 onChange={handleInputChange}
                                 required
                                 placeholder="e.g., Room 101, Main Building"
+                                className="form-input"
                             />
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="startTime">Start Date & Time *</label>
+                                <label htmlFor="startTime" className="form-label">Start Date & Time *</label>
                                 <input
                                     type="datetime-local"
                                     id="startTime"
@@ -353,11 +356,12 @@ const ManageEventsPage = () => {
                                     value={formData.startTime}
                                     onChange={handleInputChange}
                                     required
+                                    className="form-input"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="endTime">End Date & Time *</label>
+                                <label htmlFor="endTime" className="form-label">End Date & Time *</label>
                                 <input
                                     type="datetime-local"
                                     id="endTime"
@@ -365,13 +369,14 @@ const ManageEventsPage = () => {
                                     value={formData.endTime}
                                     onChange={handleInputChange}
                                     required
+                                    className="form-input"
                                 />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="capacity">Capacity</label>
+                                <label htmlFor="capacity" className="form-label">Capacity</label>
                                 <input
                                     type="number"
                                     id="capacity"
@@ -380,11 +385,12 @@ const ManageEventsPage = () => {
                                     onChange={handleInputChange}
                                     min="1"
                                     placeholder="Leave empty for unlimited"
+                                    className="form-input"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="points">Points to Award</label>
+                                <label htmlFor="points" className="form-label">Points to Award</label>
                                 <input
                                     type="number"
                                     id="points"
@@ -393,8 +399,9 @@ const ManageEventsPage = () => {
                                     onChange={handleInputChange}
                                     min="0"
                                     placeholder="0"
+                                    className="form-input"
                                 />
-                                <span className="input-hint">Total points pool for attendees</span>
+                                <span className="form-helper">Total points pool for attendees</span>
                             </div>
                         </div>
 
@@ -405,12 +412,12 @@ const ManageEventsPage = () => {
                                     setShowCreateModal(false);
                                     setShowEditModal(false);
                                 }}
-                                className="btn-secondary"
+                                className="btn btn-secondary"
                                 disabled={formLoading}
                             >
                                 Cancel
                             </button>
-                            <button type="submit" className="btn-primary" disabled={formLoading}>
+                            <button type="submit" className="btn btn-primary" disabled={formLoading}>
                                 {formLoading ? 'Saving...' : showEditModal ? 'Update Event' : 'Create Event'}
                             </button>
                         </div>

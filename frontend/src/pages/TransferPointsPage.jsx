@@ -146,7 +146,7 @@ const TransferPointsPage = () => {
 
                     <form onSubmit={handleSubmit} className="transfer-form">
                         <div className="form-group">
-                            <label htmlFor="recipientId">Recipient User ID or UTORid</label>
+                            <label htmlFor="recipientId" className="form-label">Recipient User ID or UTORid</label>
                             <div className="lookup-input-wrapper">
                                 <input
                                     type="text"
@@ -180,7 +180,7 @@ const TransferPointsPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="amount">Amount to Transfer</label>
+                            <label htmlFor="amount" className="form-label">Amount to Transfer</label>
                             <input
                                 type="number"
                                 id="amount"
@@ -196,7 +196,7 @@ const TransferPointsPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="remark">Remark (Optional)</label>
+                            <label htmlFor="remark" className="form-label">Remark (Optional)</label>
                             <textarea
                                 id="remark"
                                 name="remark"
@@ -232,7 +232,7 @@ const TransferPointsPage = () => {
                         <div className="form-actions">
                             <button
                                 type="button"
-                                className="cancel-button"
+                                className="btn btn-secondary"
                                 onClick={() => navigate(-1)}
                                 disabled={loading}
                             >
@@ -240,7 +240,7 @@ const TransferPointsPage = () => {
                             </button>
                             <button
                                 type="submit"
-                                className="transfer-button"
+                                className="btn btn-primary"
                                 disabled={loading || !recipientInfo}
                             >
                                 {loading ? 'Processing...' : 'Transfer Points'}

@@ -1,4 +1,12 @@
-/* CreateTransactionPage - Cashier Transaction Creation */
+/* ==========================================================================
+   CreateTransactionPage - Cashier Transaction Creation
+   
+   Design System Classes Used:
+   - Buttons: .btn, .btn-primary, .btn-secondary
+   - Forms: .form-label (labels use design system)
+   - Messages: .alert-error
+   ========================================================================== */
+
 .create-transaction-page {
   padding: var(--space-8);
   max-width: var(--max-width-2xl);
@@ -106,41 +114,6 @@
   margin: 0 0 var(--space-4) 0;
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--color-border-light);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-}
-
-.form-group label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
-}
-
-.form-group input,
-.form-group select {
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-family: var(--font-sans);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
-}
-
-.form-group .hint {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
 }
 
 /* User Lookup */
@@ -266,11 +239,20 @@
   font-size: var(--text-base);
 }
 
-.calculation-row .label { color: var(--color-text-muted); }
-.calculation-row .value { color: var(--color-text-primary); }
-.calculation-row.total .value { color: var(--color-accent); font-size: var(--text-lg); }
+.calculation-row .label {
+  color: var(--color-text-muted);
+}
 
-/* Action Buttons */
+.calculation-row .value {
+  color: var(--color-text-primary);
+}
+
+.calculation-row.total .value {
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+}
+
+/* Form Actions */
 .form-actions {
   display: flex;
   gap: var(--space-4);
@@ -279,64 +261,45 @@
   border-top: 1px solid var(--color-border-light);
 }
 
-.form-actions button {
+.form-actions .btn {
   flex: 1;
   padding: var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
-}
-
-.btn-submit {
-  background: var(--color-accent);
-  color: white;
-  border: none;
-}
-
-.btn-submit:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-cancel {
-  background: transparent;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-}
-
-.btn-cancel:hover { background: var(--color-bg-secondary); }
-
-/* Messages */
-.error-message {
-  background: var(--color-error-light);
-  color: var(--color-error);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-4);
-}
-
-.success-message {
-  background: var(--color-success-light);
-  color: var(--color-success);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-4);
 }
 
 @media (max-width: 640px) {
-  .create-transaction-page { padding: var(--space-4); }
-  .transaction-form-card { padding: var(--space-5); }
-  .step-indicator { flex-wrap: wrap; justify-content: center; }
-  .step-connector { display: none; }
-  .user-lookup { flex-direction: column; }
-  .user-preview { flex-wrap: wrap; }
-  .user-points { margin-left: 0; margin-top: var(--space-3); text-align: left; width: 100%; }
-  .form-actions { flex-direction: column; }
+  .create-transaction-page {
+    padding: var(--space-4);
+  }
+
+  .transaction-form-card {
+    padding: var(--space-5);
+  }
+
+  .step-indicator {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .step-connector {
+    display: none;
+  }
+
+  .user-lookup {
+    flex-direction: column;
+  }
+
+  .user-preview {
+    flex-wrap: wrap;
+  }
+
+  .user-points {
+    margin-left: 0;
+    margin-top: var(--space-3);
+    text-align: left;
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

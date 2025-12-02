@@ -162,7 +162,7 @@ const CreateTransactionPage = () => {
                             </button>
                         </div>
 
-                        {error && <div className="error-message">{error}</div>}
+                        {error && <div className="alert-error">{error}</div>}
 
                         {userInfo && (
                             <div className="customer-info">
@@ -193,7 +193,7 @@ const CreateTransactionPage = () => {
                                 <h2>Step 2: Transaction Details</h2>
 
                                 <div className="form-group">
-                                    <label htmlFor="spent">Amount Spent ($) *</label>
+                                    <label htmlFor="spent" className="form-label">Amount Spent ($) *</label>
                                     <div className="amount-input-wrapper">
                                         <span className="currency-symbol">$</span>
                                         <input
@@ -216,7 +216,7 @@ const CreateTransactionPage = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="remark">Remark (Optional)</label>
+                                    <label htmlFor="remark" className="form-label">Remark (Optional)</label>
                                     <input
                                         type="text"
                                         id="remark"
@@ -262,10 +262,10 @@ const CreateTransactionPage = () => {
                             )}
 
                             <div className="form-actions">
-                                <button type="button" onClick={() => navigate(-1)} className="btn-secondary">
+                                <button type="button" onClick={() => navigate(-1)} className="btn btn-secondary">
                                     Cancel
                                 </button>
-                                <button type="submit" className="btn-primary" disabled={loading}>
+                                <button type="submit" className="btn btn-primary" disabled={loading}>
                                     {loading ? 'Processing...' : 'Create Transaction'}
                                 </button>
                             </div>

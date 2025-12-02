@@ -23,13 +23,13 @@ const LoginPage = () => {
     }
 
     const result = await login(utorid, password);
-    
+
     if (result.success) {
       navigate('/dashboard');
     } else {
       setError(result.error || 'Login failed. Please check your credentials');
     }
-    
+
     setLoading(false);
   };
 
@@ -40,15 +40,16 @@ const LoginPage = () => {
           <h1>Loyalty Program System</h1>
           <p>Please login to your account</p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="login-form">
-          {error && <div className="error-message">{error}</div>}
-          
+          {error && <div className="alert-error">{error}</div>}
+
           <div className="form-group">
-            <label htmlFor="utorid">UTORid</label>
+            <label htmlFor="utorid" className="form-label">UTORid</label>
             <input
               type="text"
               id="utorid"
+              className="form-input"
               value={utorid}
               onChange={(e) => setUtorid(e.target.value)}
               placeholder="Enter your UTORid"
@@ -58,10 +59,11 @@ const LoginPage = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" className="form-label">Password</label>
             <input
               type="password"
               id="password"
+              className="form-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
@@ -70,9 +72,9 @@ const LoginPage = () => {
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="login-button"
+          <button
+            type="submit"
+            className="btn btn-primary btn-block login-button"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}

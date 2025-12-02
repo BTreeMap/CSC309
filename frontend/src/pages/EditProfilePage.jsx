@@ -138,23 +138,24 @@ const EditProfilePage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="utorid">UTORid</label>
+                        <label htmlFor="utorid" className="form-label">UTORid</label>
                         <input
                             type="text"
                             id="utorid"
+                            className="form-input input-disabled"
                             value={user?.utorid || ''}
                             disabled
-                            className="input-disabled"
                         />
                         <span className="input-hint">UTORid cannot be changed</span>
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="name">Full Name</label>
+                        <label htmlFor="name" className="form-label">Full Name</label>
                         <input
                             type="text"
                             id="name"
                             name="name"
+                            className="form-input"
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter your full name"
@@ -164,11 +165,12 @@ const EditProfilePage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email" className="form-label">Email</label>
                         <input
                             type="email"
                             id="email"
                             name="email"
+                            className="form-input"
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="example@mail.utoronto.ca"
@@ -178,11 +180,12 @@ const EditProfilePage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="birthday">Birthday</label>
+                        <label htmlFor="birthday" className="form-label">Birthday</label>
                         <input
                             type="date"
                             id="birthday"
                             name="birthday"
+                            className="form-input"
                             value={formData.birthday}
                             onChange={handleChange}
                         />
@@ -192,7 +195,7 @@ const EditProfilePage = () => {
                     <div className="form-actions">
                         <button
                             type="button"
-                            className="cancel-button"
+                            className="btn btn-secondary"
                             onClick={() => navigate('/profile')}
                             disabled={loading}
                         >
@@ -200,7 +203,7 @@ const EditProfilePage = () => {
                         </button>
                         <button
                             type="submit"
-                            className="save-button"
+                            className="btn btn-primary"
                             disabled={loading}
                         >
                             {loading ? 'Saving...' : 'Save Changes'}

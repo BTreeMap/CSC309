@@ -93,7 +93,7 @@ const PromotionDetailPage = () => {
                 <div className="not-found">
                     <h2>Promotion Not Found</h2>
                     <p>The promotion you're looking for doesn't exist or has been removed.</p>
-                    <button onClick={() => navigate('/promotions')} className="btn-back">
+                    <button onClick={() => navigate('/promotions')} className="btn btn-secondary">
                         Back to Promotions
                     </button>
                 </div>
@@ -214,7 +214,7 @@ const PromotionDetailPage = () => {
                             <div className="action-buttons">
                                 <button
                                     onClick={() => navigate(`/promotions/${promotion.id}/edit`)}
-                                    className="btn-edit"
+                                    className="btn btn-secondary"
                                 >
                                     ✏️ Edit Promotion
                                 </button>

@@ -1,5 +1,6 @@
 /* ==========================================================================
    Promotions Page - Modern Minimalist
+   Uses design system: .btn, .form-select, .form-label, .filters-bar
    ========================================================================== */
 
 .promotions-page {
@@ -35,36 +36,8 @@
   font-size: var(--text-base);
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  background-color: var(--color-accent);
-  color: var(--color-text-inverse);
-  text-decoration: none;
-  border-radius: var(--radius-md);
-  font-weight: var(--font-medium);
-  font-size: var(--text-sm);
-  transition: all var(--duration-normal) var(--ease-out);
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary::after { display: none; }
-
-.btn-primary:hover {
-  background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-/* Filters */
-.promotions-filters {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  border: 1px solid var(--color-border-light);
+/* Filters - extend design system */
+.promotions-page .filters-bar {
   margin-bottom: var(--space-6);
   display: flex;
   gap: var(--space-4);
@@ -79,54 +52,17 @@
   min-width: 150px;
 }
 
-.filter-group label {
+/* Override label styling for filters */
+.filter-group .form-label {
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
 }
 
-.filter-select,
-.filter-input {
+/* Override select sizing for filters */
+.filter-group .form-select {
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  font-family: var(--font-sans);
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.filter-select:hover,
-.filter-input:hover {
-  border-color: var(--color-accent);
-}
-
-.filter-select:focus,
-.filter-input:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
-}
-
-.clear-filters-btn {
-  padding: var(--space-3) var(--space-5);
-  background: transparent;
-  border: 1px solid var(--color-error);
-  color: var(--color-error);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-family: var(--font-sans);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.clear-filters-btn:hover {
-  background-color: var(--color-error);
-  color: var(--color-text-inverse);
 }
 
 /* Grid */
@@ -150,7 +86,9 @@
   color: inherit;
 }
 
-.promotion-card::after { display: none; }
+.promotion-card::after {
+  display: none;
+}
 
 .promotion-card:hover {
   transform: translateY(-4px);
@@ -192,6 +130,7 @@
   color: var(--color-info);
 }
 
+.status-ended,
 .status-expired {
   background-color: var(--color-bg-secondary);
   color: var(--color-text-muted);
@@ -213,7 +152,7 @@
   flex: 1;
 }
 
-.promotion-meta {
+.promotion-details {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -221,108 +160,43 @@
   border-top: 1px solid var(--color-border-light);
 }
 
-.meta-item {
+.detail-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--space-2);
   font-size: var(--text-sm);
+}
+
+.detail-label {
   color: var(--color-text-muted);
 }
 
-.meta-icon {
-  font-size: 1rem;
-  opacity: 0.7;
-}
-
-.promotion-value {
-  font-family: var(--font-serif);
-  font-size: var(--text-2xl);
-  font-weight: var(--font-bold);
-  color: var(--color-accent);
-  margin-top: var(--space-3);
-}
-
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-8);
-}
-
-.pagination-btn {
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-family: var(--font-sans);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+.detail-value {
+  font-weight: var(--font-medium);
   color: var(--color-text-primary);
 }
 
-.pagination-btn:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+.detail-value.bonus {
+  color: var(--color-success);
 }
 
-.pagination-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pagination-btn.active {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-text-inverse);
-}
-
-.pagination-info {
+.view-details-link {
+  display: inline-block;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-light);
   font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  padding: 0 var(--space-4);
+  font-weight: var(--font-medium);
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
-/* Empty & Loading States */
-.loading-state,
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-16);
-  text-align: center;
-  color: var(--color-text-muted);
+.view-details-link::after {
+  display: none;
 }
 
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--color-border);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: var(--space-4);
-}
-
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-4);
-  opacity: 0.5;
-}
-
-.empty-state h3 {
-  font-family: var(--font-serif);
-  font-size: var(--text-xl);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.empty-state p {
-  color: var(--color-text-muted);
-  margin: 0;
+.view-details-link:hover {
+  color: var(--color-accent-hover);
 }
 
 @media (max-width: 768px) {
@@ -330,19 +204,19 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .header-left h1 {
     font-size: var(--text-3xl);
   }
-  
-  .promotions-filters {
+
+  .promotions-page .filters-bar {
     flex-direction: column;
   }
-  
+
   .filter-group {
     width: 100%;
   }
-  
+
   .promotions-grid {
     grid-template-columns: 1fr;
   }

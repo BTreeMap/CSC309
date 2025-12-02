@@ -118,12 +118,13 @@ const ChangePasswordPage = () => {
 
                 <form onSubmit={handleSubmit} className="change-password-form">
                     <div className="form-group">
-                        <label htmlFor="currentPassword">Current Password</label>
+                        <label htmlFor="currentPassword" className="form-label">Current Password</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.current ? 'text' : 'password'}
                                 id="currentPassword"
                                 name="currentPassword"
+                                className="form-input"
                                 value={formData.currentPassword}
                                 onChange={handleChange}
                                 placeholder="Enter your current password"
@@ -142,12 +143,13 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="newPassword">New Password</label>
+                        <label htmlFor="newPassword" className="form-label">New Password</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.new ? 'text' : 'password'}
                                 id="newPassword"
                                 name="newPassword"
+                                className="form-input"
                                 value={formData.newPassword}
                                 onChange={handleChange}
                                 placeholder="Enter your new password"
@@ -199,12 +201,13 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm New Password</label>
+                        <label htmlFor="confirmPassword" className="form-label">Confirm New Password</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.confirm ? 'text' : 'password'}
                                 id="confirmPassword"
                                 name="confirmPassword"
+                                className="form-input"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 placeholder="Re-enter your new password"
@@ -225,7 +228,7 @@ const ChangePasswordPage = () => {
                     <div className="form-actions">
                         <button
                             type="button"
-                            className="cancel-button"
+                            className="btn btn-secondary"
                             onClick={() => navigate('/profile')}
                             disabled={loading}
                         >
@@ -233,7 +236,7 @@ const ChangePasswordPage = () => {
                         </button>
                         <button
                             type="submit"
-                            className="save-button"
+                            className="btn btn-primary"
                             disabled={loading}
                         >
                             {loading ? 'Changing...' : 'Change Password'}
