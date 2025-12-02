@@ -6,7 +6,10 @@
   "scripts": {
     "createsuperuser": "node prisma/createsu.js",
     "seed": "node prisma/seed.js",
-    "clean": "rm -rf prisma/dev.db* node_modules package-lock.json prisma/migrations/"
+    "clean": "rm -rf prisma/dev.db* node_modules package-lock.json prisma/migrations/",
+    "test": "jest --runInBand --forceExit",
+    "test:watch": "jest --runInBand --watch",
+    "test:coverage": "jest --runInBand --forceExit --coverage"
   },
   "author": "CSC309 Student, Fall 2025",
   "license": "ISC",
@@ -23,5 +26,23 @@
     "sqlite3": "^5.1.7",
     "uuid": "^13.0.0",
     "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "testTimeout": 30000,
+    "verbose": true,
+    "setupFilesAfterEnv": [],
+    "collectCoverageFrom": [
+      "index.js",
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ]
   }
 }
