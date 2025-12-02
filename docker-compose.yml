@@ -15,6 +15,8 @@ services:
       - DATABASE_URL=file:/app/data/database.db
       # CORS: Set to your frontend URL (e.g., https://your-app.pages.dev)
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
+      # Auto-migrate: Set to "true" to run migrations on startup
+      - AUTO_MIGRATE=${AUTO_MIGRATE:-true}
     volumes:
       # Persist SQLite database
       - backend-data:/app/data

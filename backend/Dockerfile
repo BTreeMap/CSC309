@@ -67,11 +67,19 @@ USER nodejs
 
 # Environment variables (JWT_SECRET must be provided at runtime)
 ENV NODE_ENV=production
+# Set to "true" to auto-run database migrations on startup (disabled by default for safety)
+ENV AUTO_MIGRATE=false
 
 # Default port (can be overridden via command)
 EXPOSE 3000
 
-# Run database migrations and start the server
+# Run database migrations (if enabled) and start the server
+# Uses "prisma migrate deploy" which safely applies pending migrations
 # Port is passed as argument: docker run -p 3000:3000 image 3000
-ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "npx prisma migrate deploy && exec node index.js \"$@\"", "--"]
+ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "\
+    if [ \"$AUTO_MIGRATE\" = 'true' ]; then \
+        echo 'Running database migrations...' && \
+        npx prisma migrate deploy; \
+    fi && \
+    exec node index.js \"$@\"", "--"]
 CMD ["3000"]
