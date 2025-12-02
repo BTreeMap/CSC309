@@ -4,9 +4,8 @@ node_modules/
 # Keep environment variables out of version control
 .env
 
-# Ignore database files and migrations
+# Ignore database files
 prisma/*.db
-prisma/migrations
 
 # Ignore uploaded files
 uploads/

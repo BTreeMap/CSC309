@@ -3,7 +3,14 @@
  */
 'use strict';
 
-require('dotenv').config();
+const fs = require('fs');
+require('dotenv').config(
+    {
+        path: ['./', './../', './../../'].map((dir) => dir + '.env').filter((path) => {
+            return fs.existsSync(path);
+        })
+    }
+);
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 
