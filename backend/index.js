@@ -42,6 +42,10 @@ if (!JWT_SECRET) {
 
 // Backend URL for absolute URLs (e.g., avatar images)
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+const resolveRelativeUrl = (relativePath) => {
+    const url = new URL(relativePath, BACKEND_URL);
+    return url.toString();
+}
 
 // Health check endpoint (before other middleware for fast response)
 app.get('/health', (_req, res) => {
@@ -899,7 +903,7 @@ app.get('/users', requireRole('manager'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: user.avatarUrl
+            avatarUrl: resolveRelativeUrl(user.avatarUrl),
         }));
 
         res.json({ count, results: formattedResults });
@@ -959,7 +963,7 @@ app.get('/users/me', requireRole('regular'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: user.avatarUrl,
+            avatarUrl: resolveRelativeUrl(user.avatarUrl),
             promotions: availablePromotions
         });
     } catch (error) {
@@ -1032,7 +1036,7 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
         }
 
         if (req.file) {
-            updates.avatarUrl = `${BACKEND_URL}/uploads/${req.file.filename}`;
+            updates.avatarUrl = `/uploads/${req.file.filename}`;
         }
 
         // Double check we have updates
@@ -1057,7 +1061,7 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: user.avatarUrl
+            avatarUrl: resolveRelativeUrl(user.avatarUrl),
         });
     } catch (error) {
         if (error.code === 'P2002') {
@@ -1143,7 +1147,7 @@ app.get('/users/:userId', requireRole('cashier'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: user.avatarUrl,
+            avatarUrl: resolveRelativeUrl(user.avatarUrl),
             promotions: availablePromotions
         });
     } catch (error) {
@@ -3524,7 +3528,7 @@ const initializeSuperuser = async () => {
 
     // Validate UTORid format (must be 7-8 alphanumeric characters)
     if (!isValidUtorid(SUPERUSER_UTORID)) {
-        console.error(`Invalid SUPERUSER_UTORID: '${SUPERUSER_UTORID}' (must be 7-8 alphanumeric characters)`);
+        console.error(`Invalid SUPERUSER_UTORID: '${SUPERUSER_UTORID}'(must be 7 - 8 alphanumeric characters)`);
         return;
     }
 
@@ -3535,7 +3539,7 @@ const initializeSuperuser = async () => {
         });
 
         if (existingSuperuser) {
-            console.log(`Superuser already exists: ${existingSuperuser.utorid}`);
+            console.log(`Superuser already exists: ${existingSuperuser.utorid} `);
             return;
         }
 
@@ -3574,10 +3578,10 @@ const initializeSuperuser = async () => {
         console.log('========================================');
         console.log('SUPERUSER CREATED');
         console.log('========================================');
-        console.log(`UTORid:   ${superuser.utorid}`);
-        console.log(`Email:    ${superuser.email}`);
+        console.log(`UTORid:   ${superuser.utorid} `);
+        console.log(`Email:    ${superuser.email} `);
         if (!SUPERUSER_PASSWORD) {
-            console.log(`Password: ${password}`);
+            console.log(`Password: ${password} `);
             console.log('');
             console.log('IMPORTANT: Save this password now!');
             console.log('It will not be shown again.');
@@ -3607,11 +3611,11 @@ const initializeSuperuser = async () => {
 };
 
 const server = app.listen(port, async () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port} `);
     await initializeSuperuser();
 });
 
 server.on('error', (err) => {
-    console.error(`cannot start server: ${err.message}`);
+    console.error(`cannot start server: ${err.message} `);
     process.exit(1);
 });
