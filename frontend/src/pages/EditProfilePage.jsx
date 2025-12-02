@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, useToast } from '../components/shared';
+import { LoadingSpinner } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './EditProfilePage.css';
 
 const EditProfilePage = () => {
     const { user, updateUser, loading: authLoading } = useAuth();
     const navigate = useNavigate();
-    const { showSuccess, showError } = useToast();
+    const { showToast } = useToast();
 
     const [formData, setFormData] = useState({
         name: user?.name || '',
@@ -56,7 +57,7 @@ const EditProfilePage = () => {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
-                showError('Avatar image must be less than 5MB');
+                showToast('Avatar image must be less than 5MB', 'error');
                 return;
             }
             setAvatar(file);
@@ -81,17 +82,17 @@ const EditProfilePage = () => {
             if (avatar) updateData.avatar = avatar;
 
             if (Object.keys(updateData).length === 0) {
-                showError('No changes to save');
+                showToast('No changes to save', 'error');
                 setLoading(false);
                 return;
             }
 
             const updatedUser = await usersAPI.updateMe(updateData);
             updateUser(updatedUser);
-            showSuccess('Profile updated successfully');
+            showToast('Profile updated successfully', 'success');
             navigate('/profile');
         } catch (error) {
-            showError(error.response?.data?.error || 'Failed to update profile');
+            showToast(error.response?.data?.error || 'Failed to update profile', 'error');
         } finally {
             setLoading(false);
         }

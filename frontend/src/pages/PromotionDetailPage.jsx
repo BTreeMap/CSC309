@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { promotionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
@@ -17,23 +17,23 @@ const PromotionDetailPage = () => {
 
     const isManager = ['manager', 'superuser'].includes(activeRole);
 
-    useEffect(() => {
-        const fetchPromotion = async () => {
-            setLoading(true);
-            setError(null);
+    const fetchPromotion = useCallback(async () => {
+        setLoading(true);
+        setError(null);
 
-            try {
-                const data = await promotionsAPI.getPromotion(id);
-                setPromotion(data);
-            } catch (err) {
-                setError(err.response?.data?.error || 'Failed to load promotion');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPromotion();
+        try {
+            const data = await promotionsAPI.getPromotion(id);
+            setPromotion(data);
+        } catch (err) {
+            setError(err.response?.data?.error || 'Failed to load promotion');
+        } finally {
+            setLoading(false);
+        }
     }, [id]);
+
+    useEffect(() => {
+        fetchPromotion();
+    }, [fetchPromotion]);
 
     const getPromotionStatus = (promotion) => {
         const now = new Date();
@@ -82,7 +82,7 @@ const PromotionDetailPage = () => {
     if (error) {
         return (
             <Layout>
-                <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+                <ErrorMessage message={error} onRetry={fetchPromotion} />
             </Layout>
         );
     }

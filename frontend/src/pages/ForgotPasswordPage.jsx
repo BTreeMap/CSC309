@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../api';
 import './ForgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
   const [utorid, setUtorid] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -51,9 +52,9 @@ const ForgotPasswordPage = () => {
 
     try {
       await authAPI.resetPassword(resetToken, utorid, newPassword);
-      setSuccess('Password reset successful! Please login with your new password.');
+      setSuccess('Password reset successful! Redirecting to login...');
       setTimeout(() => {
-        window.location.href = '/login';
+        navigate('/login');
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to reset password');

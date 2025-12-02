@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, useToast, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, ConfirmDialog } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './RedemptionPage.css';
 
 const RedemptionPage = () => {
     const { user, loading: authLoading, updateUser } = useAuth();
     const navigate = useNavigate();
-    const { showSuccess, showError } = useToast();
+    const { showToast } = useToast();
 
     const [amount, setAmount] = useState('');
     const [remark, setRemark] = useState('');
@@ -57,9 +58,9 @@ const RedemptionPage = () => {
             updateUser(updatedUser);
 
             setRedemptionResult(result);
-            showSuccess('Redemption request created successfully!');
+            showToast('Redemption request created successfully!', 'success');
         } catch (error) {
-            showError(error.response?.data?.error || 'Failed to create redemption request');
+            showToast(error.response?.data?.error || 'Failed to create redemption request', 'error');
         } finally {
             setLoading(false);
         }

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { useToast } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import './ChangePasswordPage.css';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
-    const { showSuccess, showError } = useToast();
+    const { showToast } = useToast();
 
     const [formData, setFormData] = useState({
         currentPassword: '',
@@ -80,14 +80,14 @@ const ChangePasswordPage = () => {
 
         try {
             await usersAPI.updatePassword(formData.currentPassword, formData.newPassword);
-            showSuccess('Password changed successfully');
+            showToast('Password changed successfully', 'success');
             navigate('/profile');
         } catch (error) {
             const errorMessage = error.response?.data?.error || 'Failed to change password';
             if (errorMessage.toLowerCase().includes('incorrect') || errorMessage.toLowerCase().includes('invalid')) {
                 setErrors({ currentPassword: 'Current password is incorrect' });
             } else {
-                showError(errorMessage);
+                showToast(errorMessage, 'error');
             }
         } finally {
             setLoading(false);

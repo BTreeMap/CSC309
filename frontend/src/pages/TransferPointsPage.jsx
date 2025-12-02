@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, useToast, ConfirmDialog, QrScanner } from '../components/shared';
+import { LoadingSpinner, ConfirmDialog, QrScanner } from '../components/shared';
+import { useToast } from '../components/shared/ToastContext';
 import { parseQrPayload, extractUserIdentifier, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
 import './TransferPointsPage.css';
 
@@ -16,7 +17,7 @@ const INITIAL_FORM_STATE = {
 const TransferPointsPage = () => {
     const { user, loading: authLoading, updateUser } = useAuth();
     const navigate = useNavigate();
-    const { showSuccess, showError } = useToast();
+    const { showToast } = useToast();
 
     const [formData, setFormData] = useState(INITIAL_FORM_STATE);
     const [recipientInfo, setRecipientInfo] = useState(null);
@@ -96,20 +97,20 @@ const TransferPointsPage = () => {
         const payload = parseQrPayload(rawData);
 
         if (!payload.isValid) {
-            showError(payload.error || 'Invalid QR code');
+            showToast(payload.error || 'Invalid QR code', 'error');
             return;
         }
 
         // Validate this is a user QR code
         if (payload.type === QR_PAYLOAD_TYPES.REDEMPTION) {
-            showError('This is a redemption QR code. Please scan a user\'s personal QR code.');
+            showToast('This is a redemption QR code. Please scan a user\'s personal QR code.', 'error');
             return;
         }
 
         // Extract user identifier
         const identifier = extractUserIdentifier(payload);
         if (!identifier) {
-            showError('Could not extract user information from QR code');
+            showToast('Could not extract user information from QR code', 'error');
             return;
         }
 
@@ -117,7 +118,7 @@ const TransferPointsPage = () => {
         const identifierStr = String(identifier);
         setFormData((prev) => ({ ...prev, recipientId: identifierStr }));
         lookupRecipient(identifierStr);
-    }, [lookupRecipient, showError]);
+    }, [lookupRecipient, showToast]);
 
     const validateForm = useCallback(() => {
         const newErrors = {};
@@ -156,10 +157,10 @@ const TransferPointsPage = () => {
             const updatedUser = await usersAPI.getMe();
             updateUser(updatedUser);
 
-            showSuccess(`Successfully transferred ${amount.toLocaleString()} points to ${recipientInfo.name || recipientInfo.utorid}`);
+            showToast(`Successfully transferred ${amount.toLocaleString()} points to ${recipientInfo.name || recipientInfo.utorid}`, 'success');
             navigate('/transactions');
         } catch (error) {
-            showError(error.response?.data?.error || 'Failed to transfer points');
+            showToast(error.response?.data?.error || 'Failed to transfer points', 'error');
         } finally {
             setLoading(false);
         }
