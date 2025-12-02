@@ -8,7 +8,10 @@ import {
     TRANSACTION_TYPE_COLORS,
     PROMOTION_TYPES,
     PROMOTION_TYPE_LABELS,
-    API_BASE_URL,
+    EVENT_STATUSES,
+    PAGINATION_DEFAULTS,
+    DATE_FORMATS,
+    POINTS_CONFIG,
     hasMinimumRole,
     getRoleLabel,
     getTransactionTypeLabel,
@@ -231,25 +234,36 @@ describe('Constants', () => {
         });
     });
 
-    describe('API_BASE_URL', () => {
-        it('should be defined', () => {
-            expect(API_BASE_URL).toBeDefined();
+    describe('EVENT_STATUSES', () => {
+        it('should have all expected status values', () => {
+            expect(EVENT_STATUSES.UPCOMING).toBe('upcoming');
+            expect(EVENT_STATUSES.ONGOING).toBe('ongoing');
+            expect(EVENT_STATUSES.PAST).toBe('past');
+        });
+    });
+
+    describe('PAGINATION_DEFAULTS', () => {
+        it('should have default page size', () => {
+            expect(PAGINATION_DEFAULTS.PAGE_SIZE).toBe(10);
         });
 
-        it('should be a string', () => {
-            expect(typeof API_BASE_URL).toBe('string');
+        it('should have page size options array', () => {
+            expect(Array.isArray(PAGINATION_DEFAULTS.PAGE_SIZE_OPTIONS)).toBe(true);
+            expect(PAGINATION_DEFAULTS.PAGE_SIZE_OPTIONS).toContain(10);
         });
+    });
 
-        it('should be a valid URL format', () => {
-            expect(API_BASE_URL).toMatch(/^https?:\/\//);
+    describe('DATE_FORMATS', () => {
+        it('should have SHORT, LONG, and WITH_TIME formats', () => {
+            expect(DATE_FORMATS.SHORT).toBeDefined();
+            expect(DATE_FORMATS.LONG).toBeDefined();
+            expect(DATE_FORMATS.WITH_TIME).toBeDefined();
         });
+    });
 
-        it('should default to localhost:3001 when no env var set', () => {
-            expect(API_BASE_URL).toBe('http://localhost:3001');
-        });
-
-        it('should not end with a trailing slash', () => {
-            expect(API_BASE_URL.endsWith('/')).toBe(false);
+    describe('POINTS_CONFIG', () => {
+        it('should have points per dollar configuration', () => {
+            expect(POINTS_CONFIG.POINTS_PER_DOLLAR).toBe(4);
         });
     });
 });

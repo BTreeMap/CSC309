@@ -1,42 +1,54 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, useToast, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, useToast, ConfirmDialog, QrScanner } from '../components/shared';
+import { parseQrPayload, extractUserIdentifier, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
 import './TransferPointsPage.css';
+
+const INITIAL_FORM_STATE = {
+    recipientId: '',
+    amount: '',
+    remark: '',
+};
 
 const TransferPointsPage = () => {
     const { user, loading: authLoading, updateUser } = useAuth();
     const navigate = useNavigate();
     const { showSuccess, showError } = useToast();
 
-    const [formData, setFormData] = useState({
-        recipientId: '',
-        amount: '',
-        remark: '',
-    });
+    const [formData, setFormData] = useState(INITIAL_FORM_STATE);
     const [recipientInfo, setRecipientInfo] = useState(null);
     const [lookingUpRecipient, setLookingUpRecipient] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showScanner, setShowScanner] = useState(false);
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        if (errors[name]) {
-            setErrors(prev => ({ ...prev, [name]: null }));
-        }
+        setFormData((prev) => ({ ...prev, [name]: value }));
+
+        // Clear field-specific error
+        setErrors((prev) => {
+            if (prev[name]) {
+                const { [name]: _, ...rest } = prev;
+                return rest;
+            }
+            return prev;
+        });
+
         // Clear recipient info when ID changes
         if (name === 'recipientId') {
             setRecipientInfo(null);
         }
-    };
+    }, []);
 
-    const lookupRecipient = async () => {
-        if (!formData.recipientId.trim()) {
-            setErrors(prev => ({ ...prev, recipientId: 'Please enter a user ID or UTORid' }));
+    const lookupRecipient = useCallback(async (identifier = formData.recipientId) => {
+        const trimmedId = identifier?.trim();
+        if (!trimmedId) {
+            setErrors((prev) => ({ ...prev, recipientId: 'Please enter a user ID or UTORid' }));
             return;
         }
 
@@ -45,35 +57,69 @@ const TransferPointsPage = () => {
 
         try {
             // First try to look up by UTORid
-            const response = await usersAPI.getUsers({ name: formData.recipientId, limit: 5 });
+            const response = await usersAPI.getUsers({ name: trimmedId, limit: 5 });
 
-            if (response.results && response.results.length > 0) {
+            if (response.results?.length > 0) {
                 // Find exact match by utorid or id
                 const exactMatch = response.results.find(
-                    u => u.utorid === formData.recipientId || u.id.toString() === formData.recipientId
+                    (u) => u.utorid === trimmedId || u.id.toString() === trimmedId
                 );
 
                 if (exactMatch) {
                     if (exactMatch.id === user.id) {
-                        setErrors(prev => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
+                        setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
                     } else {
                         setRecipientInfo(exactMatch);
-                        setErrors(prev => ({ ...prev, recipientId: null }));
+                        setErrors((prev) => {
+                            const { recipientId: _, ...rest } = prev;
+                            return rest;
+                        });
                     }
                 } else {
-                    setErrors(prev => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                    setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
                 }
             } else {
-                setErrors(prev => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
             }
-        } catch (error) {
-            setErrors(prev => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+        } catch {
+            setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
         } finally {
             setLookingUpRecipient(false);
         }
-    };
+    }, [formData.recipientId, user.id]);
 
-    const validateForm = () => {
+    const handleQrScan = useCallback((rawData) => {
+        setShowScanner(false);
+        if (!rawData) return;
+
+        // Parse the QR payload
+        const payload = parseQrPayload(rawData);
+
+        if (!payload.isValid) {
+            showError(payload.error || 'Invalid QR code');
+            return;
+        }
+
+        // Validate this is a user QR code
+        if (payload.type === QR_PAYLOAD_TYPES.REDEMPTION) {
+            showError('This is a redemption QR code. Please scan a user\'s personal QR code.');
+            return;
+        }
+
+        // Extract user identifier
+        const identifier = extractUserIdentifier(payload);
+        if (!identifier) {
+            showError('Could not extract user information from QR code');
+            return;
+        }
+
+        // Set the identifier and lookup
+        const identifierStr = String(identifier);
+        setFormData((prev) => ({ ...prev, recipientId: identifierStr }));
+        lookupRecipient(identifierStr);
+    }, [lookupRecipient, showError]);
+
+    const validateForm = useCallback(() => {
         const newErrors = {};
 
         if (!recipientInfo) {
@@ -84,21 +130,18 @@ const TransferPointsPage = () => {
         if (!formData.amount || isNaN(amount) || amount <= 0) {
             newErrors.amount = 'Please enter a valid positive amount';
         } else if (amount > user.points) {
-            newErrors.amount = `Insufficient points. You have ${user.points} points available.`;
+            newErrors.amount = `Insufficient points. You have ${user.points.toLocaleString()} points available.`;
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    }, [recipientInfo, formData.amount, user.points]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (!validateForm()) {
-            return;
+        if (validateForm()) {
+            setShowConfirm(true);
         }
-
-        setShowConfirm(true);
     };
 
     const handleConfirmTransfer = async () => {
@@ -113,7 +156,7 @@ const TransferPointsPage = () => {
             const updatedUser = await usersAPI.getMe();
             updateUser(updatedUser);
 
-            showSuccess(`Successfully transferred ${amount} points to ${recipientInfo.name || recipientInfo.utorid}`);
+            showSuccess(`Successfully transferred ${amount.toLocaleString()} points to ${recipientInfo.name || recipientInfo.utorid}`);
             navigate('/my-transactions');
         } catch (error) {
             showError(error.response?.data?.error || 'Failed to transfer points');
@@ -129,6 +172,9 @@ const TransferPointsPage = () => {
             </Layout>
         );
     }
+
+    const transferAmount = parseInt(formData.amount, 10);
+    const isValidAmount = !isNaN(transferAmount) && transferAmount > 0;
 
     return (
         <Layout>
@@ -156,14 +202,24 @@ const TransferPointsPage = () => {
                                     onChange={handleChange}
                                     placeholder="Enter user ID or UTORid"
                                     disabled={loading}
+                                    className="form-input"
                                 />
                                 <button
                                     type="button"
-                                    className="lookup-button"
-                                    onClick={lookupRecipient}
+                                    className="btn btn-secondary lookup-button"
+                                    onClick={() => lookupRecipient()}
                                     disabled={loading || lookingUpRecipient}
                                 >
                                     {lookingUpRecipient ? 'Looking...' : 'Look Up'}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-ghost scan-button"
+                                    onClick={() => setShowScanner(true)}
+                                    disabled={loading}
+                                    aria-label="Scan QR Code"
+                                >
+                                    📷
                                 </button>
                             </div>
                             {errors.recipientId && <span className="input-error">{errors.recipientId}</span>}
@@ -185,6 +241,7 @@ const TransferPointsPage = () => {
                                 type="number"
                                 id="amount"
                                 name="amount"
+                                className="form-input"
                                 value={formData.amount}
                                 onChange={handleChange}
                                 placeholder="Enter amount"
@@ -200,6 +257,7 @@ const TransferPointsPage = () => {
                             <textarea
                                 id="remark"
                                 name="remark"
+                                className="form-textarea"
                                 value={formData.remark}
                                 onChange={handleChange}
                                 placeholder="Add a note for this transfer"
@@ -216,15 +274,14 @@ const TransferPointsPage = () => {
                             </div>
                             <div className="summary-row">
                                 <span>Amount:</span>
-                                <span>{formData.amount ? `${parseInt(formData.amount, 10).toLocaleString()} points` : '-'}</span>
+                                <span>{isValidAmount ? `${transferAmount.toLocaleString()} points` : '-'}</span>
                             </div>
                             <div className="summary-row">
                                 <span>Your balance after:</span>
                                 <span>
-                                    {formData.amount && !isNaN(parseInt(formData.amount, 10))
-                                        ? `${(user.points - parseInt(formData.amount, 10)).toLocaleString()} points`
-                                        : `${user?.points?.toLocaleString() || 0} points`
-                                    }
+                                    {isValidAmount
+                                        ? `${(user.points - transferAmount).toLocaleString()} points`
+                                        : `${user?.points?.toLocaleString() || 0} points`}
                                 </span>
                             </div>
                         </div>
@@ -254,9 +311,16 @@ const TransferPointsPage = () => {
                     onClose={() => setShowConfirm(false)}
                     onConfirm={handleConfirmTransfer}
                     title="Confirm Transfer"
-                    message={`Are you sure you want to transfer ${parseInt(formData.amount, 10)?.toLocaleString() || 0} points to ${recipientInfo?.name || recipientInfo?.utorid}?`}
+                    message={`Are you sure you want to transfer ${transferAmount?.toLocaleString() || 0} points to ${recipientInfo?.name || recipientInfo?.utorid}?`}
                     confirmText="Transfer"
                     variant="primary"
+                />
+
+                <QrScanner
+                    isOpen={showScanner}
+                    onScan={handleQrScan}
+                    onClose={() => setShowScanner(false)}
+                    onError={(err) => console.warn('QR Scanner error:', err)}
                 />
             </div>
         </Layout>

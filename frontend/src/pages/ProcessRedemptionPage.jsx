@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage, ConfirmDialog, QrScanner } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { parseQrPayload, extractTransactionId, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
 import './ProcessRedemptionPage.css';
 
 const ProcessRedemptionPage = () => {
@@ -20,13 +21,7 @@ const ProcessRedemptionPage = () => {
     const [showScanner, setShowScanner] = useState(false);
     const [manualId, setManualId] = useState('');
 
-    useEffect(() => {
-        if (transactionId) {
-            fetchTransactionData(transactionId);
-        }
-    }, [transactionId]);
-
-    const fetchTransactionData = async (id) => {
+    const fetchTransactionData = useCallback(async (id) => {
         setLoading(true);
         setError(null);
 
@@ -51,23 +46,49 @@ const ProcessRedemptionPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
-    const handleQrScan = (data) => {
-        setShowScanner(false);
-        if (data) {
-            // Navigate to the scanned transaction ID
-            const scannedId = data.trim();
-            navigate(`/cashier/redemption/${scannedId}`);
+    useEffect(() => {
+        if (transactionId) {
+            fetchTransactionData(transactionId);
         }
+    }, [transactionId, fetchTransactionData]);
+
+    const handleQrScan = (rawData) => {
+        setShowScanner(false);
+        if (!rawData) return;
+
+        // Parse the QR payload using the standardized protocol
+        const payload = parseQrPayload(rawData);
+
+        if (!payload.isValid) {
+            showToast(payload.error || 'Invalid QR code', 'error');
+            return;
+        }
+
+        // Validate this is a redemption QR code
+        if (payload.type === QR_PAYLOAD_TYPES.USER) {
+            showToast('This is a user QR code. Please scan a redemption QR code.', 'error');
+            return;
+        }
+
+        // Extract transaction ID
+        const txnId = extractTransactionId(payload);
+        if (!txnId) {
+            showToast('Could not extract redemption ID from QR code', 'error');
+            return;
+        }
+
+        navigate(`/cashier/redemption/${txnId}`);
     };
 
     const handleManualLookup = () => {
-        if (!manualId.trim()) {
+        const trimmedId = manualId.trim();
+        if (!trimmedId) {
             showToast('Please enter a redemption ID', 'error');
             return;
         }
-        navigate(`/cashier/redemption/${manualId.trim()}`);
+        navigate(`/cashier/redemption/${trimmedId}`);
     };
 
     const handleProcess = async () => {

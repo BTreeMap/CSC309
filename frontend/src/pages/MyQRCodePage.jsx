@@ -3,6 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner } from '../components/shared';
+import { createUserPayload } from '../utils/qrPayload';
 import './MyQRCodePage.css';
 
 const MyQRCodePage = () => {
@@ -16,7 +17,8 @@ const MyQRCodePage = () => {
         );
     }
 
-    const qrValue = user?.id?.toString() || '';
+    // Generate QR payload with full user info
+    const qrValue = user ? createUserPayload(user) : '';
 
     const handleDownload = () => {
         const svg = document.querySelector('.qr-code-svg');
@@ -40,7 +42,7 @@ const MyQRCodePage = () => {
             link.click();
         };
 
-        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
     };
 
     return (

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { transactionsAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage } from '../components/shared';
+import { createRedemptionPayload } from '../utils/qrPayload';
 import './RedemptionQRPage.css';
 
 const RedemptionQRPage = () => {
@@ -33,7 +34,10 @@ const RedemptionQRPage = () => {
         fetchTransaction();
     }, [transactionId]);
 
-    const handleDownload = () => {
+    // Generate QR code payload with transaction details
+    const qrValue = transaction ? createRedemptionPayload(transaction) : '';
+
+    const handleDownload = useCallback(() => {
         const svg = document.querySelector('.redemption-qr-svg');
         if (!svg) return;
 
@@ -55,8 +59,8 @@ const RedemptionQRPage = () => {
             link.click();
         };
 
-        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-    };
+        img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
+    }, [transactionId]);
 
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
@@ -114,7 +118,7 @@ const RedemptionQRPage = () => {
                             <>
                                 <div className="qr-wrapper">
                                     <QRCodeSVG
-                                        value={transactionId.toString()}
+                                        value={qrValue}
                                         size={250}
                                         level="H"
                                         includeMargin={true}

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { transactionsAPI, usersAPI, promotionsAPI } from '../api';
 import Layout from '../components/Layout';
 import { useToast } from '../components/shared/ToastContext';
 import { ConfirmDialog, QrScanner } from '../components/shared';
+import { parseQrPayload, extractUserIdentifier, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
 import './CreateTransactionPage.css';
+
+// Constants for points calculation
+const POINTS_PER_DOLLAR = 4; // $0.25 = 1 point → $1 = 4 points
 
 const CreateTransactionPage = () => {
     const navigate = useNavigate();
@@ -23,6 +27,19 @@ const CreateTransactionPage = () => {
     const [error, setError] = useState(null);
     const [showScanner, setShowScanner] = useState(false);
 
+    const fetchUserAndPromotions = useCallback(async (identifier) => {
+        const userData = await usersAPI.getUser(identifier);
+        const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
+        const now = new Date();
+
+        const activePromos = (promoData.results || []).filter((promo) => {
+            const endTime = new Date(promo.endTime);
+            return now <= endTime && promo.type === 'automatic';
+        });
+
+        return { userData, activePromos };
+    }, []);
+
     const handleLookupUser = async () => {
         if (!utorid.trim()) {
             setError('Please enter a UTORid');
@@ -34,16 +51,8 @@ const CreateTransactionPage = () => {
         setUserInfo(null);
 
         try {
-            const userData = await usersAPI.getUser(utorid.trim());
+            const { userData, activePromos } = await fetchUserAndPromotions(utorid.trim());
             setUserInfo(userData);
-
-            // Also fetch available promotions
-            const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
-            const activePromos = (promoData.results || []).filter((p) => {
-                const now = new Date();
-                const end = new Date(p.endTime);
-                return now <= end && p.type === 'automatic';
-            });
             setAvailablePromotions(activePromos);
         } catch (err) {
             setError(err.response?.data?.error || 'User not found');
@@ -60,12 +69,12 @@ const CreateTransactionPage = () => {
         );
     };
 
-    const calculateExpectedPoints = () => {
-        const basePoints = Math.floor(parseFloat(spent) * 4); // $0.25 = 1 point → $1 = 4 points
+    const calculateExpectedPoints = useCallback(() => {
+        const basePoints = Math.floor(parseFloat(spent) * POINTS_PER_DOLLAR);
         let bonusPoints = 0;
 
         availablePromotions
-            .filter((p) => promotionIds.includes(p.id))
+            .filter((promo) => promotionIds.includes(promo.id))
             .forEach((promo) => {
                 if (promo.minSpending && parseFloat(spent) < promo.minSpending) {
                     return;
@@ -74,9 +83,9 @@ const CreateTransactionPage = () => {
             });
 
         return { basePoints, bonusPoints, total: basePoints + bonusPoints };
-    };
+    }, [spent, availablePromotions, promotionIds]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!userInfo) {
@@ -94,6 +103,15 @@ const CreateTransactionPage = () => {
         setShowConfirm(true);
     };
 
+    const resetForm = useCallback(() => {
+        setUtorid('');
+        setSpent('');
+        setRemark('');
+        setPromotionIds([]);
+        setUserInfo(null);
+        setShowConfirm(false);
+    }, []);
+
     const handleConfirmTransaction = async () => {
         setLoading(true);
 
@@ -107,14 +125,7 @@ const CreateTransactionPage = () => {
 
             const result = await transactionsAPI.createPurchase(payload);
             showToast(`Purchase recorded! ${result.points} points earned.`, 'success');
-
-            // Reset form
-            setUtorid('');
-            setSpent('');
-            setRemark('');
-            setPromotionIds([]);
-            setUserInfo(null);
-            setShowConfirm(false);
+            resetForm();
         } catch (err) {
             showToast(err.response?.data?.error || 'Failed to create transaction', 'error');
         } finally {
@@ -126,35 +137,46 @@ const CreateTransactionPage = () => {
         setShowScanner(true);
     };
 
-    const handleQrScan = (data) => {
-        // Close scanner and set the scanned UTORid
+    const handleQrScan = async (rawData) => {
         setShowScanner(false);
-        if (data) {
-            setUtorid(data.trim());
-            // Auto-lookup the user after scanning
-            setError(null);
-            setUserInfo(null);
-            setLookupLoading(true);
+        if (!rawData) return;
 
-            usersAPI.getUser(data.trim())
-                .then(async (userData) => {
-                    setUserInfo(userData);
-                    // Also fetch available promotions
-                    const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
-                    const activePromos = (promoData.results || []).filter((p) => {
-                        const now = new Date();
-                        const end = new Date(p.endTime);
-                        return now <= end && p.type === 'automatic';
-                    });
-                    setAvailablePromotions(activePromos);
-                    showToast('Customer found!', 'success');
-                })
-                .catch((err) => {
-                    setError(err.response?.data?.error || 'User not found');
-                })
-                .finally(() => {
-                    setLookupLoading(false);
-                });
+        // Parse the QR payload using the standardized protocol
+        const payload = parseQrPayload(rawData);
+
+        if (!payload.isValid) {
+            setError(payload.error || 'Invalid QR code');
+            return;
+        }
+
+        // Validate this is a user QR code (not a redemption)
+        if (payload.type === QR_PAYLOAD_TYPES.REDEMPTION) {
+            setError('This is a redemption QR code. Please scan a customer\'s personal QR code.');
+            return;
+        }
+
+        // Extract user identifier (utorid or id)
+        const identifier = extractUserIdentifier(payload);
+        if (!identifier) {
+            setError('Could not extract user information from QR code');
+            return;
+        }
+
+        // Set the identifier in the input field
+        setUtorid(String(identifier));
+        setError(null);
+        setUserInfo(null);
+        setLookupLoading(true);
+
+        try {
+            const { userData, activePromos } = await fetchUserAndPromotions(identifier);
+            setUserInfo(userData);
+            setAvailablePromotions(activePromos);
+            showToast('Customer found!', 'success');
+        } catch (err) {
+            setError(err.response?.data?.error || 'User not found');
+        } finally {
+            setLookupLoading(false);
         }
     };
 

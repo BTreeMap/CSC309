@@ -1,61 +1,124 @@
-export const ROLES = {
+/**
+ * Application Constants
+ *
+ * Centralized constants for roles, transaction types, and other
+ * application-wide values. All exports are frozen to prevent modification.
+ */
+
+// =============================================================================
+// USER ROLES
+// =============================================================================
+
+export const ROLES = Object.freeze({
   REGULAR: 'regular',
   CASHIER: 'cashier',
   MANAGER: 'manager',
   SUPERUSER: 'superuser',
-};
+});
 
-export const ROLE_HIERARCHY = {
+export const ROLE_HIERARCHY = Object.freeze({
   regular: 0,
   cashier: 1,
   manager: 2,
   superuser: 3,
-};
+});
 
-export const ROLE_LABELS = {
+export const ROLE_LABELS = Object.freeze({
   regular: 'Regular User',
   cashier: 'Cashier',
   manager: 'Manager',
   superuser: 'Superuser',
-};
+});
 
-export const TRANSACTION_TYPES = {
+// =============================================================================
+// TRANSACTION TYPES
+// =============================================================================
+
+export const TRANSACTION_TYPES = Object.freeze({
   PURCHASE: 'purchase',
   REDEMPTION: 'redemption',
   ADJUSTMENT: 'adjustment',
   TRANSFER: 'transfer',
   EVENT: 'event',
-};
+});
 
-export const TRANSACTION_TYPE_LABELS = {
+export const TRANSACTION_TYPE_LABELS = Object.freeze({
   purchase: 'Purchase',
   redemption: 'Redemption',
   adjustment: 'Adjustment',
   transfer: 'Transfer',
   event: 'Event',
-};
+});
 
-export const TRANSACTION_TYPE_COLORS = {
+export const TRANSACTION_TYPE_COLORS = Object.freeze({
   purchase: '#4CAF50',
   redemption: '#FF9800',
   adjustment: '#2196F3',
   transfer: '#9C27B0',
   event: '#00BCD4',
-};
+});
 
-export const PROMOTION_TYPES = {
+// =============================================================================
+// PROMOTIONS
+// =============================================================================
+
+export const PROMOTION_TYPES = Object.freeze({
   AUTOMATIC: 'automatic',
   ONETIME: 'onetime',
-};
+});
 
-export const PROMOTION_TYPE_LABELS = {
+export const PROMOTION_TYPE_LABELS = Object.freeze({
   automatic: 'Automatic',
   onetime: 'One-time',
-};
+});
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// =============================================================================
+// EVENTS
+// =============================================================================
 
-// Utility functions
+export const EVENT_STATUSES = Object.freeze({
+  UPCOMING: 'upcoming',
+  ONGOING: 'ongoing',
+  PAST: 'past',
+});
+
+// =============================================================================
+// PAGINATION
+// =============================================================================
+
+export const PAGINATION_DEFAULTS = Object.freeze({
+  PAGE_SIZE: 10,
+  PAGE_SIZE_OPTIONS: [10, 25, 50, 100],
+});
+
+// =============================================================================
+// DATE FORMATS
+// =============================================================================
+
+export const DATE_FORMATS = Object.freeze({
+  SHORT: { year: 'numeric', month: 'short', day: 'numeric' },
+  LONG: { year: 'numeric', month: 'long', day: 'numeric' },
+  WITH_TIME: {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  },
+});
+
+// =============================================================================
+// POINTS CONFIGURATION
+// =============================================================================
+
+export const POINTS_CONFIG = Object.freeze({
+  POINTS_PER_DOLLAR: 4, // $0.25 = 1 point → $1 = 4 points
+  MIN_REDEMPTION: 1,
+});
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
 
 /**
  * Check if a role meets or exceeds a minimum role requirement
