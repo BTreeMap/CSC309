@@ -308,16 +308,10 @@ const EventDetailPage = () => {
                                     <h3>Manager Actions</h3>
                                     <div className="manager-actions">
                                         <button
-                                            onClick={() => navigate(`/events/${event.id}/edit`)}
+                                            onClick={() => navigate('/events/manage')}
                                             className="btn btn-secondary btn-block"
                                         >
-                                            ✏️ Edit Event
-                                        </button>
-                                        <button
-                                            onClick={() => navigate(`/events/${event.id}/guests`)}
-                                            className="btn btn-secondary btn-block"
-                                        >
-                                            👥 Manage Guests
+                                            ✏️ Manage Events
                                         </button>
                                     </div>
                                 </div>

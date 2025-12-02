@@ -198,20 +198,20 @@ const CreateTransactionPage = () => {
                                     value={utorid}
                                     onChange={(e) => setUtorid(e.target.value)}
                                     placeholder="Enter UTORid"
-                                    className="lookup-input"
+                                    className="form-input lookup-input"
                                     onKeyDown={(e) => e.key === 'Enter' && handleLookupUser()}
                                 />
                                 <button
                                     type="button"
                                     onClick={handleLookupUser}
-                                    className="btn-lookup"
+                                    className="btn btn-primary"
                                     disabled={lookupLoading}
                                 >
                                     {lookupLoading ? 'Looking up...' : 'Look Up'}
                                 </button>
                             </div>
 
-                            <button type="button" onClick={handleScanQR} className="btn-scan">
+                            <button type="button" onClick={handleScanQR} className="btn btn-secondary">
                                 📷 Scan QR Code
                             </button>
                         </div>

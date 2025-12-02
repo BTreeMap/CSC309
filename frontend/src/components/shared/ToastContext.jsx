@@ -39,8 +39,13 @@ export const ToastProvider = ({ children }) => {
         addToast(message, 'info', duration);
     }, [addToast]);
 
+    // showToast is a convenience method for backward compatibility and flexibility
+    const showToast = useCallback((message, type = 'info', duration) => {
+        addToast(message, type, duration);
+    }, [addToast]);
+
     return (
-        <ToastContext.Provider value={{ showSuccess, showError, showWarning, showInfo }}>
+        <ToastContext.Provider value={{ showSuccess, showError, showWarning, showInfo, showToast }}>
             {children}
             <div className="toast-container">
                 {toasts.map(toast => (

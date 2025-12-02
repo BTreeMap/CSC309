@@ -178,7 +178,7 @@ const MyTransactionsPage = () => {
                                                 )}
                                                 {transaction.type === 'redemption' && !transaction.processedAt && (
                                                     <Link
-                                                        to={`/redemption/${transaction.id}/qr`}
+                                                        to={`/redeem/${transaction.id}/qr`}
                                                         className="view-qr-link"
                                                     >
                                                         View QR Code

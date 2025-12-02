@@ -121,6 +121,20 @@
     box-shadow: var(--shadow-md);
 }
 
+/* Warning Button */
+.btn-warning {
+    background-color: var(--color-warning);
+    color: var(--color-text-inverse);
+    border-color: var(--color-warning);
+}
+
+.btn-warning:hover:not(:disabled) {
+    background-color: #a87d5a;
+    border-color: #a87d5a;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
 /* Button Sizes */
 .btn-sm {
     padding: var(--space-2) var(--space-3);

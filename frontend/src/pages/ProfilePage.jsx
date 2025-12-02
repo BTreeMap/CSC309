@@ -58,8 +58,8 @@ const ProfilePage = () => {
                             <span className={`badge badge-role badge-${user?.role}`}>
                                 {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
                             </span>
-                            <span className={`badge ${user?.isVerified ? 'badge-verified' : 'badge-unverified'}`}>
-                                {user?.isVerified ? '✓ Verified' : 'Not Verified'}
+                            <span className={`badge ${user?.verified ? 'badge-verified' : 'badge-unverified'}`}>
+                                {user?.verified ? '✓ Verified' : 'Not Verified'}
                             </span>
                         </div>
                     </div>
@@ -112,7 +112,7 @@ const ProfilePage = () => {
                     <div className="profile-section">
                         <h2>Security</h2>
                         <div className="security-actions">
-                            <Link to="/change-password" className="security-action-button">
+                            <Link to="/profile/password" className="security-action-button">
                                 <span className="security-icon">🔒</span>
                                 <div className="security-action-content">
                                     <span className="security-action-title">Change Password</span>

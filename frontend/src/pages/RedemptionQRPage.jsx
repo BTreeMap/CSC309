@@ -59,7 +59,7 @@ const RedemptionQRPage = () => {
             link.click();
         };
 
-        img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
+        img.src = `data:image/svg+xml;base64,${btoa(decodeURIComponent(encodeURIComponent(svgData)))}`;
     }, [transactionId]);
 
     const formatDate = (dateString) => {
@@ -172,10 +172,10 @@ const RedemptionQRPage = () => {
                     </div>
 
                     <div className="qr-actions">
-                        <Link to="/my-transactions" className="action-link">
+                        <Link to="/transactions" className="action-link">
                             View All Transactions
                         </Link>
-                        <Link to="/redemption" className="action-link">
+                        <Link to="/redeem" className="action-link">
                             Create New Redemption
                         </Link>
                     </div>

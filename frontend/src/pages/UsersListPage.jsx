@@ -18,8 +18,9 @@ const UsersListPage = () => {
     const [error, setError] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
 
-    // Selected user for adjustment
+    // Selected user for viewing/adjustment
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showViewModal, setShowViewModal] = useState(false);
     const [showAdjustModal, setShowAdjustModal] = useState(false);
     const [adjustmentAmount, setAdjustmentAmount] = useState('');
     const [adjustmentRemark, setAdjustmentRemark] = useState('');
@@ -79,6 +80,11 @@ const UsersListPage = () => {
         setSearchParams({ page: '1' });
     };
 
+    const handleOpenView = (user) => {
+        setSelectedUser(user);
+        setShowViewModal(true);
+    };
+
     const handleOpenAdjust = (user) => {
         setSelectedUser(user);
         setAdjustmentAmount('');
@@ -130,7 +136,7 @@ const UsersListPage = () => {
                         <p>View and manage system users</p>
                     </div>
                     <div className="header-right">
-                        <button onClick={() => navigate('/users/create')} className="btn btn-primary">
+                        <button onClick={() => navigate('/register')} className="btn btn-primary">
                             + Create User
                         </button>
                     </div>
@@ -274,7 +280,7 @@ const UsersListPage = () => {
                                             <td>
                                                 <div className="action-buttons">
                                                     <button
-                                                        onClick={() => navigate(`/users/${user.id}`)}
+                                                        onClick={() => handleOpenView(user)}
                                                         className="btn-action btn-view"
                                                     >
                                                         View
@@ -353,6 +359,84 @@ const UsersListPage = () => {
                                     disabled={adjustmentLoading || !adjustmentAmount}
                                 >
                                     {adjustmentLoading ? 'Adjusting...' : 'Adjust Points'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </Modal>
+
+                {/* User Details Modal */}
+                <Modal
+                    isOpen={showViewModal}
+                    onClose={() => setShowViewModal(false)}
+                    title="User Details"
+                    size="medium"
+                >
+                    {selectedUser && (
+                        <div className="user-details-modal">
+                            <div className="user-detail-header">
+                                <div className="user-avatar-large">
+                                    {selectedUser.avatarUrl ? (
+                                        <img src={selectedUser.avatarUrl} alt={selectedUser.name} />
+                                    ) : (
+                                        <span>{selectedUser.name?.charAt(0).toUpperCase() || '?'}</span>
+                                    )}
+                                </div>
+                                <div className="user-basic-info">
+                                    <h3>{selectedUser.name}</h3>
+                                    <p className="user-email">{selectedUser.email}</p>
+                                </div>
+                            </div>
+
+                            <div className="user-detail-grid">
+                                <div className="detail-item">
+                                    <label>UTORid</label>
+                                    <span>{selectedUser.utorid}</span>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Role</label>
+                                    <span
+                                        className="role-badge"
+                                        style={{ backgroundColor: getRoleColor(selectedUser.role) + '20', color: getRoleColor(selectedUser.role) }}
+                                    >
+                                        {ROLE_LABELS[selectedUser.role] || selectedUser.role}
+                                    </span>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Points</label>
+                                    <span className="points-value">{selectedUser.points?.toLocaleString() || 0}</span>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Verification Status</label>
+                                    <span className={`status-badge ${selectedUser.verified ? 'verified' : 'unverified'}`}>
+                                        {selectedUser.verified ? '✓ Verified' : '○ Unverified'}
+                                    </span>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Created At</label>
+                                    <span>{selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString() : 'N/A'}</span>
+                                </div>
+                                <div className="detail-item">
+                                    <label>Last Login</label>
+                                    <span>{selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleDateString() : 'Never'}</span>
+                                </div>
+                            </div>
+
+                            <div className="modal-actions">
+                                <button
+                                    onClick={() => {
+                                        setShowViewModal(false);
+                                        handleOpenAdjust(selectedUser);
+                                    }}
+                                    className="btn btn-secondary"
+                                >
+                                    Adjust Points
+                                </button>
+                                <button
+                                    onClick={() => setShowViewModal(false)}
+                                    className="btn btn-primary"
+                                >
+                                    Close
                                 </button>
                             </div>
                         </div>

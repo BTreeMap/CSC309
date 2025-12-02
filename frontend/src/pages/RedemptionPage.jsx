@@ -108,13 +108,13 @@ const RedemptionPage = () => {
                         <div className="success-actions">
                             <button
                                 className="btn btn-primary view-qr-button"
-                                onClick={() => navigate(`/redemption/${redemptionResult.id}/qr`)}
+                                onClick={() => navigate(`/redeem/${redemptionResult.id}/qr`)}
                             >
                                 <span>📱</span> View QR Code
                             </button>
                             <button
                                 className="btn btn-secondary view-transactions-button"
-                                onClick={() => navigate('/my-transactions')}
+                                onClick={() => navigate('/transactions')}
                             >
                                 View My Transactions
                             </button>

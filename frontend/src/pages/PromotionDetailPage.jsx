@@ -213,10 +213,10 @@ const PromotionDetailPage = () => {
                             <h2>Manager Actions</h2>
                             <div className="action-buttons">
                                 <button
-                                    onClick={() => navigate(`/promotions/${promotion.id}/edit`)}
+                                    onClick={() => navigate('/promotions/manage')}
                                     className="btn btn-secondary"
                                 >
-                                    ✏️ Edit Promotion
+                                    ⚙️ Manage Promotions
                                 </button>
                             </div>
                         </div>

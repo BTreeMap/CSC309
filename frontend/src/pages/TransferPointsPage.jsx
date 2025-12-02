@@ -157,7 +157,7 @@ const TransferPointsPage = () => {
             updateUser(updatedUser);
 
             showSuccess(`Successfully transferred ${amount.toLocaleString()} points to ${recipientInfo.name || recipientInfo.utorid}`);
-            navigate('/my-transactions');
+            navigate('/transactions');
         } catch (error) {
             showError(error.response?.data?.error || 'Failed to transfer points');
         } finally {

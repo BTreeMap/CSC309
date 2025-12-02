@@ -260,10 +260,10 @@ const ManageEventsPage = () => {
                                                             Edit
                                                         </button>
                                                         <button
-                                                            onClick={() => navigate(`/events/${event.id}/guests`)}
+                                                            onClick={() => navigate(`/events/${event.id}`)}
                                                             className="btn-action btn-guests"
                                                         >
-                                                            Guests
+                                                            Details
                                                         </button>
                                                         <button
                                                             onClick={() => openDeleteConfirm(event)}

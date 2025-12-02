@@ -10,7 +10,7 @@ const ConfirmDialog = ({
     message = 'Are you sure you want to proceed?',
     confirmText = 'Confirm',
     cancelText = 'Cancel',
-    variant = 'primary', // 'primary', 'danger', 'warning'
+    confirmVariant = 'primary', // 'primary', 'danger', 'warning'
     loading = false
 }) => {
     const handleConfirm = () => {
@@ -30,7 +30,7 @@ const ConfirmDialog = ({
                         {cancelText}
                     </button>
                     <button
-                        className={`confirm-button confirm-action-button confirm-${variant}`}
+                        className={`confirm-button confirm-action-button confirm-${confirmVariant}`}
                         onClick={handleConfirm}
                         disabled={loading}
                     >
