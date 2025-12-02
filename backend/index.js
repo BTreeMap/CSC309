@@ -3424,8 +3424,94 @@ app.delete('/promotions/:promotionId', requireRole('manager'), async (req, res) 
 // SERVER STARTUP
 // ============================================================================
 
-const server = app.listen(port, () => {
+// Helper: Generate a cryptographically secure URL-safe base64 password
+// Equivalent to: base64.urlsafe_b64encode(os.urandom(33)).decode()
+const generateSecurePassword = () => {
+    const randomBytes = crypto.randomBytes(33);
+    return randomBytes.toString('base64url');
+};
+
+// Initialize superuser on first launch
+const initializeSuperuser = async () => {
+    const SUPERUSER_UTORID = process.env.SUPERUSER_UTORID || 'superadm';
+    const SUPERUSER_EMAIL = process.env.SUPERUSER_EMAIL || 'admin@utoronto.ca';
+    const SUPERUSER_PASSWORD = process.env.SUPERUSER_PASSWORD;
+
+    // Validate UTORid format (must be 7-8 alphanumeric characters)
+    if (!isValidUtorid(SUPERUSER_UTORID)) {
+        console.error(`Invalid SUPERUSER_UTORID: '${SUPERUSER_UTORID}' (must be 7-8 alphanumeric characters)`);
+        return;
+    }
+
+    try {
+        // Check if any superuser exists
+        const existingSuperuser = await prisma.user.findFirst({
+            where: { role: 'superuser' }
+        });
+
+        if (existingSuperuser) {
+            console.log(`Superuser already exists: ${existingSuperuser.utorid}`);
+            return;
+        }
+
+        // Check if user with this utorid already exists (but not as superuser)
+        const existingUser = await prisma.user.findUnique({
+            where: { utorid: SUPERUSER_UTORID }
+        });
+
+        if (existingUser) {
+            // Promote existing user to superuser
+            await prisma.user.update({
+                where: { id: existingUser.id },
+                data: { role: 'superuser', isVerified: true }
+            });
+            console.log(`Existing user '${SUPERUSER_UTORID}' promoted to superuser`);
+            return;
+        }
+
+        // Generate password if not provided
+        const password = SUPERUSER_PASSWORD || generateSecurePassword();
+        const passwordHash = await bcrypt.hash(password, 12);
+
+        // Create new superuser
+        const superuser = await prisma.user.create({
+            data: {
+                utorid: SUPERUSER_UTORID,
+                email: SUPERUSER_EMAIL,
+                name: 'System Administrator',
+                passwordBcrypt: passwordHash,
+                role: 'superuser',
+                isVerified: true,
+                points: 0
+            }
+        });
+
+        console.log('========================================');
+        console.log('SUPERUSER CREATED');
+        console.log('========================================');
+        console.log(`UTORid:   ${superuser.utorid}`);
+        console.log(`Email:    ${superuser.email}`);
+        if (!SUPERUSER_PASSWORD) {
+            console.log(`Password: ${password}`);
+            console.log('');
+            console.log('IMPORTANT: Save this password now!');
+            console.log('It will not be shown again.');
+            console.log('Set SUPERUSER_PASSWORD env var to use a custom password.');
+        }
+        console.log('========================================');
+
+    } catch (error) {
+        if (error.code === 'P2002') {
+            console.error('Failed to create superuser: email already in use');
+        } else {
+            console.error('Failed to initialize superuser:', error.message);
+        }
+    }
+};
+
+const server = app.listen(port, async () => {
     console.log(`Server running on port ${port}`);
+    await initializeSuperuser();
 });
 
 server.on('error', (err) => {
