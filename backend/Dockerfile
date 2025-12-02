@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 
 ################################################################################
-# Build stage - install dependencies and generate Prisma client
+# Build stage - install dependencies, generate Prisma client, and PREPARE for prod
 ################################################################################
 FROM node:24-alpine AS builder
 
 # Install build dependencies for native modules (bcrypt)
+# Python and build-base are needed for node-gyp
 RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
@@ -20,8 +21,25 @@ RUN npm ci --no-audit --no-fund
 COPY prisma ./prisma/
 RUN npx prisma generate
 
-# Remove devDependencies after prisma generate
-RUN npm prune --production
+# OPTIMIZATION START: Clean up in the Builder stage
+# 1. Prune to production dependencies
+# 2. Aggressively remove unused files from node_modules BEFORE copying to prod
+RUN npm prune --production && \
+    # Remove cached package data
+    rm -rf /root/.npm /root/.node-gyp && \
+    # Remove common bloat from node_modules
+    find ./node_modules -name "*.md" -delete && \
+    find ./node_modules -name "*.ts" -delete && \
+    find ./node_modules -name "*.map" -delete && \
+    find ./node_modules -name "LICENSE*" -delete && \
+    find ./node_modules -name "CHANGELOG*" -delete && \
+    find ./node_modules -name "README*" -delete && \
+    find ./node_modules -name ".npmignore" -delete && \
+    find ./node_modules -name ".eslint*" -delete && \
+    find ./node_modules -type d -name "test" -exec rm -rf {} + && \
+    find ./node_modules -type d -name "tests" -exec rm -rf {} + && \
+    find ./node_modules -type d -name "__tests__" -exec rm -rf {} + && \
+    find ./node_modules -type d -name "docs" -exec rm -rf {} +
 
 ################################################################################
 # Production stage - minimal runtime image
@@ -29,41 +47,26 @@ RUN npm prune --production
 FROM node:24-alpine AS production
 
 # Install tini for proper process management
+# Combine user creation/modification into one step if strictly necessary, 
+# but node:24-alpine already has a 'node' user (UID 1000). 
+# We will use the built-in 'node' user to avoid creating a new one.
 RUN apk add --no-cache tini
-
-# Security: run as non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 -G nodejs
 
 WORKDIR /app
 
-# Copy only production node_modules from builder
-COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules/
+# Copy ONLY the cleaned production node_modules from builder
+# This effectively "flattens" the cleanup into a single ADD layer
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules/
 
 # Copy application code
-COPY --chown=nodejs:nodejs index.js ./
-COPY --chown=nodejs:nodejs prisma ./prisma/
+COPY --chown=node:node index.js ./
+COPY --chown=node:node prisma ./prisma/
 
-# Create directories for runtime data
-RUN mkdir -p uploads && chown nodejs:nodejs uploads
+# Create directories for runtime data with correct permissions
+RUN mkdir -p uploads && chown node:node uploads
 
-# Clean up caches and unnecessary files
-RUN rm -rf /root/.npm /root/.node-gyp /tmp/* /var/cache/apk/* && \
-    find /app/node_modules -name "*.md" -delete 2>/dev/null || true && \
-    find /app/node_modules -name "*.ts" -delete 2>/dev/null || true && \
-    find /app/node_modules -name "*.map" -delete 2>/dev/null || true && \
-    find /app/node_modules -name "LICENSE*" -delete 2>/dev/null || true && \
-    find /app/node_modules -name "CHANGELOG*" -delete 2>/dev/null || true && \
-    find /app/node_modules -name "README*" -delete 2>/dev/null || true && \
-    find /app/node_modules -name ".npmignore" -delete 2>/dev/null || true && \
-    find /app/node_modules -name ".eslint*" -delete 2>/dev/null || true && \
-    find /app/node_modules -type d -name "test" -exec rm -rf {} + 2>/dev/null || true && \
-    find /app/node_modules -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true && \
-    find /app/node_modules -type d -name "__tests__" -exec rm -rf {} + 2>/dev/null || true && \
-    find /app/node_modules -type d -name "docs" -exec rm -rf {} + 2>/dev/null || true
-
-# Switch to non-root user
-USER nodejs
+# Switch to the built-in non-root user 'node'
+USER node
 
 # Environment variables (JWT_SECRET must be provided at runtime)
 ENV NODE_ENV=production
