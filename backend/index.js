@@ -61,6 +61,15 @@ app.use(express.json());
 const ResetRateLimits = new Map();
 
 // Multer configuration for avatar uploads
+// Allowed image MIME types for avatar uploads
+const ALLOWED_AVATAR_MIMES = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/bmp'
+];
+
 const storage = multer.diskStorage({
     destination: (_req, _file, cb) => {
         const uploadDir = path.join(__dirname, 'uploads');
@@ -75,10 +84,61 @@ const storage = multer.diskStorage({
         cb(null, uniqueName);
     }
 });
-const upload = multer({ storage });
 
-// Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// File filter to only allow safe image types
+const avatarFileFilter = (_req, file, cb) => {
+    if (ALLOWED_AVATAR_MIMES.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Only image files (JPEG, PNG, GIF, WebP, BMP) are allowed'), false);
+    }
+};
+
+const upload = multer({
+    storage,
+    fileFilter: avatarFileFilter,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB max
+    }
+});
+
+// Security: Safe MIME types for uploaded files
+// Only these extensions will be served; others are rejected
+const SAFE_MIME_TYPES = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.webp': 'image/webp',
+    '.bmp': 'image/bmp',
+    '.ico': 'image/x-icon'
+};
+
+// Serve uploaded files with security headers and caching
+// Files have unique hash names so they're immutable - cache aggressively
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+    // Set headers after express.static determines the file exists
+    setHeaders: (res, filePath) => {
+        const ext = path.extname(filePath).toLowerCase();
+        const safeMimeType = SAFE_MIME_TYPES[ext];
+
+        if (safeMimeType) {
+            // Override Content-Type to our safe value
+            res.set('Content-Type', safeMimeType);
+        } else {
+            // Unknown extension - force download to prevent execution
+            res.set('Content-Type', 'application/octet-stream');
+            res.set('Content-Disposition', 'attachment');
+        }
+
+        // Security: Prevent MIME type sniffing
+        res.set('X-Content-Type-Options', 'nosniff');
+
+        // Caching: Files have unique hashes, so they're immutable
+        // Cache for 1 year with immutable directive (Cloudflare respects this)
+        res.set('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+}));
 
 // JWT middleware with error handling
 app.use((req, res, next) => {
@@ -909,7 +969,21 @@ app.get('/users/me', requireRole('regular'), async (req, res) => {
 });
 
 // PATCH /users/me - Update own profile (Regular+)
-app.patch('/users/me', requireRole('regular'), upload.single('avatar'), async (req, res) => {
+app.patch('/users/me', requireRole('regular'), (req, res, next) => {
+    upload.single('avatar')(req, res, (err) => {
+        if (err) {
+            if (err instanceof multer.MulterError) {
+                if (err.code === 'LIMIT_FILE_SIZE') {
+                    return res.status(400).json({ error: 'File too large. Maximum size is 5MB' });
+                }
+                return res.status(400).json({ error: `Upload error: ${err.message}` });
+            }
+            // Custom error from fileFilter
+            return res.status(400).json({ error: err.message });
+        }
+        next();
+    });
+}, async (req, res) => {
     try {
         // Validate request (note: avatar handled separately by multer)
         const validation = validateRequest('PATCH /users/me', { ...req.body, avatar: req.file });
