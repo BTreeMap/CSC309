@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { Gift, CalendarDays, Coins, ShoppingCart, Target } from 'lucide-react';
 import './PromotionsPage.css';
 
 const PromotionsPage = () => {
@@ -170,7 +171,7 @@ const PromotionsPage = () => {
                     <ErrorMessage message={error} onRetry={fetchPromotions} />
                 ) : promotions.length === 0 ? (
                     <EmptyState
-                        icon="🎁"
+                        icon={<Gift size={48} strokeWidth={1.5} />}
                         title="No promotions found"
                         description={hasFilters ? "No promotions match your filters." : "There are no active promotions at the moment."}
                         action={
@@ -205,7 +206,7 @@ const PromotionsPage = () => {
 
                                         <div className="promotion-details">
                                             <div className="detail-row">
-                                                <span className="detail-label">📅 Duration</span>
+                                                <span className="detail-label"><CalendarDays size={14} /> Duration</span>
                                                 <span className="detail-value">
                                                     {formatDate(promotion.startTime)} - {formatDate(promotion.endTime)}
                                                 </span>
@@ -215,7 +216,7 @@ const PromotionsPage = () => {
                                                 <>
                                                     {promotion.rate && (
                                                         <div className="detail-row">
-                                                            <span className="detail-label">💰 Rate</span>
+                                                            <span className="detail-label"><Coins size={14} /> Rate</span>
                                                             <span className="detail-value bonus">
                                                                 +{(promotion.rate * 100).toFixed(0)}% bonus points
                                                             </span>
@@ -223,7 +224,7 @@ const PromotionsPage = () => {
                                                     )}
                                                     {promotion.minSpending > 0 && (
                                                         <div className="detail-row">
-                                                            <span className="detail-label">🛒 Min Spending</span>
+                                                            <span className="detail-label"><ShoppingCart size={14} /> Min Spending</span>
                                                             <span className="detail-value">${promotion.minSpending}</span>
                                                         </div>
                                                     )}
@@ -232,7 +233,7 @@ const PromotionsPage = () => {
 
                                             {promotion.type === 'one-time' && (
                                                 <div className="detail-row">
-                                                    <span className="detail-label">🎯 Points</span>
+                                                    <span className="detail-label"><Target size={14} /> Points</span>
                                                     <span className="detail-value bonus">
                                                         +{promotion.points?.toLocaleString()} points
                                                     </span>

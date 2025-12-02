@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { ROLE_LABELS } from '../utils/constants';
+import { Users } from 'lucide-react';
 import '../styles/design-system.css';
 import './UsersListPage.css';
 
@@ -210,7 +211,7 @@ const UsersListPage = () => {
                     <ErrorMessage message={error} onRetry={fetchUsers} />
                 ) : users.length === 0 ? (
                     <EmptyState
-                        icon="👥"
+                        icon={<Users size={48} strokeWidth={1.5} />}
                         title="No users found"
                         description={hasFilters ? "No users match your filters." : "No users in the system."}
                         action={

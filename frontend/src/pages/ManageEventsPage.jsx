@@ -4,6 +4,7 @@ import { eventsAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { Calendar } from 'lucide-react';
 import './ManageEventsPage.css';
 
 const ManageEventsPage = () => {
@@ -196,7 +197,7 @@ const ManageEventsPage = () => {
                     <ErrorMessage message={error} onRetry={fetchEvents} />
                 ) : events.length === 0 ? (
                     <EmptyState
-                        icon="📅"
+                        icon={<Calendar size={48} strokeWidth={1.5} />}
                         title="No events yet"
                         description="Create your first event to engage users."
                         action={

@@ -1,6 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import {
+    LayoutDashboard,
+    Tag,
+    Calendar,
+    CreditCard,
+    PlusCircle,
+    CheckCircle,
+    UserPlus,
+    Users,
+    ClipboardList,
+    Target,
+    CalendarCog,
+    QrCode,
+    ArrowLeftRight,
+    Gift,
+    RefreshCw,
+    ChevronDown,
+    ChevronLeft,
+    ChevronRight,
+    Check,
+    User,
+    Pencil,
+    Lock,
+    LogOut
+} from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -117,7 +142,7 @@ const Sidebar = () => {
                 {/* Brand Header */}
                 <div className="sidebar-header">
                     <Link to="/dashboard" className="sidebar-brand">
-                        <span className="sidebar-brand-icon">🎁</span>
+                        <span className="sidebar-brand-icon"><Gift size={24} /></span>
                         <span className="sidebar-brand-text">Loyalty</span>
                     </Link>
                     <button
@@ -125,7 +150,7 @@ const Sidebar = () => {
                         onClick={() => setCollapsed(!collapsed)}
                         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                     >
-                        {collapsed ? '→' : '←'}
+                        {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
                     </button>
                 </div>
 
@@ -134,19 +159,19 @@ const Sidebar = () => {
                     {/* Main Section */}
                     <div className="sidebar-section">
                         <div className="sidebar-section-title">Main</div>
-                        <NavLink to="/dashboard" icon="📊" exact>Dashboard</NavLink>
-                        <NavLink to="/promotions" icon="🏷️">Promotions</NavLink>
-                        <NavLink to="/events" icon="📅">Events</NavLink>
-                        <NavLink to="/transactions" icon="💳">Transactions</NavLink>
+                        <NavLink to="/dashboard" icon={<LayoutDashboard size={18} />} exact>Dashboard</NavLink>
+                        <NavLink to="/promotions" icon={<Tag size={18} />}>Promotions</NavLink>
+                        <NavLink to="/events" icon={<Calendar size={18} />}>Events</NavLink>
+                        <NavLink to="/transactions" icon={<CreditCard size={18} />}>Transactions</NavLink>
                     </div>
 
                     {/* Cashier Section */}
                     {hasActiveRole('cashier') && (
                         <div className="sidebar-section">
                             <div className="sidebar-section-title">Cashier</div>
-                            <NavLink to="/cashier/transaction" icon="➕">Create Transaction</NavLink>
-                            <NavLink to="/cashier/redemption" icon="✅">Process Redemption</NavLink>
-                            <NavLink to="/register" icon="👤">Register User</NavLink>
+                            <NavLink to="/cashier/transaction" icon={<PlusCircle size={18} />}>Create Transaction</NavLink>
+                            <NavLink to="/cashier/redemption" icon={<CheckCircle size={18} />}>Process Redemption</NavLink>
+                            <NavLink to="/register" icon={<UserPlus size={18} />}>Register User</NavLink>
                         </div>
                     )}
 
@@ -154,19 +179,19 @@ const Sidebar = () => {
                     {hasActiveRole('manager') && (
                         <div className="sidebar-section">
                             <div className="sidebar-section-title">Manager</div>
-                            <NavLink to="/users" icon="👥">Users</NavLink>
-                            <NavLink to="/transactions/all" icon="📋">All Transactions</NavLink>
-                            <NavLink to="/promotions/manage" icon="🎯">Manage Promotions</NavLink>
-                            <NavLink to="/events/manage" icon="🗓️">Manage Events</NavLink>
+                            <NavLink to="/users" icon={<Users size={18} />}>Users</NavLink>
+                            <NavLink to="/transactions/all" icon={<ClipboardList size={18} />}>All Transactions</NavLink>
+                            <NavLink to="/promotions/manage" icon={<Target size={18} />}>Manage Promotions</NavLink>
+                            <NavLink to="/events/manage" icon={<CalendarCog size={18} />}>Manage Events</NavLink>
                         </div>
                     )}
 
                     {/* Personal Section */}
                     <div className="sidebar-section">
                         <div className="sidebar-section-title">Personal</div>
-                        <NavLink to="/my-qr" icon="📱">My QR Code</NavLink>
-                        <NavLink to="/transfer" icon="💸">Transfer Points</NavLink>
-                        <NavLink to="/redeem" icon="🎁">Redeem Points</NavLink>
+                        <NavLink to="/my-qr" icon={<QrCode size={18} />}>My QR Code</NavLink>
+                        <NavLink to="/transfer" icon={<ArrowLeftRight size={18} />}>Transfer Points</NavLink>
+                        <NavLink to="/redeem" icon={<Gift size={18} />}>Redeem Points</NavLink>
                     </div>
                 </nav>
 
@@ -180,9 +205,9 @@ const Sidebar = () => {
                                 onClick={() => setShowRoleMenu(!showRoleMenu)}
                                 title={collapsed ? `Role: ${getRoleDisplayName(activeRole)}` : undefined}
                             >
-                                <span className="sidebar-role-icon">🔄</span>
+                                <span className="sidebar-role-icon"><RefreshCw size={16} /></span>
                                 <span className="sidebar-role-text">{getRoleDisplayName(activeRole)}</span>
-                                <span className="sidebar-role-arrow">▼</span>
+                                <span className="sidebar-role-arrow"><ChevronDown size={14} /></span>
                             </button>
 
                             {showRoleMenu && (
@@ -195,7 +220,7 @@ const Sidebar = () => {
                                             onClick={() => handleRoleSwitch(role)}
                                         >
                                             {getRoleDisplayName(role)}
-                                            {activeRole === role && <span className="check-mark">✓</span>}
+                                            {activeRole === role && <span className="check-mark"><Check size={14} /></span>}
                                         </button>
                                     ))}
                                 </div>
@@ -220,7 +245,7 @@ const Sidebar = () => {
                                 <span className="sidebar-user-name">{user?.name || user?.utorid}</span>
                                 <span className="sidebar-user-points">{user?.points?.toLocaleString() || 0} pts</span>
                             </div>
-                            <span className="sidebar-user-arrow">▼</span>
+                            <span className="sidebar-user-arrow"><ChevronDown size={14} /></span>
                         </button>
 
                         {showUserMenu && (
@@ -237,7 +262,7 @@ const Sidebar = () => {
                                     className="sidebar-dropdown-item"
                                     onClick={() => setShowUserMenu(false)}
                                 >
-                                    <span className="menu-icon">👤</span>
+                                    <span className="menu-icon"><User size={16} /></span>
                                     View Profile
                                 </Link>
                                 <Link
@@ -245,7 +270,7 @@ const Sidebar = () => {
                                     className="sidebar-dropdown-item"
                                     onClick={() => setShowUserMenu(false)}
                                 >
-                                    <span className="menu-icon">✏️</span>
+                                    <span className="menu-icon"><Pencil size={16} /></span>
                                     Edit Profile
                                 </Link>
                                 <Link
@@ -253,7 +278,7 @@ const Sidebar = () => {
                                     className="sidebar-dropdown-item"
                                     onClick={() => setShowUserMenu(false)}
                                 >
-                                    <span className="menu-icon">🔒</span>
+                                    <span className="menu-icon"><Lock size={16} /></span>
                                     Change Password
                                 </Link>
                                 <div className="sidebar-dropdown-divider"></div>
@@ -264,7 +289,7 @@ const Sidebar = () => {
                                         setShowUserMenu(false);
                                     }}
                                 >
-                                    <span className="menu-icon">🚪</span>
+                                    <span className="menu-icon"><LogOut size={16} /></span>
                                     Logout
                                 </button>
                             </div>

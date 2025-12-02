@@ -4,6 +4,7 @@ import { promotionsAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { Gift } from 'lucide-react';
 import './ManagePromotionsPage.css';
 
 const ManagePromotionsPage = () => {
@@ -202,7 +203,7 @@ const ManagePromotionsPage = () => {
                     <ErrorMessage message={error} onRetry={fetchPromotions} />
                 ) : promotions.length === 0 ? (
                     <EmptyState
-                        icon="🎁"
+                        icon={<Gift size={48} strokeWidth={1.5} />}
                         title="No promotions yet"
                         description="Create your first promotion to engage customers."
                         action={

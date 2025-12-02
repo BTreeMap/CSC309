@@ -1,4 +1,5 @@
 import React from 'react';
+import { XCircle, AlertTriangle, Info } from 'lucide-react';
 import './ErrorMessage.css';
 
 const ErrorMessage = ({
@@ -7,9 +8,9 @@ const ErrorMessage = ({
     variant = 'error' // 'error', 'warning', 'info'
 }) => {
     const icons = {
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
+        error: <XCircle size={20} />,
+        warning: <AlertTriangle size={20} />,
+        info: <Info size={20} />
     };
 
     return (

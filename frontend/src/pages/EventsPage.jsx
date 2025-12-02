@@ -4,6 +4,7 @@ import { eventsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { Calendar, CheckCircle, Radio, MapPin, CalendarDays, Users, Gift } from 'lucide-react';
 import './EventsPage.css';
 
 const EventsPage = () => {
@@ -83,9 +84,9 @@ const EventsPage = () => {
         const startDate = new Date(event.startTime);
         const endDate = new Date(event.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', icon: '📅' };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended', icon: '✓' };
-        return { label: 'Happening Now', className: 'status-active', icon: '🔴' };
+        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', icon: <Calendar size={14} /> };
+        if (now > endDate) return { label: 'Ended', className: 'status-ended', icon: <CheckCircle size={14} /> };
+        return { label: 'Happening Now', className: 'status-active', icon: <Radio size={14} /> };
     };
 
     const formatDate = (dateString) => {
@@ -205,7 +206,7 @@ const EventsPage = () => {
                     <ErrorMessage message={error} onRetry={fetchEvents} />
                 ) : events.length === 0 ? (
                     <EmptyState
-                        icon="📅"
+                        icon={<Calendar size={48} strokeWidth={1.5} />}
                         title="No events found"
                         description={hasFilters ? "No events match your filters." : "There are no events at the moment."}
                         action={
@@ -230,7 +231,7 @@ const EventsPage = () => {
                                             </span>
                                             {event.pointsRemain > 0 && (
                                                 <span className="points-badge">
-                                                    🎁 {event.pointsRemain.toLocaleString()} pts
+                                                    <Gift size={14} /> {event.pointsRemain.toLocaleString()} pts
                                                 </span>
                                             )}
                                         </div>
@@ -243,17 +244,17 @@ const EventsPage = () => {
 
                                         <div className="event-details">
                                             <div className="detail-item">
-                                                <span className="detail-icon">📍</span>
+                                                <span className="detail-icon"><MapPin size={14} /></span>
                                                 <span className="detail-text">{event.location}</span>
                                             </div>
 
                                             <div className="detail-item">
-                                                <span className="detail-icon">🗓️</span>
+                                                <span className="detail-icon"><CalendarDays size={14} /></span>
                                                 <span className="detail-text">{formatDate(event.startTime)}</span>
                                             </div>
 
                                             <div className="detail-item">
-                                                <span className="detail-icon">👥</span>
+                                                <span className="detail-icon"><Users size={14} /></span>
                                                 <span className={`detail-text ${capacity.className}`}>
                                                     {event.numGuests} attending {capacity.text && `· ${capacity.text}`}
                                                 </span>

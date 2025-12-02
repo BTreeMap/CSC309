@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
+import { ShoppingCart, Gift, Settings, ArrowLeftRight, Calendar, ClipboardList } from 'lucide-react';
 import '../styles/design-system.css';
 import './AllTransactionsPage.css';
 
@@ -136,13 +137,13 @@ const AllTransactionsPage = () => {
 
     const getTransactionIcon = (type) => {
         const icons = {
-            purchase: '🛒',
-            redemption: '🎁',
-            adjustment: '⚙️',
-            transfer: '💸',
-            event: '📅',
+            purchase: <ShoppingCart size={18} />,
+            redemption: <Gift size={18} />,
+            adjustment: <Settings size={18} />,
+            transfer: <ArrowLeftRight size={18} />,
+            event: <Calendar size={18} />,
         };
-        return icons[type] || '📋';
+        return icons[type] || <ClipboardList size={18} />;
     };
 
     const totalPages = Math.ceil(totalCount / limit);
@@ -257,7 +258,7 @@ const AllTransactionsPage = () => {
                     <ErrorMessage message={error} onRetry={fetchTransactions} />
                 ) : transactions.length === 0 ? (
                     <EmptyState
-                        icon="📋"
+                        icon={<ClipboardList size={48} strokeWidth={1.5} />}
                         title="No transactions found"
                         description={hasActiveFilters ? "No transactions match your filters." : "No transactions in the system yet."}
                         action={
