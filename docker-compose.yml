@@ -13,6 +13,8 @@ services:
       - NODE_ENV=production
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - DATABASE_URL=file:/app/data/database.db
+      # Backend URL for absolute URLs (e.g., avatar images)
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:3000}
       # CORS: Set to your frontend URL (e.g., https://your-app.pages.dev)
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
       # Auto-migrate: Set to "true" to run migrations on startup

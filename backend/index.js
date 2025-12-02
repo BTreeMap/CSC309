@@ -40,6 +40,9 @@ if (!JWT_SECRET) {
     process.exit(1);
 }
 
+// Backend URL for absolute URLs (e.g., avatar images)
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+
 // Health check endpoint (before other middleware for fast response)
 app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -955,7 +958,7 @@ app.patch('/users/me', requireRole('regular'), upload.single('avatar'), async (r
         }
 
         if (req.file) {
-            updates.avatarUrl = `/uploads/${req.file.filename}`;
+            updates.avatarUrl = `${BACKEND_URL}/uploads/${req.file.filename}`;
         }
 
         // Double check we have updates
