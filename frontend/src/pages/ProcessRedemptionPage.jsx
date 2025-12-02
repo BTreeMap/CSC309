@@ -1,59 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog, QrScanner } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import './ProcessRedemptionPage.css';
 
 const ProcessRedemptionPage = () => {
-    const { id } = useParams();
-    const [searchParams] = useSearchParams();
+    const { transactionId } = useParams();
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     const [transaction, setTransaction] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-
-    // Check if coming from QR scan (would have token in URL)
-    const redemptionToken = searchParams.get('token');
+    const [showScanner, setShowScanner] = useState(false);
+    const [manualId, setManualId] = useState('');
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                // Fetch transaction details
-                const txn = await transactionsAPI.getTransaction(id);
-
-                // Verify it's a redemption transaction
-                if (txn.type !== 'redemption') {
-                    setError('This is not a redemption transaction');
-                    setLoading(false);
-                    return;
-                }
-
-                setTransaction(txn);
-
-                // Fetch user info
-                const user = await usersAPI.getUser(txn.utorid);
-                setUserInfo(user);
-            } catch (err) {
-                setError(err.response?.data?.error || 'Failed to load transaction');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (id) {
-            fetchData();
+        if (transactionId) {
+            fetchTransactionData(transactionId);
         }
-    }, [id]);
+    }, [transactionId]);
+
+    const fetchTransactionData = async (id) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Fetch transaction details
+            const txn = await transactionsAPI.getTransaction(id);
+
+            // Verify it's a redemption transaction
+            if (txn.type !== 'redemption') {
+                setError('This is not a redemption transaction');
+                setLoading(false);
+                return;
+            }
+
+            setTransaction(txn);
+
+            // Fetch user info
+            const user = await usersAPI.getUser(txn.utorid);
+            setUserInfo(user);
+        } catch (err) {
+            setError(err.response?.data?.error || 'Failed to load transaction');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleQrScan = (data) => {
+        setShowScanner(false);
+        if (data) {
+            // Navigate to the scanned transaction ID
+            const scannedId = data.trim();
+            navigate(`/cashier/redemption/${scannedId}`);
+        }
+    };
+
+    const handleManualLookup = () => {
+        if (!manualId.trim()) {
+            showToast('Please enter a redemption ID', 'error');
+            return;
+        }
+        navigate(`/cashier/redemption/${manualId.trim()}`);
+    };
 
     const handleProcess = async () => {
         setProcessing(true);
@@ -61,7 +76,7 @@ const ProcessRedemptionPage = () => {
         try {
             await transactionsAPI.processRedemption(transaction.id);
             showToast('Redemption processed successfully!', 'success');
-            navigate('/transactions');
+            navigate('/cashier/redemption');
         } catch (err) {
             showToast(err.response?.data?.error || 'Failed to process redemption', 'error');
         } finally {
@@ -80,6 +95,57 @@ const ProcessRedemptionPage = () => {
         });
     };
 
+    // If no transaction ID, show the scanner interface
+    if (!transactionId) {
+        return (
+            <Layout>
+                <div className="process-redemption-page">
+                    <div className="page-header">
+                        <h1>Process Redemption</h1>
+                        <p>Scan a customer's QR code to process their redemption request</p>
+                    </div>
+
+                    <div className="scanner-section">
+                        <button
+                            className="btn btn-primary btn-lg scan-qr-btn"
+                            onClick={() => setShowScanner(true)}
+                        >
+                            <span className="btn-icon">📷</span>
+                            Scan QR Code
+                        </button>
+
+                        <div className="manual-lookup">
+                            <p className="divider-text">or enter redemption ID manually</p>
+                            <div className="manual-input-group">
+                                <input
+                                    type="text"
+                                    value={manualId}
+                                    onChange={(e) => setManualId(e.target.value)}
+                                    placeholder="Enter Redemption ID"
+                                    className="form-input"
+                                    onKeyDown={(e) => e.key === 'Enter' && handleManualLookup()}
+                                />
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={handleManualLookup}
+                                >
+                                    Look Up
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <QrScanner
+                        isOpen={showScanner}
+                        onScan={handleQrScan}
+                        onClose={() => setShowScanner(false)}
+                        onError={(err) => console.warn('QR Scanner error:', err)}
+                    />
+                </div>
+            </Layout>
+        );
+    }
+
     if (loading) {
         return (
             <Layout>
@@ -93,7 +159,7 @@ const ProcessRedemptionPage = () => {
             <Layout>
                 <div className="process-redemption-page">
                     <ErrorMessage message={error} />
-                    <button onClick={() => navigate(-1)} className="btn btn-secondary">
+                    <button onClick={() => navigate('/cashier/redemption')} className="btn btn-secondary">
                         ← Go Back
                     </button>
                 </div>
@@ -108,7 +174,7 @@ const ProcessRedemptionPage = () => {
                     <div className="not-found">
                         <h2>Redemption Not Found</h2>
                         <p>The redemption request could not be found.</p>
-                        <button onClick={() => navigate(-1)} className="btn btn-secondary">
+                        <button onClick={() => navigate('/cashier/redemption')} className="btn btn-secondary">
                             ← Go Back
                         </button>
                     </div>
@@ -123,7 +189,7 @@ const ProcessRedemptionPage = () => {
     return (
         <Layout>
             <div className="process-redemption-page">
-                <button onClick={() => navigate(-1)} className="btn btn-ghost back-button">
+                <button onClick={() => navigate('/cashier/redemption')} className="btn btn-ghost back-button">
                     ← Back
                 </button>
 

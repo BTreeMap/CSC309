@@ -1,0 +1,209 @@
+/* ==========================================================================
+   QR Scanner Component - Modal with camera viewport
+   ========================================================================== */
+
+.qr-scanner-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-4);
+    animation: fadeIn var(--duration-fast) var(--ease-out);
+}
+
+.qr-scanner-content {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp var(--duration-normal) var(--ease-out);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.qr-scanner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.qr-scanner-header h2 {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    margin: 0;
+    color: var(--color-text-primary);
+}
+
+.qr-scanner-close {
+    background: none;
+    border: none;
+    font-size: var(--text-xl);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    transition: all var(--duration-fast) var(--ease-out);
+    line-height: 1;
+}
+
+.qr-scanner-close:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+/* Body */
+.qr-scanner-body {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-5);
+    gap: var(--space-4);
+}
+
+/* Viewport */
+.qr-scanner-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.qr-scanner-viewport video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* qr-scanner library adds a scan region overlay div */
+.qr-scanner-viewport .scan-region-highlight {
+    border: 2px solid var(--color-accent) !important;
+    border-radius: var(--radius-md);
+}
+
+.qr-scanner-viewport .scan-region-highlight-svg {
+    stroke: var(--color-success) !important;
+    stroke-width: 3 !important;
+}
+
+/* Loading overlay */
+.qr-scanner-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-tertiary);
+    gap: var(--space-3);
+}
+
+.qr-scanner-loading .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.qr-scanner-loading p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+}
+
+/* Error state */
+.qr-scanner-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    text-align: center;
+    gap: var(--space-4);
+}
+
+.qr-scanner-error .error-icon {
+    font-size: 3rem;
+    opacity: 0.6;
+}
+
+.qr-scanner-error p {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    margin: 0;
+    max-width: 280px;
+    line-height: var(--leading-relaxed);
+}
+
+/* Instructions */
+.qr-scanner-instructions {
+    text-align: center;
+}
+
+.qr-scanner-instructions p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+}
+
+/* Controls */
+.qr-scanner-controls {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+}
+
+.qr-scanner-controls .flash-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.qr-scanner-controls .flash-button.active {
+    background: var(--color-warning-light);
+    color: var(--color-warning);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .qr-scanner-modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .qr-scanner-content {
+        max-width: none;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        max-height: 85vh;
+    }
+}

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { transactionsAPI, usersAPI, promotionsAPI } from '../api';
 import Layout from '../components/Layout';
 import { useToast } from '../components/shared/ToastContext';
-import { ConfirmDialog } from '../components/shared';
+import { ConfirmDialog, QrScanner } from '../components/shared';
 import './CreateTransactionPage.css';
 
 const CreateTransactionPage = () => {
@@ -21,6 +21,7 @@ const CreateTransactionPage = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [calculatedPoints, setCalculatedPoints] = useState(null);
     const [error, setError] = useState(null);
+    const [showScanner, setShowScanner] = useState(false);
 
     const handleLookupUser = async () => {
         if (!utorid.trim()) {
@@ -122,8 +123,39 @@ const CreateTransactionPage = () => {
     };
 
     const handleScanQR = () => {
-        // In a real app, this would open a QR scanner
-        showToast('QR scanning would open camera here', 'info');
+        setShowScanner(true);
+    };
+
+    const handleQrScan = (data) => {
+        // Close scanner and set the scanned UTORid
+        setShowScanner(false);
+        if (data) {
+            setUtorid(data.trim());
+            // Auto-lookup the user after scanning
+            setError(null);
+            setUserInfo(null);
+            setLookupLoading(true);
+
+            usersAPI.getUser(data.trim())
+                .then(async (userData) => {
+                    setUserInfo(userData);
+                    // Also fetch available promotions
+                    const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
+                    const activePromos = (promoData.results || []).filter((p) => {
+                        const now = new Date();
+                        const end = new Date(p.endTime);
+                        return now <= end && p.type === 'automatic';
+                    });
+                    setAvailablePromotions(activePromos);
+                    showToast('Customer found!', 'success');
+                })
+                .catch((err) => {
+                    setError(err.response?.data?.error || 'User not found');
+                })
+                .finally(() => {
+                    setLookupLoading(false);
+                });
+        }
     };
 
     return (
@@ -295,6 +327,14 @@ const CreateTransactionPage = () => {
                         )
                     }
                     confirmText="Confirm Transaction"
+                />
+
+                {/* QR Scanner Modal */}
+                <QrScanner
+                    isOpen={showScanner}
+                    onScan={handleQrScan}
+                    onClose={() => setShowScanner(false)}
+                    onError={(err) => console.warn('QR Scanner error:', err)}
                 />
             </div>
         </Layout>
