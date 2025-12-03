@@ -1231,6 +1231,24 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        const targetUser = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { role: true, suspicious: true }
+        });
+
+        if (!targetUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (req.auth.role === 'manager') {
+            const targetRoleIndex = RoleOrderMap.get(targetUser.role);
+            const managerRoleIndex = RoleOrderMap.get('manager');
+            
+            if (targetRoleIndex >= managerRoleIndex) {
+                return res.status(403).json({ error: 'Managers cannot edit users with manager or superuser roles' });
+            }
+        }
+
         const { email, verified, suspicious, role } = req.body;
 
         // Check if at least one field is being updated
@@ -1275,11 +1293,6 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
 
             // Check if promoting to cashier - must verify user is not suspicious
             if (role === 'cashier') {
-                const targetUser = await prisma.user.findUnique({
-                    where: { id: userId },
-                    select: { suspicious: true }
-                });
-
                 // Check the final suspicious state (either current or being updated)
                 const willBeSuspicious = isDefined(suspicious) ? suspicious : targetUser.suspicious;
 
