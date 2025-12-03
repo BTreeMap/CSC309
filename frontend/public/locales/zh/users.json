@@ -23,6 +23,15 @@
     },
     "qrCode": {
         "title": "我的二维码",
-        "subtitle": "展示此二维码以赚取或兑换积分"
+        "subtitle": "展示此二维码进行交易或转账",
+        "download": "下载二维码",
+        "share": "分享二维码",
+        "howToUse": "如何使用您的二维码",
+        "forPurchases": "用于购物",
+        "forPurchasesDesc": "购物时向收银员展示此二维码以赚取积分。",
+        "forTransfers": "用于转账",
+        "forTransfersDesc": "其他用户可以扫描您的二维码向您发送积分。",
+        "keepItSafe": "妥善保管",
+        "keepItSafeDesc": "您的二维码包含您的用户ID。只与信任的人分享。"
     }
 }

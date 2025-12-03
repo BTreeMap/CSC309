@@ -82,6 +82,34 @@ const MyQRCodePage = () => {
                             {t('users:qrCode.download')}
                         </button>
                     </div>
+
+                    <div className="qr-code-instructions">
+                        <h2>{t('users:qrCode.howToUse')}</h2>
+
+                        <div className="instruction-item">
+                            <span className="instruction-icon">🛒</span>
+                            <div className="instruction-content">
+                                <h3>{t('users:qrCode.forPurchases')}</h3>
+                                <p>{t('users:qrCode.forPurchasesDesc')}</p>
+                            </div>
+                        </div>
+
+                        <div className="instruction-item">
+                            <span className="instruction-icon">💸</span>
+                            <div className="instruction-content">
+                                <h3>{t('users:qrCode.forTransfers')}</h3>
+                                <p>{t('users:qrCode.forTransfersDesc')}</p>
+                            </div>
+                        </div>
+
+                        <div className="instruction-item">
+                            <span className="instruction-icon">🔒</span>
+                            <div className="instruction-content">
+                                <h3>{t('users:qrCode.keepItSafe')}</h3>
+                                <p>{t('users:qrCode.keepItSafeDesc')}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Layout>

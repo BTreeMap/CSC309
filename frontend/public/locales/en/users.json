@@ -94,8 +94,15 @@
     },
     "qrCode": {
         "title": "My QR Code",
-        "subtitle": "Show this QR code to earn or redeem points",
+        "subtitle": "Show this QR code to make transactions or transfers",
         "download": "Download QR Code",
-        "share": "Share QR Code"
+        "share": "Share QR Code",
+        "howToUse": "How to use your QR Code",
+        "forPurchases": "For Purchases",
+        "forPurchasesDesc": "Show this QR code to the cashier when making a purchase to earn points.",
+        "forTransfers": "For Transfers",
+        "forTransfersDesc": "Another user can scan your QR code to send you points.",
+        "keepItSafe": "Keep it Safe",
+        "keepItSafeDesc": "Your QR code contains your user ID. Only share it with trusted parties."
     }
 }

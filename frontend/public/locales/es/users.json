@@ -81,8 +81,15 @@
     },
     "qrCode": {
         "title": "Mi código QR",
-        "subtitle": "Muestre este código QR para ganar o canjear puntos",
+        "subtitle": "Muestra este código QR para realizar transacciones o transferencias",
         "download": "Descargar código QR",
-        "share": "Compartir código QR"
+        "share": "Compartir código QR",
+        "howToUse": "Cómo usar tu código QR",
+        "forPurchases": "Para compras",
+        "forPurchasesDesc": "Muestra este código QR al cajero al hacer una compra para ganar puntos.",
+        "forTransfers": "Para transferencias",
+        "forTransfersDesc": "Otro usuario puede escanear tu código QR para enviarte puntos.",
+        "keepItSafe": "Mantenlo seguro",
+        "keepItSafeDesc": "Tu código QR contiene tu ID de usuario. Solo compártelo con personas de confianza."
     }
 }
