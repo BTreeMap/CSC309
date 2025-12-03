@@ -6,18 +6,30 @@ require('dotenv').config();
 const port = (() => {
     const args = process.argv;
 
-    if (args.length !== 3) {
-        console.error("usage: node index.js port");
-        process.exit(1);
+    if (args.length === 3) {
+        const num = parseInt(args[2], 10);
+        if (isNaN(num)) {
+            console.error("error: argument must be an integer.");
+            process.exit(1);
+        }
+        return num;
     }
 
-    const num = parseInt(args[2], 10);
-    if (isNaN(num)) {
-        console.error("error: argument must be an integer.");
-        process.exit(1);
+    if (args.length === 2) {
+        const envPort = process.env.PORT;
+        if (envPort) {
+            const num = parseInt(envPort, 10);
+            if (isNaN(num)) {
+                console.error("error: PORT environment variable must be an integer.");
+                process.exit(1);
+            }
+            return num;
+        }
+        return 3000;
     }
 
-    return num;
+    console.error("usage: node index.js [port]");
+    process.exit(1);
 })();
 
 const express = require("express");
@@ -54,7 +66,7 @@ app.get('/health', (_req, res) => {
 
 // CORS configuration for React frontend
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true

@@ -23,17 +23,47 @@ async function main() {
         return;
     }
 
-    console.log('Seeding database...');
+    console.log('Clearing all database tables...');
+    
+    // Delete all data in correct order (respecting foreign key constraints)
+    // 1. Delete junction/relation tables first
+    console.log('  - Deleting TransactionPromotion...');
+    await prisma.transactionPromotion.deleteMany({});
+    
+    console.log('  - Deleting UserPromotionUse...');
+    await prisma.userPromotionUse.deleteMany({});
+    
+    console.log('  - Deleting EventGuest...');
+    await prisma.eventGuest.deleteMany({});
+    
+    console.log('  - Deleting EventOrganizer...');
+    await prisma.eventOrganizer.deleteMany({});
+    
+    console.log('  - Deleting Transaction...');
+    await prisma.transaction.deleteMany({});
+    
+    console.log('  - Deleting ResetToken...');
+    await prisma.resetToken.deleteMany({});
+    
+    // 2. Delete main tables
+    console.log('  - Deleting Promotion...');
+    await prisma.promotion.deleteMany({});
+    
+    console.log('  - Deleting Event...');
+    await prisma.event.deleteMany({});
+    
+    console.log('  - Deleting User...');
+    await prisma.user.deleteMany({});
+    
+    console.log('✓ All tables cleared successfully!\n');
 
-    // Create test users
+    console.log('Creating test data...');
     const password = await bcrypt.hash('TestPass123!', 12);
 
     // Create superuser
-    await prisma.user.upsert({
-        where: { utorid: 'superuser' },
-        update: {},
-        create: {
-            utorid: 'superuser',
+    const superuser = await prisma.user.create({
+        data: {
+            utorid: 'superadm',
             name: 'Super User',
             email: 'super@mail.utoronto.ca',
             passwordBcrypt: password,
@@ -44,10 +74,8 @@ async function main() {
     });
 
     // Create manager
-    const manager = await prisma.user.upsert({
-        where: { utorid: 'manager' },
-        update: {},
-        create: {
+    const manager = await prisma.user.create({
+        data: {
             utorid: 'manager',
             name: 'Test Manager',
             email: 'manager@mail.utoronto.ca',
@@ -59,10 +87,8 @@ async function main() {
     });
 
     // Create cashier
-    await prisma.user.upsert({
-        where: { utorid: 'cashier' },
-        update: {},
-        create: {
+    const cashier = await prisma.user.create({
+        data: {
             utorid: 'cashier',
             name: 'Test Cashier',
             email: 'cashier@mail.utoronto.ca',
@@ -75,10 +101,8 @@ async function main() {
     });
 
     // Create regular user
-    await prisma.user.upsert({
-        where: { utorid: 'testuser' },
-        update: {},
-        create: {
+    const testuser = await prisma.user.create({
+        data: {
             utorid: 'testuser',
             name: 'Test User',
             email: 'user@mail.utoronto.ca',
@@ -89,9 +113,9 @@ async function main() {
         }
     });
 
-    // Create test promotions
+    console.log('Creating test promotions...');
     const now = new Date();
-    const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+    const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
     const autoPromo = await prisma.promotion.create({
         data: {
@@ -116,7 +140,7 @@ async function main() {
         }
     });
 
-    // Create test event
+    console.log('Creating test event...');
     const eventStart = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
     const eventEnd = new Date(eventStart.getTime() + 2 * 60 * 60 * 1000); // 2 hours later
 
@@ -141,7 +165,7 @@ async function main() {
 
     console.log('✓ Database seeded successfully!');
     console.log('\nTest Accounts (all use password: TestPass123!):');
-    console.log('  Superuser: superuser / super@mail.utoronto.ca');
+    console.log('  Superuser: superadm / super@mail.utoronto.ca');
     console.log('  Manager:   manager / manager@mail.utoronto.ca');
     console.log('  Cashier:   cashier / cashier@mail.utoronto.ca');
     console.log('  User:      testuser / user@mail.utoronto.ca');
