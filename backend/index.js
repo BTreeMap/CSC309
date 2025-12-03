@@ -1339,22 +1339,17 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             return res.status(400).json({ error: validation.error });
         }
 
-        let { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
+        const { utorid, type, spent: rawSpent, amount, relatedId, promotionIds: rawPromotionIds, remark } = req.body;
 
-        if (Array.isArray(promotionIds) && promotionIds.length === 0) {
-            promotionIds = undefined;
-        }
-
-        // Convert promotion IDs to numbers if they are strings
-        if (Array.isArray(promotionIds)) {
-            promotionIds = promotionIds.map(id => {
+        // Normalize promotionIds to always be an array of numbers
+        const promotionIds = (Array.isArray(rawPromotionIds) ? rawPromotionIds : [])
+            .map(id => {
                 const numId = typeof id === 'string' ? parseInt(id, 10) : id;
                 if (isNaN(numId)) {
                     throw new Error('Invalid promotion ID format');
                 }
                 return numId;
             });
-        }
 
         const user = await prisma.user.findUnique({ where: { utorid } });
         if (!user) {
@@ -1368,9 +1363,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
 
         if (type === 'purchase') {
             // Ensure spent is a number
-            if (typeof spent !== 'number') {
-                spent = parseFloat(spent);
-            }
+            const spent = typeof rawSpent === 'number' ? rawSpent : parseFloat(rawSpent);
             if (!isPositiveNumber(spent) || !isFinite(spent)) {
                 return res.status(400).json({ error: 'Spent amount must be a positive number' });
             }
@@ -1390,14 +1383,15 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             });
 
             // Validate and fetch manual promotions
-            let manualPromotions = [];
-            if (promotionIds && promotionIds.length > 0) {
-                manualPromotions = await prisma.promotion.findMany({
+            const manualPromotions = promotionIds.length > 0
+                ? await prisma.promotion.findMany({
                     where: {
                         id: { in: promotionIds }
                     }
-                });
+                })
+                : [];
 
+            if (promotionIds.length > 0) {
                 if (manualPromotions.length !== promotionIds.length) {
                     return res.status(400).json({ error: 'Invalid promotion IDs' });
                 }
@@ -1556,9 +1550,9 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                     remark,
                     createdById: req.auth.sub,
                     promotions: {
-                        create: promotionIds ? promotionIds.map(id => ({
+                        create: promotionIds.map(id => ({
                             promotionId: id
-                        })) : []
+                        }))
                     }
                 }
             });
@@ -1576,7 +1570,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                 type: transaction.type,
                 relatedId: transaction.relatedId ?? null,
                 remark: transaction.remark ?? '',
-                promotionIds: promotionIds ?? [],
+                promotionIds,
                 createdBy: creator.utorid
             });
 
