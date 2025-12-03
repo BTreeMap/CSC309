@@ -1,0 +1,130 @@
+{
+    "title": "Transacciones",
+    "list": {
+        "title": "Historial de transacciones",
+        "myTitle": "Mis transacciones",
+        "allTitle": "Todas las transacciones",
+        "searchPlaceholder": "Buscar transacciones...",
+        "noTransactions": "No se encontraron transacciones",
+        "columns": {
+            "id": "ID",
+            "type": "Tipo",
+            "amount": "Monto",
+            "points": "Puntos",
+            "user": "Usuario",
+            "createdBy": "Creado por",
+            "date": "Fecha",
+            "status": "Estado",
+            "description": "Descripción",
+            "actions": "Acciones"
+        }
+    },
+    "types": {
+        "purchase": "Compra",
+        "redemption": "Canje",
+        "transfer": "Transferencia",
+        "adjustment": "Ajuste",
+        "event": "Evento",
+        "promotion": "Promoción",
+        "refund": "Reembolso"
+    },
+    "status": {
+        "pending": "Pendiente",
+        "completed": "Completado",
+        "failed": "Fallido",
+        "cancelled": "Cancelado"
+    },
+    "create": {
+        "title": "Crear transacción",
+        "subtitle": "Procesar una nueva transacción para un cliente",
+        "utoridLabel": "UTORid del cliente",
+        "utoridPlaceholder": "Ingrese o escanee UTORid del cliente",
+        "scanQr": "Escanear código QR",
+        "amountLabel": "Monto de la transacción",
+        "amountPlaceholder": "Ingrese monto",
+        "typeLabel": "Tipo de transacción",
+        "descriptionLabel": "Descripción",
+        "descriptionPlaceholder": "Ingrese descripción de la transacción (opcional)",
+        "promotionLabel": "Aplicar promoción",
+        "promotionPlaceholder": "Seleccione una promoción",
+        "noPromotion": "Sin promoción",
+        "pointsPreview": "Puntos a ganar: {{points}}",
+        "submit": "Procesar transacción",
+        "submitting": "Procesando...",
+        "success": "Transacción procesada correctamente. El cliente ganó {{points}} puntos.",
+        "error": {
+            "userNotFound": "Cliente no encontrado",
+            "invalidAmount": "Monto inválido",
+            "generic": "No se pudo procesar la transacción"
+        }
+    },
+    "transfer": {
+        "title": "Transferir puntos",
+        "subtitle": "Enviar puntos a otro usuario",
+        "recipientLabel": "UTORid del destinatario",
+        "recipientPlaceholder": "Ingrese UTORid del destinatario",
+        "amountLabel": "Puntos a transferir",
+        "amountPlaceholder": "Ingrese cantidad",
+        "reasonLabel": "Motivo (opcional)",
+        "reasonPlaceholder": "Ingrese motivo de la transferencia",
+        "availablePoints": "Puntos disponibles: {{points}}",
+        "submit": "Transferir puntos",
+        "submitting": "Transfiriendo...",
+        "success": "Se transfirieron {{points}} puntos a {{recipient}} correctamente",
+        "error": {
+            "insufficientPoints": "Puntos insuficientes",
+            "userNotFound": "Destinatario no encontrado",
+            "selfTransfer": "No puede transferir puntos a sí mismo",
+            "invalidAmount": "Cantidad inválida",
+            "generic": "No se pudieron transferir los puntos"
+        }
+    },
+    "redemption": {
+        "title": "Canjear puntos",
+        "processTitle": "Procesar canje",
+        "subtitle": "Use sus puntos para obtener recompensas",
+        "processSubtitle": "Procesar solicitud de canje de un cliente",
+        "availablePoints": "Puntos disponibles: {{points}}",
+        "selectReward": "Seleccione una recompensa",
+        "customAmount": "Cantidad personalizada",
+        "pointsCost": "{{points}} puntos",
+        "cashValue": "Valor en efectivo: {{value}}",
+        "confirmTitle": "Confirmar canje",
+        "confirmMessage": "¿Canjear {{points}} puntos por {{reward}}?",
+        "submit": "Canjear",
+        "submitting": "Canjeando...",
+        "generateQr": "Generar QR de canje",
+        "scanQr": "Escanear QR del cliente",
+        "success": "Se canjearon {{points}} puntos correctamente",
+        "processSuccess": "Canje procesado correctamente",
+        "error": {
+            "insufficientPoints": "Puntos insuficientes para este canje",
+            "invalidCode": "Código de canje inválido",
+            "expired": "La solicitud de canje ha expirado",
+            "alreadyProcessed": "Este canje ya fue procesado",
+            "generic": "No se pudo procesar el canje"
+        }
+    },
+    "detail": {
+        "title": "Detalles de la transacción",
+        "id": "ID de transacción",
+        "type": "Tipo",
+        "amount": "Monto",
+        "points": "Puntos",
+        "user": "Usuario",
+        "createdBy": "Creado por",
+        "date": "Fecha",
+        "status": "Estado",
+        "description": "Descripción",
+        "promotion": "Promoción aplicada",
+        "relatedUser": "Usuario relacionado"
+    },
+    "filters": {
+        "type": "Tipo de transacción",
+        "status": "Estado",
+        "dateRange": "Rango de fechas",
+        "minAmount": "Monto mínimo",
+        "maxAmount": "Monto máximo",
+        "user": "Usuario"
+    }
+}

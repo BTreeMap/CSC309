@@ -1,0 +1,47 @@
+{
+    "required": "Este campo es obligatorio",
+    "email": "Por favor, ingrese una dirección de correo electrónico válida",
+    "minLength": "Debe tener al menos {{min}} caracteres",
+    "maxLength": "Debe tener como máximo {{max}} caracteres",
+    "min": "Debe ser al menos {{min}}",
+    "max": "Debe ser como máximo {{max}}",
+    "pattern": "Formato inválido",
+    "passwordMatch": "Las contraseñas no coinciden",
+    "passwordStrength": {
+        "weak": "La contraseña es muy débil",
+        "minLength": "La contraseña debe tener al menos {{min}} caracteres",
+        "uppercase": "La contraseña debe contener al menos una letra mayúscula",
+        "lowercase": "La contraseña debe contener al menos una letra minúscula",
+        "number": "La contraseña debe contener al menos un número",
+        "special": "La contraseña debe contener al menos un carácter especial"
+    },
+    "utorid": {
+        "required": "El UTORid es obligatorio",
+        "invalid": "Por favor, ingrese un UTORid válido",
+        "format": "El UTORid debe ser alfanumérico"
+    },
+    "points": {
+        "required": "La cantidad de puntos es obligatoria",
+        "positive": "Los puntos deben ser un número positivo",
+        "integer": "Los puntos deben ser un número entero",
+        "insufficient": "Puntos insuficientes",
+        "max": "Máximo {{max}} puntos permitidos"
+    },
+    "amount": {
+        "required": "El monto es obligatorio",
+        "positive": "El monto debe ser positivo",
+        "invalid": "Monto inválido"
+    },
+    "date": {
+        "required": "La fecha es obligatoria",
+        "invalid": "Fecha inválida",
+        "past": "La fecha no puede ser en el pasado",
+        "future": "La fecha no puede ser en el futuro",
+        "range": "La fecha de fin debe ser posterior a la fecha de inicio"
+    },
+    "file": {
+        "required": "El archivo es obligatorio",
+        "size": "El archivo debe ser menor a {{size}}",
+        "type": "Tipo de archivo inválido. Permitidos: {{types}}"
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "title": "Panel de control",
+    "welcome": "¡Bienvenido/a, {{name}}!",
+    "actingAs": "Actuando como: {{role}}",
+    "stats": {
+        "currentPoints": "Puntos actuales",
+        "accountStatus": "Estado de la cuenta",
+        "accountRole": "Rol de la cuenta",
+        "utorid": "UTORid",
+        "verified": "Verificado",
+        "pendingVerification": "Pendiente de verificación"
+    },
+    "quickActions": {
+        "title": "Acciones rápidas",
+        "myQr": "Mi código QR",
+        "myTransactions": "Mis transacciones",
+        "promotions": "Promociones",
+        "events": "Eventos",
+        "transfer": "Transferir puntos",
+        "redeem": "Canjear puntos",
+        "createTransaction": "Crear transacción",
+        "processRedemption": "Procesar canje",
+        "registerUser": "Registrar usuario",
+        "manageUsers": "Gestionar usuarios",
+        "allTransactions": "Todas las transacciones",
+        "managePromotions": "Gestionar promociones",
+        "manageEvents": "Gestionar eventos"
+    },
+    "profile": {
+        "title": "Perfil",
+        "viewProfile": "Ver perfil",
+        "editProfile": "Editar perfil",
+        "changePassword": "Cambiar contraseña"
+    }
+}

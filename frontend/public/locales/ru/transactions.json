@@ -1,0 +1,130 @@
+{
+    "title": "Транзакции",
+    "list": {
+        "title": "История транзакций",
+        "myTitle": "Мои транзакции",
+        "allTitle": "Все транзакции",
+        "searchPlaceholder": "Поиск транзакций...",
+        "noTransactions": "Транзакции не найдены",
+        "columns": {
+            "id": "ID",
+            "type": "Тип",
+            "amount": "Сумма",
+            "points": "Баллы",
+            "user": "Пользователь",
+            "createdBy": "Создано",
+            "date": "Дата",
+            "status": "Статус",
+            "description": "Описание",
+            "actions": "Действия"
+        }
+    },
+    "types": {
+        "purchase": "Покупка",
+        "redemption": "Погашение",
+        "transfer": "Перевод",
+        "adjustment": "Корректировка",
+        "event": "Событие",
+        "promotion": "Акция",
+        "refund": "Возврат"
+    },
+    "status": {
+        "pending": "В ожидании",
+        "completed": "Завершено",
+        "failed": "Ошибка",
+        "cancelled": "Отменено"
+    },
+    "create": {
+        "title": "Создать транзакцию",
+        "subtitle": "Обработать новую транзакцию для клиента",
+        "utoridLabel": "UTORid клиента",
+        "utoridPlaceholder": "Введите или отсканируйте UTORid клиента",
+        "scanQr": "Сканировать QR-код",
+        "amountLabel": "Сумма транзакции",
+        "amountPlaceholder": "Введите сумму",
+        "typeLabel": "Тип транзакции",
+        "descriptionLabel": "Описание",
+        "descriptionPlaceholder": "Введите описание транзакции (необязательно)",
+        "promotionLabel": "Применить акцию",
+        "promotionPlaceholder": "Выберите акцию",
+        "noPromotion": "Без акции",
+        "pointsPreview": "Баллов к начислению: {{points}}",
+        "submit": "Обработать транзакцию",
+        "submitting": "Обработка...",
+        "success": "Транзакция обработана успешно. Клиент получил {{points}} баллов.",
+        "error": {
+            "userNotFound": "Клиент не найден",
+            "invalidAmount": "Неверная сумма",
+            "generic": "Не удалось обработать транзакцию"
+        }
+    },
+    "transfer": {
+        "title": "Перевод баллов",
+        "subtitle": "Отправить баллы другому пользователю",
+        "recipientLabel": "UTORid получателя",
+        "recipientPlaceholder": "Введите UTORid получателя",
+        "amountLabel": "Баллов для перевода",
+        "amountPlaceholder": "Введите количество",
+        "reasonLabel": "Причина (необязательно)",
+        "reasonPlaceholder": "Введите причину перевода",
+        "availablePoints": "Доступно баллов: {{points}}",
+        "submit": "Перевести баллы",
+        "submitting": "Перевод...",
+        "success": "Успешно переведено {{points}} баллов пользователю {{recipient}}",
+        "error": {
+            "insufficientPoints": "Недостаточно баллов",
+            "userNotFound": "Получатель не найден",
+            "selfTransfer": "Нельзя перевести баллы себе",
+            "invalidAmount": "Неверное количество",
+            "generic": "Не удалось перевести баллы"
+        }
+    },
+    "redemption": {
+        "title": "Использовать баллы",
+        "processTitle": "Обработать погашение",
+        "subtitle": "Используйте ваши баллы для получения вознаграждений",
+        "processSubtitle": "Обработать запрос на погашение от клиента",
+        "availablePoints": "Доступно баллов: {{points}}",
+        "selectReward": "Выберите награду",
+        "customAmount": "Произвольная сумма",
+        "pointsCost": "{{points}} баллов",
+        "cashValue": "Денежный эквивалент: {{value}}",
+        "confirmTitle": "Подтвердите погашение",
+        "confirmMessage": "Использовать {{points}} баллов за {{reward}}?",
+        "submit": "Использовать",
+        "submitting": "Обработка...",
+        "generateQr": "Создать QR для погашения",
+        "scanQr": "Сканировать QR клиента",
+        "success": "Успешно использовано {{points}} баллов",
+        "processSuccess": "Погашение обработано успешно",
+        "error": {
+            "insufficientPoints": "Недостаточно баллов для этого погашения",
+            "invalidCode": "Неверный код погашения",
+            "expired": "Запрос на погашение истёк",
+            "alreadyProcessed": "Это погашение уже обработано",
+            "generic": "Не удалось обработать погашение"
+        }
+    },
+    "detail": {
+        "title": "Детали транзакции",
+        "id": "ID транзакции",
+        "type": "Тип",
+        "amount": "Сумма",
+        "points": "Баллы",
+        "user": "Пользователь",
+        "createdBy": "Создано",
+        "date": "Дата",
+        "status": "Статус",
+        "description": "Описание",
+        "promotion": "Применённая акция",
+        "relatedUser": "Связанный пользователь"
+    },
+    "filters": {
+        "type": "Тип транзакции",
+        "status": "Статус",
+        "dateRange": "Период",
+        "minAmount": "Мин. сумма",
+        "maxAmount": "Макс. сумма",
+        "user": "Пользователь"
+    }
+}

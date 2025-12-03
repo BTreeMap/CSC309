@@ -1,0 +1,160 @@
+{
+    "promotions": {
+        "title": "Promociones",
+        "manageTitle": "Gestionar promociones",
+        "list": {
+            "noPromotions": "No hay promociones disponibles",
+            "viewDetails": "Ver detalles",
+            "searchPlaceholder": "Buscar promociones..."
+        },
+        "card": {
+            "validFrom": "Válido desde {{date}}",
+            "validUntil": "Válido hasta {{date}}",
+            "expired": "Expirada",
+            "active": "Activa",
+            "upcoming": "Próxima",
+            "pointsMultiplier": "{{multiplier}}x puntos",
+            "bonusPoints": "+{{points}} puntos de bonificación",
+            "minPurchase": "Compra mín.: {{amount}}"
+        },
+        "detail": {
+            "title": "Detalles de la promoción",
+            "description": "Descripción",
+            "type": "Tipo",
+            "value": "Valor",
+            "validPeriod": "Período de validez",
+            "conditions": "Condiciones",
+            "terms": "Términos y condiciones",
+            "usageLimit": "Límite de uso",
+            "usageCount": "Veces usado"
+        },
+        "types": {
+            "multiplier": "Multiplicador de puntos",
+            "bonus": "Puntos de bonificación",
+            "discount": "Descuento",
+            "freeItem": "Artículo gratis"
+        },
+        "create": {
+            "title": "Crear promoción",
+            "nameLabel": "Nombre de la promoción",
+            "namePlaceholder": "Ingrese nombre de la promoción",
+            "descriptionLabel": "Descripción",
+            "descriptionPlaceholder": "Ingrese descripción de la promoción",
+            "typeLabel": "Tipo de promoción",
+            "valueLabel": "Valor",
+            "valuePlaceholder": "Ingrese valor",
+            "startDateLabel": "Fecha de inicio",
+            "endDateLabel": "Fecha de fin",
+            "minPurchaseLabel": "Compra mínima",
+            "minPurchasePlaceholder": "Ingrese monto mínimo de compra",
+            "usageLimitLabel": "Límite de uso (por usuario)",
+            "usageLimitPlaceholder": "Dejar vacío para ilimitado",
+            "submit": "Crear promoción",
+            "submitting": "Creando...",
+            "success": "Promoción creada correctamente",
+            "error": "No se pudo crear la promoción"
+        },
+        "edit": {
+            "title": "Editar promoción",
+            "submit": "Guardar cambios",
+            "submitting": "Guardando...",
+            "success": "Promoción actualizada correctamente",
+            "error": "No se pudo actualizar la promoción"
+        },
+        "delete": {
+            "title": "Eliminar promoción",
+            "message": "¿Está seguro de que desea eliminar esta promoción? Esta acción no se puede deshacer.",
+            "success": "Promoción eliminada correctamente",
+            "error": "No se pudo eliminar la promoción"
+        }
+    },
+    "events": {
+        "title": "Eventos",
+        "manageTitle": "Gestionar eventos",
+        "list": {
+            "noEvents": "No hay eventos disponibles",
+            "viewDetails": "Ver detalles",
+            "searchPlaceholder": "Buscar eventos...",
+            "upcoming": "Próximos eventos",
+            "past": "Eventos pasados",
+            "all": "Todos los eventos"
+        },
+        "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} lugares",
+            "spotsLeft": "{{count}} lugares disponibles",
+            "full": "Evento lleno",
+            "registered": "Registrado",
+            "ended": "Finalizado",
+            "cancelled": "Cancelado",
+            "points": "+{{points}} puntos"
+        },
+        "detail": {
+            "title": "Detalles del evento",
+            "description": "Descripción",
+            "dateTime": "Fecha y hora",
+            "location": "Ubicación",
+            "capacity": "Capacidad",
+            "pointsReward": "Recompensa en puntos",
+            "registrationDeadline": "Fecha límite de registro",
+            "attendees": "Asistentes",
+            "organizer": "Organizador"
+        },
+        "registration": {
+            "register": "Registrarse",
+            "registering": "Registrando...",
+            "unregister": "Cancelar registro",
+            "unregistering": "Cancelando...",
+            "registerSuccess": "Se registró en el evento correctamente",
+            "unregisterSuccess": "Registro cancelado",
+            "alreadyRegistered": "Ya está registrado",
+            "eventFull": "Este evento está lleno",
+            "registrationClosed": "El registro está cerrado",
+            "error": "No se pudo procesar el registro"
+        },
+        "create": {
+            "title": "Crear evento",
+            "nameLabel": "Nombre del evento",
+            "namePlaceholder": "Ingrese nombre del evento",
+            "descriptionLabel": "Descripción",
+            "descriptionPlaceholder": "Ingrese descripción del evento",
+            "dateLabel": "Fecha",
+            "timeLabel": "Hora",
+            "locationLabel": "Ubicación",
+            "locationPlaceholder": "Ingrese ubicación del evento",
+            "capacityLabel": "Capacidad máxima",
+            "capacityPlaceholder": "Ingrese máximo de asistentes",
+            "pointsLabel": "Recompensa en puntos",
+            "pointsPlaceholder": "Puntos por asistir",
+            "deadlineLabel": "Fecha límite de registro",
+            "submit": "Crear evento",
+            "submitting": "Creando...",
+            "success": "Evento creado correctamente",
+            "error": "No se pudo crear el evento"
+        },
+        "edit": {
+            "title": "Editar evento",
+            "submit": "Guardar cambios",
+            "submitting": "Guardando...",
+            "success": "Evento actualizado correctamente",
+            "error": "No se pudo actualizar el evento"
+        },
+        "delete": {
+            "title": "Eliminar evento",
+            "message": "¿Está seguro de que desea eliminar este evento? Todos los registros serán cancelados.",
+            "success": "Evento eliminado correctamente",
+            "error": "No se pudo eliminar el evento"
+        },
+        "manage": {
+            "attendees": "Gestionar asistentes",
+            "checkIn": "Registrar entrada",
+            "checkInSuccess": "Entrada del asistente registrada correctamente",
+            "markAttended": "Marcar como asistido",
+            "removeAttendee": "Eliminar asistente",
+            "sendReminder": "Enviar recordatorio",
+            "exportList": "Exportar lista de asistentes"
+        }
+    }
+}

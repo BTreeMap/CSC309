@@ -3,12 +3,14 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpBackend from 'i18next-http-backend';
 
-// Supported languages configuration
+// Supported languages configuration - UN Official Languages
 export const SUPPORTED_LANGUAGES = {
     en: { name: 'English', nativeName: 'English', dir: 'ltr' },
-    fr: { name: 'French', nativeName: 'Français', dir: 'ltr' },
-    zh: { name: 'Chinese', nativeName: '中文', dir: 'ltr' },
     ar: { name: 'Arabic', nativeName: 'العربية', dir: 'rtl' },
+    zh: { name: 'Chinese', nativeName: '中文', dir: 'ltr' },
+    fr: { name: 'French', nativeName: 'Français', dir: 'ltr' },
+    ru: { name: 'Russian', nativeName: 'Русский', dir: 'ltr' },
+    es: { name: 'Spanish', nativeName: 'Español', dir: 'ltr' },
 };
 
 export const DEFAULT_LANGUAGE = 'en';

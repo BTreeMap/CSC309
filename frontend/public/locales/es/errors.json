@@ -1,0 +1,34 @@
+{
+    "generic": "Ocurrió un error. Por favor, inténtelo de nuevo.",
+    "network": "Error de red. Por favor, verifique su conexión.",
+    "timeout": "Tiempo de espera agotado. Por favor, inténtelo de nuevo.",
+    "server": "Error del servidor. Por favor, inténtelo más tarde.",
+    "notFound": "El recurso solicitado no fue encontrado.",
+    "unauthorized": "No está autorizado para realizar esta acción.",
+    "forbidden": "Acceso denegado.",
+    "badRequest": "Solicitud inválida. Por favor, verifique los datos ingresados.",
+    "conflict": "Ocurrió un conflicto. El recurso puede haber sido modificado.",
+    "validation": "Por favor, corrija los errores e inténtelo de nuevo.",
+    "sessionExpired": "Su sesión ha expirado. Por favor, inicie sesión de nuevo.",
+    "maintenance": "El sistema está en mantenimiento. Por favor, inténtelo más tarde.",
+    "pageNotFound": {
+        "title": "Página no encontrada",
+        "message": "La página que busca no existe o ha sido movida.",
+        "backHome": "Ir al panel de control"
+    },
+    "unauthorized": {
+        "title": "No autorizado",
+        "message": "No tiene permiso para acceder a esta página.",
+        "backHome": "Ir al panel de control"
+    },
+    "serverError": {
+        "title": "Error del servidor",
+        "message": "Algo salió mal de nuestra parte. Por favor, inténtelo más tarde.",
+        "retry": "Intentar de nuevo"
+    },
+    "offline": {
+        "title": "Está sin conexión",
+        "message": "Por favor, verifique su conexión a internet e inténtelo de nuevo.",
+        "retry": "Reintentar"
+    }
+}

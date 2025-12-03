@@ -1,0 +1,52 @@
+{
+    "brand": "Программа лояльности",
+    "brandShort": "Лояльность",
+    "toggleMenu": "Переключить меню",
+    "toggleNavigation": "Переключить навигацию",
+    "collapseMenu": "Свернуть меню",
+    "expandMenu": "Развернуть меню",
+    "links": {
+        "dashboard": "Панель управления",
+        "promotions": "Акции",
+        "events": "События",
+        "transactions": "Транзакции",
+        "myQr": "Мой QR-код",
+        "transfer": "Перевести баллы",
+        "redeem": "Использовать баллы"
+    },
+    "groups": {
+        "main": "Главное",
+        "user": "Пользователь",
+        "cashier": "Кассир",
+        "manager": "Менеджер"
+    },
+    "cashier": {
+        "createTransaction": "Создать транзакцию",
+        "processRedemption": "Обработать погашение",
+        "registerUser": "Зарегистрировать пользователя"
+    },
+    "manager": {
+        "users": "Управление пользователями",
+        "allTransactions": "Все транзакции",
+        "managePromotions": "Управление акциями",
+        "manageEvents": "Управление событиями"
+    },
+    "user": {
+        "profile": "Профиль",
+        "editProfile": "Редактировать профиль",
+        "changePassword": "Изменить пароль",
+        "logout": "Выйти",
+        "switchRole": "Сменить роль"
+    },
+    "roles": {
+        "regular": "Обычный пользователь",
+        "regularShort": "Обычный",
+        "cashier": "Кассир",
+        "manager": "Менеджер",
+        "superuser": "Суперпользователь",
+        "actingAs": "Действует как: {{role}}"
+    },
+    "breadcrumb": {
+        "home": "Главная"
+    }
+}

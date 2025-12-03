@@ -1,0 +1,88 @@
+{
+    "title": "Usuarios",
+    "list": {
+        "title": "Gestión de usuarios",
+        "searchPlaceholder": "Buscar usuarios...",
+        "noUsers": "No se encontraron usuarios",
+        "columns": {
+            "utorid": "UTORid",
+            "name": "Nombre",
+            "email": "Correo electrónico",
+            "role": "Rol",
+            "points": "Puntos",
+            "status": "Estado",
+            "verified": "Verificado",
+            "createdAt": "Creado",
+            "actions": "Acciones"
+        }
+    },
+    "profile": {
+        "title": "Perfil",
+        "utorid": "UTORid",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "role": "Rol",
+        "points": "Puntos",
+        "birthday": "Cumpleaños",
+        "createdAt": "Miembro desde",
+        "verified": "Verificado",
+        "notVerified": "No verificado"
+    },
+    "edit": {
+        "title": "Editar perfil",
+        "nameLabel": "Nombre completo",
+        "namePlaceholder": "Ingrese su nombre completo",
+        "emailLabel": "Dirección de correo electrónico",
+        "emailPlaceholder": "Ingrese su dirección de correo electrónico",
+        "birthdayLabel": "Cumpleaños",
+        "avatarLabel": "Foto de perfil",
+        "submit": "Guardar cambios",
+        "submitting": "Guardando...",
+        "success": "Perfil actualizado correctamente",
+        "error": "No se pudo actualizar el perfil"
+    },
+    "roles": {
+        "regular": "Usuario regular",
+        "cashier": "Cajero",
+        "manager": "Gerente",
+        "superuser": "Superusuario"
+    },
+    "status": {
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "verified": "Verificado",
+        "pending": "Pendiente"
+    },
+    "actions": {
+        "view": "Ver usuario",
+        "edit": "Editar usuario",
+        "delete": "Eliminar usuario",
+        "verify": "Verificar usuario",
+        "changeRole": "Cambiar rol",
+        "resetPassword": "Restablecer contraseña",
+        "adjustPoints": "Ajustar puntos"
+    },
+    "delete": {
+        "title": "Eliminar usuario",
+        "message": "¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.",
+        "success": "Usuario eliminado correctamente",
+        "error": "No se pudo eliminar el usuario"
+    },
+    "adjustPoints": {
+        "title": "Ajustar puntos",
+        "currentPoints": "Puntos actuales",
+        "adjustmentLabel": "Cantidad de ajuste",
+        "adjustmentPlaceholder": "Ingrese puntos (positivo o negativo)",
+        "reasonLabel": "Motivo",
+        "reasonPlaceholder": "Ingrese motivo del ajuste",
+        "submit": "Aplicar ajuste",
+        "success": "Puntos ajustados correctamente",
+        "error": "No se pudieron ajustar los puntos"
+    },
+    "qrCode": {
+        "title": "Mi código QR",
+        "subtitle": "Muestre este código QR para ganar o canjear puntos",
+        "download": "Descargar código QR",
+        "share": "Compartir código QR"
+    }
+}

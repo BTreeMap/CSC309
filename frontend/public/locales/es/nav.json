@@ -1,0 +1,52 @@
+{
+    "brand": "Programa de Fidelidad",
+    "brandShort": "Fidelidad",
+    "toggleMenu": "Alternar menú",
+    "toggleNavigation": "Alternar navegación",
+    "collapseMenu": "Contraer menú",
+    "expandMenu": "Expandir menú",
+    "links": {
+        "dashboard": "Panel de control",
+        "promotions": "Promociones",
+        "events": "Eventos",
+        "transactions": "Transacciones",
+        "myQr": "Mi código QR",
+        "transfer": "Transferir puntos",
+        "redeem": "Canjear puntos"
+    },
+    "groups": {
+        "main": "Principal",
+        "user": "Usuario",
+        "cashier": "Cajero",
+        "manager": "Gerente"
+    },
+    "cashier": {
+        "createTransaction": "Crear transacción",
+        "processRedemption": "Procesar canje",
+        "registerUser": "Registrar usuario"
+    },
+    "manager": {
+        "users": "Gestionar usuarios",
+        "allTransactions": "Todas las transacciones",
+        "managePromotions": "Gestionar promociones",
+        "manageEvents": "Gestionar eventos"
+    },
+    "user": {
+        "profile": "Perfil",
+        "editProfile": "Editar perfil",
+        "changePassword": "Cambiar contraseña",
+        "logout": "Cerrar sesión",
+        "switchRole": "Cambiar rol"
+    },
+    "roles": {
+        "regular": "Usuario regular",
+        "regularShort": "Regular",
+        "cashier": "Cajero",
+        "manager": "Gerente",
+        "superuser": "Superusuario",
+        "actingAs": "Actuando como: {{role}}"
+    },
+    "breadcrumb": {
+        "home": "Inicio"
+    }
+}

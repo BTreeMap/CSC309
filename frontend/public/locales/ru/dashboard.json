@@ -1,0 +1,35 @@
+{
+    "title": "Панель управления",
+    "welcome": "Добро пожаловать, {{name}}!",
+    "actingAs": "Действует как: {{role}}",
+    "stats": {
+        "currentPoints": "Текущие баллы",
+        "accountStatus": "Статус аккаунта",
+        "accountRole": "Роль аккаунта",
+        "utorid": "UTORid",
+        "verified": "Подтверждён",
+        "pendingVerification": "Ожидает подтверждения"
+    },
+    "quickActions": {
+        "title": "Быстрые действия",
+        "myQr": "Мой QR-код",
+        "myTransactions": "Мои транзакции",
+        "promotions": "Акции",
+        "events": "События",
+        "transfer": "Перевести баллы",
+        "redeem": "Использовать баллы",
+        "createTransaction": "Создать транзакцию",
+        "processRedemption": "Обработать погашение",
+        "registerUser": "Зарегистрировать пользователя",
+        "manageUsers": "Управление пользователями",
+        "allTransactions": "Все транзакции",
+        "managePromotions": "Управление акциями",
+        "manageEvents": "Управление событиями"
+    },
+    "profile": {
+        "title": "Профиль",
+        "viewProfile": "Просмотреть профиль",
+        "editProfile": "Редактировать профиль",
+        "changePassword": "Изменить пароль"
+    }
+}

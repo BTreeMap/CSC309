@@ -1,0 +1,160 @@
+{
+    "promotions": {
+        "title": "Акции",
+        "manageTitle": "Управление акциями",
+        "list": {
+            "noPromotions": "Нет доступных акций",
+            "viewDetails": "Подробнее",
+            "searchPlaceholder": "Поиск акций..."
+        },
+        "card": {
+            "validFrom": "Действует с {{date}}",
+            "validUntil": "Действует до {{date}}",
+            "expired": "Истекла",
+            "active": "Активна",
+            "upcoming": "Скоро",
+            "pointsMultiplier": "{{multiplier}}x баллов",
+            "bonusPoints": "+{{points}} бонусных баллов",
+            "minPurchase": "Мин. покупка: {{amount}}"
+        },
+        "detail": {
+            "title": "Детали акции",
+            "description": "Описание",
+            "type": "Тип",
+            "value": "Значение",
+            "validPeriod": "Период действия",
+            "conditions": "Условия",
+            "terms": "Условия и положения",
+            "usageLimit": "Лимит использования",
+            "usageCount": "Использовано раз"
+        },
+        "types": {
+            "multiplier": "Множитель баллов",
+            "bonus": "Бонусные баллы",
+            "discount": "Скидка",
+            "freeItem": "Бесплатный товар"
+        },
+        "create": {
+            "title": "Создать акцию",
+            "nameLabel": "Название акции",
+            "namePlaceholder": "Введите название акции",
+            "descriptionLabel": "Описание",
+            "descriptionPlaceholder": "Введите описание акции",
+            "typeLabel": "Тип акции",
+            "valueLabel": "Значение",
+            "valuePlaceholder": "Введите значение",
+            "startDateLabel": "Дата начала",
+            "endDateLabel": "Дата окончания",
+            "minPurchaseLabel": "Минимальная покупка",
+            "minPurchasePlaceholder": "Введите минимальную сумму покупки",
+            "usageLimitLabel": "Лимит использования (на пользователя)",
+            "usageLimitPlaceholder": "Оставьте пустым для неограниченного",
+            "submit": "Создать акцию",
+            "submitting": "Создание...",
+            "success": "Акция успешно создана",
+            "error": "Не удалось создать акцию"
+        },
+        "edit": {
+            "title": "Редактировать акцию",
+            "submit": "Сохранить изменения",
+            "submitting": "Сохранение...",
+            "success": "Акция успешно обновлена",
+            "error": "Не удалось обновить акцию"
+        },
+        "delete": {
+            "title": "Удалить акцию",
+            "message": "Вы уверены, что хотите удалить эту акцию? Это действие нельзя отменить.",
+            "success": "Акция успешно удалена",
+            "error": "Не удалось удалить акцию"
+        }
+    },
+    "events": {
+        "title": "События",
+        "manageTitle": "Управление событиями",
+        "list": {
+            "noEvents": "Нет доступных событий",
+            "viewDetails": "Подробнее",
+            "searchPlaceholder": "Поиск событий...",
+            "upcoming": "Предстоящие события",
+            "past": "Прошедшие события",
+            "all": "Все события"
+        },
+        "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} мест",
+            "spotsLeft": "Осталось {{count}} мест",
+            "full": "Мест нет",
+            "registered": "Зарегистрирован",
+            "ended": "Завершено",
+            "cancelled": "Отменено",
+            "points": "+{{points}} баллов"
+        },
+        "detail": {
+            "title": "Детали события",
+            "description": "Описание",
+            "dateTime": "Дата и время",
+            "location": "Место",
+            "capacity": "Вместимость",
+            "pointsReward": "Награда в баллах",
+            "registrationDeadline": "Крайний срок регистрации",
+            "attendees": "Участники",
+            "organizer": "Организатор"
+        },
+        "registration": {
+            "register": "Зарегистрироваться",
+            "registering": "Регистрация...",
+            "unregister": "Отменить регистрацию",
+            "unregistering": "Отмена...",
+            "registerSuccess": "Вы успешно зарегистрировались на событие",
+            "unregisterSuccess": "Регистрация отменена",
+            "alreadyRegistered": "Вы уже зарегистрированы",
+            "eventFull": "Событие заполнено",
+            "registrationClosed": "Регистрация закрыта",
+            "error": "Не удалось обработать регистрацию"
+        },
+        "create": {
+            "title": "Создать событие",
+            "nameLabel": "Название события",
+            "namePlaceholder": "Введите название события",
+            "descriptionLabel": "Описание",
+            "descriptionPlaceholder": "Введите описание события",
+            "dateLabel": "Дата",
+            "timeLabel": "Время",
+            "locationLabel": "Место",
+            "locationPlaceholder": "Введите место проведения",
+            "capacityLabel": "Максимальная вместимость",
+            "capacityPlaceholder": "Введите максимальное число участников",
+            "pointsLabel": "Награда в баллах",
+            "pointsPlaceholder": "Баллы за участие",
+            "deadlineLabel": "Крайний срок регистрации",
+            "submit": "Создать событие",
+            "submitting": "Создание...",
+            "success": "Событие успешно создано",
+            "error": "Не удалось создать событие"
+        },
+        "edit": {
+            "title": "Редактировать событие",
+            "submit": "Сохранить изменения",
+            "submitting": "Сохранение...",
+            "success": "Событие успешно обновлено",
+            "error": "Не удалось обновить событие"
+        },
+        "delete": {
+            "title": "Удалить событие",
+            "message": "Вы уверены, что хотите удалить это событие? Все регистрации будут отменены.",
+            "success": "Событие успешно удалено",
+            "error": "Не удалось удалить событие"
+        },
+        "manage": {
+            "attendees": "Управление участниками",
+            "checkIn": "Отметить присутствие",
+            "checkInSuccess": "Участник успешно отмечен",
+            "markAttended": "Отметить как посетившего",
+            "removeAttendee": "Удалить участника",
+            "sendReminder": "Отправить напоминание",
+            "exportList": "Экспортировать список участников"
+        }
+    }
+}
