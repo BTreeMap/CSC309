@@ -1,10 +1,34 @@
 {
     "generic": "Une erreur s'est produite. Veuillez réessayer.",
     "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+    "timeout": "Délai d'attente dépassé. Veuillez réessayer.",
+    "server": "Erreur serveur. Veuillez réessayer plus tard.",
     "notFound": "La ressource demandée n'a pas été trouvée.",
-    "unauthorized": {
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "forbidden": "Accès refusé.",
+    "badRequest": "Requête invalide. Veuillez vérifier vos données.",
+    "conflict": "Un conflit s'est produit. La ressource a peut-être été modifiée.",
+    "validation": "Veuillez corriger les erreurs et réessayer.",
+    "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
+    "maintenance": "Le système est en maintenance. Veuillez réessayer plus tard.",
+    "pageNotFound": {
+        "title": "Page non trouvée",
+        "message": "La page que vous recherchez n'existe pas ou a été déplacée.",
+        "backHome": "Aller au tableau de bord"
+    },
+    "unauthorizedPage": {
         "title": "Non autorisé",
         "message": "Vous n'avez pas la permission d'accéder à cette page.",
-        "backHome": "Retour au tableau de bord"
+        "backHome": "Aller au tableau de bord"
+    },
+    "serverError": {
+        "title": "Erreur serveur",
+        "message": "Quelque chose s'est mal passé de notre côté. Veuillez réessayer plus tard.",
+        "retry": "Réessayer"
+    },
+    "offline": {
+        "title": "Vous êtes hors ligne",
+        "message": "Veuillez vérifier votre connexion internet et réessayer.",
+        "retry": "Réessayer"
     }
 }

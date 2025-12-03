@@ -16,7 +16,7 @@
         "message": "La página que busca no existe o ha sido movida.",
         "backHome": "Ir al panel de control"
     },
-    "unauthorized": {
+    "unauthorizedPage": {
         "title": "No autorizado",
         "message": "No tiene permiso para acceder a esta página.",
         "backHome": "Ir al panel de control"

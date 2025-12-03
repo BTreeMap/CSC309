@@ -77,16 +77,11 @@ i18n
         interpolation: {
             // React already escapes values
             escapeValue: false,
-            // Format function for dates, numbers, etc.
-            format: (value, format, lng) => {
-                if (value instanceof Date) {
-                    return new Intl.DateTimeFormat(lng, getDateFormatOptions(format)).format(value);
-                }
-                if (typeof value === 'number') {
-                    return new Intl.NumberFormat(lng, getNumberFormatOptions(format)).format(value);
-                }
-                return value;
-            },
+            // Use built-in Intl formatting (i18next >= 21.3.0)
+            // Format dates with: {{val, datetime}}
+            // Format numbers with: {{val, number}}
+            // Format currency with: {{val, currency(USD)}}
+            // Format relative time with: {{val, relativetime}}
         },
 
         // Debug mode (disable in production)
@@ -95,30 +90,6 @@ i18n
         // Load all namespaces initially for better UX (can be changed to lazy load)
         partialBundledLanguages: true,
     });
-
-// Helper function to get date format options
-function getDateFormatOptions(format) {
-    const formats = {
-        short: { dateStyle: 'short' },
-        medium: { dateStyle: 'medium' },
-        long: { dateStyle: 'long' },
-        full: { dateStyle: 'full' },
-        time: { timeStyle: 'short' },
-        datetime: { dateStyle: 'medium', timeStyle: 'short' },
-    };
-    return formats[format] || formats.medium;
-}
-
-// Helper function to get number format options
-function getNumberFormatOptions(format) {
-    const formats = {
-        currency: { style: 'currency', currency: 'USD' },
-        percent: { style: 'percent' },
-        decimal: { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-        integer: { maximumFractionDigits: 0 },
-    };
-    return formats[format] || {};
-}
 
 // Helper to get current language direction
 export const getCurrentDirection = () => {

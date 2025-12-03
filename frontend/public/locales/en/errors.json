@@ -16,7 +16,7 @@
         "message": "The page you are looking for doesn't exist or has been moved.",
         "backHome": "Go to Dashboard"
     },
-    "unauthorized": {
+    "unauthorizedPage": {
         "title": "Unauthorized",
         "message": "You don't have permission to access this page.",
         "backHome": "Go to Dashboard"

@@ -11,11 +11,11 @@ const UnauthorizedPage = () => {
       <div className="unauthorized-container">
         <div className="unauthorized-content">
           <h1>403</h1>
-          <h2>{t('errors:unauthorized.title')}</h2>
-          <p>{t('errors:unauthorized.message')}</p>
+          <h2>{t('errors:unauthorizedPage.title')}</h2>
+          <p>{t('errors:unauthorizedPage.message')}</p>
           <div className="unauthorized-actions">
             <Link to="/dashboard" className="btn btn-primary">
-              {t('errors:unauthorized.backHome')}
+              {t('errors:unauthorizedPage.backHome')}
             </Link>
             <Link to="/login" className="btn btn-secondary">
               {t('auth:login.submit')}
