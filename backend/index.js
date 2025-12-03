@@ -42,10 +42,7 @@ if (!JWT_SECRET) {
 
 // Backend URL for absolute URLs (e.g., avatar images)
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
-const resolveRelativeUrl = (relativePath) => {
-    const url = new URL(relativePath, BACKEND_URL);
-    return url.toString();
-}
+const resolveRelativeUrl = (relativePath) => new URL(relativePath, BACKEND_URL).toString();
 
 // Health check endpoint (before other middleware for fast response)
 app.get('/health', (_req, res) => {
@@ -167,9 +164,7 @@ const RoleOrderMap = RoleOrder.reduce((acc, role, index) => {
 }, new Map());
 
 // Helper: validate role
-const isValidRole = (role) => {
-    return RoleOrderMap.has(role);
-}
+const isValidRole = (role) => RoleOrderMap.has(role);
 
 // Helper: check minimum role
 const hasRole = (minRole) => {
@@ -212,60 +207,33 @@ const requireRole = (minRole) => {
 }
 
 // Helper: validate UTORid
-const isValidUtorid = (utorid) => {
-    if (typeof utorid !== 'string') {
-        return false;
-    }
-    return /^[a-zA-Z0-9]{7,8}$/.test(utorid);
-}
+const isValidUtorid = (utorid) => typeof utorid === 'string' && /^[a-zA-Z0-9]{7,8}$/.test(utorid);
 
 // Helper: validate name
-const isValidName = (name) => {
-    if (typeof name !== 'string') {
-        return false;
-    }
-    return 1 <= name.length && name.length <= 50;
-}
+const isValidName = (name) => typeof name === 'string' && name.length >= 1 && name.length <= 50;
 
 // Helper: validate email is UofT
-const isValidUofTEmail = (email) => {
-    if (typeof email !== 'string') {
-        return false;
-    }
-    return email.endsWith('@mail.utoronto.ca') || email.endsWith('@utoronto.ca');
-}
+const isValidUofTEmail = (email) => typeof email === 'string' && (email.endsWith('@mail.utoronto.ca') || email.endsWith('@utoronto.ca'));
 
 // Helper: password complexity check
-const isValidPassword = (password) => {
-    if (typeof password !== 'string') {
-        return false;
-    }
-    return password.length >= 8 &&
-        password.length <= 20 &&
-        /[A-Z]/.test(password) &&
-        /[a-z]/.test(password) &&
-        /[0-9]/.test(password) &&
-        /[^A-Za-z0-9]/.test(password);
-}
+const isValidPassword = (password) =>
+    typeof password === 'string' &&
+    password.length >= 8 &&
+    password.length <= 20 &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[^A-Za-z0-9]/.test(password);
 
 // Helper: validate date format (YYYY-MM-DD)
-const isValidDate = (date) => {
-    if (typeof date !== 'string') {
-        return false;
-    }
-    return /^\d{4}-\d{2}-\d{2}$/.test(date);
-}
+const isValidDate = (date) => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date);
 
 // Helper: validate boolean string (for query parameters)
-const isBooleanString = (value) => {
-    return value === 'true' || value === 'false';
-}
+const isBooleanString = (value) => value === 'true' || value === 'false';
 
 // Helper: validate ISO 8601 timestamp
 const isValidISOTimestamp = (timestamp) => {
-    if (typeof timestamp !== 'string') {
-        return false;
-    }
+    if (typeof timestamp !== 'string') return false;
     try {
         const date = new Date(timestamp);
         if (date.toISOString() !== timestamp) {
@@ -273,61 +241,46 @@ const isValidISOTimestamp = (timestamp) => {
             console.warn(`Warning: Timestamp "${timestamp}" is not in canonical ISO format "${date.toISOString()}"`);
         }
         return !isNaN(date.getTime());
-    }
-    catch {
+    } catch {
         return false;
     }
-}
+};
 
 // Helper: validate positive number
-const isPositiveNumber = (value) => {
-    return typeof value === 'number' && value > 0;
-}
+const isPositiveNumber = (value) => typeof value === 'number' && value > 0;
 
 // Helper: validate positive integer
-const isPositiveInteger = (value) => {
-    return typeof value === 'number' && Number.isInteger(value) && value > 0;
-}
+const isPositiveInteger = (value) => typeof value === 'number' && Number.isInteger(value) && value > 0;
 
 // Helper: validate non-negative integer (>= 0)
-const isNonNegativeInteger = (value) => {
-    return typeof value === 'number' && Number.isInteger(value) && value >= 0;
-}
+const isNonNegativeInteger = (value) => typeof value === 'number' && Number.isInteger(value) && value >= 0;
 
 // Helper: validate positive integer string (for query parameters)
 const isPositiveIntegerString = (value) => {
-    if (typeof value !== 'string') {
-        return false;
-    }
+    if (typeof value !== 'string') return false;
     const num = parseInt(value, 10);
     return !isNaN(num) && num > 0 && num.toString() === value;
-}
+};
 
 // Helper: validate number string (for query parameters)
 const isNumberString = (value) => {
-    if (typeof value !== 'string') {
-        return false;
-    }
+    if (typeof value !== 'string') return false;
     const num = parseFloat(value);
     return !isNaN(num) && isFinite(num);
-}
+};
 
 // Helper: validate transaction type
-const isValidTransactionType = (type) => {
-    const validTypes = ['purchase', 'adjustment', 'redemption', 'transfer', 'event'];
-    return typeof type === 'string' && validTypes.includes(type);
-}
+const VALID_TRANSACTION_TYPES = ['purchase', 'adjustment', 'redemption', 'transfer', 'event'];
+const isValidTransactionType = (type) => typeof type === 'string' && VALID_TRANSACTION_TYPES.includes(type);
 
 // Helper: validate operator
-const isValidOperator = (operator) => {
-    const validOperators = ['gte', 'lte'];
-    return typeof operator === 'string' && validOperators.includes(operator);
-}
+const VALID_OPERATORS = ['gte', 'lte'];
+const isValidOperator = (operator) => typeof operator === 'string' && VALID_OPERATORS.includes(operator);
 
 // Helper: validate array of numbers
 const isArrayOfNumbers = (arr) => {
     if (!Array.isArray(arr)) return false;
-    return arr.every(item => {
+    return arr.every((item) => {
         if (typeof item === 'number') return true;
         if (typeof item === 'string') {
             const num = parseInt(item, 10);
@@ -335,7 +288,7 @@ const isArrayOfNumbers = (arr) => {
         }
         return false;
     });
-}
+};
 
 // Helper: calculate points from spending
 const calculatePoints = (spent, promotions = []) => {
@@ -343,27 +296,25 @@ const calculatePoints = (spent, promotions = []) => {
         return 0;
     }
     // Use Math.floor to match frontend calculation: Math.floor(spent * 4)
-    let basePoints = Math.floor(spent * 4);
-    let bonusPoints = 0;
-
-    for (const promo of promotions) {
+    const basePoints = Math.floor(spent * 4);
+    const bonusPoints = promotions.reduce((acc, promo) => {
+        let bonus = 0;
         if (promo.rate && isFinite(promo.rate)) {
-            bonusPoints += Math.floor(basePoints * promo.rate);
+            bonus += Math.floor(basePoints * promo.rate);
         }
         if (promo.points && isFinite(promo.points)) {
-            bonusPoints += Math.floor(promo.points);
+            bonus += Math.floor(promo.points);
         }
-    }
+        return acc + bonus;
+    }, 0);
 
     const total = basePoints + bonusPoints;
     return Math.max(0, Math.floor(total));
-}
+};
 
 // Helper: validate promotion type
-const isValidPromotionType = (type) => {
-    const validTypes = ['automatic', 'one-time'];
-    return typeof type === 'string' && validTypes.includes(type);
-}
+const VALID_PROMOTION_TYPES = ['automatic', 'one-time'];
+const isValidPromotionType = (type) => typeof type === 'string' && VALID_PROMOTION_TYPES.includes(type);
 
 // Helper: validate field type against validator
 const validateField = (validator, value) => {
@@ -374,27 +325,19 @@ const validateField = (validator, value) => {
         return validator(value);
     }
     throw new Error('Invalid validator type');
-}
+};
 
 // Helper: check if value is a non-empty string
-const isNonEmptyString = (value) => {
-    return typeof value === 'string' && value !== '';
-}
+const isNonEmptyString = (value) => typeof value === 'string' && value !== '';
 
 // Helper: check if value is nullish (null or undefined)
-const isNullish = (value) => {
-    return value === null || value === undefined;
-}
+const isNullish = (value) => value === null || value === undefined;
 
 // Helper: check if value is defined and not null
-const isDefined = (value) => {
-    return !isNullish(value);
-}
+const isDefined = (value) => !isNullish(value);
 
 // Helper: validate nullable value with a validator function
-const isNullableOr = (validator) => {
-    return (value) => isNullish(value) || validator(value);
-}
+const isNullableOr = (validator) => (value) => isNullish(value) || validator(value);
 
 // Endpoint-specific field validators
 const EndpointValidators = {
@@ -1089,7 +1032,7 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
 app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) => {
     try {
         const identifier = req.params.identifier.trim();
-        
+
         if (!identifier) {
             return res.status(400).json({ error: 'Invalid identifier' });
         }
@@ -1256,7 +1199,7 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
         if (req.auth.role === 'manager') {
             const targetRoleIndex = RoleOrderMap.get(targetUser.role);
             const managerRoleIndex = RoleOrderMap.get('manager');
-            
+
             if (targetRoleIndex >= managerRoleIndex) {
                 return res.status(403).json({ error: 'Managers cannot edit users with manager or superuser roles' });
             }
@@ -1397,11 +1340,11 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
 
         let { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
-        
+
         if (Array.isArray(promotionIds) && promotionIds.length === 0) {
             promotionIds = undefined;
         }
-        
+
         // Convert promotion IDs to numbers if they are strings
         if (Array.isArray(promotionIds)) {
             promotionIds = promotionIds.map(id => {
@@ -1496,11 +1439,11 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             const allPromotionIds = Array.from(new Set(allPromotions.map(p => p.id)));
 
             const earned = calculatePoints(spent, allPromotions);
-            
+
             if (!Number.isInteger(earned) || earned < 0 || !isFinite(earned)) {
                 return res.status(400).json({ error: 'Invalid points calculation' });
             }
-            
+
             const isSuspicious = creator.suspicious;
 
             // Use database transaction to ensure atomicity
@@ -1511,7 +1454,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                     unique: uniquePromotionIds
                 });
             }
-            
+
             const transaction = await prisma.$transaction(async (tx) => {
                 // Mark one-time promotions as used
                 const oneTimePromotions = manualPromotions.filter(p => p.type === 'onetime');
@@ -1644,12 +1587,12 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         console.error('Create transaction error:', error);
         console.error('Error stack:', error.stack);
         console.error('Request body:', req.body);
-        
+
         // Handle specific error messages
         if (error.message === 'One-time promotion already used') {
             return res.status(400).json({ error: error.message });
         }
-        
+
         // Handle Prisma errors
         if (error.code === 'P2002') {
             // Check if it's a TransactionPromotion unique constraint error
@@ -1658,7 +1601,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             }
             return res.status(400).json({ error: 'Duplicate entry detected' });
         }
-        
+
         res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
