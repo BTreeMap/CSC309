@@ -6,30 +6,18 @@ require('dotenv').config();
 const port = (() => {
     const args = process.argv;
 
-    if (args.length === 3) {
-        const num = parseInt(args[2], 10);
-        if (isNaN(num)) {
-            console.error("error: argument must be an integer.");
-            process.exit(1);
-        }
-        return num;
+    if (args.length !== 3) {
+        console.error("usage: node index.js port");
+        process.exit(1);
     }
 
-    if (args.length === 2) {
-        const envPort = process.env.PORT;
-        if (envPort) {
-            const num = parseInt(envPort, 10);
-            if (isNaN(num)) {
-                console.error("error: PORT environment variable must be an integer.");
-                process.exit(1);
-            }
-            return num;
-        }
-        return 3000;
+    const num = parseInt(args[2], 10);
+    if (isNaN(num)) {
+        console.error("error: argument must be an integer.");
+        process.exit(1);
     }
 
-    console.error("usage: node index.js [port]");
-    process.exit(1);
+    return num;
 })();
 
 const express = require("express");
@@ -66,7 +54,7 @@ app.get('/health', (_req, res) => {
 
 // CORS configuration for React frontend
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -348,7 +336,7 @@ const calculatePoints = (spent, promotions = []) => {
 
     for (const promo of promotions) {
         if (promo.rate) {
-            bonusPoints += Math.round(spent * promo.rate * 100);
+            bonusPoints += Math.floor(basePoints * promo.rate);
         }
         if (promo.points) {
             bonusPoints += promo.points;
@@ -1330,6 +1318,9 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
 
         const creator = await prisma.user.findUnique({ where: { id: req.auth.sub } });
+        if (!creator) {
+            return res.status(404).json({ error: 'Creator not found' });
+        }
 
         if (type === 'purchase') {
             if (!isPositiveNumber(spent)) {
@@ -1410,21 +1401,26 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             const earned = calculatePoints(spent, allPromotions);
             const isSuspicious = creator.suspicious;
 
+            const transactionData = {
+                userId: user.id,
+                type: 'purchase',
+                amount: earned,
+                spent: spent,
+                suspicious: isSuspicious,
+                remark,
+                createdById: req.auth.sub,
+            };
+
+            if (allPromotionIds.length > 0) {
+                transactionData.promotions = {
+                    create: allPromotionIds.map(id => ({
+                        promotionId: id
+                    }))
+                };
+            }
+
             const transaction = await prisma.transaction.create({
-                data: {
-                    userId: user.id,
-                    type: 'purchase',
-                    amount: earned,
-                    spent: spent,
-                    suspicious: isSuspicious,
-                    remark,
-                    createdById: req.auth.sub,
-                    promotions: {
-                        create: allPromotionIds.map(id => ({
-                            promotionId: id
-                        }))
-                    }
-                },
+                data: transactionData,
                 include: {
                     promotions: {
                         include: {
@@ -1447,6 +1443,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                 utorid: user.utorid,
                 type: transaction.type,
                 spent: transaction.spent,
+                points: isSuspicious ? 0 : transaction.amount,
                 earned: isSuspicious ? 0 : transaction.amount,
                 remark: transaction.remark ?? '',
                 promotionIds: allPromotionIds,
@@ -1511,7 +1508,9 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
     } catch (error) {
         console.error('Create transaction error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error stack:', error.stack);
+        console.error('Request body:', req.body);
+        res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
 
@@ -1946,6 +1945,8 @@ app.post('/users/:userId/transactions', requireRole('regular'), async (req, res)
         // Validate request
         const validation = validateRequest('POST /users/:userId/transactions', req.body);
         if (!validation.valid) {
+            console.error('Validation failed:', validation.error);
+            console.error('Request body:', req.body);
             return res.status(400).json({ error: validation.error });
         }
 
@@ -2034,7 +2035,10 @@ app.post('/users/:userId/transactions', requireRole('regular'), async (req, res)
         });
     } catch (error) {
         console.error('Transfer error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error stack:', error.stack);
+        console.error('Request body:', req.body);
+        console.error('Request params:', req.params);
+        res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
 

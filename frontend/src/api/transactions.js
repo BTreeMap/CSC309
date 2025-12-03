@@ -49,11 +49,14 @@ export const transactionsAPI = {
   },
 
   createTransfer: async (userId, amount, remark) => {
-    const response = await apiClient.post(`/users/${userId}/transactions`, {
+    const payload = {
       type: 'transfer',
       amount,
-      remark,
-    });
+    };
+    if (remark) {
+      payload.remark = remark;
+    }
+    const response = await apiClient.post(`/users/${userId}/transactions`, payload);
     return response.data;
   },
 
