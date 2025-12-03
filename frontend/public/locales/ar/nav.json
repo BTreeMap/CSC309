@@ -1,0 +1,52 @@
+{
+    "brand": "برنامج الولاء",
+    "brandShort": "الولاء",
+    "toggleMenu": "تبديل القائمة",
+    "toggleNavigation": "تبديل التنقل",
+    "collapseMenu": "طي القائمة",
+    "expandMenu": "توسيع القائمة",
+    "links": {
+        "dashboard": "لوحة التحكم",
+        "promotions": "العروض الترويجية",
+        "events": "الفعاليات",
+        "transactions": "المعاملات",
+        "myQr": "رمز QR الخاص بي",
+        "transfer": "تحويل النقاط",
+        "redeem": "استبدال النقاط"
+    },
+    "groups": {
+        "main": "الرئيسية",
+        "user": "المستخدم",
+        "cashier": "أمين الصندوق",
+        "manager": "المدير"
+    },
+    "cashier": {
+        "createTransaction": "إنشاء معاملة",
+        "processRedemption": "معالجة الاستبدال",
+        "registerUser": "تسجيل مستخدم"
+    },
+    "manager": {
+        "users": "إدارة المستخدمين",
+        "allTransactions": "جميع المعاملات",
+        "managePromotions": "إدارة العروض",
+        "manageEvents": "إدارة الفعاليات"
+    },
+    "user": {
+        "profile": "الملف الشخصي",
+        "editProfile": "تعديل الملف الشخصي",
+        "changePassword": "تغيير كلمة المرور",
+        "logout": "تسجيل الخروج",
+        "switchRole": "تبديل الدور"
+    },
+    "roles": {
+        "regular": "مستخدم عادي",
+        "regularShort": "عادي",
+        "cashier": "أمين صندوق",
+        "manager": "مدير",
+        "superuser": "مستخدم متميز",
+        "actingAs": "يعمل كـ: {{role}}"
+    },
+    "breadcrumb": {
+        "home": "الرئيسية"
+    }
+}

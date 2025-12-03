@@ -1,0 +1,27 @@
+{
+    "title": "المعاملات",
+    "list": {
+        "title": "سجل المعاملات",
+        "myTitle": "معاملاتي",
+        "allTitle": "جميع المعاملات",
+        "noTransactions": "لم يتم العثور على معاملات"
+    },
+    "types": {
+        "purchase": "شراء",
+        "redemption": "استبدال",
+        "transfer": "تحويل",
+        "adjustment": "تعديل"
+    },
+    "create": {
+        "title": "إنشاء معاملة",
+        "success": "تمت معالجة المعاملة بنجاح. حصل العميل على {{points}} نقطة."
+    },
+    "transfer": {
+        "title": "تحويل النقاط",
+        "success": "تم تحويل {{points}} نقطة بنجاح إلى {{recipient}}"
+    },
+    "redemption": {
+        "title": "استبدال النقاط",
+        "success": "تم استبدال {{points}} نقطة بنجاح"
+    }
+}

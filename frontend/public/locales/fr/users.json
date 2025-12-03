@@ -1,0 +1,28 @@
+{
+    "title": "Utilisateurs",
+    "list": {
+        "title": "Gestion des utilisateurs",
+        "searchPlaceholder": "Rechercher des utilisateurs...",
+        "noUsers": "Aucun utilisateur trouvé"
+    },
+    "profile": {
+        "title": "Profil",
+        "utorid": "UTORid",
+        "name": "Nom",
+        "email": "E-mail",
+        "role": "Rôle",
+        "points": "Points",
+        "verified": "Vérifié",
+        "notVerified": "Non vérifié"
+    },
+    "roles": {
+        "regular": "Utilisateur régulier",
+        "cashier": "Caissier",
+        "manager": "Gestionnaire",
+        "superuser": "Super utilisateur"
+    },
+    "qrCode": {
+        "title": "Mon code QR",
+        "subtitle": "Montrez ce code QR pour gagner ou échanger des points"
+    }
+}

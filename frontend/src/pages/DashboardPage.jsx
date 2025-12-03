@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
@@ -29,6 +30,7 @@ import {
 import './DashboardPage.css';
 
 const DashboardPage = () => {
+  const { t } = useTranslation(['dashboard', 'nav', 'common']);
   const { user, activeRole, updateUser } = useAuth();
   const [loading, setLoading] = useState(true);
 
@@ -57,25 +59,25 @@ const DashboardPage = () => {
   // Role-specific quick actions
   const getQuickActions = () => {
     const baseActions = [
-      { to: '/my-qr', icon: <QrCode size={24} />, text: 'My QR Code' },
-      { to: '/transactions', icon: <ClipboardList size={24} />, text: 'My Transactions' },
-      { to: '/promotions', icon: <Gift size={24} />, text: 'Promotions' },
-      { to: '/events', icon: <Calendar size={24} />, text: 'Events' },
-      { to: '/transfer', icon: <ArrowLeftRight size={24} />, text: 'Transfer Points' },
-      { to: '/redeem', icon: <Target size={24} />, text: 'Redeem Points' },
+      { to: '/my-qr', icon: <QrCode size={24} />, text: t('dashboard:quickActions.myQr') },
+      { to: '/transactions', icon: <ClipboardList size={24} />, text: t('dashboard:quickActions.myTransactions') },
+      { to: '/promotions', icon: <Gift size={24} />, text: t('dashboard:quickActions.promotions') },
+      { to: '/events', icon: <Calendar size={24} />, text: t('dashboard:quickActions.events') },
+      { to: '/transfer', icon: <ArrowLeftRight size={24} />, text: t('dashboard:quickActions.transfer') },
+      { to: '/redeem', icon: <Target size={24} />, text: t('dashboard:quickActions.redeem') },
     ];
 
     const cashierActions = [
-      { to: '/cashier/transaction', icon: <CreditCard size={24} />, text: 'Create Transaction' },
-      { to: '/cashier/redemption', icon: <CheckCircle size={24} />, text: 'Process Redemption' },
-      { to: '/register', icon: <UserPlus size={24} />, text: 'Register User' },
+      { to: '/cashier/transaction', icon: <CreditCard size={24} />, text: t('dashboard:quickActions.createTransaction') },
+      { to: '/cashier/redemption', icon: <CheckCircle size={24} />, text: t('dashboard:quickActions.processRedemption') },
+      { to: '/register', icon: <UserPlus size={24} />, text: t('dashboard:quickActions.registerUser') },
     ];
 
     const managerActions = [
-      { to: '/users', icon: <Users size={24} />, text: 'Manage Users' },
-      { to: '/transactions/all', icon: <BarChart3 size={24} />, text: 'All Transactions' },
-      { to: '/promotions/manage', icon: <Tag size={24} />, text: 'Manage Promotions' },
-      { to: '/events/manage', icon: <CalendarCog size={24} />, text: 'Manage Events' },
+      { to: '/users', icon: <Users size={24} />, text: t('dashboard:quickActions.manageUsers') },
+      { to: '/transactions/all', icon: <BarChart3 size={24} />, text: t('dashboard:quickActions.allTransactions') },
+      { to: '/promotions/manage', icon: <Tag size={24} />, text: t('dashboard:quickActions.managePromotions') },
+      { to: '/events/manage', icon: <CalendarCog size={24} />, text: t('dashboard:quickActions.manageEvents') },
     ];
 
     if (activeRole === 'superuser' || activeRole === 'manager') {
@@ -87,24 +89,18 @@ const DashboardPage = () => {
   };
 
   const getRoleDisplayName = (role) => {
-    const names = {
-      regular: 'Regular User',
-      cashier: 'Cashier',
-      manager: 'Manager',
-      superuser: 'Superuser'
-    };
-    return names[role] || role;
+    return t(`nav:roles.${role}`, { defaultValue: role });
   };
 
   return (
     <Layout>
       <div className="dashboard-page">
         <div className="dashboard-header">
-          <h1>Welcome, {user?.name || user?.utorid}!</h1>
+          <h1>{t('dashboard:welcome', { name: user?.name || user?.utorid })}</h1>
           <p className="dashboard-subtitle">
             {activeRole !== 'regular' && (
               <span className="active-role-badge">
-                Acting as: {getRoleDisplayName(activeRole)}
+                {t('dashboard:actingAs', { role: getRoleDisplayName(activeRole) })}
               </span>
             )}
           </p>
@@ -114,7 +110,7 @@ const DashboardPage = () => {
           <div className="stat-card points-card">
             <div className="stat-icon"><Coins size={28} /></div>
             <div className="stat-content">
-              <h3>Current Points</h3>
+              <h3>{t('dashboard:stats.currentPoints')}</h3>
               <p className="stat-value">{user?.points?.toLocaleString() || 0}</p>
             </div>
           </div>
@@ -122,9 +118,9 @@ const DashboardPage = () => {
           <div className="stat-card">
             <div className="stat-icon"><ShieldCheck size={28} /></div>
             <div className="stat-content">
-              <h3>Account Status</h3>
+              <h3>{t('dashboard:stats.accountStatus')}</h3>
               <p className={`stat-value ${user?.verified ? 'verified' : 'pending'}`}>
-                {user?.verified ? 'Verified' : 'Pending Verification'}
+                {user?.verified ? t('dashboard:stats.verified') : t('dashboard:stats.pendingVerification')}
               </p>
             </div>
           </div>
@@ -132,7 +128,7 @@ const DashboardPage = () => {
           <div className="stat-card">
             <div className="stat-icon"><User size={28} /></div>
             <div className="stat-content">
-              <h3>Account Role</h3>
+              <h3>{t('dashboard:stats.accountRole')}</h3>
               <p className="stat-value">{getRoleDisplayName(user?.role)}</p>
             </div>
           </div>
@@ -140,14 +136,14 @@ const DashboardPage = () => {
           <div className="stat-card">
             <div className="stat-icon"><BadgeCheck size={28} /></div>
             <div className="stat-content">
-              <h3>UTORid</h3>
+              <h3>{t('dashboard:stats.utorid')}</h3>
               <p className="stat-value utorid">{user?.utorid}</p>
             </div>
           </div>
         </div>
 
         <div className="dashboard-quick-actions">
-          <h2>Quick Actions</h2>
+          <h2>{t('dashboard:quickActions.title')}</h2>
           <div className="quick-actions-grid">
             {getQuickActions().map((action, index) => (
               <Link key={index} to={action.to} className="quick-action-card">
@@ -160,19 +156,19 @@ const DashboardPage = () => {
 
         {/* Profile Quick Link */}
         <div className="dashboard-profile-section">
-          <h2>Profile</h2>
+          <h2>{t('dashboard:profile.title')}</h2>
           <div className="profile-actions">
             <Link to="/profile" className="profile-link">
               <span className="profile-icon"><Settings size={20} /></span>
-              <span>View Profile</span>
+              <span>{t('dashboard:profile.viewProfile')}</span>
             </Link>
             <Link to="/profile/edit" className="profile-link">
               <span className="profile-icon"><Pencil size={20} /></span>
-              <span>Edit Profile</span>
+              <span>{t('dashboard:profile.editProfile')}</span>
             </Link>
             <Link to="/profile/password" className="profile-link">
               <span className="profile-icon"><Lock size={20} /></span>
-              <span>Change Password</span>
+              <span>{t('dashboard:profile.changePassword')}</span>
             </Link>
           </div>
         </div>

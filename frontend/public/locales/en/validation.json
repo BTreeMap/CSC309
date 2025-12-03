@@ -1,0 +1,47 @@
+{
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be at most {{max}} characters",
+    "min": "Must be at least {{min}}",
+    "max": "Must be at most {{max}}",
+    "pattern": "Invalid format",
+    "passwordMatch": "Passwords do not match",
+    "passwordStrength": {
+        "weak": "Password is too weak",
+        "minLength": "Password must be at least {{min}} characters",
+        "uppercase": "Password must contain at least one uppercase letter",
+        "lowercase": "Password must contain at least one lowercase letter",
+        "number": "Password must contain at least one number",
+        "special": "Password must contain at least one special character"
+    },
+    "utorid": {
+        "required": "UTORid is required",
+        "invalid": "Please enter a valid UTORid",
+        "format": "UTORid must be alphanumeric"
+    },
+    "points": {
+        "required": "Points amount is required",
+        "positive": "Points must be a positive number",
+        "integer": "Points must be a whole number",
+        "insufficient": "Insufficient points",
+        "max": "Maximum {{max}} points allowed"
+    },
+    "amount": {
+        "required": "Amount is required",
+        "positive": "Amount must be positive",
+        "invalid": "Invalid amount"
+    },
+    "date": {
+        "required": "Date is required",
+        "invalid": "Invalid date",
+        "past": "Date cannot be in the past",
+        "future": "Date cannot be in the future",
+        "range": "End date must be after start date"
+    },
+    "file": {
+        "required": "File is required",
+        "size": "File must be smaller than {{size}}",
+        "type": "Invalid file type. Allowed: {{types}}"
+    }
+}

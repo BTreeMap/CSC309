@@ -1,0 +1,25 @@
+{
+    "promotions": {
+        "title": "العروض الترويجية",
+        "manageTitle": "إدارة العروض",
+        "list": {
+            "noPromotions": "لا توجد عروض متاحة"
+        },
+        "card": {
+            "expired": "منتهية",
+            "active": "نشطة",
+            "upcoming": "قادمة"
+        }
+    },
+    "events": {
+        "title": "الفعاليات",
+        "manageTitle": "إدارة الفعاليات",
+        "list": {
+            "noEvents": "لا توجد فعاليات متاحة"
+        },
+        "registration": {
+            "register": "التسجيل",
+            "unregister": "إلغاء التسجيل"
+        }
+    }
+}

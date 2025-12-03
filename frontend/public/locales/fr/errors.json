@@ -1,0 +1,10 @@
+{
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+    "notFound": "La ressource demandée n'a pas été trouvée.",
+    "unauthorized": {
+        "title": "Non autorisé",
+        "message": "Vous n'avez pas la permission d'accéder à cette page.",
+        "backHome": "Retour au tableau de bord"
+    }
+}

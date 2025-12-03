@@ -1,0 +1,52 @@
+{
+    "brand": "忠诚度计划",
+    "brandShort": "忠诚度",
+    "toggleMenu": "切换菜单",
+    "toggleNavigation": "切换导航",
+    "collapseMenu": "收起菜单",
+    "expandMenu": "展开菜单",
+    "links": {
+        "dashboard": "仪表板",
+        "promotions": "促销活动",
+        "events": "活动",
+        "transactions": "交易记录",
+        "myQr": "我的二维码",
+        "transfer": "转账积分",
+        "redeem": "兑换积分"
+    },
+    "groups": {
+        "main": "主要",
+        "user": "用户",
+        "cashier": "收银员",
+        "manager": "管理员"
+    },
+    "cashier": {
+        "createTransaction": "创建交易",
+        "processRedemption": "处理兑换",
+        "registerUser": "注册用户"
+    },
+    "manager": {
+        "users": "管理用户",
+        "allTransactions": "所有交易",
+        "managePromotions": "管理促销",
+        "manageEvents": "管理活动"
+    },
+    "user": {
+        "profile": "个人资料",
+        "editProfile": "编辑资料",
+        "changePassword": "修改密码",
+        "logout": "退出登录",
+        "switchRole": "切换角色"
+    },
+    "roles": {
+        "regular": "普通用户",
+        "regularShort": "普通",
+        "cashier": "收银员",
+        "manager": "管理员",
+        "superuser": "超级用户",
+        "actingAs": "当前角色：{{role}}"
+    },
+    "breadcrumb": {
+        "home": "首页"
+    }
+}

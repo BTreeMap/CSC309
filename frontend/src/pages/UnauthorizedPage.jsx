@@ -1,21 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './UnauthorizedPage.css';
 
 const UnauthorizedPage = () => {
+  const { t } = useTranslation(['errors', 'common']);
+
   return (
     <div className="unauthorized-page">
       <div className="unauthorized-container">
         <div className="unauthorized-content">
           <h1>403</h1>
-          <h2>Access Denied</h2>
-          <p>You do not have permission to access this page. Please ensure you are logged in and have the required permissions.</p>
+          <h2>{t('errors:unauthorized.title')}</h2>
+          <p>{t('errors:unauthorized.message')}</p>
           <div className="unauthorized-actions">
             <Link to="/dashboard" className="btn btn-primary">
-              Back to Dashboard
+              {t('errors:unauthorized.backHome')}
             </Link>
             <Link to="/login" className="btn btn-secondary">
-              Login Again
+              {t('auth:login.submit')}
             </Link>
           </div>
         </div>

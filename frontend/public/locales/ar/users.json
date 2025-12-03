@@ -1,0 +1,28 @@
+{
+    "title": "المستخدمون",
+    "list": {
+        "title": "إدارة المستخدمين",
+        "searchPlaceholder": "البحث عن المستخدمين...",
+        "noUsers": "لم يتم العثور على مستخدمين"
+    },
+    "profile": {
+        "title": "الملف الشخصي",
+        "utorid": "UTORid",
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "role": "الدور",
+        "points": "النقاط",
+        "verified": "موثق",
+        "notVerified": "غير موثق"
+    },
+    "roles": {
+        "regular": "مستخدم عادي",
+        "cashier": "أمين صندوق",
+        "manager": "مدير",
+        "superuser": "مستخدم متميز"
+    },
+    "qrCode": {
+        "title": "رمز QR الخاص بي",
+        "subtitle": "اعرض رمز QR هذا لكسب أو استبدال النقاط"
+    }
+}

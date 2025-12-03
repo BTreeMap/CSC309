@@ -1,0 +1,52 @@
+{
+    "brand": "Loyalty Program",
+    "brandShort": "Loyalty",
+    "toggleMenu": "Toggle menu",
+    "toggleNavigation": "Toggle navigation",
+    "collapseMenu": "Collapse menu",
+    "expandMenu": "Expand menu",
+    "links": {
+        "dashboard": "Dashboard",
+        "promotions": "Promotions",
+        "events": "Events",
+        "transactions": "Transactions",
+        "myQr": "My QR Code",
+        "transfer": "Transfer Points",
+        "redeem": "Redeem Points"
+    },
+    "groups": {
+        "main": "Main",
+        "user": "User",
+        "cashier": "Cashier",
+        "manager": "Manager"
+    },
+    "cashier": {
+        "createTransaction": "Create Transaction",
+        "processRedemption": "Process Redemption",
+        "registerUser": "Register User"
+    },
+    "manager": {
+        "users": "Manage Users",
+        "allTransactions": "All Transactions",
+        "managePromotions": "Manage Promotions",
+        "manageEvents": "Manage Events"
+    },
+    "user": {
+        "profile": "Profile",
+        "editProfile": "Edit Profile",
+        "changePassword": "Change Password",
+        "logout": "Logout",
+        "switchRole": "Switch Role"
+    },
+    "roles": {
+        "regular": "Regular User",
+        "regularShort": "Regular",
+        "cashier": "Cashier",
+        "manager": "Manager",
+        "superuser": "Superuser",
+        "actingAs": "Acting as: {{role}}"
+    },
+    "breadcrumb": {
+        "home": "Home"
+    }
+}

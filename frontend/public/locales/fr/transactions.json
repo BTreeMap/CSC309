@@ -1,0 +1,27 @@
+{
+    "title": "Transactions",
+    "list": {
+        "title": "Historique des transactions",
+        "myTitle": "Mes transactions",
+        "allTitle": "Toutes les transactions",
+        "noTransactions": "Aucune transaction trouvée"
+    },
+    "types": {
+        "purchase": "Achat",
+        "redemption": "Échange",
+        "transfer": "Transfert",
+        "adjustment": "Ajustement"
+    },
+    "create": {
+        "title": "Créer une transaction",
+        "success": "Transaction traitée avec succès. Le client a gagné {{points}} points."
+    },
+    "transfer": {
+        "title": "Transférer des points",
+        "success": "{{points}} points transférés avec succès à {{recipient}}"
+    },
+    "redemption": {
+        "title": "Échanger des points",
+        "success": "{{points}} points échangés avec succès"
+    }
+}

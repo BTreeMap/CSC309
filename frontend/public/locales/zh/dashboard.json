@@ -1,0 +1,35 @@
+{
+    "title": "仪表板",
+    "welcome": "欢迎，{{name}}！",
+    "actingAs": "当前角色：{{role}}",
+    "stats": {
+        "currentPoints": "当前积分",
+        "accountStatus": "账户状态",
+        "accountRole": "账户角色",
+        "utorid": "UTORid",
+        "verified": "已验证",
+        "pendingVerification": "待验证"
+    },
+    "quickActions": {
+        "title": "快捷操作",
+        "myQr": "我的二维码",
+        "myTransactions": "我的交易",
+        "promotions": "促销活动",
+        "events": "活动",
+        "transfer": "转账积分",
+        "redeem": "兑换积分",
+        "createTransaction": "创建交易",
+        "processRedemption": "处理兑换",
+        "registerUser": "注册用户",
+        "manageUsers": "管理用户",
+        "allTransactions": "所有交易",
+        "managePromotions": "管理促销",
+        "manageEvents": "管理活动"
+    },
+    "profile": {
+        "title": "个人资料",
+        "viewProfile": "查看资料",
+        "editProfile": "编辑资料",
+        "changePassword": "修改密码"
+    }
+}

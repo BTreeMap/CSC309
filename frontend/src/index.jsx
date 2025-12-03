@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './styles/design-system.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Initialize i18n before rendering
+import './i18n';
+
+// Loading fallback for Suspense while translations load
+const LoadingFallback = () => (
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    fontSize: '1rem',
+    color: 'var(--text-secondary, #666)'
+  }}>
+    Loading...
+  </div>
+);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Suspense fallback={<LoadingFallback />}>
+      <App />
+    </Suspense>
   </React.StrictMode>
 );
 

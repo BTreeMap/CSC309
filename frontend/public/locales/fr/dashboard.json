@@ -1,0 +1,35 @@
+{
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue, {{name}} !",
+    "actingAs": "Agissant comme : {{role}}",
+    "stats": {
+        "currentPoints": "Points actuels",
+        "accountStatus": "Statut du compte",
+        "accountRole": "Rôle du compte",
+        "utorid": "UTORid",
+        "verified": "Vérifié",
+        "pendingVerification": "En attente de vérification"
+    },
+    "quickActions": {
+        "title": "Actions rapides",
+        "myQr": "Mon code QR",
+        "myTransactions": "Mes transactions",
+        "promotions": "Promotions",
+        "events": "Événements",
+        "transfer": "Transférer des points",
+        "redeem": "Échanger des points",
+        "createTransaction": "Créer une transaction",
+        "processRedemption": "Traiter un échange",
+        "registerUser": "Inscrire un utilisateur",
+        "manageUsers": "Gérer les utilisateurs",
+        "allTransactions": "Toutes les transactions",
+        "managePromotions": "Gérer les promotions",
+        "manageEvents": "Gérer les événements"
+    },
+    "profile": {
+        "title": "Profil",
+        "viewProfile": "Voir le profil",
+        "editProfile": "Modifier le profil",
+        "changePassword": "Changer le mot de passe"
+    }
+}

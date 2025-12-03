@@ -1,0 +1,34 @@
+{
+    "generic": "An error occurred. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "timeout": "Request timed out. Please try again.",
+    "server": "Server error. Please try again later.",
+    "notFound": "The requested resource was not found.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden": "Access denied.",
+    "badRequest": "Invalid request. Please check your input.",
+    "conflict": "A conflict occurred. The resource may have been modified.",
+    "validation": "Please correct the errors and try again.",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "maintenance": "The system is under maintenance. Please try again later.",
+    "pageNotFound": {
+        "title": "Page Not Found",
+        "message": "The page you are looking for doesn't exist or has been moved.",
+        "backHome": "Go to Dashboard"
+    },
+    "unauthorized": {
+        "title": "Unauthorized",
+        "message": "You don't have permission to access this page.",
+        "backHome": "Go to Dashboard"
+    },
+    "serverError": {
+        "title": "Server Error",
+        "message": "Something went wrong on our end. Please try again later.",
+        "retry": "Try Again"
+    },
+    "offline": {
+        "title": "You're Offline",
+        "message": "Please check your internet connection and try again.",
+        "retry": "Retry"
+    }
+}

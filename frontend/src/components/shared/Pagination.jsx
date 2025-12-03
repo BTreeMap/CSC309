@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './Pagination.css';
 
 const Pagination = ({
@@ -9,6 +10,8 @@ const Pagination = ({
     itemsPerPage = null,
     showInfo = true
 }) => {
+    const { t } = useTranslation('common');
+
     if (totalPages <= 1) return null;
 
     const getPageNumbers = () => {
@@ -30,12 +33,14 @@ const Pagination = ({
     };
 
     const pageNumbers = getPageNumbers();
+    const startItem = Math.min((currentPage - 1) * itemsPerPage + 1, totalItems);
+    const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
     return (
         <div className="pagination-container">
             {showInfo && totalItems !== null && itemsPerPage !== null && (
                 <div className="pagination-info">
-                    Showing {Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)} - {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems} items
+                    {t('pagination.showingItems', { start: startItem, end: endItem, total: totalItems })}
                 </div>
             )}
 
@@ -44,7 +49,7 @@ const Pagination = ({
                     className="pagination-button"
                     onClick={() => onPageChange(1)}
                     disabled={currentPage === 1}
-                    aria-label="First page"
+                    aria-label={t('pagination.first')}
                 >
                     ««
                 </button>
@@ -53,7 +58,7 @@ const Pagination = ({
                     className="pagination-button"
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    aria-label="Previous page"
+                    aria-label={t('previous')}
                 >
                     «
                 </button>
@@ -99,7 +104,7 @@ const Pagination = ({
                     className="pagination-button"
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    aria-label="Next page"
+                    aria-label={t('next')}
                 >
                     »
                 </button>
@@ -108,7 +113,7 @@ const Pagination = ({
                     className="pagination-button"
                     onClick={() => onPageChange(totalPages)}
                     disabled={currentPage === totalPages}
-                    aria-label="Last page"
+                    aria-label={t('pagination.last')}
                 >
                     »»
                 </button>

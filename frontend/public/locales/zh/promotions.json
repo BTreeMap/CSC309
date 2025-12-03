@@ -1,0 +1,25 @@
+{
+    "promotions": {
+        "title": "促销活动",
+        "manageTitle": "管理促销",
+        "list": {
+            "noPromotions": "暂无促销活动"
+        },
+        "card": {
+            "expired": "已过期",
+            "active": "进行中",
+            "upcoming": "即将开始"
+        }
+    },
+    "events": {
+        "title": "活动",
+        "manageTitle": "管理活动",
+        "list": {
+            "noEvents": "暂无活动"
+        },
+        "registration": {
+            "register": "报名",
+            "unregister": "取消报名"
+        }
+    }
+}

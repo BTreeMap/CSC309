@@ -1,0 +1,10 @@
+{
+    "generic": "发生错误。请重试。",
+    "network": "网络错误。请检查您的连接。",
+    "notFound": "未找到请求的资源。",
+    "unauthorized": {
+        "title": "未授权",
+        "message": "您没有权限访问此页面。",
+        "backHome": "返回仪表板"
+    }
+}

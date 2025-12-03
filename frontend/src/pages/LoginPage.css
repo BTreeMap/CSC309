@@ -13,6 +13,14 @@
   position: relative;
 }
 
+/* Language switcher positioned at top-right */
+.login-language-switcher {
+  position: absolute;
+  top: var(--space-4, 1rem);
+  inset-inline-end: var(--space-4, 1rem);
+  z-index: 10;
+}
+
 /* Subtle background pattern */
 .login-page::before {
   content: '';

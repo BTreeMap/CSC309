@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { authAPI } from '../api';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import './ForgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
+  const { t } = useTranslation(['auth', 'common', 'validation']);
   const navigate = useNavigate();
   const [utorid, setUtorid] = useState('');
   const [error, setError] = useState('');

@@ -1,0 +1,88 @@
+{
+    "title": "Users",
+    "list": {
+        "title": "User Management",
+        "searchPlaceholder": "Search users...",
+        "noUsers": "No users found",
+        "columns": {
+            "utorid": "UTORid",
+            "name": "Name",
+            "email": "Email",
+            "role": "Role",
+            "points": "Points",
+            "status": "Status",
+            "verified": "Verified",
+            "createdAt": "Created",
+            "actions": "Actions"
+        }
+    },
+    "profile": {
+        "title": "Profile",
+        "utorid": "UTORid",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "points": "Points",
+        "birthday": "Birthday",
+        "createdAt": "Member Since",
+        "verified": "Verified",
+        "notVerified": "Not Verified"
+    },
+    "edit": {
+        "title": "Edit Profile",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Enter your full name",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "Enter your email address",
+        "birthdayLabel": "Birthday",
+        "avatarLabel": "Profile Picture",
+        "submit": "Save Changes",
+        "submitting": "Saving...",
+        "success": "Profile updated successfully",
+        "error": "Failed to update profile"
+    },
+    "roles": {
+        "regular": "Regular User",
+        "cashier": "Cashier",
+        "manager": "Manager",
+        "superuser": "Superuser"
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "verified": "Verified",
+        "pending": "Pending"
+    },
+    "actions": {
+        "view": "View User",
+        "edit": "Edit User",
+        "delete": "Delete User",
+        "verify": "Verify User",
+        "changeRole": "Change Role",
+        "resetPassword": "Reset Password",
+        "adjustPoints": "Adjust Points"
+    },
+    "delete": {
+        "title": "Delete User",
+        "message": "Are you sure you want to delete this user? This action cannot be undone.",
+        "success": "User deleted successfully",
+        "error": "Failed to delete user"
+    },
+    "adjustPoints": {
+        "title": "Adjust Points",
+        "currentPoints": "Current Points",
+        "adjustmentLabel": "Adjustment Amount",
+        "adjustmentPlaceholder": "Enter points (positive or negative)",
+        "reasonLabel": "Reason",
+        "reasonPlaceholder": "Enter reason for adjustment",
+        "submit": "Apply Adjustment",
+        "success": "Points adjusted successfully",
+        "error": "Failed to adjust points"
+    },
+    "qrCode": {
+        "title": "My QR Code",
+        "subtitle": "Show this QR code to earn or redeem points",
+        "download": "Download QR Code",
+        "share": "Share QR Code"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "title": "交易",
+    "list": {
+        "title": "交易历史",
+        "myTitle": "我的交易",
+        "allTitle": "所有交易",
+        "noTransactions": "未找到交易"
+    },
+    "types": {
+        "purchase": "购买",
+        "redemption": "兑换",
+        "transfer": "转账",
+        "adjustment": "调整"
+    },
+    "create": {
+        "title": "创建交易",
+        "success": "交易处理成功。客户获得了 {{points}} 积分。"
+    },
+    "transfer": {
+        "title": "转账积分",
+        "success": "成功向 {{recipient}} 转账 {{points}} 积分"
+    },
+    "redemption": {
+        "title": "兑换积分",
+        "success": "成功兑换 {{points}} 积分"
+    }
+}

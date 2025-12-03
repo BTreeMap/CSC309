@@ -1,0 +1,35 @@
+{
+    "title": "Dashboard",
+    "welcome": "Welcome, {{name}}!",
+    "actingAs": "Acting as: {{role}}",
+    "stats": {
+        "currentPoints": "Current Points",
+        "accountStatus": "Account Status",
+        "accountRole": "Account Role",
+        "utorid": "UTORid",
+        "verified": "Verified",
+        "pendingVerification": "Pending Verification"
+    },
+    "quickActions": {
+        "title": "Quick Actions",
+        "myQr": "My QR Code",
+        "myTransactions": "My Transactions",
+        "promotions": "Promotions",
+        "events": "Events",
+        "transfer": "Transfer Points",
+        "redeem": "Redeem Points",
+        "createTransaction": "Create Transaction",
+        "processRedemption": "Process Redemption",
+        "registerUser": "Register User",
+        "manageUsers": "Manage Users",
+        "allTransactions": "All Transactions",
+        "managePromotions": "Manage Promotions",
+        "manageEvents": "Manage Events"
+    },
+    "profile": {
+        "title": "Profile",
+        "viewProfile": "View Profile",
+        "editProfile": "Edit Profile",
+        "changePassword": "Change Password"
+    }
+}

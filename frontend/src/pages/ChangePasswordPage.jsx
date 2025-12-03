@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
 import { useToast } from '../components/shared/ToastContext';
 import './ChangePasswordPage.css';
 
 const ChangePasswordPage = () => {
+    const { t } = useTranslation(['auth', 'validation', 'common']);
     const navigate = useNavigate();
     const { showToast } = useToast();
 

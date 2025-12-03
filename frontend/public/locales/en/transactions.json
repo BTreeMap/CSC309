@@ -1,0 +1,130 @@
+{
+    "title": "Transactions",
+    "list": {
+        "title": "Transaction History",
+        "myTitle": "My Transactions",
+        "allTitle": "All Transactions",
+        "searchPlaceholder": "Search transactions...",
+        "noTransactions": "No transactions found",
+        "columns": {
+            "id": "ID",
+            "type": "Type",
+            "amount": "Amount",
+            "points": "Points",
+            "user": "User",
+            "createdBy": "Created By",
+            "date": "Date",
+            "status": "Status",
+            "description": "Description",
+            "actions": "Actions"
+        }
+    },
+    "types": {
+        "purchase": "Purchase",
+        "redemption": "Redemption",
+        "transfer": "Transfer",
+        "adjustment": "Adjustment",
+        "event": "Event",
+        "promotion": "Promotion",
+        "refund": "Refund"
+    },
+    "status": {
+        "pending": "Pending",
+        "completed": "Completed",
+        "failed": "Failed",
+        "cancelled": "Cancelled"
+    },
+    "create": {
+        "title": "Create Transaction",
+        "subtitle": "Process a new transaction for a customer",
+        "utoridLabel": "Customer UTORid",
+        "utoridPlaceholder": "Enter or scan customer UTORid",
+        "scanQr": "Scan QR Code",
+        "amountLabel": "Transaction Amount",
+        "amountPlaceholder": "Enter amount",
+        "typeLabel": "Transaction Type",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Enter transaction description (optional)",
+        "promotionLabel": "Apply Promotion",
+        "promotionPlaceholder": "Select a promotion",
+        "noPromotion": "No promotion",
+        "pointsPreview": "Points to earn: {{points}}",
+        "submit": "Process Transaction",
+        "submitting": "Processing...",
+        "success": "Transaction processed successfully. Customer earned {{points}} points.",
+        "error": {
+            "userNotFound": "Customer not found",
+            "invalidAmount": "Invalid amount",
+            "generic": "Failed to process transaction"
+        }
+    },
+    "transfer": {
+        "title": "Transfer Points",
+        "subtitle": "Send points to another user",
+        "recipientLabel": "Recipient UTORid",
+        "recipientPlaceholder": "Enter recipient's UTORid",
+        "amountLabel": "Points to Transfer",
+        "amountPlaceholder": "Enter amount",
+        "reasonLabel": "Reason (optional)",
+        "reasonPlaceholder": "Enter reason for transfer",
+        "availablePoints": "Available Points: {{points}}",
+        "submit": "Transfer Points",
+        "submitting": "Transferring...",
+        "success": "Successfully transferred {{points}} points to {{recipient}}",
+        "error": {
+            "insufficientPoints": "Insufficient points",
+            "userNotFound": "Recipient not found",
+            "selfTransfer": "Cannot transfer points to yourself",
+            "invalidAmount": "Invalid amount",
+            "generic": "Failed to transfer points"
+        }
+    },
+    "redemption": {
+        "title": "Redeem Points",
+        "processTitle": "Process Redemption",
+        "subtitle": "Use your points for rewards",
+        "processSubtitle": "Process a customer's redemption request",
+        "availablePoints": "Available Points: {{points}}",
+        "selectReward": "Select a Reward",
+        "customAmount": "Custom Amount",
+        "pointsCost": "{{points}} points",
+        "cashValue": "Cash value: {{value}}",
+        "confirmTitle": "Confirm Redemption",
+        "confirmMessage": "Redeem {{points}} points for {{reward}}?",
+        "submit": "Redeem",
+        "submitting": "Redeeming...",
+        "generateQr": "Generate Redemption QR",
+        "scanQr": "Scan Customer QR",
+        "success": "Successfully redeemed {{points}} points",
+        "processSuccess": "Redemption processed successfully",
+        "error": {
+            "insufficientPoints": "Insufficient points for this redemption",
+            "invalidCode": "Invalid redemption code",
+            "expired": "Redemption request has expired",
+            "alreadyProcessed": "This redemption has already been processed",
+            "generic": "Failed to process redemption"
+        }
+    },
+    "detail": {
+        "title": "Transaction Details",
+        "id": "Transaction ID",
+        "type": "Type",
+        "amount": "Amount",
+        "points": "Points",
+        "user": "User",
+        "createdBy": "Created By",
+        "date": "Date",
+        "status": "Status",
+        "description": "Description",
+        "promotion": "Applied Promotion",
+        "relatedUser": "Related User"
+    },
+    "filters": {
+        "type": "Transaction Type",
+        "status": "Status",
+        "dateRange": "Date Range",
+        "minAmount": "Min Amount",
+        "maxAmount": "Max Amount",
+        "user": "User"
+    }
+}

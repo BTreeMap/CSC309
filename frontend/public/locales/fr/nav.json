@@ -1,0 +1,52 @@
+{
+    "brand": "Programme de Fidélité",
+    "brandShort": "Fidélité",
+    "toggleMenu": "Basculer le menu",
+    "toggleNavigation": "Basculer la navigation",
+    "collapseMenu": "Réduire le menu",
+    "expandMenu": "Développer le menu",
+    "links": {
+        "dashboard": "Tableau de bord",
+        "promotions": "Promotions",
+        "events": "Événements",
+        "transactions": "Transactions",
+        "myQr": "Mon code QR",
+        "transfer": "Transférer des points",
+        "redeem": "Échanger des points"
+    },
+    "groups": {
+        "main": "Principal",
+        "user": "Utilisateur",
+        "cashier": "Caissier",
+        "manager": "Gestionnaire"
+    },
+    "cashier": {
+        "createTransaction": "Créer une transaction",
+        "processRedemption": "Traiter un échange",
+        "registerUser": "Inscrire un utilisateur"
+    },
+    "manager": {
+        "users": "Gérer les utilisateurs",
+        "allTransactions": "Toutes les transactions",
+        "managePromotions": "Gérer les promotions",
+        "manageEvents": "Gérer les événements"
+    },
+    "user": {
+        "profile": "Profil",
+        "editProfile": "Modifier le profil",
+        "changePassword": "Changer le mot de passe",
+        "logout": "Déconnexion",
+        "switchRole": "Changer de rôle"
+    },
+    "roles": {
+        "regular": "Utilisateur régulier",
+        "regularShort": "Régulier",
+        "cashier": "Caissier",
+        "manager": "Gestionnaire",
+        "superuser": "Super utilisateur",
+        "actingAs": "Agissant comme : {{role}}"
+    },
+    "breadcrumb": {
+        "home": "Accueil"
+    }
+}

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 import {
     LayoutDashboard,
     Tag,
@@ -29,6 +31,7 @@ import {
 import './Sidebar.css';
 
 const Sidebar = () => {
+    const { t } = useTranslation(['nav', 'common']);
     const { user, logout, activeRole, switchRole, availableRoles } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -76,13 +79,7 @@ const Sidebar = () => {
     }, []);
 
     const getRoleDisplayName = (role) => {
-        const names = {
-            regular: 'Regular',
-            cashier: 'Cashier',
-            manager: 'Manager',
-            superuser: 'Superuser'
-        };
-        return names[role] || role;
+        return t(`nav:roles.${role}`, { defaultValue: role });
     };
 
     const isActive = (path) => {
@@ -148,7 +145,7 @@ const Sidebar = () => {
                     <button
                         className="sidebar-collapse-btn hide-mobile"
                         onClick={() => setCollapsed(!collapsed)}
-                        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                        aria-label={collapsed ? t('nav:expandMenu') : t('nav:collapseMenu')}
                     >
                         {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
                     </button>
@@ -158,40 +155,40 @@ const Sidebar = () => {
                 <nav className="sidebar-nav">
                     {/* Main Section */}
                     <div className="sidebar-section">
-                        <div className="sidebar-section-title">Main</div>
-                        <NavLink to="/dashboard" icon={<LayoutDashboard size={18} />} exact>Dashboard</NavLink>
-                        <NavLink to="/promotions" icon={<Tag size={18} />}>Promotions</NavLink>
-                        <NavLink to="/events" icon={<Calendar size={18} />}>Events</NavLink>
-                        <NavLink to="/transactions" icon={<CreditCard size={18} />}>Transactions</NavLink>
+                        <div className="sidebar-section-title">{t('nav:groups.main')}</div>
+                        <NavLink to="/dashboard" icon={<LayoutDashboard size={18} />} exact>{t('nav:links.dashboard')}</NavLink>
+                        <NavLink to="/promotions" icon={<Tag size={18} />}>{t('nav:links.promotions')}</NavLink>
+                        <NavLink to="/events" icon={<Calendar size={18} />}>{t('nav:links.events')}</NavLink>
+                        <NavLink to="/transactions" icon={<CreditCard size={18} />}>{t('nav:links.transactions')}</NavLink>
                     </div>
 
                     {/* Cashier Section */}
                     {hasActiveRole('cashier') && (
                         <div className="sidebar-section">
-                            <div className="sidebar-section-title">Cashier</div>
-                            <NavLink to="/cashier/transaction" icon={<PlusCircle size={18} />}>Create Transaction</NavLink>
-                            <NavLink to="/cashier/redemption" icon={<CheckCircle size={18} />}>Process Redemption</NavLink>
-                            <NavLink to="/register" icon={<UserPlus size={18} />}>Register User</NavLink>
+                            <div className="sidebar-section-title">{t('nav:groups.cashier')}</div>
+                            <NavLink to="/cashier/transaction" icon={<PlusCircle size={18} />}>{t('nav:cashier.createTransaction')}</NavLink>
+                            <NavLink to="/cashier/redemption" icon={<CheckCircle size={18} />}>{t('nav:cashier.processRedemption')}</NavLink>
+                            <NavLink to="/register" icon={<UserPlus size={18} />}>{t('nav:cashier.registerUser')}</NavLink>
                         </div>
                     )}
 
                     {/* Manager Section */}
                     {hasActiveRole('manager') && (
                         <div className="sidebar-section">
-                            <div className="sidebar-section-title">Manager</div>
-                            <NavLink to="/users" icon={<Users size={18} />}>Users</NavLink>
-                            <NavLink to="/transactions/all" icon={<ClipboardList size={18} />}>All Transactions</NavLink>
-                            <NavLink to="/promotions/manage" icon={<Target size={18} />}>Manage Promotions</NavLink>
-                            <NavLink to="/events/manage" icon={<CalendarCog size={18} />}>Manage Events</NavLink>
+                            <div className="sidebar-section-title">{t('nav:groups.manager')}</div>
+                            <NavLink to="/users" icon={<Users size={18} />}>{t('nav:manager.users')}</NavLink>
+                            <NavLink to="/transactions/all" icon={<ClipboardList size={18} />}>{t('nav:manager.allTransactions')}</NavLink>
+                            <NavLink to="/promotions/manage" icon={<Target size={18} />}>{t('nav:manager.managePromotions')}</NavLink>
+                            <NavLink to="/events/manage" icon={<CalendarCog size={18} />}>{t('nav:manager.manageEvents')}</NavLink>
                         </div>
                     )}
 
                     {/* Personal Section */}
                     <div className="sidebar-section">
-                        <div className="sidebar-section-title">Personal</div>
-                        <NavLink to="/my-qr" icon={<QrCode size={18} />}>My QR Code</NavLink>
-                        <NavLink to="/transfer" icon={<ArrowLeftRight size={18} />}>Transfer Points</NavLink>
-                        <NavLink to="/redeem" icon={<Gift size={18} />}>Redeem Points</NavLink>
+                        <div className="sidebar-section-title">{t('nav:groups.user')}</div>
+                        <NavLink to="/my-qr" icon={<QrCode size={18} />}>{t('nav:links.myQr')}</NavLink>
+                        <NavLink to="/transfer" icon={<ArrowLeftRight size={18} />}>{t('nav:links.transfer')}</NavLink>
+                        <NavLink to="/redeem" icon={<Gift size={18} />}>{t('nav:links.redeem')}</NavLink>
                     </div>
                 </nav>
 
@@ -212,7 +209,7 @@ const Sidebar = () => {
 
                             {showRoleMenu && (
                                 <div className="sidebar-dropdown">
-                                    <div className="sidebar-dropdown-header">Switch Role</div>
+                                    <div className="sidebar-dropdown-header">{t('nav:user.switchRole')}</div>
                                     {availableRoles.map((role) => (
                                         <button
                                             key={role}
@@ -263,7 +260,7 @@ const Sidebar = () => {
                                     onClick={() => setShowUserMenu(false)}
                                 >
                                     <span className="menu-icon"><User size={16} /></span>
-                                    View Profile
+                                    {t('nav:user.profile')}
                                 </Link>
                                 <Link
                                     to="/profile/edit"
@@ -271,7 +268,7 @@ const Sidebar = () => {
                                     onClick={() => setShowUserMenu(false)}
                                 >
                                     <span className="menu-icon"><Pencil size={16} /></span>
-                                    Edit Profile
+                                    {t('nav:user.editProfile')}
                                 </Link>
                                 <Link
                                     to="/profile/password"
@@ -279,8 +276,13 @@ const Sidebar = () => {
                                     onClick={() => setShowUserMenu(false)}
                                 >
                                     <span className="menu-icon"><Lock size={16} /></span>
-                                    Change Password
+                                    {t('nav:user.changePassword')}
                                 </Link>
+                                <div className="sidebar-dropdown-divider"></div>
+                                {/* Language Switcher in User Menu */}
+                                <div className="sidebar-dropdown-item language-item">
+                                    <LanguageSwitcher compact />
+                                </div>
                                 <div className="sidebar-dropdown-divider"></div>
                                 <button
                                     className="sidebar-dropdown-item danger"
@@ -290,7 +292,7 @@ const Sidebar = () => {
                                     }}
                                 >
                                     <span className="menu-icon"><LogOut size={16} /></span>
-                                    Logout
+                                    {t('nav:user.logout')}
                                 </button>
                             </div>
                         )}

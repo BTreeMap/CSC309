@@ -1,0 +1,25 @@
+{
+    "promotions": {
+        "title": "Promotions",
+        "manageTitle": "Gérer les promotions",
+        "list": {
+            "noPromotions": "Aucune promotion disponible"
+        },
+        "card": {
+            "expired": "Expirée",
+            "active": "Active",
+            "upcoming": "À venir"
+        }
+    },
+    "events": {
+        "title": "Événements",
+        "manageTitle": "Gérer les événements",
+        "list": {
+            "noEvents": "Aucun événement disponible"
+        },
+        "registration": {
+            "register": "S'inscrire",
+            "unregister": "Annuler l'inscription"
+        }
+    }
+}

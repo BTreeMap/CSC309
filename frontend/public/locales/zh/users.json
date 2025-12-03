@@ -1,0 +1,28 @@
+{
+    "title": "用户",
+    "list": {
+        "title": "用户管理",
+        "searchPlaceholder": "搜索用户...",
+        "noUsers": "未找到用户"
+    },
+    "profile": {
+        "title": "个人资料",
+        "utorid": "UTORid",
+        "name": "姓名",
+        "email": "电子邮件",
+        "role": "角色",
+        "points": "积分",
+        "verified": "已验证",
+        "notVerified": "未验证"
+    },
+    "roles": {
+        "regular": "普通用户",
+        "cashier": "收银员",
+        "manager": "管理员",
+        "superuser": "超级用户"
+    },
+    "qrCode": {
+        "title": "我的二维码",
+        "subtitle": "展示此二维码以赚取或兑换积分"
+    }
+}

@@ -1,0 +1,160 @@
+{
+    "promotions": {
+        "title": "Promotions",
+        "manageTitle": "Manage Promotions",
+        "list": {
+            "noPromotions": "No promotions available",
+            "viewDetails": "View Details",
+            "searchPlaceholder": "Search promotions..."
+        },
+        "card": {
+            "validFrom": "Valid from {{date}}",
+            "validUntil": "Valid until {{date}}",
+            "expired": "Expired",
+            "active": "Active",
+            "upcoming": "Upcoming",
+            "pointsMultiplier": "{{multiplier}}x Points",
+            "bonusPoints": "+{{points}} Bonus Points",
+            "minPurchase": "Min. purchase: {{amount}}"
+        },
+        "detail": {
+            "title": "Promotion Details",
+            "description": "Description",
+            "type": "Type",
+            "value": "Value",
+            "validPeriod": "Valid Period",
+            "conditions": "Conditions",
+            "terms": "Terms & Conditions",
+            "usageLimit": "Usage Limit",
+            "usageCount": "Times Used"
+        },
+        "types": {
+            "multiplier": "Points Multiplier",
+            "bonus": "Bonus Points",
+            "discount": "Discount",
+            "freeItem": "Free Item"
+        },
+        "create": {
+            "title": "Create Promotion",
+            "nameLabel": "Promotion Name",
+            "namePlaceholder": "Enter promotion name",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Enter promotion description",
+            "typeLabel": "Promotion Type",
+            "valueLabel": "Value",
+            "valuePlaceholder": "Enter value",
+            "startDateLabel": "Start Date",
+            "endDateLabel": "End Date",
+            "minPurchaseLabel": "Minimum Purchase",
+            "minPurchasePlaceholder": "Enter minimum purchase amount",
+            "usageLimitLabel": "Usage Limit (per user)",
+            "usageLimitPlaceholder": "Leave empty for unlimited",
+            "submit": "Create Promotion",
+            "submitting": "Creating...",
+            "success": "Promotion created successfully",
+            "error": "Failed to create promotion"
+        },
+        "edit": {
+            "title": "Edit Promotion",
+            "submit": "Save Changes",
+            "submitting": "Saving...",
+            "success": "Promotion updated successfully",
+            "error": "Failed to update promotion"
+        },
+        "delete": {
+            "title": "Delete Promotion",
+            "message": "Are you sure you want to delete this promotion? This action cannot be undone.",
+            "success": "Promotion deleted successfully",
+            "error": "Failed to delete promotion"
+        }
+    },
+    "events": {
+        "title": "Events",
+        "manageTitle": "Manage Events",
+        "list": {
+            "noEvents": "No events available",
+            "viewDetails": "View Details",
+            "searchPlaceholder": "Search events...",
+            "upcoming": "Upcoming Events",
+            "past": "Past Events",
+            "all": "All Events"
+        },
+        "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} spots",
+            "spotsLeft": "{{count}} spots left",
+            "full": "Event Full",
+            "registered": "Registered",
+            "ended": "Ended",
+            "cancelled": "Cancelled",
+            "points": "+{{points}} points"
+        },
+        "detail": {
+            "title": "Event Details",
+            "description": "Description",
+            "dateTime": "Date & Time",
+            "location": "Location",
+            "capacity": "Capacity",
+            "pointsReward": "Points Reward",
+            "registrationDeadline": "Registration Deadline",
+            "attendees": "Attendees",
+            "organizer": "Organizer"
+        },
+        "registration": {
+            "register": "Register",
+            "registering": "Registering...",
+            "unregister": "Cancel Registration",
+            "unregistering": "Cancelling...",
+            "registerSuccess": "Successfully registered for the event",
+            "unregisterSuccess": "Registration cancelled",
+            "alreadyRegistered": "You are already registered",
+            "eventFull": "This event is full",
+            "registrationClosed": "Registration is closed",
+            "error": "Failed to process registration"
+        },
+        "create": {
+            "title": "Create Event",
+            "nameLabel": "Event Name",
+            "namePlaceholder": "Enter event name",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Enter event description",
+            "dateLabel": "Date",
+            "timeLabel": "Time",
+            "locationLabel": "Location",
+            "locationPlaceholder": "Enter event location",
+            "capacityLabel": "Maximum Capacity",
+            "capacityPlaceholder": "Enter maximum attendees",
+            "pointsLabel": "Points Reward",
+            "pointsPlaceholder": "Points for attending",
+            "deadlineLabel": "Registration Deadline",
+            "submit": "Create Event",
+            "submitting": "Creating...",
+            "success": "Event created successfully",
+            "error": "Failed to create event"
+        },
+        "edit": {
+            "title": "Edit Event",
+            "submit": "Save Changes",
+            "submitting": "Saving...",
+            "success": "Event updated successfully",
+            "error": "Failed to update event"
+        },
+        "delete": {
+            "title": "Delete Event",
+            "message": "Are you sure you want to delete this event? All registrations will be cancelled.",
+            "success": "Event deleted successfully",
+            "error": "Failed to delete event"
+        },
+        "manage": {
+            "attendees": "Manage Attendees",
+            "checkIn": "Check In",
+            "checkInSuccess": "Attendee checked in successfully",
+            "markAttended": "Mark as Attended",
+            "removeAttendee": "Remove Attendee",
+            "sendReminder": "Send Reminder",
+            "exportList": "Export Attendee List"
+        }
+    }
+}

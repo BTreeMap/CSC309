@@ -41,11 +41,23 @@ import AllTransactionsPage from './pages/AllTransactionsPage';
 
 import './App.css';
 
+// Loading component for route transitions
+const RouteLoading = () => (
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh'
+  }}>
+    Loading...
+  </div>
+);
+
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <RouteLoading />;
   }
 
   if (isAuthenticated) {

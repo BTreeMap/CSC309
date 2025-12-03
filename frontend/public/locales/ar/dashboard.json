@@ -1,0 +1,35 @@
+{
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً، {{name}}!",
+    "actingAs": "يعمل كـ: {{role}}",
+    "stats": {
+        "currentPoints": "النقاط الحالية",
+        "accountStatus": "حالة الحساب",
+        "accountRole": "دور الحساب",
+        "utorid": "UTORid",
+        "verified": "موثق",
+        "pendingVerification": "في انتظار التوثيق"
+    },
+    "quickActions": {
+        "title": "إجراءات سريعة",
+        "myQr": "رمز QR الخاص بي",
+        "myTransactions": "معاملاتي",
+        "promotions": "العروض الترويجية",
+        "events": "الفعاليات",
+        "transfer": "تحويل النقاط",
+        "redeem": "استبدال النقاط",
+        "createTransaction": "إنشاء معاملة",
+        "processRedemption": "معالجة الاستبدال",
+        "registerUser": "تسجيل مستخدم",
+        "manageUsers": "إدارة المستخدمين",
+        "allTransactions": "جميع المعاملات",
+        "managePromotions": "إدارة العروض",
+        "manageEvents": "إدارة الفعاليات"
+    },
+    "profile": {
+        "title": "الملف الشخصي",
+        "viewProfile": "عرض الملف الشخصي",
+        "editProfile": "تعديل الملف الشخصي",
+        "changePassword": "تغيير كلمة المرور"
+    }
+}
