@@ -6,6 +6,7 @@
    - .form-label (filter labels)
    - .form-input, .form-select (filter inputs)
    - .filters-bar (filter container - defined below as page-specific)
+   - .page-header, .page-header-flex, .page-title, .page-subtitle (layout)
    
    Components from shared/:
    - LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal
@@ -19,26 +20,9 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-8);
-  flex-wrap: wrap;
-  gap: var(--space-4);
-}
-
-.page-header h1 {
-  font-family: var(--font-serif);
+/* Page-specific title size override */
+.users-list-page .page-title {
   font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.page-header p {
-  color: var(--color-text-muted);
-  margin: var(--space-1) 0 0 0;
 }
 
 .header-left,

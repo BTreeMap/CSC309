@@ -179,10 +179,10 @@ const ManageEventsPage = () => {
     return (
         <Layout>
             <div className="manage-events-page">
-                <div className="page-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>Manage Events</h1>
-                        <p>Create and manage events</p>
+                        <h1 className="page-title">Manage Events</h1>
+                        <p className="page-subtitle">Create and manage events</p>
                     </div>
                     <div className="header-right">
                         <button onClick={openCreateModal} className="btn btn-primary">

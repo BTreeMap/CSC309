@@ -102,10 +102,10 @@ const PromotionsPage = () => {
     return (
         <Layout>
             <div className="promotions-page">
-                <div className="page-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>{t('promotions.title')}</h1>
-                        <p>{t('promotions.subtitle')}</p>
+                        <h1 className="page-title">{t('promotions.title')}</h1>
+                        <p className="page-subtitle">{t('promotions.subtitle')}</p>
                     </div>
                     {isManager && (
                         <div className="header-right">

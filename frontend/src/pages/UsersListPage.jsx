@@ -28,7 +28,7 @@ const UsersListPage = () => {
     const [adjustmentAmount, setAdjustmentAmount] = useState('');
     const [adjustmentRemark, setAdjustmentRemark] = useState('');
     const [adjustmentLoading, setAdjustmentLoading] = useState(false);
-    
+
     const [editForm, setEditForm] = useState({
         verified: false,
         role: 'regular',
@@ -106,16 +106,16 @@ const UsersListPage = () => {
             showToast('You do not have permission to edit this user', 'error');
             return;
         }
-        
+
         setSelectedUser(user);
         const availableRoles = getAvailableRoleOptions();
         const currentRole = user.role || 'regular';
-        
+
         let initialRole = currentRole;
         if (!availableRoles.includes(currentRole) && availableRoles.length > 0) {
             initialRole = availableRoles[0];
         }
-        
+
         setEditForm({
             verified: user.verified || false,
             role: initialRole,
@@ -181,25 +181,25 @@ const UsersListPage = () => {
 
     const canEditUser = (targetUser) => {
         if (!currentUser || !targetUser) return false;
-        
+
         const currentUserRole = currentUser.role;
-        
+
         if (currentUserRole === 'superuser') {
             return true;
         }
-        
+
         if (currentUserRole === 'manager') {
             const targetRoleLevel = ROLE_HIERARCHY[targetUser.role] ?? 0;
             const managerLevel = ROLE_HIERARCHY['manager'] ?? 0;
             return targetRoleLevel < managerLevel;
         }
-        
+
         return false;
     };
 
     const getAvailableRoleOptions = () => {
         if (!currentUser) return ['regular'];
-        
+
         const currentUserRole = currentUser.role;
         if (currentUserRole === 'superuser') {
             return ['regular', 'cashier', 'manager', 'superuser'];
@@ -225,10 +225,10 @@ const UsersListPage = () => {
     return (
         <Layout>
             <div className="users-list-page">
-                <div className="page-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>User Management</h1>
-                        <p>View and manage system users</p>
+                        <h1 className="page-title">User Management</h1>
+                        <p className="page-subtitle">View and manage system users</p>
                     </div>
                     <div className="header-right">
                         <button onClick={() => navigate('/register')} className="btn btn-primary">
@@ -603,7 +603,7 @@ const UsersListPage = () => {
                                     const availableRoles = getAvailableRoleOptions();
                                     const userCurrentRole = selectedUser.role;
                                     const canSetCurrentRole = availableRoles.includes(userCurrentRole);
-                                    
+
                                     return (
                                         <>
                                             <select
@@ -623,11 +623,11 @@ const UsersListPage = () => {
                                                 </span>
                                             )}
                                             <span className="input-hint">
-                                                {currentUser?.role === 'manager' 
+                                                {currentUser?.role === 'manager'
                                                     ? 'Managers can only set role to Regular or Cashier'
                                                     : currentUser?.role === 'superuser'
-                                                    ? 'Superusers can set any role'
-                                                    : ''}
+                                                        ? 'Superusers can set any role'
+                                                        : ''}
                                             </span>
                                         </>
                                     );

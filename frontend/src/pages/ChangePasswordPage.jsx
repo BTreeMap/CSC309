@@ -113,9 +113,9 @@ const ChangePasswordPage = () => {
     return (
         <Layout>
             <div className="change-password-page">
-                <div className="change-password-header">
-                    <h1>Change Password</h1>
-                    <p>Keep your account secure by using a strong password</p>
+                <div className="page-header">
+                    <h1 className="page-title">Change Password</h1>
+                    <p className="page-subtitle">Keep your account secure by using a strong password</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="change-password-form">

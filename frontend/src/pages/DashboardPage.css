@@ -5,6 +5,7 @@
    - .btn, .btn-primary, .btn-secondary (available if needed)
    - .card, .card-hover (available if needed)
    - .alert-error, .alert-success (via shared components)
+   - .page-header, .page-title, .page-subtitle (layout)
    
    Note: Dashboard uses custom stat-card and quick-action-card styles
    that are specific to the dashboard layout.
@@ -15,25 +16,9 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.dashboard-header {
+/* Dashboard uses larger page-title for welcome message */
+.dashboard-page .page-header {
   margin-bottom: var(--space-10);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.dashboard-header h1 {
-  font-family: var(--font-serif);
-  font-size: var(--text-4xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-3) 0;
-  letter-spacing: var(--tracking-tight);
-}
-
-.dashboard-subtitle {
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  margin: 0;
 }
 
 .active-role-badge {

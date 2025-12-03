@@ -74,7 +74,7 @@ const CreateTransactionPage = () => {
         if (!spentAmount || spentAmount <= 0) {
             return { basePoints: 0, bonusPoints: 0, total: 0 };
         }
-        
+
         const basePoints = Math.floor(spentAmount * POINTS_PER_DOLLAR);
         let bonusPoints = 0;
 
@@ -195,8 +195,8 @@ const CreateTransactionPage = () => {
         <Layout>
             <div className="create-transaction-page">
                 <div className="page-header">
-                    <h1>Create Purchase Transaction</h1>
-                    <p>Record a new purchase and award points to a customer</p>
+                    <h1 className="page-title">Create Purchase Transaction</h1>
+                    <p className="page-subtitle">Record a new purchase and award points to a customer</p>
                 </div>
 
                 <div className="transaction-form-container">

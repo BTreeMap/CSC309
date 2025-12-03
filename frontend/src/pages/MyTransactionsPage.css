@@ -6,6 +6,7 @@
    - .form-label (filter labels)
    - .form-select (filter dropdown)
    - .filters-bar (filter container - defined below as page-specific)
+   - .page-header, .page-header-flex, .page-title, .page-subtitle (layout)
    
    Components from shared/:
    - LoadingSpinner, EmptyState, ErrorMessage, Pagination
@@ -19,26 +20,9 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.transactions-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-8);
-  flex-wrap: wrap;
-  gap: var(--space-4);
-}
-
-.transactions-header h1 {
-  font-family: var(--font-serif);
+/* Page-specific title size override */
+.my-transactions-page .page-title {
   font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.transactions-header p {
-  color: var(--color-text-muted);
-  margin: 0;
 }
 
 .header-left {

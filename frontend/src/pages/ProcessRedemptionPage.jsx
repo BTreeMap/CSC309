@@ -125,8 +125,8 @@ const ProcessRedemptionPage = () => {
             <Layout>
                 <div className="process-redemption-page">
                     <div className="page-header">
-                        <h1>Process Redemption</h1>
-                        <p>Scan a customer's QR code to process their redemption request</p>
+                        <h1 className="page-title">Process Redemption</h1>
+                        <p className="page-subtitle">Scan a customer's QR code to process their redemption request</p>
                     </div>
 
                     <div className="scanner-section">
@@ -218,8 +218,8 @@ const ProcessRedemptionPage = () => {
                 </button>
 
                 <div className="page-header">
-                    <h1>Process Redemption</h1>
-                    <p>Review and process this redemption request</p>
+                    <h1 className="page-title">Process Redemption</h1>
+                    <p className="page-subtitle">Review and process this redemption request</p>
                 </div>
 
                 <div className="redemption-card">

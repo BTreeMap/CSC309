@@ -5,6 +5,7 @@
    - Buttons: .btn, .btn-primary, .btn-secondary
    - Forms: .form-label
    - Messages: Uses design system alert classes
+   - Layout: .page-header, .page-title, .page-subtitle
    ========================================================================== */
 
 .transfer-points-page {
@@ -14,22 +15,14 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.transfer-header {
+/* Page header uses design-system styles, override to center on this page */
+.transfer-points-page .page-header {
   text-align: center;
-  margin-bottom: var(--space-8);
+  border-bottom: none;
 }
 
-.transfer-header h1 {
-  font-family: var(--font-serif);
+.transfer-points-page .page-title {
   font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.transfer-header p {
-  color: var(--color-text-muted);
-  margin: 0;
 }
 
 /* Balance Card */

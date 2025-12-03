@@ -156,8 +156,8 @@ const AllTransactionsPage = () => {
         <Layout>
             <div className="all-transactions-page">
                 <div className="page-header">
-                    <h1>All Transactions</h1>
-                    <p>View and manage all system transactions</p>
+                    <h1 className="page-title">All Transactions</h1>
+                    <p className="page-subtitle">View and manage all system transactions</p>
                 </div>
 
                 <div className="filters-bar">

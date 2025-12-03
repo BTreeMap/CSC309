@@ -100,10 +100,10 @@ const MyTransactionsPage = () => {
     return (
         <Layout>
             <div className="my-transactions-page">
-                <div className="transactions-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>My Transactions</h1>
-                        <p>View your transaction history</p>
+                        <h1 className="page-title">My Transactions</h1>
+                        <p className="page-subtitle">View your transaction history</p>
                     </div>
                     <div className="header-right">
                         <div className="points-badge">

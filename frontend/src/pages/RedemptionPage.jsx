@@ -139,9 +139,9 @@ const RedemptionPage = () => {
     return (
         <Layout>
             <div className="redemption-page">
-                <div className="redemption-header">
-                    <h1>Redeem Points</h1>
-                    <p>Create a redemption request to spend your points</p>
+                <div className="page-header">
+                    <h1 className="page-title">Redeem Points</h1>
+                    <p className="page-subtitle">Create a redemption request to spend your points</p>
                 </div>
 
                 <div className="redemption-content">

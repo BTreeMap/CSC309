@@ -50,9 +50,9 @@ const MyQRCodePage = () => {
     return (
         <Layout>
             <div className="qr-code-page">
-                <div className="qr-code-header">
-                    <h1>{t('users:qrCode.title')}</h1>
-                    <p>{t('users:qrCode.subtitle')}</p>
+                <div className="page-header">
+                    <h1 className="page-title">{t('users:qrCode.title')}</h1>
+                    <p className="page-subtitle">{t('users:qrCode.subtitle')}</p>
                 </div>
 
                 <div className="qr-code-container">

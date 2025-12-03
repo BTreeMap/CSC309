@@ -115,10 +115,10 @@ const EventsPage = () => {
     return (
         <Layout>
             <div className="events-page">
-                <div className="page-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>{t('events.title')}</h1>
-                        <p>{t('events.subtitle')}</p>
+                        <h1 className="page-title">{t('events.title')}</h1>
+                        <p className="page-subtitle">{t('events.subtitle')}</p>
                     </div>
                     {isManager && (
                         <div className="header-right">

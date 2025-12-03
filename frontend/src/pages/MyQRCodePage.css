@@ -1,6 +1,6 @@
 /* ==========================================================================
    MyQRCodePage - QR Code Display
-   Uses design system: .btn, .btn-primary
+   Uses design system: .btn, .btn-primary, .page-header, .page-title, .page-subtitle
    ========================================================================== */
 
 .qr-code-page {
@@ -10,22 +10,14 @@
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
-.qr-code-header {
+/* Override page-header to center on this page */
+.qr-code-page .page-header {
   text-align: center;
-  margin-bottom: var(--space-8);
+  border-bottom: none;
 }
 
-.qr-code-header h1 {
-  font-family: var(--font-serif);
+.qr-code-page .page-title {
   font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.qr-code-header p {
-  color: var(--color-text-muted);
-  margin: 0;
 }
 
 .qr-code-container {

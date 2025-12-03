@@ -111,9 +111,9 @@ const EditProfilePage = () => {
     return (
         <Layout>
             <div className="edit-profile-page">
-                <div className="edit-profile-header">
-                    <h1>{t('edit.title')}</h1>
-                    <p>{t('edit.subtitle')}</p>
+                <div className="page-header">
+                    <h1 className="page-title">{t('edit.title')}</h1>
+                    <p className="page-subtitle">{t('edit.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="edit-profile-form">

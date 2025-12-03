@@ -95,9 +95,9 @@ const DashboardPage = () => {
   return (
     <Layout>
       <div className="dashboard-page">
-        <div className="dashboard-header">
-          <h1>{t('dashboard:welcome', { name: user?.name || user?.utorid })}</h1>
-          <p className="dashboard-subtitle">
+        <div className="page-header">
+          <h1 className="page-title">{t('dashboard:welcome', { name: user?.name || user?.utorid })}</h1>
+          <p className="page-subtitle">
             {activeRole !== 'regular' && (
               <span className="active-role-badge">
                 {t('dashboard:actingAs', { role: getRoleDisplayName(activeRole) })}

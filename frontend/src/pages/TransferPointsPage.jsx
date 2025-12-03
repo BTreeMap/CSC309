@@ -183,9 +183,9 @@ const TransferPointsPage = () => {
     return (
         <Layout>
             <div className="transfer-points-page">
-                <div className="transfer-header">
-                    <h1>{t('transfer.title')}</h1>
-                    <p>{t('transfer.subtitle')}</p>
+                <div className="page-header">
+                    <h1 className="page-title">{t('transfer.title')}</h1>
+                    <p className="page-subtitle">{t('transfer.subtitle')}</p>
                 </div>
 
                 <div className="transfer-content">

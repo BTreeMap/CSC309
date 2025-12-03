@@ -185,10 +185,10 @@ const ManagePromotionsPage = () => {
     return (
         <Layout>
             <div className="manage-promotions-page">
-                <div className="page-header">
+                <div className="page-header page-header-flex">
                     <div className="header-left">
-                        <h1>Manage Promotions</h1>
-                        <p>Create and manage promotional campaigns</p>
+                        <h1 className="page-title">Manage Promotions</h1>
+                        <p className="page-subtitle">Create and manage promotional campaigns</p>
                     </div>
                     <div className="header-right">
                         <button onClick={openCreateModal} className="btn btn-primary">
