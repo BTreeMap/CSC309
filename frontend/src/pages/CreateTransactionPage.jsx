@@ -28,7 +28,7 @@ const CreateTransactionPage = () => {
     const [showScanner, setShowScanner] = useState(false);
 
     const fetchUserAndPromotions = useCallback(async (identifier) => {
-        const userData = await usersAPI.getUser(identifier);
+        const userData = await usersAPI.lookupUser(identifier);
         const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
         const now = new Date();
 
@@ -42,7 +42,7 @@ const CreateTransactionPage = () => {
 
     const handleLookupUser = async () => {
         if (!utorid.trim()) {
-            setError('Please enter a UTORid');
+            setError('Please enter a UTORid or User ID');
             return;
         }
 
@@ -197,7 +197,7 @@ const CreateTransactionPage = () => {
                                     type="text"
                                     value={utorid}
                                     onChange={(e) => setUtorid(e.target.value)}
-                                    placeholder="Enter UTORid"
+                                    placeholder="Enter UTORid or User ID"
                                     className="form-input lookup-input"
                                     onKeyDown={(e) => e.key === 'Enter' && handleLookupUser()}
                                 />
