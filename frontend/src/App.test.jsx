@@ -2,6 +2,38 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
+// Mock i18n
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+    i18n: {
+      language: 'en',
+      changeLanguage: vi.fn(),
+    },
+  }),
+  Trans: ({ children }) => children,
+  initReactI18next: {
+    type: '3rdParty',
+    init: vi.fn(),
+  },
+}));
+
+// Mock the i18n config with all exports
+vi.mock('./i18n', () => ({
+  SUPPORTED_LANGUAGES: {
+    en: { name: 'English', nativeName: 'English', dir: 'ltr' },
+    ar: { name: 'Arabic', nativeName: 'العربية', dir: 'rtl' },
+    zh: { name: 'Chinese', nativeName: '中文', dir: 'ltr' },
+    fr: { name: 'French', nativeName: 'Français', dir: 'ltr' },
+    ru: { name: 'Russian', nativeName: 'Русский', dir: 'ltr' },
+    es: { name: 'Spanish', nativeName: 'Español', dir: 'ltr' },
+  },
+  DEFAULT_LANGUAGE: 'en',
+  FALLBACK_LANGUAGE: 'en',
+  changeLanguage: vi.fn(),
+  getCurrentDirection: () => 'ltr',
+}));
+
 // Mock the AuthContext
 vi.mock('./contexts/AuthContext', () => ({
   AuthProvider: ({ children }) => <div>{children}</div>,
