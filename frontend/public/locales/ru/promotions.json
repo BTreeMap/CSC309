@@ -1,21 +1,40 @@
 {
     "promotions": {
         "title": "Акции",
+        "subtitle": "Откройте доступные акции и зарабатывайте бонусные баллы",
         "manageTitle": "Управление акциями",
         "list": {
-            "noPromotions": "Нет доступных акций",
-            "viewDetails": "Подробнее",
-            "searchPlaceholder": "Поиск акций..."
+            "noPromotions": "Акции не найдены",
+            "noPromotionsFiltered": "Нет акций, соответствующих вашим фильтрам.",
+            "noPromotionsAvailable": "В данный момент нет активных акций.",
+            "viewDetails": "Подробнее →",
+            "searchPlaceholder": "Поиск акций...",
+            "loading": "Загрузка акций..."
+        },
+        "filters": {
+            "type": "Тип",
+            "allTypes": "Все типы",
+            "automatic": "Автоматическая",
+            "oneTime": "Одноразовый код",
+            "status": "Статус",
+            "allStatuses": "Все статусы",
+            "clearFilters": "Сбросить фильтры"
         },
         "card": {
             "validFrom": "Действует с {{date}}",
             "validUntil": "Действует до {{date}}",
             "expired": "Истекла",
+            "ended": "Завершена",
             "active": "Активна",
             "upcoming": "Скоро",
             "pointsMultiplier": "{{multiplier}}x баллов",
             "bonusPoints": "+{{points}} бонусных баллов",
-            "minPurchase": "Мин. покупка: {{amount}}"
+            "minPurchase": "Мин. покупка: {{amount}}",
+            "duration": "Период",
+            "rate": "Ставка",
+            "bonusPointsRate": "+{{rate}}% бонусных баллов",
+            "minSpending": "Мин. расход",
+            "points": "Баллы"
         },
         "detail": {
             "title": "Детали акции",
@@ -70,26 +89,51 @@
     },
     "events": {
         "title": "События",
+        "subtitle": "Откройте предстоящие события и зарегистрируйтесь",
         "manageTitle": "Управление событиями",
         "list": {
-            "noEvents": "Нет доступных событий",
-            "viewDetails": "Подробнее",
+            "noEvents": "События не найдены",
+            "noEventsFiltered": "Нет событий, соответствующих вашим фильтрам.",
+            "noEventsAvailable": "В данный момент нет событий.",
+            "viewDetails": "Подробнее →",
             "searchPlaceholder": "Поиск событий...",
             "upcoming": "Предстоящие события",
             "past": "Прошедшие события",
-            "all": "Все события"
+            "all": "Все события",
+            "loading": "Загрузка событий...",
+            "error": "Не удалось загрузить события"
+        },
+        "filters": {
+            "search": "Поиск",
+            "searchName": "Поиск по названию...",
+            "location": "Место",
+            "searchLocation": "Поиск по месту...",
+            "status": "Статус",
+            "allEvents": "Все события",
+            "happeningNow": "Сейчас",
+            "upcoming": "Предстоящие",
+            "ended": "Завершённые",
+            "showFull": "Показать заполненные события",
+            "clearFilters": "Сбросить фильтры"
         },
         "card": {
             "date": "{{date}}",
             "time": "{{time}}",
             "location": "{{location}}",
             "capacity": "{{current}}/{{max}} мест",
-            "spotsLeft": "Осталось {{count}} мест",
+            "unlimited": "Неограничено",
             "full": "Мест нет",
+            "spotsLeft": "Осталось {{count}} мест",
+            "attending": "участников",
             "registered": "Зарегистрирован",
             "ended": "Завершено",
             "cancelled": "Отменено",
             "points": "+{{points}} баллов"
+        },
+        "status": {
+            "upcoming": "Предстоящее",
+            "ended": "Завершено",
+            "happeningNow": "Сейчас"
         },
         "detail": {
             "title": "Детали события",

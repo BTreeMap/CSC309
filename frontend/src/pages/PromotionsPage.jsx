@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { promotionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -9,6 +10,7 @@ import { Gift, CalendarDays, Coins, ShoppingCart, Target } from 'lucide-react';
 import './PromotionsPage.css';
 
 const PromotionsPage = () => {
+    const { t } = useTranslation(['promotions', 'common']);
     const { user, activeRole } = useAuth();
     const { showToast } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -77,13 +79,13 @@ const PromotionsPage = () => {
         const startDate = new Date(promotion.startTime);
         const endDate = new Date(promotion.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming' };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended' };
-        return { label: 'Active', className: 'status-active' };
+        if (now < startDate) return { label: t('promotions.card.upcoming'), className: 'status-upcoming' };
+        if (now > endDate) return { label: t('promotions.card.ended'), className: 'status-ended' };
+        return { label: t('promotions.card.active'), className: 'status-active' };
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -91,7 +93,7 @@ const PromotionsPage = () => {
     };
 
     const getTypeLabel = (type) => {
-        return type === 'automatic' ? 'Automatic' : 'One-Time Code';
+        return type === 'automatic' ? t('promotions.filters.automatic') : t('promotions.filters.oneTime');
     };
 
     const totalPages = Math.ceil(totalCount / limit);
@@ -102,13 +104,13 @@ const PromotionsPage = () => {
             <div className="promotions-page">
                 <div className="page-header">
                     <div className="header-left">
-                        <h1>Promotions</h1>
-                        <p>Discover available promotions and earn bonus points</p>
+                        <h1>{t('promotions.title')}</h1>
+                        <p>{t('promotions.subtitle')}</p>
                     </div>
                     {isManager && (
                         <div className="header-right">
                             <Link to="/promotions/manage" className="btn btn-primary">
-                                Manage Promotions
+                                {t('promotions.manageTitle')}
                             </Link>
                         </div>
                     )}
@@ -116,20 +118,20 @@ const PromotionsPage = () => {
 
                 <div className="filters-bar">
                     <div className="filter-group">
-                        <label className="form-label">Type</label>
+                        <label className="form-label">{t('promotions.filters.type')}</label>
                         <select
                             value={type}
                             onChange={(e) => handleFilterChange('type', e.target.value)}
                             className="form-select"
                         >
-                            <option value="">All Types</option>
-                            <option value="automatic">Automatic</option>
-                            <option value="one-time">One-Time Code</option>
+                            <option value="">{t('promotions.filters.allTypes')}</option>
+                            <option value="automatic">{t('promotions.filters.automatic')}</option>
+                            <option value="one-time">{t('promotions.filters.oneTime')}</option>
                         </select>
                     </div>
 
                     <div className="filter-group">
-                        <label className="form-label">Status</label>
+                        <label className="form-label">{t('promotions.filters.status')}</label>
                         <select
                             value={started && !ended ? 'active' : ended === 'true' ? 'ended' : started === 'false' ? 'upcoming' : ''}
                             onChange={(e) => {
@@ -151,33 +153,33 @@ const PromotionsPage = () => {
                             }}
                             className="form-select"
                         >
-                            <option value="">All Statuses</option>
-                            <option value="active">Active</option>
-                            <option value="upcoming">Upcoming</option>
-                            <option value="ended">Ended</option>
+                            <option value="">{t('promotions.filters.allStatuses')}</option>
+                            <option value="active">{t('promotions.card.active')}</option>
+                            <option value="upcoming">{t('promotions.card.upcoming')}</option>
+                            <option value="ended">{t('promotions.card.ended')}</option>
                         </select>
                     </div>
 
                     {hasFilters && (
                         <button onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
-                            Clear Filters
+                            {t('promotions.filters.clearFilters')}
                         </button>
                     )}
                 </div>
 
                 {loading ? (
-                    <LoadingSpinner text="Loading promotions..." />
+                    <LoadingSpinner text={t('promotions.list.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchPromotions} />
                 ) : promotions.length === 0 ? (
                     <EmptyState
                         icon={<Gift size={48} strokeWidth={1.5} />}
-                        title="No promotions found"
-                        description={hasFilters ? "No promotions match your filters." : "There are no active promotions at the moment."}
+                        title={t('promotions.list.noPromotions')}
+                        description={hasFilters ? t('promotions.list.noPromotionsFiltered') : t('promotions.list.noPromotionsAvailable')}
                         action={
                             hasFilters && (
                                 <button onClick={clearFilters} className="btn btn-secondary">
-                                    Clear Filters
+                                    {t('promotions.filters.clearFilters')}
                                 </button>
                             )
                         }
@@ -206,7 +208,7 @@ const PromotionsPage = () => {
 
                                         <div className="promotion-details">
                                             <div className="detail-row">
-                                                <span className="detail-label"><CalendarDays size={14} /> Duration</span>
+                                                <span className="detail-label"><CalendarDays size={14} /> {t('promotions.card.duration')}</span>
                                                 <span className="detail-value">
                                                     {formatDate(promotion.startTime)} - {formatDate(promotion.endTime)}
                                                 </span>
@@ -216,15 +218,15 @@ const PromotionsPage = () => {
                                                 <>
                                                     {promotion.rate && (
                                                         <div className="detail-row">
-                                                            <span className="detail-label"><Coins size={14} /> Rate</span>
+                                                            <span className="detail-label"><Coins size={14} /> {t('promotions.card.rate')}</span>
                                                             <span className="detail-value bonus">
-                                                                +{(promotion.rate * 100).toFixed(0)}% bonus points
+                                                                {t('promotions.card.bonusPointsRate', { rate: (promotion.rate * 100).toFixed(0) })}
                                                             </span>
                                                         </div>
                                                     )}
                                                     {promotion.minSpending > 0 && (
                                                         <div className="detail-row">
-                                                            <span className="detail-label"><ShoppingCart size={14} /> Min Spending</span>
+                                                            <span className="detail-label"><ShoppingCart size={14} /> {t('promotions.card.minSpending')}</span>
                                                             <span className="detail-value">${promotion.minSpending}</span>
                                                         </div>
                                                     )}
@@ -233,16 +235,16 @@ const PromotionsPage = () => {
 
                                             {promotion.type === 'one-time' && (
                                                 <div className="detail-row">
-                                                    <span className="detail-label"><Target size={14} /> Points</span>
+                                                    <span className="detail-label"><Target size={14} /> {t('promotions.card.points')}</span>
                                                     <span className="detail-value bonus">
-                                                        +{promotion.points?.toLocaleString()} points
+                                                        +{promotion.points?.toLocaleString()} {t('common:points')}
                                                     </span>
                                                 </div>
                                             )}
                                         </div>
 
                                         <Link to={`/promotions/${promotion.id}`} className="view-details-link">
-                                            View Details →
+                                            {t('promotions.list.viewDetails')}
                                         </Link>
                                     </div>
                                 );

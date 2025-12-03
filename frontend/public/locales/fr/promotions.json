@@ -1,21 +1,71 @@
 {
     "promotions": {
         "title": "Promotions",
+        "subtitle": "Découvrez les promotions disponibles et gagnez des points bonus",
         "manageTitle": "Gérer les promotions",
         "list": {
-            "noPromotions": "Aucune promotion disponible"
+            "noPromotions": "Aucune promotion trouvée",
+            "noPromotionsFiltered": "Aucune promotion ne correspond à vos filtres.",
+            "noPromotionsAvailable": "Il n'y a pas de promotions actives pour le moment.",
+            "viewDetails": "Voir les détails →",
+            "loading": "Chargement des promotions..."
+        },
+        "filters": {
+            "type": "Type",
+            "allTypes": "Tous les types",
+            "automatic": "Automatique",
+            "oneTime": "Code unique",
+            "status": "Statut",
+            "allStatuses": "Tous les statuts",
+            "clearFilters": "Effacer les filtres"
         },
         "card": {
             "expired": "Expirée",
+            "ended": "Terminée",
             "active": "Active",
-            "upcoming": "À venir"
+            "upcoming": "À venir",
+            "duration": "Durée",
+            "rate": "Taux",
+            "bonusPointsRate": "+{{rate}}% points bonus",
+            "minSpending": "Dépense min.",
+            "points": "Points"
         }
     },
     "events": {
         "title": "Événements",
+        "subtitle": "Découvrez les événements à venir et inscrivez-vous",
         "manageTitle": "Gérer les événements",
         "list": {
-            "noEvents": "Aucun événement disponible"
+            "noEvents": "Aucun événement trouvé",
+            "noEventsFiltered": "Aucun événement ne correspond à vos filtres.",
+            "noEventsAvailable": "Il n'y a pas d'événements pour le moment.",
+            "viewDetails": "Voir les détails →",
+            "loading": "Chargement des événements...",
+            "error": "Échec du chargement des événements"
+        },
+        "filters": {
+            "search": "Rechercher",
+            "searchName": "Rechercher par nom...",
+            "location": "Lieu",
+            "searchLocation": "Rechercher par lieu...",
+            "status": "Statut",
+            "allEvents": "Tous les événements",
+            "happeningNow": "En cours",
+            "upcoming": "À venir",
+            "ended": "Terminé",
+            "showFull": "Afficher les événements complets",
+            "clearFilters": "Effacer les filtres"
+        },
+        "card": {
+            "unlimited": "Illimité",
+            "full": "Complet",
+            "spotsLeft": "{{count}} places restantes",
+            "attending": "participants"
+        },
+        "status": {
+            "upcoming": "À venir",
+            "ended": "Terminé",
+            "happeningNow": "En cours"
         },
         "registration": {
             "register": "S'inscrire",

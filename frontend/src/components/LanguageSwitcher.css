@@ -27,14 +27,19 @@
     box-shadow: 0 0 0 2px var(--focus-ring, rgba(66, 153, 225, 0.5));
 }
 
+/* Compact mode - for sidebar and small spaces */
 .language-switcher.compact .language-switcher-toggle {
     padding: var(--spacing-2, 0.5rem);
     border: none;
     background: transparent;
+    width: 100%;
+    justify-content: flex-start;
+    gap: var(--space-3, 0.75rem);
+    color: var(--color-text-primary, #1a202c);
 }
 
 .language-switcher.compact .language-switcher-toggle:hover {
-    background: var(--bg-hover, #f7fafc);
+    background: var(--color-bg-secondary, #f7fafc);
 }
 
 .language-switcher-icon {
@@ -45,21 +50,13 @@
     font-weight: 500;
 }
 
-.language-switcher-chevron {
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
-.language-switcher-chevron.open {
-    transform: rotate(180deg);
-}
-
+/* Dropdown menu */
 .language-switcher-menu {
     position: absolute;
     top: 100%;
-    inset-inline-end: 0;
-    z-index: 100;
-    min-width: 180px;
+    inset-inline-start: 0;
+    z-index: 1000;
+    min-width: 200px;
     margin-top: var(--spacing-1, 0.25rem);
     padding: var(--spacing-1, 0.25rem) 0;
     background: var(--bg-primary, #fff);
@@ -67,13 +64,22 @@
     border-radius: var(--radius-md, 0.375rem);
     box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
     list-style: none;
-    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Drop-up mode for bottom-positioned elements */
+.language-switcher.drop-up .language-switcher-menu {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: var(--spacing-1, 0.25rem);
 }
 
 /* RTL support */
 [dir="rtl"] .language-switcher-menu {
-    inset-inline-end: 0;
-    inset-inline-start: auto;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
 }
 
 .language-switcher-option {

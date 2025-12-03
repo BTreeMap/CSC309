@@ -1,21 +1,40 @@
 {
     "promotions": {
         "title": "Promotions",
+        "subtitle": "Discover available promotions and earn bonus points",
         "manageTitle": "Manage Promotions",
         "list": {
-            "noPromotions": "No promotions available",
-            "viewDetails": "View Details",
-            "searchPlaceholder": "Search promotions..."
+            "noPromotions": "No promotions found",
+            "noPromotionsFiltered": "No promotions match your filters.",
+            "noPromotionsAvailable": "There are no active promotions at the moment.",
+            "viewDetails": "View Details →",
+            "searchPlaceholder": "Search promotions...",
+            "loading": "Loading promotions..."
+        },
+        "filters": {
+            "type": "Type",
+            "allTypes": "All Types",
+            "automatic": "Automatic",
+            "oneTime": "One-Time Code",
+            "status": "Status",
+            "allStatuses": "All Statuses",
+            "clearFilters": "Clear Filters"
         },
         "card": {
             "validFrom": "Valid from {{date}}",
             "validUntil": "Valid until {{date}}",
             "expired": "Expired",
+            "ended": "Ended",
             "active": "Active",
             "upcoming": "Upcoming",
             "pointsMultiplier": "{{multiplier}}x Points",
             "bonusPoints": "+{{points}} Bonus Points",
-            "minPurchase": "Min. purchase: {{amount}}"
+            "minPurchase": "Min. purchase: {{amount}}",
+            "duration": "Duration",
+            "rate": "Rate",
+            "bonusPointsRate": "+{{rate}}% bonus points",
+            "minSpending": "Min Spending",
+            "points": "Points"
         },
         "detail": {
             "title": "Promotion Details",
@@ -70,26 +89,51 @@
     },
     "events": {
         "title": "Events",
+        "subtitle": "Discover and RSVP to upcoming events",
         "manageTitle": "Manage Events",
         "list": {
-            "noEvents": "No events available",
-            "viewDetails": "View Details",
+            "noEvents": "No events found",
+            "noEventsFiltered": "No events match your filters.",
+            "noEventsAvailable": "There are no events at the moment.",
+            "viewDetails": "View Details →",
             "searchPlaceholder": "Search events...",
             "upcoming": "Upcoming Events",
             "past": "Past Events",
-            "all": "All Events"
+            "all": "All Events",
+            "loading": "Loading events...",
+            "error": "Failed to load events"
+        },
+        "filters": {
+            "search": "Search",
+            "searchName": "Search by event name...",
+            "location": "Location",
+            "searchLocation": "Search by location...",
+            "status": "Status",
+            "allEvents": "All Events",
+            "happeningNow": "Happening Now",
+            "upcoming": "Upcoming",
+            "ended": "Ended",
+            "showFull": "Show full events",
+            "clearFilters": "Clear Filters"
         },
         "card": {
             "date": "{{date}}",
             "time": "{{time}}",
             "location": "{{location}}",
-            "capacity": "{{current}}/{{max}} spots",
+            "unlimited": "Unlimited",
+            "full": "Full",
             "spotsLeft": "{{count}} spots left",
-            "full": "Event Full",
+            "attending": "attending",
+            "capacity": "{{current}}/{{max}} spots",
             "registered": "Registered",
             "ended": "Ended",
             "cancelled": "Cancelled",
             "points": "+{{points}} points"
+        },
+        "status": {
+            "upcoming": "Upcoming",
+            "ended": "Ended",
+            "happeningNow": "Happening Now"
         },
         "detail": {
             "title": "Event Details",

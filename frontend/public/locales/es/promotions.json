@@ -1,21 +1,40 @@
 {
     "promotions": {
         "title": "Promociones",
+        "subtitle": "Descubre promociones disponibles y gana puntos extra",
         "manageTitle": "Gestionar promociones",
         "list": {
-            "noPromotions": "No hay promociones disponibles",
-            "viewDetails": "Ver detalles",
-            "searchPlaceholder": "Buscar promociones..."
+            "noPromotions": "No se encontraron promociones",
+            "noPromotionsFiltered": "No hay promociones que coincidan con tus filtros.",
+            "noPromotionsAvailable": "No hay promociones activas en este momento.",
+            "viewDetails": "Ver detalles →",
+            "searchPlaceholder": "Buscar promociones...",
+            "loading": "Cargando promociones..."
+        },
+        "filters": {
+            "type": "Tipo",
+            "allTypes": "Todos los tipos",
+            "automatic": "Automática",
+            "oneTime": "Código de un solo uso",
+            "status": "Estado",
+            "allStatuses": "Todos los estados",
+            "clearFilters": "Limpiar filtros"
         },
         "card": {
             "validFrom": "Válido desde {{date}}",
             "validUntil": "Válido hasta {{date}}",
             "expired": "Expirada",
+            "ended": "Terminada",
             "active": "Activa",
             "upcoming": "Próxima",
             "pointsMultiplier": "{{multiplier}}x puntos",
             "bonusPoints": "+{{points}} puntos de bonificación",
-            "minPurchase": "Compra mín.: {{amount}}"
+            "minPurchase": "Compra mín.: {{amount}}",
+            "duration": "Duración",
+            "rate": "Tasa",
+            "bonusPointsRate": "+{{rate}}% puntos extra",
+            "minSpending": "Gasto mínimo",
+            "points": "Puntos"
         },
         "detail": {
             "title": "Detalles de la promoción",
@@ -70,26 +89,51 @@
     },
     "events": {
         "title": "Eventos",
+        "subtitle": "Descubre próximos eventos y confirma tu asistencia",
         "manageTitle": "Gestionar eventos",
         "list": {
-            "noEvents": "No hay eventos disponibles",
-            "viewDetails": "Ver detalles",
+            "noEvents": "No se encontraron eventos",
+            "noEventsFiltered": "No hay eventos que coincidan con tus filtros.",
+            "noEventsAvailable": "No hay eventos en este momento.",
+            "viewDetails": "Ver detalles →",
             "searchPlaceholder": "Buscar eventos...",
             "upcoming": "Próximos eventos",
             "past": "Eventos pasados",
-            "all": "Todos los eventos"
+            "all": "Todos los eventos",
+            "loading": "Cargando eventos...",
+            "error": "No se pudieron cargar los eventos"
+        },
+        "filters": {
+            "search": "Buscar",
+            "searchName": "Buscar por nombre...",
+            "location": "Ubicación",
+            "searchLocation": "Buscar por ubicación...",
+            "status": "Estado",
+            "allEvents": "Todos los eventos",
+            "happeningNow": "En curso",
+            "upcoming": "Próximos",
+            "ended": "Finalizados",
+            "showFull": "Mostrar eventos llenos",
+            "clearFilters": "Limpiar filtros"
         },
         "card": {
             "date": "{{date}}",
             "time": "{{time}}",
             "location": "{{location}}",
             "capacity": "{{current}}/{{max}} lugares",
+            "unlimited": "Ilimitado",
+            "full": "Lleno",
             "spotsLeft": "{{count}} lugares disponibles",
-            "full": "Evento lleno",
+            "attending": "asistentes",
             "registered": "Registrado",
             "ended": "Finalizado",
             "cancelled": "Cancelado",
             "points": "+{{points}} puntos"
+        },
+        "status": {
+            "upcoming": "Próximo",
+            "ended": "Finalizado",
+            "happeningNow": "En curso"
         },
         "detail": {
             "title": "Detalles del evento",

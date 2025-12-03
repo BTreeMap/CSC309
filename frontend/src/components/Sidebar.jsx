@@ -26,7 +26,8 @@ import {
     User,
     Pencil,
     Lock,
-    LogOut
+    LogOut,
+    Globe
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -280,8 +281,10 @@ const Sidebar = () => {
                                 </Link>
                                 <div className="sidebar-dropdown-divider"></div>
                                 {/* Language Switcher in User Menu */}
-                                <div className="sidebar-dropdown-item language-item">
-                                    <LanguageSwitcher compact />
+                                <div className="sidebar-dropdown-language">
+                                    <span className="menu-icon"><Globe size={16} /></span>
+                                    <span className="language-label">{t('common:language')}</span>
+                                    <LanguageSwitcher compact dropUp />
                                 </div>
                                 <div className="sidebar-dropdown-divider"></div>
                                 <button

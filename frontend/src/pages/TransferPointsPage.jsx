@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
@@ -15,6 +16,7 @@ const INITIAL_FORM_STATE = {
 };
 
 const TransferPointsPage = () => {
+    const { t } = useTranslation(['transactions', 'common']);
     const { user, loading: authLoading, updateUser } = useAuth();
     const navigate = useNavigate();
     const { showToast } = useToast();
@@ -49,7 +51,7 @@ const TransferPointsPage = () => {
     const lookupRecipient = useCallback(async (identifier = formData.recipientId) => {
         const trimmedId = identifier?.trim();
         if (!trimmedId) {
-            setErrors((prev) => ({ ...prev, recipientId: 'Please enter a user ID or UTORid' }));
+            setErrors((prev) => ({ ...prev, recipientId: t('transfer.error.enterRecipient') }));
             return;
         }
 
@@ -61,7 +63,7 @@ const TransferPointsPage = () => {
 
             if (foundUser) {
                 if (foundUser.id === user.id) {
-                    setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
+                    setErrors((prev) => ({ ...prev, recipientId: t('transfer.error.selfTransfer') }));
                 } else {
                     setRecipientInfo(foundUser);
                     setErrors((prev) => {
@@ -70,18 +72,18 @@ const TransferPointsPage = () => {
                     });
                 }
             } else {
-                setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                setErrors((prev) => ({ ...prev, recipientId: t('transfer.error.userNotFound') }));
             }
         } catch (err) {
             if (err.response?.status === 404) {
-                setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                setErrors((prev) => ({ ...prev, recipientId: t('transfer.error.userNotFound') }));
             } else {
-                setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+                setErrors((prev) => ({ ...prev, recipientId: t('transfer.error.lookupFailed') }));
             }
         } finally {
             setLookingUpRecipient(false);
         }
-    }, [formData.recipientId, user.id]);
+    }, [formData.recipientId, user.id, t]);
 
     const handleQrScan = useCallback((rawData) => {
         setShowScanner(false);
@@ -91,20 +93,20 @@ const TransferPointsPage = () => {
         const payload = parseQrPayload(rawData);
 
         if (!payload.isValid) {
-            showToast(payload.error || 'Invalid QR code', 'error');
+            showToast(payload.error || t('transfer.error.invalidQr'), 'error');
             return;
         }
 
         // Validate this is a user QR code
         if (payload.type === QR_PAYLOAD_TYPES.REDEMPTION) {
-            showToast('This is a redemption QR code. Please scan a user\'s personal QR code.', 'error');
+            showToast(t('transfer.error.redemptionQr'), 'error');
             return;
         }
 
         // Extract user identifier
         const identifier = extractUserIdentifier(payload);
         if (!identifier) {
-            showToast('Could not extract user information from QR code', 'error');
+            showToast(t('transfer.error.qrExtractFailed'), 'error');
             return;
         }
 
@@ -112,27 +114,27 @@ const TransferPointsPage = () => {
         const identifierStr = String(identifier);
         setFormData((prev) => ({ ...prev, recipientId: identifierStr }));
         lookupRecipient(identifierStr);
-    }, [lookupRecipient, showToast]);
+    }, [lookupRecipient, showToast, t]);
 
     const validateForm = useCallback(() => {
         const newErrors = {};
 
         if (!recipientInfo) {
-            newErrors.recipientId = 'Please look up and verify the recipient';
+            newErrors.recipientId = t('transfer.error.verifyRecipient');
         } else if (!recipientInfo.verified) {
-            newErrors.recipientId = 'Recipient must be verified to receive points';
+            newErrors.recipientId = t('transfer.error.recipientNotVerified');
         }
 
         const amount = parseInt(formData.amount, 10);
         if (!formData.amount || isNaN(amount) || amount <= 0) {
-            newErrors.amount = 'Please enter a valid positive amount';
+            newErrors.amount = t('transfer.error.invalidAmount');
         } else if (amount > user.points) {
-            newErrors.amount = `Insufficient points. You have ${user.points.toLocaleString()} points available.`;
+            newErrors.amount = t('transfer.error.insufficientPoints', { points: user.points.toLocaleString() });
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }, [recipientInfo, formData.amount, user.points]);
+    }, [recipientInfo, formData.amount, user.points, t]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -148,7 +150,7 @@ const TransferPointsPage = () => {
         try {
             const amount = parseInt(formData.amount, 10);
             if (isNaN(amount) || amount <= 0) {
-                showToast('Invalid amount', 'error');
+                showToast(t('transfer.error.invalidAmount'), 'error');
                 setLoading(false);
                 return;
             }
@@ -158,10 +160,10 @@ const TransferPointsPage = () => {
             const updatedUser = await usersAPI.getMe();
             updateUser(updatedUser);
 
-            showToast(`Successfully transferred ${amount.toLocaleString()} points to ${recipientInfo.name || recipientInfo.utorid}`, 'success');
+            showToast(t('transfer.success', { points: amount.toLocaleString(), recipient: recipientInfo.name || recipientInfo.utorid }), 'success');
             navigate('/transactions');
         } catch (error) {
-            showToast(error.response?.data?.error || 'Failed to transfer points', 'error');
+            showToast(error.response?.data?.error || t('transfer.error.generic'), 'error');
         } finally {
             setLoading(false);
         }
@@ -170,7 +172,7 @@ const TransferPointsPage = () => {
     if (authLoading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading..." />
+                <LoadingSpinner text={t('common:loading')} />
             </Layout>
         );
     }
@@ -182,19 +184,19 @@ const TransferPointsPage = () => {
         <Layout>
             <div className="transfer-points-page">
                 <div className="transfer-header">
-                    <h1>Transfer Points</h1>
-                    <p>Send points to another user</p>
+                    <h1>{t('transfer.title')}</h1>
+                    <p>{t('transfer.subtitle')}</p>
                 </div>
 
                 <div className="transfer-content">
                     <div className="points-balance-card">
-                        <span className="balance-label">Your Available Points</span>
+                        <span className="balance-label">{t('transfer.yourAvailablePoints')}</span>
                         <span className="balance-value">{user?.points?.toLocaleString() || 0}</span>
                     </div>
 
                     <form onSubmit={handleSubmit} className="transfer-form">
                         <div className="form-group">
-                            <label htmlFor="recipientId" className="form-label">Recipient User ID or UTORid</label>
+                            <label htmlFor="recipientId" className="form-label">{t('transfer.recipientLabel')}</label>
                             <div className="lookup-input-wrapper">
                                 <input
                                     type="text"
@@ -202,7 +204,7 @@ const TransferPointsPage = () => {
                                     name="recipientId"
                                     value={formData.recipientId}
                                     onChange={handleChange}
-                                    placeholder="Enter user ID or UTORid"
+                                    placeholder={t('transfer.recipientPlaceholder')}
                                     disabled={loading}
                                     className="form-input"
                                 />
@@ -212,14 +214,14 @@ const TransferPointsPage = () => {
                                     onClick={() => lookupRecipient()}
                                     disabled={loading || lookingUpRecipient}
                                 >
-                                    {lookingUpRecipient ? 'Looking...' : 'Look Up'}
+                                    {lookingUpRecipient ? t('transfer.lookingUp') : t('transfer.lookUp')}
                                 </button>
                                 <button
                                     type="button"
                                     className="btn btn-ghost scan-button"
                                     onClick={() => setShowScanner(true)}
                                     disabled={loading}
-                                    aria-label="Scan QR Code"
+                                    aria-label={t('transfer.scanQr')}
                                 >
                                     📷
                                 </button>
@@ -229,17 +231,17 @@ const TransferPointsPage = () => {
                             {recipientInfo && (
                                 <div className="recipient-info">
                                     {recipientInfo.verified ? (
-                                        <span className="recipient-verified">✓ Verified</span>
+                                        <span className="recipient-verified">✓ {t('transfer.verified')}</span>
                                     ) : (
-                                        <span className="recipient-unverified">⚠ Unverified</span>
+                                        <span className="recipient-unverified">⚠ {t('transfer.unverified')}</span>
                                     )}
                                     <div className="recipient-details">
-                                        <span className="recipient-name">{recipientInfo.name || 'No name'}</span>
+                                        <span className="recipient-name">{recipientInfo.name || t('transfer.noName')}</span>
                                         <span className="recipient-utorid">@{recipientInfo.utorid}</span>
                                     </div>
                                     {!recipientInfo.verified && (
                                         <div className="recipient-warning">
-                                            This user is not verified. Transfers to unverified users are not allowed.
+                                            {t('transfer.unverifiedWarning')}
                                         </div>
                                     )}
                                 </div>
@@ -247,7 +249,7 @@ const TransferPointsPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="amount" className="form-label">Amount to Transfer</label>
+                            <label htmlFor="amount" className="form-label">{t('transfer.amountLabel')}</label>
                             <input
                                 type="number"
                                 id="amount"
@@ -255,7 +257,7 @@ const TransferPointsPage = () => {
                                 className="form-input"
                                 value={formData.amount}
                                 onChange={handleChange}
-                                placeholder="Enter amount"
+                                placeholder={t('transfer.amountPlaceholder')}
                                 min="1"
                                 max={user?.points || 0}
                                 disabled={loading}
@@ -264,35 +266,35 @@ const TransferPointsPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="remark" className="form-label">Remark (Optional)</label>
+                            <label htmlFor="remark" className="form-label">{t('transfer.remarkLabel')}</label>
                             <textarea
                                 id="remark"
                                 name="remark"
                                 className="form-textarea"
                                 value={formData.remark}
                                 onChange={handleChange}
-                                placeholder="Add a note for this transfer"
+                                placeholder={t('transfer.remarkPlaceholder')}
                                 rows={3}
                                 disabled={loading}
                             />
                         </div>
 
                         <div className="transfer-summary">
-                            <h3>Transfer Summary</h3>
+                            <h3>{t('transfer.summary')}</h3>
                             <div className="summary-row">
-                                <span>To:</span>
+                                <span>{t('transfer.to')}</span>
                                 <span>{recipientInfo ? `${recipientInfo.name || recipientInfo.utorid} (@${recipientInfo.utorid})` : '-'}</span>
                             </div>
                             <div className="summary-row">
-                                <span>Amount:</span>
-                                <span>{isValidAmount ? `${transferAmount.toLocaleString()} points` : '-'}</span>
+                                <span>{t('transfer.amount')}</span>
+                                <span>{isValidAmount ? `${transferAmount.toLocaleString()} ${t('common:points')}` : '-'}</span>
                             </div>
                             <div className="summary-row">
-                                <span>Your balance after:</span>
+                                <span>{t('transfer.balanceAfter')}</span>
                                 <span>
                                     {isValidAmount
-                                        ? `${(user.points - transferAmount).toLocaleString()} points`
-                                        : `${user?.points?.toLocaleString() || 0} points`}
+                                        ? `${(user.points - transferAmount).toLocaleString()} ${t('common:points')}`
+                                        : `${user?.points?.toLocaleString() || 0} ${t('common:points')}`}
                                 </span>
                             </div>
                         </div>
@@ -304,14 +306,14 @@ const TransferPointsPage = () => {
                                 onClick={() => navigate(-1)}
                                 disabled={loading}
                             >
-                                Cancel
+                                {t('common:cancel')}
                             </button>
                             <button
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={loading || !recipientInfo || !recipientInfo?.verified}
                             >
-                                {loading ? 'Processing...' : 'Transfer Points'}
+                                {loading ? t('transfer.submitting') : t('transfer.submit')}
                             </button>
                         </div>
                     </form>
@@ -321,9 +323,9 @@ const TransferPointsPage = () => {
                     isOpen={showConfirm}
                     onClose={() => setShowConfirm(false)}
                     onConfirm={handleConfirmTransfer}
-                    title="Confirm Transfer"
-                    message={`Are you sure you want to transfer ${transferAmount?.toLocaleString() || 0} points to ${recipientInfo?.name || recipientInfo?.utorid}?`}
-                    confirmText="Transfer"
+                    title={t('transfer.confirmTitle')}
+                    message={t('transfer.confirmMessage', { points: transferAmount?.toLocaleString() || 0, recipient: recipientInfo?.name || recipientInfo?.utorid })}
+                    confirmText={t('common:confirm')}
                     variant="primary"
                 />
 

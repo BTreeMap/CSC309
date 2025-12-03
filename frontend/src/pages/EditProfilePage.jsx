@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
@@ -8,6 +9,7 @@ import { useToast } from '../components/shared/ToastContext';
 import './EditProfilePage.css';
 
 const EditProfilePage = () => {
+    const { t } = useTranslation(['users', 'common']);
     const { user, updateUser, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const { showToast } = useToast();
@@ -26,17 +28,17 @@ const EditProfilePage = () => {
         const newErrors = {};
 
         if (formData.name && (formData.name.length < 1 || formData.name.length > 50)) {
-            newErrors.name = 'Name must be between 1 and 50 characters';
+            newErrors.name = t('edit.validation.nameLength');
         }
 
         if (formData.email && !formData.email.match(/^[^\s@]+@(mail\.)?utoronto\.ca$/)) {
-            newErrors.email = 'Email must be a valid UofT email address';
+            newErrors.email = t('edit.validation.invalidEmail');
         }
 
         if (formData.birthday) {
             const date = new Date(formData.birthday);
             if (isNaN(date.getTime())) {
-                newErrors.birthday = 'Invalid date format';
+                newErrors.birthday = t('edit.validation.invalidDate');
             }
         }
 
@@ -57,7 +59,7 @@ const EditProfilePage = () => {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
-                showToast('Avatar image must be less than 5MB', 'error');
+                showToast(t('edit.avatarTooLarge'), 'error');
                 return;
             }
             setAvatar(file);
@@ -82,17 +84,17 @@ const EditProfilePage = () => {
             if (avatar) updateData.avatar = avatar;
 
             if (Object.keys(updateData).length === 0) {
-                showToast('No changes to save', 'error');
+                showToast(t('edit.noChanges'), 'error');
                 setLoading(false);
                 return;
             }
 
             const updatedUser = await usersAPI.updateMe(updateData);
             updateUser(updatedUser);
-            showToast('Profile updated successfully', 'success');
+            showToast(t('edit.success'), 'success');
             navigate('/profile');
         } catch (error) {
-            showToast(error.response?.data?.error || 'Failed to update profile', 'error');
+            showToast(error.response?.data?.error || t('edit.error'), 'error');
         } finally {
             setLoading(false);
         }
@@ -101,7 +103,7 @@ const EditProfilePage = () => {
     if (authLoading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading profile..." />
+                <LoadingSpinner text={t('edit.loading')} />
             </Layout>
         );
     }
@@ -110,8 +112,8 @@ const EditProfilePage = () => {
         <Layout>
             <div className="edit-profile-page">
                 <div className="edit-profile-header">
-                    <h1>Edit Profile</h1>
-                    <p>Update your personal information</p>
+                    <h1>{t('edit.title')}</h1>
+                    <p>{t('edit.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="edit-profile-form">
@@ -125,7 +127,7 @@ const EditProfilePage = () => {
                         </div>
                         <div className="avatar-upload">
                             <label htmlFor="avatar" className="avatar-upload-button">
-                                Choose Photo
+                                {t('edit.choosePhoto')}
                             </label>
                             <input
                                 type="file"
@@ -134,12 +136,12 @@ const EditProfilePage = () => {
                                 onChange={handleAvatarChange}
                                 className="avatar-input"
                             />
-                            <p className="avatar-hint">JPG, PNG or GIF. Max size 5MB</p>
+                            <p className="avatar-hint">{t('edit.avatarHint')}</p>
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="utorid" className="form-label">UTORid</label>
+                        <label htmlFor="utorid" className="form-label">{t('profile.utorid')}</label>
                         <input
                             type="text"
                             id="utorid"
@@ -147,11 +149,11 @@ const EditProfilePage = () => {
                             value={user?.utorid || ''}
                             disabled
                         />
-                        <span className="input-hint">UTORid cannot be changed</span>
+                        <span className="input-hint">{t('edit.utoridCannotChange')}</span>
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="name" className="form-label">Full Name</label>
+                        <label htmlFor="name" className="form-label">{t('edit.nameLabel')}</label>
                         <input
                             type="text"
                             id="name"
@@ -159,14 +161,14 @@ const EditProfilePage = () => {
                             className="form-input"
                             value={formData.name}
                             onChange={handleChange}
-                            placeholder="Enter your full name"
+                            placeholder={t('edit.namePlaceholder')}
                             maxLength={50}
                         />
                         {errors.name && <span className="input-error">{errors.name}</span>}
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="email" className="form-label">Email</label>
+                        <label htmlFor="email" className="form-label">{t('edit.emailLabel')}</label>
                         <input
                             type="email"
                             id="email"
@@ -174,14 +176,14 @@ const EditProfilePage = () => {
                             className="form-input"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="example@mail.utoronto.ca"
+                            placeholder={t('edit.emailPlaceholder')}
                         />
                         {errors.email && <span className="input-error">{errors.email}</span>}
-                        <span className="input-hint">Must be a valid UofT email address</span>
+                        <span className="input-hint">{t('edit.emailHint')}</span>
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="birthday" className="form-label">Birthday</label>
+                        <label htmlFor="birthday" className="form-label">{t('edit.birthdayLabel')}</label>
                         <input
                             type="date"
                             id="birthday"
@@ -200,14 +202,14 @@ const EditProfilePage = () => {
                             onClick={() => navigate('/profile')}
                             disabled={loading}
                         >
-                            Cancel
+                            {t('common:cancel')}
                         </button>
                         <button
                             type="submit"
                             className="btn btn-primary"
                             disabled={loading}
                         >
-                            {loading ? 'Saving...' : 'Save Changes'}
+                            {loading ? t('edit.submitting') : t('edit.submit')}
                         </button>
                     </div>
                 </form>

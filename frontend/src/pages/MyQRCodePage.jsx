@@ -1,5 +1,6 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner } from '../components/shared';
@@ -7,12 +8,13 @@ import { createUserPayload } from '../utils/qrPayload';
 import './MyQRCodePage.css';
 
 const MyQRCodePage = () => {
+    const { t } = useTranslation(['users', 'common']);
     const { user, loading } = useAuth();
 
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading..." />
+                <LoadingSpinner />
             </Layout>
         );
     }
@@ -49,8 +51,8 @@ const MyQRCodePage = () => {
         <Layout>
             <div className="qr-code-page">
                 <div className="qr-code-header">
-                    <h1>My QR Code</h1>
-                    <p>Show this QR code to make transactions or transfers</p>
+                    <h1>{t('users:qrCode.title')}</h1>
+                    <p>{t('users:qrCode.subtitle')}</p>
                 </div>
 
                 <div className="qr-code-container">
@@ -67,51 +69,18 @@ const MyQRCodePage = () => {
 
                         <div className="qr-code-info">
                             <div className="user-info-row">
-                                <span className="user-info-label">User ID</span>
-                                <span className="user-info-value">{user?.id}</span>
-                            </div>
-                            <div className="user-info-row">
-                                <span className="user-info-label">UTORid</span>
+                                <span className="user-info-label">{t('users:profile.utorid')}</span>
                                 <span className="user-info-value">{user?.utorid}</span>
                             </div>
                             <div className="user-info-row">
-                                <span className="user-info-label">Name</span>
-                                <span className="user-info-value">{user?.name || 'Not set'}</span>
+                                <span className="user-info-label">{t('users:profile.name')}</span>
+                                <span className="user-info-value">{user?.name || t('common:noData')}</span>
                             </div>
                         </div>
 
                         <button className="btn btn-primary download-qr-button" onClick={handleDownload}>
-                            <span className="download-icon">📥</span>
-                            Download QR Code
+                            {t('users:qrCode.download')}
                         </button>
-                    </div>
-
-                    <div className="qr-code-instructions">
-                        <h2>How to use your QR Code</h2>
-
-                        <div className="instruction-item">
-                            <span className="instruction-icon">🛒</span>
-                            <div className="instruction-content">
-                                <h3>For Purchases</h3>
-                                <p>Show this QR code to the cashier when making a purchase to earn points.</p>
-                            </div>
-                        </div>
-
-                        <div className="instruction-item">
-                            <span className="instruction-icon">💸</span>
-                            <div className="instruction-content">
-                                <h3>For Transfers</h3>
-                                <p>Another user can scan your QR code to send you points.</p>
-                            </div>
-                        </div>
-
-                        <div className="instruction-item">
-                            <span className="instruction-icon">🔒</span>
-                            <div className="instruction-content">
-                                <h3>Keep it Safe</h3>
-                                <p>Your QR code contains your user ID. Only share it with trusted parties.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

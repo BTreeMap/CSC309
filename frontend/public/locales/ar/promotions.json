@@ -1,21 +1,71 @@
 {
     "promotions": {
         "title": "العروض الترويجية",
+        "subtitle": "اكتشف العروض المتاحة واكسب نقاط إضافية",
         "manageTitle": "إدارة العروض",
         "list": {
-            "noPromotions": "لا توجد عروض متاحة"
+            "noPromotions": "لم يتم العثور على عروض",
+            "noPromotionsFiltered": "لا توجد عروض تطابق معايير البحث.",
+            "noPromotionsAvailable": "لا توجد عروض نشطة في الوقت الحالي.",
+            "viewDetails": "عرض التفاصيل ←",
+            "loading": "جاري تحميل العروض..."
+        },
+        "filters": {
+            "type": "النوع",
+            "allTypes": "جميع الأنواع",
+            "automatic": "تلقائي",
+            "oneTime": "رمز لمرة واحدة",
+            "status": "الحالة",
+            "allStatuses": "جميع الحالات",
+            "clearFilters": "مسح التصفية"
         },
         "card": {
             "expired": "منتهية",
+            "ended": "انتهت",
             "active": "نشطة",
-            "upcoming": "قادمة"
+            "upcoming": "قادمة",
+            "duration": "المدة",
+            "rate": "المعدل",
+            "bonusPointsRate": "+{{rate}}% نقاط إضافية",
+            "minSpending": "الحد الأدنى للإنفاق",
+            "points": "النقاط"
         }
     },
     "events": {
         "title": "الفعاليات",
+        "subtitle": "اكتشف الفعاليات القادمة وسجل فيها",
         "manageTitle": "إدارة الفعاليات",
         "list": {
-            "noEvents": "لا توجد فعاليات متاحة"
+            "noEvents": "لم يتم العثور على فعاليات",
+            "noEventsFiltered": "لا توجد فعاليات تطابق معايير البحث.",
+            "noEventsAvailable": "لا توجد فعاليات في الوقت الحالي.",
+            "viewDetails": "عرض التفاصيل ←",
+            "loading": "جاري تحميل الفعاليات...",
+            "error": "فشل تحميل الفعاليات"
+        },
+        "filters": {
+            "search": "بحث",
+            "searchName": "البحث باسم الفعالية...",
+            "location": "الموقع",
+            "searchLocation": "البحث بالموقع...",
+            "status": "الحالة",
+            "allEvents": "جميع الفعاليات",
+            "happeningNow": "يحدث الآن",
+            "upcoming": "قادمة",
+            "ended": "انتهت",
+            "showFull": "عرض الفعاليات الممتلئة",
+            "clearFilters": "مسح التصفية"
+        },
+        "card": {
+            "unlimited": "غير محدود",
+            "full": "ممتلئ",
+            "spotsLeft": "{{count}} أماكن متبقية",
+            "attending": "مشارك"
+        },
+        "status": {
+            "upcoming": "قادمة",
+            "ended": "انتهت",
+            "happeningNow": "يحدث الآن"
         },
         "registration": {
             "register": "التسجيل",

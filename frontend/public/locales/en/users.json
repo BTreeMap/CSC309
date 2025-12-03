@@ -30,16 +30,29 @@
     },
     "edit": {
         "title": "Edit Profile",
+        "subtitle": "Update your personal information",
         "nameLabel": "Full Name",
         "namePlaceholder": "Enter your full name",
-        "emailLabel": "Email Address",
-        "emailPlaceholder": "Enter your email address",
+        "emailLabel": "Email",
+        "emailPlaceholder": "example@mail.utoronto.ca",
+        "emailHint": "Must be a valid UofT email address",
         "birthdayLabel": "Birthday",
         "avatarLabel": "Profile Picture",
+        "choosePhoto": "Choose Photo",
+        "avatarHint": "JPG, PNG or GIF. Max size 5MB",
+        "utoridCannotChange": "UTORid cannot be changed",
         "submit": "Save Changes",
         "submitting": "Saving...",
         "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "noChanges": "No changes to save",
+        "error": "Failed to update profile",
+        "loading": "Loading profile...",
+        "avatarTooLarge": "Avatar image must be less than 5MB",
+        "validation": {
+            "nameLength": "Name must be between 1 and 50 characters",
+            "invalidEmail": "Email must be a valid UofT email address",
+            "invalidDate": "Invalid date format"
+        }
     },
     "roles": {
         "regular": "Regular User",

@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Globe, Check, ChevronDown } from 'lucide-react';
+import { Globe, Check } from 'lucide-react';
 import { SUPPORTED_LANGUAGES, changeLanguage } from '../i18n';
 import './LanguageSwitcher.css';
 
 /**
  * Language switcher dropdown component
  * Allows users to change the application language
+ * 
+ * @param {boolean} compact - If true, only shows globe icon
+ * @param {boolean} dropUp - If true, dropdown opens upward
+ * @param {string} className - Additional CSS classes
  */
-const LanguageSwitcher = ({ compact = false, className = '' }) => {
+const LanguageSwitcher = ({ compact = false, dropUp = false, className = '' }) => {
     const { i18n, t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -54,7 +58,7 @@ const LanguageSwitcher = ({ compact = false, className = '' }) => {
 
     return (
         <div
-            className={`language-switcher ${compact ? 'compact' : ''} ${className}`}
+            className={`language-switcher ${compact ? 'compact' : ''} ${dropUp ? 'drop-up' : ''} ${className}`}
             ref={dropdownRef}
         >
             <button
@@ -65,17 +69,11 @@ const LanguageSwitcher = ({ compact = false, className = '' }) => {
                 aria-label={t('common:language')}
                 title={t('common:language')}
             >
-                <Globe size={compact ? 18 : 20} className="language-switcher-icon" />
+                <Globe size={compact ? 16 : 18} className="language-switcher-icon" />
                 {!compact && (
-                    <>
-                        <span className="language-switcher-current">
-                            {currentLanguageInfo.nativeName}
-                        </span>
-                        <ChevronDown
-                            size={16}
-                            className={`language-switcher-chevron ${isOpen ? 'open' : ''}`}
-                        />
-                    </>
+                    <span className="language-switcher-current">
+                        {currentLanguageInfo.nativeName}
+                    </span>
                 )}
             </button>
 

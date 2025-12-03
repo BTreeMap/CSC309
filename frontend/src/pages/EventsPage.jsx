@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -8,6 +9,7 @@ import { Calendar, CheckCircle, Radio, MapPin, CalendarDays, Users, Gift } from 
 import './EventsPage.css';
 
 const EventsPage = () => {
+    const { t } = useTranslation(['promotions', 'common']);
     const { activeRole } = useAuth();
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -43,7 +45,7 @@ const EventsPage = () => {
             setEvents(data.results || []);
             setTotalCount(data.count || 0);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load events');
+            setError(err.response?.data?.error || t('events.list.error'));
         } finally {
             setLoading(false);
         }
@@ -84,13 +86,13 @@ const EventsPage = () => {
         const startDate = new Date(event.startTime);
         const endDate = new Date(event.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', icon: <Calendar size={14} /> };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended', icon: <CheckCircle size={14} /> };
-        return { label: 'Happening Now', className: 'status-active', icon: <Radio size={14} /> };
+        if (now < startDate) return { label: t('events.status.upcoming'), className: 'status-upcoming', icon: <Calendar size={14} /> };
+        if (now > endDate) return { label: t('events.status.ended'), className: 'status-ended', icon: <CheckCircle size={14} /> };
+        return { label: t('events.status.happeningNow'), className: 'status-active', icon: <Radio size={14} /> };
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString(undefined, {
             weekday: 'short',
             month: 'short',
             day: 'numeric',
@@ -100,11 +102,11 @@ const EventsPage = () => {
     };
 
     const getCapacityDisplay = (event) => {
-        if (!event.capacity) return { text: 'Unlimited', className: '' };
+        if (!event.capacity) return { text: t('events.card.unlimited'), className: '' };
         const spotsLeft = event.capacity - event.numGuests;
-        if (spotsLeft === 0) return { text: 'Full', className: 'capacity-full' };
-        if (spotsLeft <= 5) return { text: `${spotsLeft} spots left`, className: 'capacity-low' };
-        return { text: `${spotsLeft} spots left`, className: '' };
+        if (spotsLeft === 0) return { text: t('events.card.full'), className: 'capacity-full' };
+        if (spotsLeft <= 5) return { text: t('events.card.spotsLeft', { count: spotsLeft }), className: 'capacity-low' };
+        return { text: t('events.card.spotsLeft', { count: spotsLeft }), className: '' };
     };
 
     const totalPages = Math.ceil(totalCount / limit);
@@ -115,13 +117,13 @@ const EventsPage = () => {
             <div className="events-page">
                 <div className="page-header">
                     <div className="header-left">
-                        <h1>Events</h1>
-                        <p>Discover and RSVP to upcoming events</p>
+                        <h1>{t('events.title')}</h1>
+                        <p>{t('events.subtitle')}</p>
                     </div>
                     {isManager && (
                         <div className="header-right">
                             <Link to="/events/manage" className="btn btn-primary">
-                                Manage Events
+                                {t('events.manageTitle')}
                             </Link>
                         </div>
                     )}
@@ -130,29 +132,29 @@ const EventsPage = () => {
                 <form className="filters-bar" onSubmit={handleSearch}>
                     <div className="filters-row">
                         <div className="filter-group search-group">
-                            <label className="form-label">Search</label>
+                            <label className="form-label">{t('events.filters.search')}</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => handleFilterChange('name', e.target.value)}
-                                placeholder="Search by event name..."
+                                placeholder={t('events.filters.searchName')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Location</label>
+                            <label className="form-label">{t('events.filters.location')}</label>
                             <input
                                 type="text"
                                 value={location}
                                 onChange={(e) => handleFilterChange('location', e.target.value)}
-                                placeholder="Search by location..."
+                                placeholder={t('events.filters.searchLocation')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Status</label>
+                            <label className="form-label">{t('events.filters.status')}</label>
                             <select
                                 value={started && !ended ? 'active' : ended === 'true' ? 'ended' : started === 'false' ? 'upcoming' : ''}
                                 onChange={(e) => {
@@ -174,10 +176,10 @@ const EventsPage = () => {
                                 }}
                                 className="form-select"
                             >
-                                <option value="">All Events</option>
-                                <option value="active">Happening Now</option>
-                                <option value="upcoming">Upcoming</option>
-                                <option value="ended">Ended</option>
+                                <option value="">{t('events.filters.allEvents')}</option>
+                                <option value="active">{t('events.filters.happeningNow')}</option>
+                                <option value="upcoming">{t('events.filters.upcoming')}</option>
+                                <option value="ended">{t('events.filters.ended')}</option>
                             </select>
                         </div>
 
@@ -188,31 +190,31 @@ const EventsPage = () => {
                                     checked={showFull === 'true'}
                                     onChange={(e) => handleFilterChange('showFull', e.target.checked ? 'true' : '')}
                                 />
-                                <span>Show full events</span>
+                                <span>{t('events.filters.showFull')}</span>
                             </label>
                         </div>
                     </div>
 
                     {hasFilters && (
                         <button type="button" onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
-                            Clear Filters
+                            {t('events.filters.clearFilters')}
                         </button>
                     )}
                 </form>
 
                 {loading ? (
-                    <LoadingSpinner text="Loading events..." />
+                    <LoadingSpinner text={t('events.list.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchEvents} />
                 ) : events.length === 0 ? (
                     <EmptyState
                         icon={<Calendar size={48} strokeWidth={1.5} />}
-                        title="No events found"
-                        description={hasFilters ? "No events match your filters." : "There are no events at the moment."}
+                        title={t('events.list.noEvents')}
+                        description={hasFilters ? t('events.list.noEventsFiltered') : t('events.list.noEventsAvailable')}
                         action={
                             hasFilters && (
                                 <button onClick={clearFilters} className="btn btn-secondary">
-                                    Clear Filters
+                                    {t('events.filters.clearFilters')}
                                 </button>
                             )
                         }
@@ -256,13 +258,13 @@ const EventsPage = () => {
                                             <div className="detail-item">
                                                 <span className="detail-icon"><Users size={14} /></span>
                                                 <span className={`detail-text ${capacity.className}`}>
-                                                    {event.numGuests} attending {capacity.text && `· ${capacity.text}`}
+                                                    {event.numGuests} {t('events.card.attending')} {capacity.text && `· ${capacity.text}`}
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div className="event-footer">
-                                            <span className="view-details">View Details →</span>
+                                            <span className="view-details">{t('events.list.viewDetails')}</span>
                                         </div>
                                     </Link>
                                 );

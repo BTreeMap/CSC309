@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage } from '../components/shared';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
+    const { t, i18n } = useTranslation(['users', 'common']);
     const { user, loading } = useAuth();
     const [error, setError] = useState(null);
 
     useEffect(() => {
         if (!user && !loading) {
-            setError('Unable to load profile data');
+            setError(t('errors:generic'));
         }
-    }, [user, loading]);
+    }, [user, loading, t]);
 
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading profile..." />
+                <LoadingSpinner />
             </Layout>
         );
     }
@@ -32,12 +34,16 @@ const ProfilePage = () => {
     }
 
     const formatDate = (dateString) => {
-        if (!dateString) return 'Not set';
-        return new Date(dateString).toLocaleDateString('en-US', {
+        if (!dateString) return t('common:noData');
+        return new Date(dateString).toLocaleDateString(i18n.language, {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });
+    };
+
+    const getRoleDisplayName = (role) => {
+        return t(`users:roles.${role}`, { defaultValue: role });
     };
 
     return (
@@ -52,71 +58,71 @@ const ProfilePage = () => {
                         )}
                     </div>
                     <div className="profile-header-info">
-                        <h1>{user?.name || 'No name set'}</h1>
+                        <h1>{user?.name || t('common:noData')}</h1>
                         <p className="profile-utorid">@{user?.utorid}</p>
                         <div className="profile-badges">
                             <span className={`badge badge-role badge-${user?.role}`}>
-                                {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
+                                {getRoleDisplayName(user?.role)}
                             </span>
                             <span className={`badge ${user?.verified ? 'badge-verified' : 'badge-unverified'}`}>
-                                {user?.verified ? '✓ Verified' : 'Not Verified'}
+                                {user?.verified ? t('users:profile.verified') : t('users:profile.notVerified')}
                             </span>
                         </div>
                     </div>
                     <Link to="/profile/edit" className="btn btn-primary">
-                        Edit Profile
+                        {t('users:edit.title')}
                     </Link>
                 </div>
 
                 <div className="profile-content">
                     <div className="profile-section">
-                        <h2>Account Information</h2>
+                        <h2>{t('users:profile.title')}</h2>
                         <div className="profile-info-grid">
                             <div className="profile-info-item">
-                                <label>UTORid</label>
+                                <label>{t('users:profile.utorid')}</label>
                                 <span>{user?.utorid}</span>
                             </div>
                             <div className="profile-info-item">
-                                <label>Email</label>
+                                <label>{t('users:profile.email')}</label>
                                 <span>{user?.email}</span>
                             </div>
                             <div className="profile-info-item">
-                                <label>Full Name</label>
-                                <span>{user?.name || 'Not set'}</span>
+                                <label>{t('users:profile.name')}</label>
+                                <span>{user?.name || t('common:noData')}</span>
                             </div>
                             <div className="profile-info-item">
-                                <label>Birthday</label>
+                                <label>{t('users:profile.birthday')}</label>
                                 <span>{formatDate(user?.birthday)}</span>
                             </div>
                             <div className="profile-info-item">
-                                <label>Member Since</label>
+                                <label>{t('users:profile.createdAt')}</label>
                                 <span>{formatDate(user?.createdAt)}</span>
                             </div>
                             <div className="profile-info-item">
-                                <label>Last Login</label>
+                                <label>{t('common:date')}</label>
                                 <span>{formatDate(user?.lastLogin)}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="profile-section">
-                        <h2>Points Summary</h2>
+                        <h2>{t('users:profile.points')}</h2>
                         <div className="points-summary-card">
                             <div className="points-display">
-                                <span className="points-value">{user?.points?.toLocaleString() || 0}</span>
-                                <span className="points-label">Available Points</span>
+                                <span className="points-value">{user?.points?.toLocaleString(i18n.language) || 0}</span>
+                                <span className="points-label">{t('common:points')}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="profile-section">
-                        <h2>Security</h2>
+                        <h2>{t('auth:changePassword.title')}</h2>
                         <div className="security-actions">
                             <Link to="/profile/password" className="security-action-button">
                                 <span className="security-icon">🔒</span>
                                 <div className="security-action-content">
-                                    <span className="security-action-title">Change Password</span>
-                                    <span className="security-action-description">Update your account password</span>
+                                    <span className="security-action-title">{t('auth:changePassword.title')}</span>
+                                    <span className="security-action-description">{t('auth:changePassword.submit')}</span>
                                 </div>
                                 <span className="security-arrow">→</span>
                             </Link>

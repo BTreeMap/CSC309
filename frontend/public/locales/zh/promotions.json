@@ -1,21 +1,71 @@
 {
     "promotions": {
         "title": "促销活动",
+        "subtitle": "发现可用促销活动，赚取奖励积分",
         "manageTitle": "管理促销",
         "list": {
-            "noPromotions": "暂无促销活动"
+            "noPromotions": "未找到促销活动",
+            "noPromotionsFiltered": "没有符合筛选条件的促销活动。",
+            "noPromotionsAvailable": "目前没有进行中的促销活动。",
+            "viewDetails": "查看详情 →",
+            "loading": "正在加载促销活动..."
+        },
+        "filters": {
+            "type": "类型",
+            "allTypes": "所有类型",
+            "automatic": "自动",
+            "oneTime": "一次性代码",
+            "status": "状态",
+            "allStatuses": "所有状态",
+            "clearFilters": "清除筛选"
         },
         "card": {
             "expired": "已过期",
+            "ended": "已结束",
             "active": "进行中",
-            "upcoming": "即将开始"
+            "upcoming": "即将开始",
+            "duration": "持续时间",
+            "rate": "比率",
+            "bonusPointsRate": "+{{rate}}% 奖励积分",
+            "minSpending": "最低消费",
+            "points": "积分"
         }
     },
     "events": {
         "title": "活动",
+        "subtitle": "发现即将举行的活动并报名参加",
         "manageTitle": "管理活动",
         "list": {
-            "noEvents": "暂无活动"
+            "noEvents": "未找到活动",
+            "noEventsFiltered": "没有符合筛选条件的活动。",
+            "noEventsAvailable": "目前没有活动。",
+            "viewDetails": "查看详情 →",
+            "loading": "正在加载活动...",
+            "error": "加载活动失败"
+        },
+        "filters": {
+            "search": "搜索",
+            "searchName": "按活动名称搜索...",
+            "location": "地点",
+            "searchLocation": "按地点搜索...",
+            "status": "状态",
+            "allEvents": "所有活动",
+            "happeningNow": "正在进行",
+            "upcoming": "即将开始",
+            "ended": "已结束",
+            "showFull": "显示已满活动",
+            "clearFilters": "清除筛选"
+        },
+        "card": {
+            "unlimited": "无限制",
+            "full": "已满",
+            "spotsLeft": "剩余 {{count}} 个名额",
+            "attending": "人参加"
+        },
+        "status": {
+            "upcoming": "即将开始",
+            "ended": "已结束",
+            "happeningNow": "正在进行"
         },
         "registration": {
             "register": "报名",
