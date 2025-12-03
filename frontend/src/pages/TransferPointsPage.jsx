@@ -57,33 +57,27 @@ const TransferPointsPage = () => {
         setRecipientInfo(null);
 
         try {
-            // First try to look up by UTORid
-            const response = await usersAPI.getUsers({ name: trimmedId, limit: 5 });
+            const foundUser = await usersAPI.lookupUser(trimmedId);
 
-            if (response.results?.length > 0) {
-                // Find exact match by utorid or id
-                const exactMatch = response.results.find(
-                    (u) => u.utorid === trimmedId || u.id.toString() === trimmedId
-                );
-
-                if (exactMatch) {
-                    if (exactMatch.id === user.id) {
-                        setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
-                    } else {
-                        setRecipientInfo(exactMatch);
-                        setErrors((prev) => {
-                            const { recipientId: _, ...rest } = prev;
-                            return rest;
-                        });
-                    }
+            if (foundUser) {
+                if (foundUser.id === user.id) {
+                    setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
                 } else {
-                    setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                    setRecipientInfo(foundUser);
+                    setErrors((prev) => {
+                        const { recipientId: _, ...rest } = prev;
+                        return rest;
+                    });
                 }
             } else {
                 setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
             }
-        } catch {
-            setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+        } catch (err) {
+            if (err.response?.status === 404) {
+                setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+            } else {
+                setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+            }
         } finally {
             setLookingUpRecipient(false);
         }
@@ -125,6 +119,8 @@ const TransferPointsPage = () => {
 
         if (!recipientInfo) {
             newErrors.recipientId = 'Please look up and verify the recipient';
+        } else if (!recipientInfo.verified) {
+            newErrors.recipientId = 'Recipient must be verified to receive points';
         }
 
         const amount = parseInt(formData.amount, 10);
@@ -151,6 +147,11 @@ const TransferPointsPage = () => {
 
         try {
             const amount = parseInt(formData.amount, 10);
+            if (isNaN(amount) || amount <= 0) {
+                showToast('Invalid amount', 'error');
+                setLoading(false);
+                return;
+            }
             await transactionsAPI.createTransfer(recipientInfo.id, amount, formData.remark || undefined);
 
             // Update local user points
@@ -227,11 +228,20 @@ const TransferPointsPage = () => {
 
                             {recipientInfo && (
                                 <div className="recipient-info">
-                                    <span className="recipient-verified">✓ Verified</span>
+                                    {recipientInfo.verified ? (
+                                        <span className="recipient-verified">✓ Verified</span>
+                                    ) : (
+                                        <span className="recipient-unverified">⚠ Unverified</span>
+                                    )}
                                     <div className="recipient-details">
                                         <span className="recipient-name">{recipientInfo.name || 'No name'}</span>
                                         <span className="recipient-utorid">@{recipientInfo.utorid}</span>
                                     </div>
+                                    {!recipientInfo.verified && (
+                                        <div className="recipient-warning">
+                                            This user is not verified. Transfers to unverified users are not allowed.
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -299,7 +309,7 @@ const TransferPointsPage = () => {
                             <button
                                 type="submit"
                                 className="btn btn-primary"
-                                disabled={loading || !recipientInfo}
+                                disabled={loading || !recipientInfo || !recipientInfo?.verified}
                             >
                                 {loading ? 'Processing...' : 'Transfer Points'}
                             </button>

@@ -20,7 +20,7 @@ const ConfirmDialog = ({
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={title} size="small">
             <div className="confirm-dialog">
-                <p className="confirm-message">{message}</p>
+                <div className="confirm-message">{message}</div>
                 <div className="confirm-actions">
                     <button
                         className="confirm-button cancel-button"

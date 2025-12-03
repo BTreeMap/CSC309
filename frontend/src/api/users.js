@@ -39,6 +39,11 @@ export const usersAPI = {
     return response.data;
   },
 
+  lookupUser: async (identifier) => {
+    const response = await apiClient.get(`/users/lookup/${encodeURIComponent(identifier)}`);
+    return response.data;
+  },
+
   updateUser: async (userId, data) => {
     const response = await apiClient.patch(`/users/${userId}`, data);
     return response.data;

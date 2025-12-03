@@ -28,7 +28,7 @@ const CreateTransactionPage = () => {
     const [showScanner, setShowScanner] = useState(false);
 
     const fetchUserAndPromotions = useCallback(async (identifier) => {
-        const userData = await usersAPI.getUser(identifier);
+        const userData = await usersAPI.lookupUser(identifier);
         const promoData = await promotionsAPI.getPromotions({ started: true, limit: 50 });
         const now = new Date();
 
@@ -42,7 +42,7 @@ const CreateTransactionPage = () => {
 
     const handleLookupUser = async () => {
         if (!utorid.trim()) {
-            setError('Please enter a UTORid');
+            setError('Please enter a UTORid or User ID');
             return;
         }
 
@@ -70,16 +70,27 @@ const CreateTransactionPage = () => {
     };
 
     const calculateExpectedPoints = useCallback(() => {
-        const basePoints = Math.floor(parseFloat(spent) * POINTS_PER_DOLLAR);
+        const spentAmount = parseFloat(spent);
+        if (!spentAmount || spentAmount <= 0) {
+            return { basePoints: 0, bonusPoints: 0, total: 0 };
+        }
+        
+        const basePoints = Math.floor(spentAmount * POINTS_PER_DOLLAR);
         let bonusPoints = 0;
 
+        // Calculate bonus from selected promotions (matching backend logic)
         availablePromotions
             .filter((promo) => promotionIds.includes(promo.id))
             .forEach((promo) => {
-                if (promo.minSpending && parseFloat(spent) < promo.minSpending) {
+                if (promo.minSpending && spentAmount < promo.minSpending) {
                     return;
                 }
-                bonusPoints += Math.floor(basePoints * promo.rate);
+                if (promo.rate) {
+                    bonusPoints += Math.floor(basePoints * promo.rate);
+                }
+                if (promo.points) {
+                    bonusPoints += Math.floor(promo.points);
+                }
             });
 
         return { basePoints, bonusPoints, total: basePoints + bonusPoints };
@@ -197,7 +208,7 @@ const CreateTransactionPage = () => {
                                     type="text"
                                     value={utorid}
                                     onChange={(e) => setUtorid(e.target.value)}
-                                    placeholder="Enter UTORid"
+                                    placeholder="Enter UTORid or User ID"
                                     className="form-input lookup-input"
                                     onKeyDown={(e) => e.key === 'Enter' && handleLookupUser()}
                                 />
@@ -233,9 +244,12 @@ const CreateTransactionPage = () => {
                                     <p className="customer-points">
                                         Current Points: <strong>{userInfo.points?.toLocaleString() || 0}</strong>
                                     </p>
-                                    {!userInfo.verified && (
-                                        <span className="unverified-badge">⚠️ Unverified Account</span>
-                                    )}
+                                    <div className="account-status">
+                                        <span className="status-label">Account Status:</span>
+                                        <span className={`status-badge ${userInfo.verified ? 'verified' : 'unverified'}`}>
+                                            {userInfo.verified ? '✓ Verified' : '⚠️ Unverified'}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         )}

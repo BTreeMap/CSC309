@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usersAPI } from '../api';
+import { usersAPI, transactionsAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
-import { ROLE_LABELS } from '../utils/constants';
+import { ROLE_LABELS, ROLE_HIERARCHY } from '../utils/constants';
 import { Users } from 'lucide-react';
 import '../styles/design-system.css';
 import './UsersListPage.css';
@@ -12,6 +13,7 @@ import './UsersListPage.css';
 const UsersListPage = () => {
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const { user: currentUser } = useAuth();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [users, setUsers] = useState([]);
@@ -19,13 +21,19 @@ const UsersListPage = () => {
     const [error, setError] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
 
-    // Selected user for viewing/adjustment
     const [selectedUser, setSelectedUser] = useState(null);
     const [showViewModal, setShowViewModal] = useState(false);
     const [showAdjustModal, setShowAdjustModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [adjustmentAmount, setAdjustmentAmount] = useState('');
     const [adjustmentRemark, setAdjustmentRemark] = useState('');
     const [adjustmentLoading, setAdjustmentLoading] = useState(false);
+    
+    const [editForm, setEditForm] = useState({
+        verified: false,
+        role: 'regular',
+    });
+    const [editLoading, setEditLoading] = useState(false);
 
     // Parse query params
     const page = parseInt(searchParams.get('page') || '1', 10);
@@ -93,6 +101,59 @@ const UsersListPage = () => {
         setShowAdjustModal(true);
     };
 
+    const handleOpenEdit = (user) => {
+        if (!canEditUser(user)) {
+            showToast('You do not have permission to edit this user', 'error');
+            return;
+        }
+        
+        setSelectedUser(user);
+        const availableRoles = getAvailableRoleOptions();
+        const currentRole = user.role || 'regular';
+        
+        let initialRole = currentRole;
+        if (!availableRoles.includes(currentRole) && availableRoles.length > 0) {
+            initialRole = availableRoles[0];
+        }
+        
+        setEditForm({
+            verified: user.verified || false,
+            role: initialRole,
+        });
+        setShowEditModal(true);
+    };
+
+    const handleEditUser = async () => {
+        if (!selectedUser) return;
+
+        const updates = {};
+        if (editForm.verified !== selectedUser.verified) {
+            if (editForm.verified) {
+                updates.verified = true;
+            }
+        }
+        if (editForm.role !== selectedUser.role) {
+            updates.role = editForm.role;
+        }
+
+        if (Object.keys(updates).length === 0) {
+            showToast('No changes to save', 'info');
+            return;
+        }
+
+        setEditLoading(true);
+        try {
+            await usersAPI.updateUser(selectedUser.id, updates);
+            showToast('User updated successfully!', 'success');
+            setShowEditModal(false);
+            fetchUsers();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to update user', 'error');
+        } finally {
+            setEditLoading(false);
+        }
+    };
+
     const handleAdjustPoints = async () => {
         if (!adjustmentAmount || parseInt(adjustmentAmount, 10) === 0) {
             showToast('Please enter a valid amount', 'error');
@@ -101,18 +162,51 @@ const UsersListPage = () => {
 
         setAdjustmentLoading(true);
         try {
-            await usersAPI.updateUser(selectedUser.id, {
-                points: parseInt(adjustmentAmount, 10),
+            await transactionsAPI.createAdjustment({
+                utorid: selectedUser.utorid,
+                amount: parseInt(adjustmentAmount, 10),
                 remark: adjustmentRemark || undefined,
             });
             showToast('Points adjusted successfully!', 'success');
             setShowAdjustModal(false);
+            setAdjustmentAmount('');
+            setAdjustmentRemark('');
             fetchUsers();
         } catch (err) {
             showToast(err.response?.data?.error || 'Failed to adjust points', 'error');
         } finally {
             setAdjustmentLoading(false);
         }
+    };
+
+    const canEditUser = (targetUser) => {
+        if (!currentUser || !targetUser) return false;
+        
+        const currentUserRole = currentUser.role;
+        
+        if (currentUserRole === 'superuser') {
+            return true;
+        }
+        
+        if (currentUserRole === 'manager') {
+            const targetRoleLevel = ROLE_HIERARCHY[targetUser.role] ?? 0;
+            const managerLevel = ROLE_HIERARCHY['manager'] ?? 0;
+            return targetRoleLevel < managerLevel;
+        }
+        
+        return false;
+    };
+
+    const getAvailableRoleOptions = () => {
+        if (!currentUser) return ['regular'];
+        
+        const currentUserRole = currentUser.role;
+        if (currentUserRole === 'superuser') {
+            return ['regular', 'cashier', 'manager', 'superuser'];
+        } else if (currentUserRole === 'manager') {
+            return ['regular', 'cashier'];
+        }
+        return ['regular'];
     };
 
     const getRoleColor = (role) => {
@@ -286,6 +380,22 @@ const UsersListPage = () => {
                                                     >
                                                         View
                                                     </button>
+                                                    {canEditUser(user) ? (
+                                                        <button
+                                                            onClick={() => handleOpenEdit(user)}
+                                                            className="btn-action btn-edit"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            disabled
+                                                            className="btn-action btn-edit"
+                                                            title="You do not have permission to edit this user"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleOpenAdjust(user)}
                                                         className="btn-action btn-adjust"
@@ -424,6 +534,17 @@ const UsersListPage = () => {
                             </div>
 
                             <div className="modal-actions">
+                                {canEditUser(selectedUser) && (
+                                    <button
+                                        onClick={() => {
+                                            setShowViewModal(false);
+                                            handleOpenEdit(selectedUser);
+                                        }}
+                                        className="btn btn-secondary"
+                                    >
+                                        Edit User
+                                    </button>
+                                )}
                                 <button
                                     onClick={() => {
                                         setShowViewModal(false);
@@ -438,6 +559,95 @@ const UsersListPage = () => {
                                     className="btn btn-primary"
                                 >
                                     Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </Modal>
+
+                {/* Edit User Modal */}
+                <Modal
+                    isOpen={showEditModal}
+                    onClose={() => setShowEditModal(false)}
+                    title="Edit User"
+                    size="medium"
+                >
+                    {selectedUser && (
+                        <div className="edit-user-modal">
+                            <div className="user-summary">
+                                <strong>{selectedUser.name}</strong>
+                                <span>UTORid: {selectedUser.utorid}</span>
+                            </div>
+
+                            <div className="form-group">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={editForm.verified}
+                                        onChange={(e) => setEditForm({ ...editForm, verified: e.target.checked })}
+                                        disabled={selectedUser.verified}
+                                    />
+                                    <span>Verified</span>
+                                </label>
+                                {selectedUser.verified && (
+                                    <span className="input-hint">User is already verified</span>
+                                )}
+                                {!selectedUser.verified && (
+                                    <span className="input-hint">Check to verify this user</span>
+                                )}
+                            </div>
+
+                            <div className="form-group">
+                                <label>Role</label>
+                                {(() => {
+                                    const availableRoles = getAvailableRoleOptions();
+                                    const userCurrentRole = selectedUser.role;
+                                    const canSetCurrentRole = availableRoles.includes(userCurrentRole);
+                                    
+                                    return (
+                                        <>
+                                            <select
+                                                value={editForm.role}
+                                                onChange={(e) => setEditForm({ ...editForm, role: e.target.value })}
+                                                className="form-select"
+                                            >
+                                                {availableRoles.map((roleOption) => (
+                                                    <option key={roleOption} value={roleOption}>
+                                                        {ROLE_LABELS[roleOption] || roleOption}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {!canSetCurrentRole && (
+                                                <span className="input-hint" style={{ color: 'var(--color-warning)' }}>
+                                                    Current role ({ROLE_LABELS[userCurrentRole] || userCurrentRole}) cannot be set by your role level
+                                                </span>
+                                            )}
+                                            <span className="input-hint">
+                                                {currentUser?.role === 'manager' 
+                                                    ? 'Managers can only set role to Regular or Cashier'
+                                                    : currentUser?.role === 'superuser'
+                                                    ? 'Superusers can set any role'
+                                                    : ''}
+                                            </span>
+                                        </>
+                                    );
+                                })()}
+                            </div>
+
+                            <div className="modal-actions">
+                                <button
+                                    onClick={() => setShowEditModal(false)}
+                                    className="btn btn-secondary"
+                                    disabled={editLoading}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleEditUser}
+                                    className="btn btn-primary"
+                                    disabled={editLoading}
+                                >
+                                    {editLoading ? 'Saving...' : 'Save Changes'}
                                 </button>
                             </div>
                         </div>

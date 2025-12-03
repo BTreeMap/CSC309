@@ -89,7 +89,13 @@ CSSU Rewards is a full-stack web application that enables student organizations 
 
 ```bash
 cd backend
-node index.js
+npm start
+```
+
+Or specify a port:
+
+```bash
+node index.js 3000
 ```
 
 The API will be available at `http://localhost:3000`.

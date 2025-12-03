@@ -326,24 +326,37 @@ const isValidOperator = (operator) => {
 
 // Helper: validate array of numbers
 const isArrayOfNumbers = (arr) => {
-    return Array.isArray(arr) && arr.every(item => typeof item === 'number');
+    if (!Array.isArray(arr)) return false;
+    return arr.every(item => {
+        if (typeof item === 'number') return true;
+        if (typeof item === 'string') {
+            const num = parseInt(item, 10);
+            return !isNaN(num) && num.toString() === item;
+        }
+        return false;
+    });
 }
 
 // Helper: calculate points from spending
 const calculatePoints = (spent, promotions = []) => {
-    let basePoints = Math.round(spent / 0.25);
+    if (!isFinite(spent) || spent <= 0) {
+        return 0;
+    }
+    // Use Math.floor to match frontend calculation: Math.floor(spent * 4)
+    let basePoints = Math.floor(spent * 4);
     let bonusPoints = 0;
 
     for (const promo of promotions) {
-        if (promo.rate) {
-            bonusPoints += Math.round(spent * promo.rate * 100);
+        if (promo.rate && isFinite(promo.rate)) {
+            bonusPoints += Math.floor(basePoints * promo.rate);
         }
-        if (promo.points) {
-            bonusPoints += promo.points;
+        if (promo.points && isFinite(promo.points)) {
+            bonusPoints += Math.floor(promo.points);
         }
     }
 
-    return basePoints + bonusPoints;
+    const total = basePoints + bonusPoints;
+    return Math.max(0, Math.floor(total));
 }
 
 // Helper: validate promotion type
@@ -1072,6 +1085,66 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
     }
 });
 
+// GET /users/lookup/:identifier - Look up user by UTORid or ID (Regular+)
+app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) => {
+    try {
+        const identifier = req.params.identifier.trim();
+        
+        if (!identifier) {
+            return res.status(400).json({ error: 'Invalid identifier' });
+        }
+
+        // Try to parse as integer ID first
+        const userId = parseInt(identifier);
+        const isNumeric = !isNaN(userId);
+
+        let user;
+        if (isNumeric) {
+            // Look up by ID
+            user = await prisma.user.findUnique({
+                where: { id: userId },
+                select: {
+                    id: true,
+                    utorid: true,
+                    name: true,
+                    points: true,
+                    isVerified: true,
+                    avatarUrl: true
+                }
+            });
+        } else {
+            // Look up by UTORid
+            user = await prisma.user.findUnique({
+                where: { utorid: identifier },
+                select: {
+                    id: true,
+                    utorid: true,
+                    name: true,
+                    points: true,
+                    isVerified: true,
+                    avatarUrl: true
+                }
+            });
+        }
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({
+            id: user.id,
+            utorid: user.utorid,
+            name: user.name,
+            points: user.points,
+            verified: user.isVerified,
+            avatarUrl: resolveRelativeUrl(user.avatarUrl)
+        });
+    } catch (error) {
+        console.error('Lookup user error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // GET /users/:userId - Get user details
 app.get('/users/:userId', requireRole('cashier'), async (req, res) => {
     try {
@@ -1171,6 +1244,24 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        const targetUser = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { role: true, suspicious: true }
+        });
+
+        if (!targetUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (req.auth.role === 'manager') {
+            const targetRoleIndex = RoleOrderMap.get(targetUser.role);
+            const managerRoleIndex = RoleOrderMap.get('manager');
+            
+            if (targetRoleIndex >= managerRoleIndex) {
+                return res.status(403).json({ error: 'Managers cannot edit users with manager or superuser roles' });
+            }
+        }
+
         const { email, verified, suspicious, role } = req.body;
 
         // Check if at least one field is being updated
@@ -1215,11 +1306,6 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
 
             // Check if promoting to cashier - must verify user is not suspicious
             if (role === 'cashier') {
-                const targetUser = await prisma.user.findUnique({
-                    where: { id: userId },
-                    select: { suspicious: true }
-                });
-
                 // Check the final suspicious state (either current or being updated)
                 const willBeSuspicious = isDefined(suspicious) ? suspicious : targetUser.suspicious;
 
@@ -1310,7 +1396,22 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             return res.status(400).json({ error: validation.error });
         }
 
-        const { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
+        let { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
+        
+        if (Array.isArray(promotionIds) && promotionIds.length === 0) {
+            promotionIds = undefined;
+        }
+        
+        // Convert promotion IDs to numbers if they are strings
+        if (Array.isArray(promotionIds)) {
+            promotionIds = promotionIds.map(id => {
+                const numId = typeof id === 'string' ? parseInt(id, 10) : id;
+                if (isNaN(numId)) {
+                    throw new Error('Invalid promotion ID format');
+                }
+                return numId;
+            });
+        }
 
         const user = await prisma.user.findUnique({ where: { utorid } });
         if (!user) {
@@ -1318,9 +1419,16 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
 
         const creator = await prisma.user.findUnique({ where: { id: req.auth.sub } });
+        if (!creator) {
+            return res.status(404).json({ error: 'Creator not found' });
+        }
 
         if (type === 'purchase') {
-            if (!isPositiveNumber(spent)) {
+            // Ensure spent is a number
+            if (typeof spent !== 'number') {
+                spent = parseFloat(spent);
+            }
+            if (!isPositiveNumber(spent) || !isFinite(spent)) {
                 return res.status(400).json({ error: 'Spent amount must be a positive number' });
             }
 
@@ -1377,67 +1485,102 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                         }
                     }
                 }
+            }
 
+            // Combine all promotions and remove duplicates
+            const promotionMap = new Map();
+            [...automaticPromotions, ...manualPromotions].forEach(promo => {
+                promotionMap.set(promo.id, promo);
+            });
+            const allPromotions = Array.from(promotionMap.values());
+            const allPromotionIds = Array.from(new Set(allPromotions.map(p => p.id)));
+
+            const earned = calculatePoints(spent, allPromotions);
+            
+            if (!Number.isInteger(earned) || earned < 0 || !isFinite(earned)) {
+                return res.status(400).json({ error: 'Invalid points calculation' });
+            }
+            
+            const isSuspicious = creator.suspicious;
+
+            // Use database transaction to ensure atomicity
+            const uniquePromotionIds = Array.from(new Set(allPromotionIds));
+            if (uniquePromotionIds.length !== allPromotionIds.length) {
+                console.warn('Duplicate promotion IDs detected and removed:', {
+                    original: allPromotionIds,
+                    unique: uniquePromotionIds
+                });
+            }
+            
+            const transaction = await prisma.$transaction(async (tx) => {
                 // Mark one-time promotions as used
-                for (const promo of manualPromotions) {
-                    if (promo.type === 'onetime') {
-                        await prisma.userPromotionUse.create({
+                const oneTimePromotions = manualPromotions.filter(p => p.type === 'onetime');
+                for (const promo of oneTimePromotions) {
+                    try {
+                        await tx.userPromotionUse.create({
                             data: {
                                 userId: user.id,
                                 promotionId: promo.id
                             }
                         });
+                    } catch (error) {
+                        if (error.code === 'P2002') {
+                            throw new Error('One-time promotion already used');
+                        }
+                        throw error;
                     }
                 }
-            }
 
-            // Combine all promotions
-            const allPromotions = [...automaticPromotions, ...manualPromotions];
-            const allPromotionIds = allPromotions.map(p => p.id);
-
-            const earned = calculatePoints(spent, allPromotions);
-            const isSuspicious = creator.suspicious;
-
-            const transaction = await prisma.transaction.create({
-                data: {
+                // Create transaction
+                const transactionData = {
                     userId: user.id,
                     type: 'purchase',
                     amount: earned,
                     spent: spent,
                     suspicious: isSuspicious,
-                    remark,
+                    remark: remark || null,
                     createdById: req.auth.sub,
-                    promotions: {
-                        create: allPromotionIds.map(id => ({
+                };
+
+                if (uniquePromotionIds.length > 0) {
+                    transactionData.promotions = {
+                        create: uniquePromotionIds.map(id => ({
                             promotionId: id
                         }))
-                    }
-                },
-                include: {
-                    promotions: {
-                        include: {
-                            promotion: true
+                    };
+                }
+
+                const createdTransaction = await tx.transaction.create({
+                    data: transactionData,
+                    include: {
+                        promotions: {
+                            include: {
+                                promotion: true
+                            }
                         }
                     }
-                }
-            });
-
-            // Add points if not suspicious
-            if (!isSuspicious) {
-                await prisma.user.update({
-                    where: { id: user.id },
-                    data: { points: { increment: earned } }
                 });
-            }
+
+                // Add points if not suspicious
+                if (!isSuspicious) {
+                    await tx.user.update({
+                        where: { id: user.id },
+                        data: { points: { increment: earned } }
+                    });
+                }
+
+                return createdTransaction;
+            });
 
             res.status(201).json({
                 id: transaction.id,
                 utorid: user.utorid,
                 type: transaction.type,
                 spent: transaction.spent,
+                points: isSuspicious ? 0 : transaction.amount,
                 earned: isSuspicious ? 0 : transaction.amount,
                 remark: transaction.remark ?? '',
-                promotionIds: allPromotionIds,
+                promotionIds: uniquePromotionIds,
                 createdBy: creator.utorid
             });
 
@@ -1499,7 +1642,24 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
     } catch (error) {
         console.error('Create transaction error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error stack:', error.stack);
+        console.error('Request body:', req.body);
+        
+        // Handle specific error messages
+        if (error.message === 'One-time promotion already used') {
+            return res.status(400).json({ error: error.message });
+        }
+        
+        // Handle Prisma errors
+        if (error.code === 'P2002') {
+            // Check if it's a TransactionPromotion unique constraint error
+            if (error.meta && error.meta.target && error.meta.target.includes('transactionId') && error.meta.target.includes('promotionId')) {
+                return res.status(400).json({ error: 'Duplicate promotion detected. Please ensure each promotion is only selected once.' });
+            }
+            return res.status(400).json({ error: 'Duplicate entry detected' });
+        }
+        
+        res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
 
@@ -1617,7 +1777,9 @@ app.get('/transactions', requireRole('manager'), async (req, res) => {
                 promotionIds: tx.promotions.map(p => p.promotionId),
                 suspicious: tx.suspicious,
                 remark: tx.remark ?? '',
-                createdBy: tx.createdBy.utorid
+                createdBy: tx.createdBy.utorid,
+                createdAt: tx.createdAt,
+                processedAt: tx.processedAt
             };
 
             // Add type-specific fields
@@ -1693,7 +1855,9 @@ app.get('/transactions/:transactionId', requireRole('manager'), async (req, res)
             promotionIds: transaction.promotions.map(p => p.promotionId),
             suspicious: transaction.suspicious,
             remark: transaction.remark ?? '',
-            createdBy: transaction.createdBy.utorid
+            createdBy: transaction.createdBy.utorid,
+            createdAt: transaction.createdAt,
+            processedAt: transaction.processedAt
         };
 
         // Add type-specific fields
@@ -1905,7 +2069,9 @@ app.get('/users/me/transactions', requireRole('regular'), async (req, res) => {
                 amount: tx.amount,
                 promotionIds: tx.promotions.map(p => p.promotionId),
                 remark: tx.remark ?? '',
-                createdBy: tx.user.utorid  // The user themselves
+                createdBy: tx.user.utorid,
+                createdAt: tx.createdAt,
+                processedAt: tx.processedAt
             };
 
             // Add type-specific fields
@@ -1934,6 +2100,8 @@ app.post('/users/:userId/transactions', requireRole('regular'), async (req, res)
         // Validate request
         const validation = validateRequest('POST /users/:userId/transactions', req.body);
         if (!validation.valid) {
+            console.error('Validation failed:', validation.error);
+            console.error('Request body:', req.body);
             return res.status(400).json({ error: validation.error });
         }
 
@@ -2022,7 +2190,10 @@ app.post('/users/:userId/transactions', requireRole('regular'), async (req, res)
         });
     } catch (error) {
         console.error('Transfer error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error stack:', error.stack);
+        console.error('Request body:', req.body);
+        console.error('Request params:', req.params);
+        res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
 
