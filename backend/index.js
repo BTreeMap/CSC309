@@ -1072,6 +1072,66 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
     }
 });
 
+// GET /users/lookup/:identifier - Look up user by UTORid or ID (Regular+)
+app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) => {
+    try {
+        const identifier = req.params.identifier.trim();
+        
+        if (!identifier) {
+            return res.status(400).json({ error: 'Invalid identifier' });
+        }
+
+        // Try to parse as integer ID first
+        const userId = parseInt(identifier);
+        const isNumeric = !isNaN(userId);
+
+        let user;
+        if (isNumeric) {
+            // Look up by ID
+            user = await prisma.user.findUnique({
+                where: { id: userId },
+                select: {
+                    id: true,
+                    utorid: true,
+                    name: true,
+                    points: true,
+                    isVerified: true,
+                    avatarUrl: true
+                }
+            });
+        } else {
+            // Look up by UTORid
+            user = await prisma.user.findUnique({
+                where: { utorid: identifier },
+                select: {
+                    id: true,
+                    utorid: true,
+                    name: true,
+                    points: true,
+                    isVerified: true,
+                    avatarUrl: true
+                }
+            });
+        }
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({
+            id: user.id,
+            utorid: user.utorid,
+            name: user.name,
+            points: user.points,
+            verified: user.isVerified,
+            avatarUrl: resolveRelativeUrl(user.avatarUrl)
+        });
+    } catch (error) {
+        console.error('Lookup user error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // GET /users/:userId - Get user details
 app.get('/users/:userId', requireRole('cashier'), async (req, res) => {
     try {

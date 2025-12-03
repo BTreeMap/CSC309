@@ -57,33 +57,27 @@ const TransferPointsPage = () => {
         setRecipientInfo(null);
 
         try {
-            // First try to look up by UTORid
-            const response = await usersAPI.getUsers({ name: trimmedId, limit: 5 });
+            const foundUser = await usersAPI.lookupUser(trimmedId);
 
-            if (response.results?.length > 0) {
-                // Find exact match by utorid or id
-                const exactMatch = response.results.find(
-                    (u) => u.utorid === trimmedId || u.id.toString() === trimmedId
-                );
-
-                if (exactMatch) {
-                    if (exactMatch.id === user.id) {
-                        setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
-                    } else {
-                        setRecipientInfo(exactMatch);
-                        setErrors((prev) => {
-                            const { recipientId: _, ...rest } = prev;
-                            return rest;
-                        });
-                    }
+            if (foundUser) {
+                if (foundUser.id === user.id) {
+                    setErrors((prev) => ({ ...prev, recipientId: 'You cannot transfer points to yourself' }));
                 } else {
-                    setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+                    setRecipientInfo(foundUser);
+                    setErrors((prev) => {
+                        const { recipientId: _, ...rest } = prev;
+                        return rest;
+                    });
                 }
             } else {
                 setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
             }
-        } catch {
-            setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+        } catch (err) {
+            if (err.response?.status === 404) {
+                setErrors((prev) => ({ ...prev, recipientId: 'User not found. Please check the ID or UTORid.' }));
+            } else {
+                setErrors((prev) => ({ ...prev, recipientId: 'Failed to look up user. Please try again.' }));
+            }
         } finally {
             setLookingUpRecipient(false);
         }
