@@ -1383,7 +1383,11 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             return res.status(400).json({ error: validation.error });
         }
 
-        const { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
+        let { utorid, type, spent, amount, relatedId, promotionIds, remark } = req.body;
+        
+        if (Array.isArray(promotionIds) && promotionIds.length === 0) {
+            promotionIds = undefined;
+        }
 
         const user = await prisma.user.findUnique({ where: { utorid } });
         if (!user) {
@@ -1396,7 +1400,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
         }
 
         if (type === 'purchase') {
-            if (!isPositiveNumber(spent)) {
+            if (!isPositiveNumber(spent) || !isFinite(spent)) {
                 return res.status(400).json({ error: 'Spent amount must be a positive number' });
             }
 
@@ -1457,12 +1461,19 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                 // Mark one-time promotions as used
                 for (const promo of manualPromotions) {
                     if (promo.type === 'onetime') {
-                        await prisma.userPromotionUse.create({
-                            data: {
-                                userId: user.id,
-                                promotionId: promo.id
+                        try {
+                            await prisma.userPromotionUse.create({
+                                data: {
+                                    userId: user.id,
+                                    promotionId: promo.id
+                                }
+                            });
+                        } catch (error) {
+                            if (error.code === 'P2002') {
+                                return res.status(400).json({ error: 'One-time promotion already used' });
                             }
-                        });
+                            throw error;
+                        }
                     }
                 }
             }
@@ -1472,6 +1483,11 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             const allPromotionIds = allPromotions.map(p => p.id);
 
             const earned = calculatePoints(spent, allPromotions);
+            
+            if (!Number.isInteger(earned) || earned < 0 || !isFinite(earned)) {
+                return res.status(400).json({ error: 'Invalid points calculation' });
+            }
+            
             const isSuspicious = creator.suspicious;
 
             const transactionData = {
@@ -1480,7 +1496,7 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                 amount: earned,
                 spent: spent,
                 suspicious: isSuspicious,
-                remark,
+                remark: remark || null,
                 createdById: req.auth.sub,
             };
 
