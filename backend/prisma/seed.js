@@ -63,7 +63,7 @@ async function main() {
     // Create superuser
     const superuser = await prisma.user.create({
         data: {
-            utorid: 'superadm',
+            utorid: 'supera82',
             name: 'Super User',
             email: 'super@mail.utoronto.ca',
             passwordBcrypt: password,
@@ -76,7 +76,7 @@ async function main() {
     // Create manager
     const manager = await prisma.user.create({
         data: {
-            utorid: 'manager',
+            utorid: 'manag123',
             name: 'Test Manager',
             email: 'manager@mail.utoronto.ca',
             passwordBcrypt: password,
@@ -89,7 +89,7 @@ async function main() {
     // Create cashier
     const cashier = await prisma.user.create({
         data: {
-            utorid: 'cashier',
+            utorid: 'cashi123',
             name: 'Test Cashier',
             email: 'cashier@mail.utoronto.ca',
             passwordBcrypt: password,
@@ -103,7 +103,7 @@ async function main() {
     // Create regular user
     const testuser = await prisma.user.create({
         data: {
-            utorid: 'testuser',
+            utorid: 'testu123',
             name: 'Test User',
             email: 'user@mail.utoronto.ca',
             passwordBcrypt: password,
@@ -165,10 +165,10 @@ async function main() {
 
     console.log('✓ Database seeded successfully!');
     console.log('\nTest Accounts (all use password: TestPass123!):');
-    console.log('  Superuser: superadm / super@mail.utoronto.ca');
-    console.log('  Manager:   manager / manager@mail.utoronto.ca');
-    console.log('  Cashier:   cashier / cashier@mail.utoronto.ca');
-    console.log('  User:      testuser / user@mail.utoronto.ca');
+    console.log('  Superuser: supera82 / super@mail.utoronto.ca');
+    console.log('  Manager:   manag123 / manager@mail.utoronto.ca');
+    console.log('  Cashier:   cashi123 / cashier@mail.utoronto.ca');
+    console.log('  User:      testu123 / user@mail.utoronto.ca');
     console.log('\nTest Promotions:');
     console.log(`  ID ${autoPromo.id}: ${autoPromo.name} (automatic)`);
     console.log(`  ID ${oneTimePromo.id}: ${oneTimePromo.name} (one-time)`);
