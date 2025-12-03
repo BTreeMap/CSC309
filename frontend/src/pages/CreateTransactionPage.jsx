@@ -70,16 +70,27 @@ const CreateTransactionPage = () => {
     };
 
     const calculateExpectedPoints = useCallback(() => {
-        const basePoints = Math.floor(parseFloat(spent) * POINTS_PER_DOLLAR);
+        const spentAmount = parseFloat(spent);
+        if (!spentAmount || spentAmount <= 0) {
+            return { basePoints: 0, bonusPoints: 0, total: 0 };
+        }
+        
+        const basePoints = Math.floor(spentAmount * POINTS_PER_DOLLAR);
         let bonusPoints = 0;
 
+        // Calculate bonus from selected promotions (matching backend logic)
         availablePromotions
             .filter((promo) => promotionIds.includes(promo.id))
             .forEach((promo) => {
-                if (promo.minSpending && parseFloat(spent) < promo.minSpending) {
+                if (promo.minSpending && spentAmount < promo.minSpending) {
                     return;
                 }
-                bonusPoints += Math.floor(basePoints * promo.rate);
+                if (promo.rate) {
+                    bonusPoints += Math.floor(basePoints * promo.rate);
+                }
+                if (promo.points) {
+                    bonusPoints += Math.floor(promo.points);
+                }
             });
 
         return { basePoints, bonusPoints, total: basePoints + bonusPoints };

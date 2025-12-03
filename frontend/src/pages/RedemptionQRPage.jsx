@@ -64,7 +64,9 @@ const RedemptionQRPage = () => {
 
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
-        return new Date(dateString).toLocaleString();
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Invalid Date';
+        return date.toLocaleString();
     };
 
     const getStatusBadge = () => {
