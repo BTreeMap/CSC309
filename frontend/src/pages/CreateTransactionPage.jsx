@@ -233,9 +233,12 @@ const CreateTransactionPage = () => {
                                     <p className="customer-points">
                                         Current Points: <strong>{userInfo.points?.toLocaleString() || 0}</strong>
                                     </p>
-                                    {!userInfo.verified && (
-                                        <span className="unverified-badge">⚠️ Unverified Account</span>
-                                    )}
+                                    <div className="account-status">
+                                        <span className="status-label">Account Status:</span>
+                                        <span className={`status-badge ${userInfo.verified ? 'verified' : 'unverified'}`}>
+                                            {userInfo.verified ? '✓ Verified' : '⚠️ Unverified'}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         )}
