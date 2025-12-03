@@ -1,16 +1,11 @@
 /* EditProfilePage - Modern Minimalist */
-/* Uses design system: .form-group, .form-label, .form-input, .btn, .btn-primary, .btn-secondary, .page-header, .page-title, .page-subtitle */
+/* Uses design system and shared PageHeader component */
 
 .edit-profile-page {
   max-width: var(--container-sm);
   margin: 0 auto;
   padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page header uses design-system styles, override font-size for this page */
-.edit-profile-page .page-title {
-  font-size: var(--text-3xl);
 }
 
 .edit-profile-form {

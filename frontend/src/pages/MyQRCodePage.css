@@ -1,23 +1,13 @@
 /* ==========================================================================
    MyQRCodePage - QR Code Display
-   Uses design system: .btn, .btn-primary, .page-header, .page-title, .page-subtitle
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 .qr-code-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-2xl);
+  max-width: var(--container-md);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Override page-header to center on this page */
-.qr-code-page .page-header {
-  text-align: center;
-  border-bottom: none;
-}
-
-.qr-code-page .page-title {
-  font-size: var(--text-3xl);
 }
 
 .qr-code-container {

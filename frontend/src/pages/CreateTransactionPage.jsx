@@ -1,10 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { transactionsAPI, usersAPI, promotionsAPI } from '../api';
 import Layout from '../components/Layout';
 import { useToast } from '../components/shared/ToastContext';
-import { ConfirmDialog, QrScanner } from '../components/shared';
+import { ConfirmDialog, QrScanner, PageHeader } from '../components/shared';
 import { parseQrPayload, extractUserIdentifier, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
+import { CreditCard } from 'lucide-react';
 import './CreateTransactionPage.css';
 
 // Constants for points calculation
@@ -190,14 +192,16 @@ const CreateTransactionPage = () => {
             setLookupLoading(false);
         }
     };
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
             <div className="create-transaction-page">
-                <div className="page-header">
-                    <h1 className="page-title">Create Purchase Transaction</h1>
-                    <p className="page-subtitle">Record a new purchase and award points to a customer</p>
-                </div>
+                <PageHeader
+                    icon={<CreditCard />}
+                    title={t('transactions:create.title')}
+                    subtitle={t('transactions:create.subtitle')}
+                />
 
                 <div className="transaction-form-container">
                     <div className="form-section">

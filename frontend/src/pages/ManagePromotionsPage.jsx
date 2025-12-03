@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { promotionsAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
-import { Gift } from 'lucide-react';
+import { Tag } from 'lucide-react';
 import './ManagePromotionsPage.css';
 
 const ManagePromotionsPage = () => {
@@ -181,21 +182,21 @@ const ManagePromotionsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
+    const { t } = useTranslation(['promotions', 'common']);
 
     return (
         <Layout>
             <div className="manage-promotions-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">Manage Promotions</h1>
-                        <p className="page-subtitle">Create and manage promotional campaigns</p>
-                    </div>
-                    <div className="header-right">
+                <PageHeader
+                    icon={<Tag />}
+                    title={t('promotions.manageTitle')}
+                    subtitle={t('promotions.manageSubtitle')}
+                    actions={
                         <button onClick={openCreateModal} className="btn btn-primary">
-                            + Create Promotion
+                            + {t('promotions.createPromotion')}
                         </button>
-                    </div>
-                </div>
+                    }
+                />
 
                 {loading ? (
                     <LoadingSpinner text="Loading promotions..." />

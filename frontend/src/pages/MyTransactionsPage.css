@@ -1,38 +1,14 @@
 /* ==========================================================================
    MyTransactionsPage - User Transaction History
-   
-   Design System Classes Used:
-   - .btn, .btn-ghost, .btn-danger, .btn-sm (buttons)
-   - .form-label (filter labels)
-   - .form-select (filter dropdown)
-   - .filters-bar (filter container - defined below as page-specific)
-   - .page-header, .page-header-flex, .page-title, .page-subtitle (layout)
-   
-   Components from shared/:
-   - LoadingSpinner, EmptyState, ErrorMessage, Pagination
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 /* Page Layout */
 .my-transactions-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-7xl);
+  max-width: var(--container-xl);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page-specific title size override */
-.my-transactions-page .page-title {
-  font-size: var(--text-3xl);
-}
-
-.header-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
 }
 
 /* Points Badge */

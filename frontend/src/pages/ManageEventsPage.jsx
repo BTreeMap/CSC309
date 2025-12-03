@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
-import { Calendar } from 'lucide-react';
+import { CalendarCog } from 'lucide-react';
 import './ManageEventsPage.css';
 
 const ManageEventsPage = () => {
@@ -175,21 +176,21 @@ const ManageEventsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
+    const { t } = useTranslation(['promotions', 'common']);
 
     return (
         <Layout>
             <div className="manage-events-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">Manage Events</h1>
-                        <p className="page-subtitle">Create and manage events</p>
-                    </div>
-                    <div className="header-right">
+                <PageHeader
+                    icon={<CalendarCog />}
+                    title={t('events.manageTitle')}
+                    subtitle={t('events.manageSubtitle')}
+                    actions={
                         <button onClick={openCreateModal} className="btn btn-primary">
-                            + Create Event
+                            + {t('events.createEvent')}
                         </button>
-                    </div>
-                </div>
+                    }
+                />
 
                 {loading ? (
                     <LoadingSpinner text="Loading events..." />

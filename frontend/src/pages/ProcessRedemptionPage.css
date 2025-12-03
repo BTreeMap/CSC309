@@ -1,33 +1,13 @@
 /* ==========================================================================
    ProcessRedemptionPage - Cashier Redemption Processing
-   Uses design system: .btn, .btn-secondary, .btn-success, .btn-ghost, .form-input
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 .process-redemption-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-2xl);
+  max-width: var(--container-md);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page Header */
-.page-header {
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.page-header h1 {
-  font-family: var(--font-serif);
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.page-header p {
-  color: var(--color-text-muted);
-  margin: 0;
 }
 
 /* Scanner Section - Shown when no transaction ID */

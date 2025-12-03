@@ -1,10 +1,6 @@
 /* ==========================================================================
    CreateTransactionPage - Cashier Transaction Creation
-   
-   Design System Classes Used:
-   - Buttons: .btn, .btn-primary, .btn-secondary
-   - Forms: .form-label (labels use design system)
-   - Messages: .alert-error
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 .create-transaction-page {
@@ -12,28 +8,6 @@
   margin: 0 auto;
   padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page Header - use same pattern as other pages */
-.create-transaction-page .page-header {
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.create-transaction-page .page-header h1 {
-  font-family: var(--font-serif);
-  font-size: var(--text-4xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-  letter-spacing: var(--tracking-tight);
-}
-
-.create-transaction-page .page-header p {
-  color: var(--color-text-muted);
-  margin: 0;
-  font-size: var(--text-lg);
 }
 
 /* Transaction Form Container */

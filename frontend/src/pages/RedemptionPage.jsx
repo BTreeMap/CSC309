@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { Target } from 'lucide-react';
 import './RedemptionPage.css';
 
 const RedemptionPage = () => {
@@ -20,6 +22,7 @@ const RedemptionPage = () => {
     const [redemptionResult, setRedemptionResult] = useState(null);
 
     const quickAmounts = [100, 500, 1000, 2500, 5000];
+    const { t } = useTranslation(['transactions', 'common']);
 
     const validateForm = () => {
         const newErrors = {};
@@ -139,20 +142,21 @@ const RedemptionPage = () => {
     return (
         <Layout>
             <div className="redemption-page">
-                <div className="page-header">
-                    <h1 className="page-title">Redeem Points</h1>
-                    <p className="page-subtitle">Create a redemption request to spend your points</p>
-                </div>
+                <PageHeader
+                    icon={<Target />}
+                    title={t('transactions:redeem.title')}
+                    subtitle={t('transactions:redeem.subtitle')}
+                />
 
                 <div className="redemption-content">
                     <div className="points-balance-card">
-                        <span className="balance-label">Your Available Points</span>
+                        <span className="balance-label">{t('transactions:redeem.yourAvailablePoints')}</span>
                         <span className="balance-value">{user?.points?.toLocaleString() || 0}</span>
                     </div>
 
                     <form onSubmit={handleSubmit} className="redemption-form">
                         <div className="form-group">
-                            <label htmlFor="amount" className="form-label">Points to Redeem</label>
+                            <label htmlFor="amount" className="form-label">{t('transactions:redeem.pointsToRedeem')}</label>
                             <input
                                 type="number"
                                 id="amount"

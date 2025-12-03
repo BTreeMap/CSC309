@@ -3,8 +3,9 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner } from '../components/shared';
+import { LoadingSpinner, PageHeader } from '../components/shared';
 import { createUserPayload } from '../utils/qrPayload';
+import { QrCode } from 'lucide-react';
 import './MyQRCodePage.css';
 
 const MyQRCodePage = () => {
@@ -50,10 +51,11 @@ const MyQRCodePage = () => {
     return (
         <Layout>
             <div className="qr-code-page">
-                <div className="page-header">
-                    <h1 className="page-title">{t('users:qrCode.title')}</h1>
-                    <p className="page-subtitle">{t('users:qrCode.subtitle')}</p>
-                </div>
+                <PageHeader
+                    icon={<QrCode />}
+                    title={t('users:qrCode.title')}
+                    subtitle={t('users:qrCode.subtitle')}
+                />
 
                 <div className="qr-code-container">
                     <div className="qr-code-card">

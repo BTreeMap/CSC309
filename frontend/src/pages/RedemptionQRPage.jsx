@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
+import { useTranslation } from 'react-i18next';
 import { transactionsAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ErrorMessage } from '../components/shared';
+import { LoadingSpinner, ErrorMessage, PageHeader } from '../components/shared';
 import { createRedemptionPayload } from '../utils/qrPayload';
+import { QrCode } from 'lucide-react';
 import './RedemptionQRPage.css';
 
 const RedemptionQRPage = () => {
@@ -100,21 +102,23 @@ const RedemptionQRPage = () => {
     }
 
     const isProcessed = !!transaction?.processedAt;
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
             <div className="redemption-qr-page">
-                <div className="qr-header">
-                    <h1>Redemption QR Code</h1>
-                    <p>Show this QR code to a cashier to process your redemption</p>
-                </div>
+                <PageHeader
+                    icon={<QrCode />}
+                    title={t('transactions:redemptionQr.title')}
+                    subtitle={t('transactions:redemptionQr.subtitle')}
+                />
 
                 <div className="qr-content">
                     <div className="qr-card">
                         {isProcessed ? (
                             <div className="processed-notice">
                                 <span className="processed-icon">✓</span>
-                                <p>This redemption has already been processed</p>
+                                <p>{t('transactions:redemptionQr.alreadyProcessed')}</p>
                             </div>
                         ) : (
                             <>

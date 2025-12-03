@@ -1,28 +1,13 @@
 /* ==========================================================================
    TransferPointsPage - Point Transfer
-   
-   Design System Classes Used:
-   - Buttons: .btn, .btn-primary, .btn-secondary
-   - Forms: .form-label
-   - Messages: Uses design system alert classes
-   - Layout: .page-header, .page-title, .page-subtitle
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 .transfer-points-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-2xl);
+  max-width: var(--container-md);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page header uses design-system styles, override to center on this page */
-.transfer-points-page .page-header {
-  text-align: center;
-  border-bottom: none;
-}
-
-.transfer-points-page .page-title {
-  font-size: var(--text-3xl);
 }
 
 /* Balance Card */

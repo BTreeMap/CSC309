@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { usersAPI, transactionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { ROLE_LABELS, ROLE_HIERARCHY } from '../utils/constants';
 import { Users } from 'lucide-react';
@@ -221,21 +222,21 @@ const UsersListPage = () => {
 
     const totalPages = Math.ceil(totalCount / limit);
     const hasFilters = name || role || verified || activated;
+    const { t } = useTranslation(['users', 'common']);
 
     return (
         <Layout>
             <div className="users-list-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">User Management</h1>
-                        <p className="page-subtitle">View and manage system users</p>
-                    </div>
-                    <div className="header-right">
+                <PageHeader
+                    icon={<Users />}
+                    title={t('users:management.title')}
+                    subtitle={t('users:management.subtitle')}
+                    actions={
                         <button onClick={() => navigate('/register')} className="btn btn-primary">
-                            + Create User
+                            + {t('users:management.createUser')}
                         </button>
-                    </div>
-                </div>
+                    }
+                />
 
                 <div className="filters-bar">
                     <div className="filters-row">

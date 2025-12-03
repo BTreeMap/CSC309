@@ -1,40 +1,14 @@
 /* ==========================================================================
    UsersListPage - Admin User Management
-   
-   Design System Classes Used:
-   - .btn, .btn-primary, .btn-secondary, .btn-ghost, .btn-danger, .btn-sm (buttons)
-   - .form-label (filter labels)
-   - .form-input, .form-select (filter inputs)
-   - .filters-bar (filter container - defined below as page-specific)
-   - .page-header, .page-header-flex, .page-title, .page-subtitle (layout)
-   
-   Components from shared/:
-   - LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 /* Page Layout */
 .users-list-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-7xl);
+  max-width: var(--container-xl);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page-specific title size override */
-.users-list-page .page-title {
-  font-size: var(--text-3xl);
-}
-
-.header-left,
-.header-right {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.header-right {
-  flex-direction: row;
-  align-items: center;
 }
 
 /* Filters Bar - Page Specific Layout */

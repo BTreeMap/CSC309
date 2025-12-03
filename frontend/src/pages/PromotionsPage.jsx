@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { promotionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { Gift, CalendarDays, Coins, ShoppingCart, Target } from 'lucide-react';
 import './PromotionsPage.css';
@@ -102,19 +102,16 @@ const PromotionsPage = () => {
     return (
         <Layout>
             <div className="promotions-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">{t('promotions.title')}</h1>
-                        <p className="page-subtitle">{t('promotions.subtitle')}</p>
-                    </div>
-                    {isManager && (
-                        <div className="header-right">
-                            <Link to="/promotions/manage" className="btn btn-primary">
-                                {t('promotions.manageTitle')}
-                            </Link>
-                        </div>
+                <PageHeader
+                    icon={<Gift />}
+                    title={t('promotions.title')}
+                    subtitle={t('promotions.subtitle')}
+                    actions={isManager && (
+                        <Link to="/promotions/manage" className="btn btn-primary">
+                            {t('promotions.manageTitle')}
+                        </Link>
                     )}
-                </div>
+                />
 
                 <div className="filters-bar">
                     <div className="filter-group">

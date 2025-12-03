@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ConfirmDialog, QrScanner } from '../components/shared';
+import { LoadingSpinner, ConfirmDialog, QrScanner, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { parseQrPayload, extractUserIdentifier, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
+import { ArrowLeftRight } from 'lucide-react';
 import './TransferPointsPage.css';
 
 const INITIAL_FORM_STATE = {
@@ -183,10 +184,11 @@ const TransferPointsPage = () => {
     return (
         <Layout>
             <div className="transfer-points-page">
-                <div className="page-header">
-                    <h1 className="page-title">{t('transfer.title')}</h1>
-                    <p className="page-subtitle">{t('transfer.subtitle')}</p>
-                </div>
+                <PageHeader
+                    icon={<ArrowLeftRight />}
+                    title={t('transfer.title')}
+                    subtitle={t('transfer.subtitle')}
+                />
 
                 <div className="transfer-content">
                     <div className="points-balance-card">

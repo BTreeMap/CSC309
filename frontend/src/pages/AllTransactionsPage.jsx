@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
-import { ShoppingCart, Gift, Settings, ArrowLeftRight, Calendar, ClipboardList } from 'lucide-react';
+import { ShoppingCart, Gift, Settings, ArrowLeftRight, Calendar, ClipboardList, BarChart3 } from 'lucide-react';
 import '../styles/design-system.css';
 import './AllTransactionsPage.css';
 
@@ -151,14 +152,16 @@ const AllTransactionsPage = () => {
 
     const totalPages = Math.ceil(totalCount / limit);
     const hasActiveFilters = type || userId || promotionId || suspicious || amount || relatedId;
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
             <div className="all-transactions-page">
-                <div className="page-header">
-                    <h1 className="page-title">All Transactions</h1>
-                    <p className="page-subtitle">View and manage all system transactions</p>
-                </div>
+                <PageHeader
+                    icon={<BarChart3 />}
+                    title={t('transactions:allTransactions.title')}
+                    subtitle={t('transactions:allTransactions.subtitle')}
+                />
 
                 <div className="filters-bar">
                     <div className="filters-row">

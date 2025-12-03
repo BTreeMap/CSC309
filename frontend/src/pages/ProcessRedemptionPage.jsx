@@ -1,16 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog, QrScanner } from '../components/shared';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog, QrScanner, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { parseQrPayload, extractTransactionId, QR_PAYLOAD_TYPES } from '../utils/qrPayload';
+import { CheckCircle } from 'lucide-react';
 import './ProcessRedemptionPage.css';
 
 const ProcessRedemptionPage = () => {
     const { transactionId } = useParams();
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const { t } = useTranslation(['transactions', 'common']);
 
     const [transaction, setTransaction] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
@@ -124,10 +127,11 @@ const ProcessRedemptionPage = () => {
         return (
             <Layout>
                 <div className="process-redemption-page">
-                    <div className="page-header">
-                        <h1 className="page-title">Process Redemption</h1>
-                        <p className="page-subtitle">Scan a customer's QR code to process their redemption request</p>
-                    </div>
+                    <PageHeader
+                        icon={<CheckCircle />}
+                        title={t('transactions:processRedemption.title')}
+                        subtitle={t('transactions:processRedemption.subtitle')}
+                    />
 
                     <div className="scanner-section">
                         <button
@@ -135,17 +139,17 @@ const ProcessRedemptionPage = () => {
                             onClick={() => setShowScanner(true)}
                         >
                             <span className="btn-icon">📷</span>
-                            Scan QR Code
+                            {t('transactions:processRedemption.scanQR')}
                         </button>
 
                         <div className="manual-lookup">
-                            <p className="divider-text">or enter redemption ID manually</p>
+                            <p className="divider-text">{t('transactions:processRedemption.orEnterManually')}</p>
                             <div className="manual-input-group">
                                 <input
                                     type="text"
                                     value={manualId}
                                     onChange={(e) => setManualId(e.target.value)}
-                                    placeholder="Enter Redemption ID"
+                                    placeholder={t('transactions:processRedemption.enterRedemptionId')}
                                     className="form-input"
                                     onKeyDown={(e) => e.key === 'Enter' && handleManualLookup()}
                                 />
@@ -153,7 +157,7 @@ const ProcessRedemptionPage = () => {
                                     className="btn btn-secondary"
                                     onClick={handleManualLookup}
                                 >
-                                    Look Up
+                                    {t('transactions:processRedemption.lookUp')}
                                 </button>
                             </div>
                         </div>
@@ -173,7 +177,7 @@ const ProcessRedemptionPage = () => {
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading redemption details..." />
+                <LoadingSpinner text={t('transactions:processRedemption.loading')} />
             </Layout>
         );
     }
@@ -184,7 +188,7 @@ const ProcessRedemptionPage = () => {
                 <div className="process-redemption-page">
                     <ErrorMessage message={error} />
                     <button onClick={() => navigate('/cashier/redemption')} className="btn btn-secondary">
-                        ← Go Back
+                        ← {t('common:goBack')}
                     </button>
                 </div>
             </Layout>
@@ -196,10 +200,10 @@ const ProcessRedemptionPage = () => {
             <Layout>
                 <div className="process-redemption-page">
                     <div className="not-found">
-                        <h2>Redemption Not Found</h2>
-                        <p>The redemption request could not be found.</p>
+                        <h2>{t('transactions:processRedemption.notFound')}</h2>
+                        <p>{t('transactions:processRedemption.notFoundDesc')}</p>
                         <button onClick={() => navigate('/cashier/redemption')} className="btn btn-secondary">
-                            ← Go Back
+                            ← {t('common:goBack')}
                         </button>
                     </div>
                 </div>
@@ -214,33 +218,34 @@ const ProcessRedemptionPage = () => {
         <Layout>
             <div className="process-redemption-page">
                 <button onClick={() => navigate('/cashier/redemption')} className="btn btn-ghost back-button">
-                    ← Back
+                    ← {t('common:back')}
                 </button>
 
-                <div className="page-header">
-                    <h1 className="page-title">Process Redemption</h1>
-                    <p className="page-subtitle">Review and process this redemption request</p>
-                </div>
+                <PageHeader
+                    icon={<CheckCircle />}
+                    title={t('transactions:processRedemption.title')}
+                    subtitle={t('transactions:processRedemption.reviewSubtitle')}
+                />
 
                 <div className="redemption-card">
                     {isProcessed && (
                         <div className="processed-banner">
-                            ✓ This redemption has already been processed
+                            ✓ {t('transactions:processRedemption.alreadyProcessed')}
                         </div>
                     )}
 
                     <div className="redemption-header">
                         <div className="redemption-id">
-                            <span className="label">Redemption ID</span>
+                            <span className="label">{t('transactions:processRedemption.redemptionId')}</span>
                             <span className="value">#{transaction.id}</span>
                         </div>
                         <span className={`status-badge ${isProcessed ? 'processed' : 'pending'}`}>
-                            {isProcessed ? 'Processed' : 'Pending'}
+                            {isProcessed ? t('transactions:status.processed') : t('transactions:status.pending')}
                         </span>
                     </div>
 
                     <div className="customer-section">
-                        <h2>Customer Information</h2>
+                        <h2>{t('transactions:processRedemption.customerInfo')}</h2>
                         <div className="customer-card">
                             <div className="customer-avatar">
                                 {userInfo?.avatarUrl ? (
@@ -254,13 +259,13 @@ const ProcessRedemptionPage = () => {
                                 <p className="customer-utorid">@{transaction.utorid}</p>
                                 <div className="customer-stats">
                                     <div className="stat">
-                                        <span className="stat-label">Current Points</span>
+                                        <span className="stat-label">{t('transactions:processRedemption.currentPoints')}</span>
                                         <span className="stat-value">{userInfo?.points?.toLocaleString() || 0}</span>
                                     </div>
                                     <div className="stat">
-                                        <span className="stat-label">Account Status</span>
+                                        <span className="stat-label">{t('transactions:processRedemption.accountStatus')}</span>
                                         <span className={`stat-value ${userInfo?.verified ? 'verified' : 'unverified'}`}>
-                                            {userInfo?.verified ? '✓ Verified' : '⚠️ Unverified'}
+                                            {userInfo?.verified ? `✓ ${t('transactions:processRedemption.verified')}` : `⚠️ ${t('transactions:processRedemption.unverified')}`}
                                         </span>
                                     </div>
                                 </div>
@@ -269,25 +274,25 @@ const ProcessRedemptionPage = () => {
                     </div>
 
                     <div className="redemption-details">
-                        <h2>Redemption Details</h2>
+                        <h2>{t('transactions:processRedemption.redemptionDetails')}</h2>
                         <div className="details-grid">
                             <div className="detail-item">
-                                <span className="detail-label">Points to Redeem</span>
+                                <span className="detail-label">{t('transactions:processRedemption.pointsToRedeem')}</span>
                                 <span className="detail-value points-value">{pointsToDeduct.toLocaleString()}</span>
                             </div>
                             <div className="detail-item">
-                                <span className="detail-label">Requested On</span>
+                                <span className="detail-label">{t('transactions:processRedemption.requestedOn')}</span>
                                 <span className="detail-value">{formatDate(transaction.createdAt)}</span>
                             </div>
                             {transaction.remark && (
                                 <div className="detail-item full-width">
-                                    <span className="detail-label">Remark</span>
+                                    <span className="detail-label">{t('transactions:remark')}</span>
                                     <span className="detail-value">{transaction.remark}</span>
                                 </div>
                             )}
                             {isProcessed && (
                                 <div className="detail-item">
-                                    <span className="detail-label">Processed On</span>
+                                    <span className="detail-label">{t('transactions:processRedemption.processedOn')}</span>
                                     <span className="detail-value">{formatDate(transaction.processedAt)}</span>
                                 </div>
                             )}
@@ -298,7 +303,7 @@ const ProcessRedemptionPage = () => {
                         <div className="action-section">
                             <div className="warning-note">
                                 <span className="warning-icon">⚠️</span>
-                                <p>Processing this redemption will deduct <strong>{pointsToDeduct.toLocaleString()} points</strong> from the customer's balance. Make sure to provide the equivalent value.</p>
+                                <p>{t('transactions:processRedemption.warningMessage', { points: pointsToDeduct.toLocaleString() })}</p>
                             </div>
 
                             <div className="action-buttons">
@@ -306,14 +311,14 @@ const ProcessRedemptionPage = () => {
                                     onClick={() => navigate(-1)}
                                     className="btn btn-secondary"
                                 >
-                                    Cancel
+                                    {t('common:cancel')}
                                 </button>
                                 <button
                                     onClick={() => setShowConfirm(true)}
                                     className="btn btn-success btn-process"
                                     disabled={processing}
                                 >
-                                    {processing ? 'Processing...' : 'Process Redemption'}
+                                    {processing ? t('transactions:processRedemption.processing') : t('transactions:processRedemption.processButton')}
                                 </button>
                             </div>
                         </div>
@@ -324,20 +329,20 @@ const ProcessRedemptionPage = () => {
                     isOpen={showConfirm}
                     onClose={() => setShowConfirm(false)}
                     onConfirm={handleProcess}
-                    title="Confirm Redemption Processing"
+                    title={t('transactions:processRedemption.confirmTitle')}
                     message={
                         <div className="confirm-content">
-                            <p>You are about to process this redemption:</p>
+                            <p>{t('transactions:processRedemption.confirmMessage')}</p>
                             <div className="confirm-summary">
-                                <p><strong>Customer:</strong> {userInfo?.name} (@{transaction.utorid})</p>
-                                <p><strong>Points:</strong> {pointsToDeduct.toLocaleString()}</p>
+                                <p><strong>{t('transactions:processRedemption.customer')}:</strong> {userInfo?.name} (@{transaction.utorid})</p>
+                                <p><strong>{t('transactions:processRedemption.points')}:</strong> {pointsToDeduct.toLocaleString()}</p>
                             </div>
                             <p className="confirm-warning">
-                                Make sure you have provided the customer with their redeemed value before confirming.
+                                {t('transactions:processRedemption.confirmWarning')}
                             </p>
                         </div>
                     }
-                    confirmText="Confirm Processing"
+                    confirmText={t('transactions:processRedemption.confirmButton')}
                 />
             </div>
         </Layout>

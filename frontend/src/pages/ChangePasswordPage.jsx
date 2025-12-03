@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
+import { PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { Lock } from 'lucide-react';
 import './ChangePasswordPage.css';
 
 const ChangePasswordPage = () => {
@@ -113,10 +115,11 @@ const ChangePasswordPage = () => {
     return (
         <Layout>
             <div className="change-password-page">
-                <div className="page-header">
-                    <h1 className="page-title">Change Password</h1>
-                    <p className="page-subtitle">Keep your account secure by using a strong password</p>
-                </div>
+                <PageHeader
+                    icon={<Lock />}
+                    title={t('auth:changePassword.title')}
+                    subtitle={t('auth:changePassword.subtitle')}
+                />
 
                 <form onSubmit={handleSubmit} className="change-password-form">
                     <div className="form-group">

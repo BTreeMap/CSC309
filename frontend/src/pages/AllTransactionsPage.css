@@ -1,39 +1,14 @@
 /* ==========================================================================
    AllTransactionsPage - Admin/Manager View
-   
-   Design System Classes Used:
-   - .btn, .btn-secondary, .btn-ghost, .btn-danger, .btn-sm, .btn-warning (buttons)
-   - .form-label (filter labels)
-   - .form-input, .form-select (filter inputs)
-   - .filters-bar (filter container - defined below as page-specific)
-   
-   Components from shared/:
-   - LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 /* Page Layout */
 .all-transactions-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-7xl);
+  max-width: var(--container-xl);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-.page-header {
-  margin-bottom: var(--space-8);
-}
-
-.page-header h1 {
-  font-family: var(--font-serif);
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.page-header p {
-  color: var(--color-text-muted);
-  margin: 0;
 }
 
 /* Filters Bar - Page Specific Layout */

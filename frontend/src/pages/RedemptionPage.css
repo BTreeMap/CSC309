@@ -1,24 +1,13 @@
 /* ==========================================================================
    RedemptionPage - Point Redemption
-   Uses design system: .btn, .btn-primary, .btn-secondary, .form-label, 
-                       .form-input, .form-textarea, .page-header, .page-title, .page-subtitle
+   Uses design system and shared PageHeader component
    ========================================================================== */
 
 .redemption-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-4xl);
+  max-width: var(--container-md);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
-}
-
-/* Page header uses design-system styles, override to center on this page */
-.redemption-page .page-header {
-  text-align: center;
-  border-bottom: none;
-}
-
-.redemption-page .page-title {
-  font-size: var(--text-3xl);
 }
 
 /* Points Balance */

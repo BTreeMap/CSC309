@@ -7,3 +7,4 @@ export { default as ConfirmDialog } from './ConfirmDialog';
 export { default as Toast } from './Toast';
 export { useToast, ToastProvider } from './ToastContext';
 export { default as QrScanner } from './QrScanner';
+export { default as PageHeader } from './PageHeader';

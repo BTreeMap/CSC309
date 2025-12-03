@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import LoadingSpinner from '../components/shared/LoadingSpinner';
+import { LoadingSpinner, PageHeader } from '../components/shared';
 import { usersAPI } from '../api';
 import {
   QrCode,
@@ -25,7 +25,8 @@ import {
   BadgeCheck,
   Settings,
   Pencil,
-  Lock
+  Lock,
+  LayoutDashboard
 } from 'lucide-react';
 import './DashboardPage.css';
 
@@ -95,16 +96,11 @@ const DashboardPage = () => {
   return (
     <Layout>
       <div className="dashboard-page">
-        <div className="page-header">
-          <h1 className="page-title">{t('dashboard:welcome', { name: user?.name || user?.utorid })}</h1>
-          <p className="page-subtitle">
-            {activeRole !== 'regular' && (
-              <span className="active-role-badge">
-                {t('dashboard:actingAs', { role: getRoleDisplayName(activeRole) })}
-              </span>
-            )}
-          </p>
-        </div>
+        <PageHeader
+          icon={<LayoutDashboard />}
+          title={t('dashboard:welcome', { name: user?.name || user?.utorid })}
+          subtitle={activeRole !== 'regular' ? t('dashboard:actingAs', { role: getRoleDisplayName(activeRole) }) : undefined}
+        />
 
         <div className="dashboard-stats">
           <div className="stat-card points-card">

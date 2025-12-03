@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { transactionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, PageHeader } from '../components/shared';
 import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
 import { ShoppingCart, Gift, Settings, ArrowLeftRight, Calendar, ClipboardList } from 'lucide-react';
 import '../styles/design-system.css';
@@ -96,37 +97,37 @@ const MyTransactionsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
             <div className="my-transactions-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">My Transactions</h1>
-                        <p className="page-subtitle">View your transaction history</p>
-                    </div>
-                    <div className="header-right">
+                <PageHeader
+                    icon={<ClipboardList />}
+                    title={t('transactions:myTransactions.title')}
+                    subtitle={t('transactions:myTransactions.subtitle')}
+                    actions={
                         <div className="points-badge">
-                            <span className="points-label">Current Points</span>
+                            <span className="points-label">{t('transactions:myTransactions.currentPoints')}</span>
                             <span className="points-value">{user?.points?.toLocaleString() || 0}</span>
                         </div>
-                    </div>
-                </div>
+                    }
+                />
 
                 <div className="filters-bar">
                     <div className="filter-group">
-                        <label className="form-label">Filter by type:</label>
+                        <label className="form-label">{t('transactions:myTransactions.filterByType')}</label>
                         <select
                             value={type}
                             onChange={(e) => handleFilterChange(e.target.value)}
                             className="form-select"
                         >
-                            <option value="">All Types</option>
-                            <option value="purchase">Purchase</option>
-                            <option value="redemption">Redemption</option>
-                            <option value="transfer">Transfer</option>
-                            <option value="adjustment">Adjustment</option>
-                            <option value="event">Event</option>
+                            <option value="">{t('transactions:myTransactions.allTypes')}</option>
+                            <option value="purchase">{t('transactions:types.purchase')}</option>
+                            <option value="redemption">{t('transactions:types.redemption')}</option>
+                            <option value="transfer">{t('transactions:types.transfer')}</option>
+                            <option value="adjustment">{t('transactions:types.adjustment')}</option>
+                            <option value="event">{t('transactions:types.event')}</option>
                         </select>
                     </div>
                 </div>

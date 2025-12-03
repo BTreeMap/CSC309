@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, EmptyState, ErrorMessage, Pagination } from '../components/shared';
+import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, PageHeader } from '../components/shared';
 import { Calendar, CheckCircle, Radio, MapPin, CalendarDays, Users, Gift } from 'lucide-react';
 import './EventsPage.css';
 
@@ -115,19 +115,16 @@ const EventsPage = () => {
     return (
         <Layout>
             <div className="events-page">
-                <div className="page-header page-header-flex">
-                    <div className="header-left">
-                        <h1 className="page-title">{t('events.title')}</h1>
-                        <p className="page-subtitle">{t('events.subtitle')}</p>
-                    </div>
-                    {isManager && (
-                        <div className="header-right">
-                            <Link to="/events/manage" className="btn btn-primary">
-                                {t('events.manageTitle')}
-                            </Link>
-                        </div>
+                <PageHeader
+                    icon={<Calendar />}
+                    title={t('events.title')}
+                    subtitle={t('events.subtitle')}
+                    actions={isManager && (
+                        <Link to="/events/manage" className="btn btn-primary">
+                            {t('events.manageTitle')}
+                        </Link>
                     )}
-                </div>
+                />
 
                 <form className="filters-bar" onSubmit={handleSearch}>
                     <div className="filters-row">

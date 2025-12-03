@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
-import { LoadingSpinner } from '../components/shared';
+import { LoadingSpinner, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { UserPen } from 'lucide-react';
 import './EditProfilePage.css';
 
 const EditProfilePage = () => {
@@ -111,10 +112,11 @@ const EditProfilePage = () => {
     return (
         <Layout>
             <div className="edit-profile-page">
-                <div className="page-header">
-                    <h1 className="page-title">{t('edit.title')}</h1>
-                    <p className="page-subtitle">{t('edit.subtitle')}</p>
-                </div>
+                <PageHeader
+                    icon={<UserPen />}
+                    title={t('edit.title')}
+                    subtitle={t('edit.subtitle')}
+                />
 
                 <form onSubmit={handleSubmit} className="edit-profile-form">
                     <div className="avatar-section">
