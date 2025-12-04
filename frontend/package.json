@@ -28,7 +28,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:translations": "vitest run src/__tests__/translations.test.js"
   },
   "browserslist": {
     "production": [
