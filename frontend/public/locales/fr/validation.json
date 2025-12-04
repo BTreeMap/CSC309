@@ -1,7 +1,53 @@
 {
     "required": "Ce champ est requis",
-    "email": "Veuillez entrer une adresse e-mail valide",
+    "email": {
+        "required": "L'adresse e-mail est requise",
+        "invalid": "Veuillez entrer une adresse e-mail valide"
+    },
     "minLength": "Doit contenir au moins {{min}} caractères",
     "maxLength": "Doit contenir au maximum {{max}} caractères",
-    "passwordMatch": "Les mots de passe ne correspondent pas"
+    "min": "Doit être au moins {{min}}",
+    "max": "Doit être au maximum {{max}}",
+    "pattern": "Format invalide",
+    "passwordMatch": "Les mots de passe ne correspondent pas",
+    "passwordStrength": {
+        "weak": "Le mot de passe est trop faible",
+        "minLength": "Le mot de passe doit contenir au moins {{min}} caractères",
+        "uppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+        "lowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+        "number": "Le mot de passe doit contenir au moins un chiffre",
+        "special": "Le mot de passe doit contenir au moins un caractère spécial"
+    },
+    "utorid": {
+        "required": "L'UTORid est requis",
+        "invalid": "Veuillez entrer un UTORid valide",
+        "format": "L'UTORid doit contenir entre 4 et 8 caractères alphanumériques"
+    },
+    "name": {
+        "required": "Le nom est requis"
+    },
+    "points": {
+        "required": "Le montant de points est requis",
+        "positive": "Les points doivent être un nombre positif",
+        "integer": "Les points doivent être un nombre entier",
+        "insufficient": "Points insuffisants",
+        "max": "Maximum {{max}} points autorisés"
+    },
+    "amount": {
+        "required": "Le montant est requis",
+        "positive": "Le montant doit être positif",
+        "invalid": "Montant invalide"
+    },
+    "date": {
+        "required": "La date est requise",
+        "invalid": "Date invalide",
+        "past": "La date ne peut pas être dans le passé",
+        "future": "La date ne peut pas être dans le futur",
+        "range": "La date de fin doit être postérieure à la date de début"
+    },
+    "file": {
+        "required": "Le fichier est requis",
+        "size": "Le fichier doit être inférieur à {{size}}",
+        "type": "Type de fichier invalide. Autorisés : {{types}}"
+    }
 }

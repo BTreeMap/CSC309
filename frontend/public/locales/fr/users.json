@@ -3,7 +3,18 @@
     "list": {
         "title": "Gestion des utilisateurs",
         "searchPlaceholder": "Rechercher des utilisateurs...",
-        "noUsers": "Aucun utilisateur trouvé"
+        "noUsers": "Aucun utilisateur trouvé",
+        "columns": {
+            "utorid": "UTORid",
+            "name": "Nom",
+            "email": "E-mail",
+            "role": "Rôle",
+            "points": "Points",
+            "status": "Statut",
+            "verified": "Vérifié",
+            "createdAt": "Créé le",
+            "actions": "Actions"
+        }
     },
     "profile": {
         "title": "Profil",
@@ -13,6 +24,7 @@
         "role": "Rôle",
         "points": "Points",
         "birthday": "Date de naissance",
+        "createdAt": "Membre depuis",
         "verified": "Vérifié",
         "notVerified": "Non vérifié"
     },
@@ -25,6 +37,7 @@
         "emailPlaceholder": "exemple@mail.utoronto.ca",
         "emailHint": "Doit être une adresse e-mail UofT valide",
         "birthdayLabel": "Date de naissance",
+        "avatarLabel": "Photo de profil",
         "choosePhoto": "Choisir une photo",
         "avatarHint": "JPG, PNG ou GIF. Taille max. 5 Mo",
         "utoridCannotChange": "L'UTORid ne peut pas être modifié",
@@ -46,6 +59,38 @@
         "cashier": "Caissier",
         "manager": "Gestionnaire",
         "superuser": "Super utilisateur"
+    },
+    "status": {
+        "active": "Actif",
+        "inactive": "Inactif",
+        "verified": "Vérifié",
+        "pending": "En attente"
+    },
+    "actions": {
+        "view": "Voir l'utilisateur",
+        "edit": "Modifier l'utilisateur",
+        "delete": "Supprimer l'utilisateur",
+        "verify": "Vérifier l'utilisateur",
+        "changeRole": "Changer le rôle",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "adjustPoints": "Ajuster les points"
+    },
+    "delete": {
+        "title": "Supprimer l'utilisateur",
+        "message": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.",
+        "success": "Utilisateur supprimé avec succès",
+        "error": "Échec de la suppression de l'utilisateur"
+    },
+    "adjustPoints": {
+        "title": "Ajuster les points",
+        "currentPoints": "Points actuels",
+        "adjustmentLabel": "Montant de l'ajustement",
+        "adjustmentPlaceholder": "Entrez les points (positif ou négatif)",
+        "reasonLabel": "Raison",
+        "reasonPlaceholder": "Entrez la raison de l'ajustement",
+        "submit": "Appliquer l'ajustement",
+        "success": "Points ajustés avec succès",
+        "error": "Échec de l'ajustement des points"
     },
     "qrCode": {
         "title": "Mon code QR",

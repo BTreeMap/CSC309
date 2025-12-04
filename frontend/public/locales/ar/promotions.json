@@ -8,6 +8,7 @@
             "noPromotionsFiltered": "لا توجد عروض تطابق معايير البحث.",
             "noPromotionsAvailable": "لا توجد عروض نشطة في الوقت الحالي.",
             "viewDetails": "عرض التفاصيل ←",
+            "searchPlaceholder": "البحث عن العروض...",
             "loading": "جاري تحميل العروض..."
         },
         "filters": {
@@ -20,15 +21,70 @@
             "clearFilters": "مسح التصفية"
         },
         "card": {
+            "validFrom": "صالح من {{date}}",
+            "validUntil": "صالح حتى {{date}}",
             "expired": "منتهية",
             "ended": "انتهت",
             "active": "نشطة",
             "upcoming": "قادمة",
+            "pointsMultiplier": "{{multiplier}}x نقاط",
+            "bonusPoints": "+{{points}} نقاط إضافية",
+            "minPurchase": "الحد الأدنى للشراء: {{amount}}",
             "duration": "المدة",
             "rate": "المعدل",
             "bonusPointsRate": "+{{rate}}% نقاط إضافية",
             "minSpending": "الحد الأدنى للإنفاق",
             "points": "النقاط"
+        },
+        "detail": {
+            "title": "تفاصيل العرض",
+            "description": "الوصف",
+            "type": "النوع",
+            "value": "القيمة",
+            "validPeriod": "فترة الصلاحية",
+            "conditions": "الشروط",
+            "terms": "الشروط والأحكام",
+            "usageLimit": "حد الاستخدام",
+            "usageCount": "عدد مرات الاستخدام"
+        },
+        "types": {
+            "multiplier": "مضاعف النقاط",
+            "bonus": "نقاط إضافية",
+            "discount": "خصم",
+            "freeItem": "منتج مجاني"
+        },
+        "create": {
+            "title": "إنشاء عرض",
+            "nameLabel": "اسم العرض",
+            "namePlaceholder": "أدخل اسم العرض",
+            "descriptionLabel": "الوصف",
+            "descriptionPlaceholder": "أدخل وصف العرض",
+            "typeLabel": "نوع العرض",
+            "valueLabel": "القيمة",
+            "valuePlaceholder": "أدخل القيمة",
+            "startDateLabel": "تاريخ البدء",
+            "endDateLabel": "تاريخ الانتهاء",
+            "minPurchaseLabel": "الحد الأدنى للشراء",
+            "minPurchasePlaceholder": "أدخل الحد الأدنى لمبلغ الشراء",
+            "usageLimitLabel": "حد الاستخدام (لكل مستخدم)",
+            "usageLimitPlaceholder": "اتركه فارغاً للاستخدام غير المحدود",
+            "submit": "إنشاء العرض",
+            "submitting": "جاري الإنشاء...",
+            "success": "تم إنشاء العرض بنجاح",
+            "error": "فشل إنشاء العرض"
+        },
+        "edit": {
+            "title": "تعديل العرض",
+            "submit": "حفظ التغييرات",
+            "submitting": "جاري الحفظ...",
+            "success": "تم تحديث العرض بنجاح",
+            "error": "فشل تحديث العرض"
+        },
+        "delete": {
+            "title": "حذف العرض",
+            "message": "هل أنت متأكد أنك تريد حذف هذا العرض؟ لا يمكن التراجع عن هذا الإجراء.",
+            "success": "تم حذف العرض بنجاح",
+            "error": "فشل حذف العرض"
         }
     },
     "events": {
@@ -40,6 +96,10 @@
             "noEventsFiltered": "لا توجد فعاليات تطابق معايير البحث.",
             "noEventsAvailable": "لا توجد فعاليات في الوقت الحالي.",
             "viewDetails": "عرض التفاصيل ←",
+            "searchPlaceholder": "البحث عن الفعاليات...",
+            "upcoming": "الفعاليات القادمة",
+            "past": "الفعاليات السابقة",
+            "all": "جميع الفعاليات",
             "loading": "جاري تحميل الفعاليات...",
             "error": "فشل تحميل الفعاليات"
         },
@@ -57,19 +117,88 @@
             "clearFilters": "مسح التصفية"
         },
         "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} مقعد",
             "unlimited": "غير محدود",
             "full": "ممتلئ",
             "spotsLeft": "{{count}} أماكن متبقية",
-            "attending": "مشارك"
+            "attending": "مشارك",
+            "registered": "مسجل",
+            "ended": "انتهت",
+            "cancelled": "ملغاة",
+            "points": "+{{points}} نقطة"
         },
         "status": {
             "upcoming": "قادمة",
             "ended": "انتهت",
             "happeningNow": "يحدث الآن"
         },
+        "detail": {
+            "title": "تفاصيل الفعالية",
+            "description": "الوصف",
+            "dateTime": "التاريخ والوقت",
+            "location": "الموقع",
+            "capacity": "السعة",
+            "pointsReward": "مكافأة النقاط",
+            "registrationDeadline": "آخر موعد للتسجيل",
+            "attendees": "المشاركون",
+            "organizer": "المنظم"
+        },
         "registration": {
             "register": "التسجيل",
-            "unregister": "إلغاء التسجيل"
+            "registering": "جاري التسجيل...",
+            "unregister": "إلغاء التسجيل",
+            "unregistering": "جاري الإلغاء...",
+            "registerSuccess": "تم التسجيل في الفعالية بنجاح",
+            "unregisterSuccess": "تم إلغاء التسجيل",
+            "alreadyRegistered": "أنت مسجل بالفعل",
+            "eventFull": "هذه الفعالية ممتلئة",
+            "registrationClosed": "التسجيل مغلق",
+            "error": "فشل معالجة التسجيل"
+        },
+        "create": {
+            "title": "إنشاء فعالية",
+            "nameLabel": "اسم الفعالية",
+            "namePlaceholder": "أدخل اسم الفعالية",
+            "descriptionLabel": "الوصف",
+            "descriptionPlaceholder": "أدخل وصف الفعالية",
+            "dateLabel": "التاريخ",
+            "timeLabel": "الوقت",
+            "locationLabel": "الموقع",
+            "locationPlaceholder": "أدخل موقع الفعالية",
+            "capacityLabel": "السعة القصوى",
+            "capacityPlaceholder": "أدخل الحد الأقصى للمشاركين",
+            "pointsLabel": "مكافأة النقاط",
+            "pointsPlaceholder": "النقاط مقابل الحضور",
+            "deadlineLabel": "آخر موعد للتسجيل",
+            "submit": "إنشاء الفعالية",
+            "submitting": "جاري الإنشاء...",
+            "success": "تم إنشاء الفعالية بنجاح",
+            "error": "فشل إنشاء الفعالية"
+        },
+        "edit": {
+            "title": "تعديل الفعالية",
+            "submit": "حفظ التغييرات",
+            "submitting": "جاري الحفظ...",
+            "success": "تم تحديث الفعالية بنجاح",
+            "error": "فشل تحديث الفعالية"
+        },
+        "delete": {
+            "title": "حذف الفعالية",
+            "message": "هل أنت متأكد أنك تريد حذف هذه الفعالية؟ سيتم إلغاء جميع التسجيلات.",
+            "success": "تم حذف الفعالية بنجاح",
+            "error": "فشل حذف الفعالية"
+        },
+        "manage": {
+            "attendees": "إدارة المشاركين",
+            "checkIn": "تسجيل الحضور",
+            "checkInSuccess": "تم تسجيل حضور المشارك بنجاح",
+            "markAttended": "تحديد كحاضر",
+            "removeAttendee": "إزالة المشارك",
+            "sendReminder": "إرسال تذكير",
+            "exportList": "تصدير قائمة المشاركين"
         }
     }
 }

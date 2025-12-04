@@ -65,6 +65,7 @@
     "processing": "Обработка...",
     "optional": "Необязательно",
     "required": "Обязательно",
+    "redeem": "Обменять",
     "points": "Баллы",
     "points_one": "{{count}} балл",
     "points_few": "{{count}} балла",

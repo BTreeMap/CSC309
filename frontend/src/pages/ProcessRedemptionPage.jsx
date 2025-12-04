@@ -34,7 +34,7 @@ const ProcessRedemptionPage = () => {
 
             // Verify it's a redemption transaction
             if (txn.type !== 'redemption') {
-                setError('This is not a redemption transaction');
+                setError(t('processRedemption.error.notRedemption'));
                 setLoading(false);
                 return;
             }
@@ -45,7 +45,7 @@ const ProcessRedemptionPage = () => {
             const user = await usersAPI.getUser(txn.utorid);
             setUserInfo(user);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load transaction');
+            setError(err.response?.data?.error || t('processRedemption.error.loadFailed'));
         } finally {
             setLoading(false);
         }
@@ -65,20 +65,20 @@ const ProcessRedemptionPage = () => {
         const payload = parseQrPayload(rawData);
 
         if (!payload.isValid) {
-            showToast(payload.error || 'Invalid QR code', 'error');
+            showToast(payload.error || t('processRedemption.error.invalidQr'), 'error');
             return;
         }
 
         // Validate this is a redemption QR code
         if (payload.type === QR_PAYLOAD_TYPES.USER) {
-            showToast('This is a user QR code. Please scan a redemption QR code.', 'error');
+            showToast(t('processRedemption.error.userQrCode'), 'error');
             return;
         }
 
         // Extract transaction ID
         const txnId = extractTransactionId(payload);
         if (!txnId) {
-            showToast('Could not extract redemption ID from QR code', 'error');
+            showToast(t('processRedemption.error.extractFailed'), 'error');
             return;
         }
 
@@ -88,7 +88,7 @@ const ProcessRedemptionPage = () => {
     const handleManualLookup = () => {
         const trimmedId = manualId.trim();
         if (!trimmedId) {
-            showToast('Please enter a redemption ID', 'error');
+            showToast(t('processRedemption.error.enterRedemptionId'), 'error');
             return;
         }
         navigate(`/cashier/redemption/${trimmedId}`);
@@ -99,10 +99,10 @@ const ProcessRedemptionPage = () => {
 
         try {
             await transactionsAPI.processRedemption(transaction.id);
-            showToast('Redemption processed successfully!', 'success');
+            showToast(t('processRedemption.successMessage'), 'success');
             navigate('/cashier/redemption');
         } catch (err) {
-            showToast(err.response?.data?.error || 'Failed to process redemption', 'error');
+            showToast(err.response?.data?.error || t('processRedemption.error.processFailed'), 'error');
         } finally {
             setProcessing(false);
             setShowConfirm(false);

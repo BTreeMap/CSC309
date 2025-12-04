@@ -65,6 +65,7 @@
     "processing": "Processing...",
     "optional": "Optional",
     "required": "Required",
+    "redeem": "Redeem",
     "points": "Points",
     "points_one": "{{count}} point",
     "points_other": "{{count}} points",

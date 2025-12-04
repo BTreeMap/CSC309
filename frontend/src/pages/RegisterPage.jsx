@@ -7,7 +7,7 @@ import { useToast } from '../components/shared/ToastContext';
 import './RegisterPage.css';
 
 const RegisterPage = () => {
-    const { t } = useTranslation(['auth', 'validation', 'common']);
+    const { t } = useTranslation(['auth', 'validation', 'common', 'users']);
     const navigate = useNavigate();
     const { showToast } = useToast();
 
@@ -45,17 +45,17 @@ const RegisterPage = () => {
 
         // Validation
         if (!validateUtorid(formData.utorid)) {
-            setError('UTORid must be 4-8 alphanumeric characters');
+            setError(t('validation:utorid.format'));
             return;
         }
 
         if (!formData.name.trim()) {
-            setError('Name is required');
+            setError(t('validation:name.required'));
             return;
         }
 
         if (!validateEmail(formData.email)) {
-            setError('Please enter a valid email address');
+            setError(t('validation:email.invalid'));
             return;
         }
 
@@ -72,9 +72,9 @@ const RegisterPage = () => {
                 resetToken: result.resetToken,
                 user: result,
             });
-            showToast('User registered successfully!', 'success');
+            showToast(t('auth:register.success'), 'success');
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to register user');
+            setError(err.response?.data?.error || t('auth:register.error.generic'));
         } finally {
             setLoading(false);
         }
@@ -89,7 +89,7 @@ const RegisterPage = () => {
     const copyResetLink = () => {
         const link = `${window.location.origin}/reset-password?token=${success.resetToken}`;
         navigator.clipboard.writeText(link);
-        showToast('Reset link copied to clipboard!', 'success');
+        showToast(t('auth:register.linkCopied'), 'success');
     };
 
     if (success) {
@@ -98,45 +98,45 @@ const RegisterPage = () => {
                 <div className="register-page">
                     <div className="success-card">
                         <div className="success-icon">✓</div>
-                        <h1>User Registered Successfully!</h1>
+                        <h1>{t('auth:register.successTitle')}</h1>
 
                         <div className="user-details">
                             <div className="detail-item">
-                                <span className="label">Name</span>
+                                <span className="label">{t('users:fields.name')}</span>
                                 <span className="value">{success.user.name}</span>
                             </div>
                             <div className="detail-item">
-                                <span className="label">UTORid</span>
+                                <span className="label">{t('users:fields.utorid')}</span>
                                 <span className="value">{success.user.utorid}</span>
                             </div>
                             <div className="detail-item">
-                                <span className="label">Email</span>
+                                <span className="label">{t('users:fields.email')}</span>
                                 <span className="value">{success.user.email}</span>
                             </div>
                         </div>
 
                         <div className="reset-token-section">
-                            <h2>Password Reset Token</h2>
+                            <h2>{t('auth:register.resetTokenTitle')}</h2>
                             <p className="instruction">
-                                Share this reset link with the user so they can set their password and activate their account:
+                                {t('auth:register.resetTokenInstruction')}
                             </p>
                             <div className="token-display">
                                 <code>{success.resetToken}</code>
                             </div>
                             <button onClick={copyResetLink} className="btn btn-secondary btn-copy">
-                                📋 Copy Reset Link
+                                📋 {t('auth:register.copyResetLink')}
                             </button>
                             <p className="warning">
-                                ⚠️ This token will only be shown once. Make sure to share it with the user.
+                                ⚠️ {t('auth:register.tokenWarning')}
                             </p>
                         </div>
 
                         <div className="action-buttons">
                             <button onClick={handleRegisterAnother} className="btn btn-primary">
-                                Register Another User
+                                {t('auth:register.registerAnother')}
                             </button>
                             <button onClick={() => navigate('/users')} className="btn btn-secondary">
-                                Back to Users List
+                                {t('auth:register.backToUsers')}
                             </button>
                         </div>
                     </div>

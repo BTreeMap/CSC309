@@ -1,6 +1,9 @@
 {
     "required": "Este campo es obligatorio",
-    "email": "Por favor, ingrese una dirección de correo electrónico válida",
+    "email": {
+        "required": "El correo electrónico es obligatorio",
+        "invalid": "Por favor, ingrese una dirección de correo electrónico válida"
+    },
     "minLength": "Debe tener al menos {{min}} caracteres",
     "maxLength": "Debe tener como máximo {{max}} caracteres",
     "min": "Debe ser al menos {{min}}",
@@ -18,7 +21,10 @@
     "utorid": {
         "required": "El UTORid es obligatorio",
         "invalid": "Por favor, ingrese un UTORid válido",
-        "format": "El UTORid debe ser alfanumérico"
+        "format": "El UTORid debe tener entre 4 y 8 caracteres alfanuméricos"
+    },
+    "name": {
+        "required": "El nombre es obligatorio"
     },
     "points": {
         "required": "La cantidad de puntos es obligatoria",

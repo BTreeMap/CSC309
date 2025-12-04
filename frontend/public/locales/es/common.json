@@ -65,6 +65,7 @@
     "processing": "Procesando...",
     "optional": "Opcional",
     "required": "Obligatorio",
+    "redeem": "Canjear",
     "points": "Puntos",
     "points_one": "{{count}} punto",
     "points_other": "{{count}} puntos",

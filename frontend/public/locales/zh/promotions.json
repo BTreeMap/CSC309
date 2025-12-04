@@ -8,6 +8,7 @@
             "noPromotionsFiltered": "没有符合筛选条件的促销活动。",
             "noPromotionsAvailable": "目前没有进行中的促销活动。",
             "viewDetails": "查看详情 →",
+            "searchPlaceholder": "搜索促销活动...",
             "loading": "正在加载促销活动..."
         },
         "filters": {
@@ -20,15 +21,70 @@
             "clearFilters": "清除筛选"
         },
         "card": {
+            "validFrom": "生效日期 {{date}}",
+            "validUntil": "截止日期 {{date}}",
             "expired": "已过期",
             "ended": "已结束",
             "active": "进行中",
             "upcoming": "即将开始",
+            "pointsMultiplier": "{{multiplier}}倍积分",
+            "bonusPoints": "+{{points}} 奖励积分",
+            "minPurchase": "最低消费：{{amount}}",
             "duration": "持续时间",
             "rate": "比率",
             "bonusPointsRate": "+{{rate}}% 奖励积分",
             "minSpending": "最低消费",
             "points": "积分"
+        },
+        "detail": {
+            "title": "促销详情",
+            "description": "描述",
+            "type": "类型",
+            "value": "价值",
+            "validPeriod": "有效期",
+            "conditions": "条件",
+            "terms": "条款和条件",
+            "usageLimit": "使用次数限制",
+            "usageCount": "已使用次数"
+        },
+        "types": {
+            "multiplier": "积分倍数",
+            "bonus": "奖励积分",
+            "discount": "折扣",
+            "freeItem": "免费商品"
+        },
+        "create": {
+            "title": "创建促销",
+            "nameLabel": "促销名称",
+            "namePlaceholder": "输入促销名称",
+            "descriptionLabel": "描述",
+            "descriptionPlaceholder": "输入促销描述",
+            "typeLabel": "促销类型",
+            "valueLabel": "价值",
+            "valuePlaceholder": "输入价值",
+            "startDateLabel": "开始日期",
+            "endDateLabel": "结束日期",
+            "minPurchaseLabel": "最低消费",
+            "minPurchasePlaceholder": "输入最低消费金额",
+            "usageLimitLabel": "使用限制（每用户）",
+            "usageLimitPlaceholder": "留空表示无限制",
+            "submit": "创建促销",
+            "submitting": "创建中...",
+            "success": "促销创建成功",
+            "error": "创建促销失败"
+        },
+        "edit": {
+            "title": "编辑促销",
+            "submit": "保存更改",
+            "submitting": "保存中...",
+            "success": "促销更新成功",
+            "error": "更新促销失败"
+        },
+        "delete": {
+            "title": "删除促销",
+            "message": "您确定要删除此促销吗？此操作无法撤销。",
+            "success": "促销删除成功",
+            "error": "删除促销失败"
         }
     },
     "events": {
@@ -40,6 +96,10 @@
             "noEventsFiltered": "没有符合筛选条件的活动。",
             "noEventsAvailable": "目前没有活动。",
             "viewDetails": "查看详情 →",
+            "searchPlaceholder": "搜索活动...",
+            "upcoming": "即将举行的活动",
+            "past": "已结束的活动",
+            "all": "所有活动",
             "loading": "正在加载活动...",
             "error": "加载活动失败"
         },
@@ -57,19 +117,88 @@
             "clearFilters": "清除筛选"
         },
         "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} 名额",
             "unlimited": "无限制",
             "full": "已满",
             "spotsLeft": "剩余 {{count}} 个名额",
-            "attending": "人参加"
+            "attending": "人参加",
+            "registered": "已报名",
+            "ended": "已结束",
+            "cancelled": "已取消",
+            "points": "+{{points}} 积分"
         },
         "status": {
             "upcoming": "即将开始",
             "ended": "已结束",
             "happeningNow": "正在进行"
         },
+        "detail": {
+            "title": "活动详情",
+            "description": "描述",
+            "dateTime": "日期和时间",
+            "location": "地点",
+            "capacity": "容量",
+            "pointsReward": "积分奖励",
+            "registrationDeadline": "报名截止日期",
+            "attendees": "参与者",
+            "organizer": "组织者"
+        },
         "registration": {
             "register": "报名",
-            "unregister": "取消报名"
+            "registering": "报名中...",
+            "unregister": "取消报名",
+            "unregistering": "取消中...",
+            "registerSuccess": "活动报名成功",
+            "unregisterSuccess": "已取消报名",
+            "alreadyRegistered": "您已经报名",
+            "eventFull": "该活动已满",
+            "registrationClosed": "报名已关闭",
+            "error": "处理报名失败"
+        },
+        "create": {
+            "title": "创建活动",
+            "nameLabel": "活动名称",
+            "namePlaceholder": "输入活动名称",
+            "descriptionLabel": "描述",
+            "descriptionPlaceholder": "输入活动描述",
+            "dateLabel": "日期",
+            "timeLabel": "时间",
+            "locationLabel": "地点",
+            "locationPlaceholder": "输入活动地点",
+            "capacityLabel": "最大容量",
+            "capacityPlaceholder": "输入最大参与人数",
+            "pointsLabel": "积分奖励",
+            "pointsPlaceholder": "参与获得的积分",
+            "deadlineLabel": "报名截止日期",
+            "submit": "创建活动",
+            "submitting": "创建中...",
+            "success": "活动创建成功",
+            "error": "创建活动失败"
+        },
+        "edit": {
+            "title": "编辑活动",
+            "submit": "保存更改",
+            "submitting": "保存中...",
+            "success": "活动更新成功",
+            "error": "更新活动失败"
+        },
+        "delete": {
+            "title": "删除活动",
+            "message": "您确定要删除此活动吗？所有报名将被取消。",
+            "success": "活动删除成功",
+            "error": "删除活动失败"
+        },
+        "manage": {
+            "attendees": "管理参与者",
+            "checkIn": "签到",
+            "checkInSuccess": "参与者签到成功",
+            "markAttended": "标记为已参与",
+            "removeAttendee": "移除参与者",
+            "sendReminder": "发送提醒",
+            "exportList": "导出参与者名单"
         }
     }
 }

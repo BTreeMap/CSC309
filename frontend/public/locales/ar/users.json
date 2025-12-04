@@ -3,7 +3,18 @@
     "list": {
         "title": "إدارة المستخدمين",
         "searchPlaceholder": "البحث عن المستخدمين...",
-        "noUsers": "لم يتم العثور على مستخدمين"
+        "noUsers": "لم يتم العثور على مستخدمين",
+        "columns": {
+            "utorid": "UTORid",
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "role": "الدور",
+            "points": "النقاط",
+            "status": "الحالة",
+            "verified": "موثق",
+            "createdAt": "تاريخ الإنشاء",
+            "actions": "الإجراءات"
+        }
     },
     "profile": {
         "title": "الملف الشخصي",
@@ -12,14 +23,74 @@
         "email": "البريد الإلكتروني",
         "role": "الدور",
         "points": "النقاط",
+        "birthday": "تاريخ الميلاد",
+        "createdAt": "عضو منذ",
         "verified": "موثق",
         "notVerified": "غير موثق"
+    },
+    "edit": {
+        "title": "تعديل الملف الشخصي",
+        "subtitle": "تحديث معلوماتك الشخصية",
+        "nameLabel": "الاسم الكامل",
+        "namePlaceholder": "أدخل اسمك الكامل",
+        "emailLabel": "البريد الإلكتروني",
+        "emailPlaceholder": "example@mail.utoronto.ca",
+        "emailHint": "يجب أن يكون عنوان بريد إلكتروني صالح من UofT",
+        "birthdayLabel": "تاريخ الميلاد",
+        "avatarLabel": "صورة الملف الشخصي",
+        "choosePhoto": "اختر صورة",
+        "avatarHint": "JPG أو PNG أو GIF. الحد الأقصى 5 ميجابايت",
+        "utoridCannotChange": "لا يمكن تغيير UTORid",
+        "submit": "حفظ التغييرات",
+        "submitting": "جاري الحفظ...",
+        "success": "تم تحديث الملف الشخصي بنجاح",
+        "noChanges": "لا توجد تغييرات للحفظ",
+        "error": "فشل تحديث الملف الشخصي",
+        "loading": "جاري تحميل الملف الشخصي...",
+        "avatarTooLarge": "يجب أن تكون صورة الملف الشخصي أقل من 5 ميجابايت",
+        "validation": {
+            "nameLength": "يجب أن يكون الاسم بين 1 و 50 حرفاً",
+            "invalidEmail": "يجب أن يكون البريد الإلكتروني عنوان UofT صالح",
+            "invalidDate": "تنسيق تاريخ غير صالح"
+        }
     },
     "roles": {
         "regular": "مستخدم عادي",
         "cashier": "أمين صندوق",
         "manager": "مدير",
         "superuser": "مستخدم متميز"
+    },
+    "status": {
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "verified": "موثق",
+        "pending": "قيد الانتظار"
+    },
+    "actions": {
+        "view": "عرض المستخدم",
+        "edit": "تعديل المستخدم",
+        "delete": "حذف المستخدم",
+        "verify": "توثيق المستخدم",
+        "changeRole": "تغيير الدور",
+        "resetPassword": "إعادة تعيين كلمة المرور",
+        "adjustPoints": "تعديل النقاط"
+    },
+    "delete": {
+        "title": "حذف المستخدم",
+        "message": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.",
+        "success": "تم حذف المستخدم بنجاح",
+        "error": "فشل حذف المستخدم"
+    },
+    "adjustPoints": {
+        "title": "تعديل النقاط",
+        "currentPoints": "النقاط الحالية",
+        "adjustmentLabel": "مبلغ التعديل",
+        "adjustmentPlaceholder": "أدخل النقاط (إيجابية أو سلبية)",
+        "reasonLabel": "السبب",
+        "reasonPlaceholder": "أدخل سبب التعديل",
+        "submit": "تطبيق التعديل",
+        "success": "تم تعديل النقاط بنجاح",
+        "error": "فشل تعديل النقاط"
     },
     "qrCode": {
         "title": "رمز QR الخاص بي",

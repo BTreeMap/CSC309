@@ -1,7 +1,53 @@
 {
     "required": "此字段为必填项",
-    "email": "请输入有效的电子邮件地址",
+    "email": {
+        "required": "电子邮件地址为必填项",
+        "invalid": "请输入有效的电子邮件地址"
+    },
     "minLength": "至少需要 {{min}} 个字符",
     "maxLength": "最多允许 {{max}} 个字符",
-    "passwordMatch": "密码不匹配"
+    "min": "最小值为 {{min}}",
+    "max": "最大值为 {{max}}",
+    "pattern": "格式无效",
+    "passwordMatch": "密码不匹配",
+    "passwordStrength": {
+        "weak": "密码强度太弱",
+        "minLength": "密码至少需要 {{min}} 个字符",
+        "uppercase": "密码必须包含至少一个大写字母",
+        "lowercase": "密码必须包含至少一个小写字母",
+        "number": "密码必须包含至少一个数字",
+        "special": "密码必须包含至少一个特殊字符"
+    },
+    "utorid": {
+        "required": "UTORid 为必填项",
+        "invalid": "请输入有效的 UTORid",
+        "format": "UTORid 必须是 4-8 个字母数字字符"
+    },
+    "name": {
+        "required": "姓名为必填项"
+    },
+    "points": {
+        "required": "积分金额为必填项",
+        "positive": "积分必须是正数",
+        "integer": "积分必须是整数",
+        "insufficient": "积分不足",
+        "max": "最多允许 {{max}} 积分"
+    },
+    "amount": {
+        "required": "金额为必填项",
+        "positive": "金额必须为正数",
+        "invalid": "无效金额"
+    },
+    "date": {
+        "required": "日期为必填项",
+        "invalid": "无效日期",
+        "past": "日期不能是过去的日期",
+        "future": "日期不能是将来的日期",
+        "range": "结束日期必须在开始日期之后"
+    },
+    "file": {
+        "required": "文件为必填项",
+        "size": "文件必须小于 {{size}}",
+        "type": "无效的文件类型。允许的类型：{{types}}"
+    }
 }

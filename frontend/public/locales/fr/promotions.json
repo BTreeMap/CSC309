@@ -8,6 +8,7 @@
             "noPromotionsFiltered": "Aucune promotion ne correspond à vos filtres.",
             "noPromotionsAvailable": "Il n'y a pas de promotions actives pour le moment.",
             "viewDetails": "Voir les détails →",
+            "searchPlaceholder": "Rechercher des promotions...",
             "loading": "Chargement des promotions..."
         },
         "filters": {
@@ -20,15 +21,70 @@
             "clearFilters": "Effacer les filtres"
         },
         "card": {
+            "validFrom": "Valide à partir du {{date}}",
+            "validUntil": "Valide jusqu'au {{date}}",
             "expired": "Expirée",
             "ended": "Terminée",
             "active": "Active",
             "upcoming": "À venir",
+            "pointsMultiplier": "{{multiplier}}x points",
+            "bonusPoints": "+{{points}} points bonus",
+            "minPurchase": "Achat min. : {{amount}}",
             "duration": "Durée",
             "rate": "Taux",
             "bonusPointsRate": "+{{rate}}% points bonus",
             "minSpending": "Dépense min.",
             "points": "Points"
+        },
+        "detail": {
+            "title": "Détails de la promotion",
+            "description": "Description",
+            "type": "Type",
+            "value": "Valeur",
+            "validPeriod": "Période de validité",
+            "conditions": "Conditions",
+            "terms": "Conditions générales",
+            "usageLimit": "Limite d'utilisation",
+            "usageCount": "Nombre d'utilisations"
+        },
+        "types": {
+            "multiplier": "Multiplicateur de points",
+            "bonus": "Points bonus",
+            "discount": "Réduction",
+            "freeItem": "Article gratuit"
+        },
+        "create": {
+            "title": "Créer une promotion",
+            "nameLabel": "Nom de la promotion",
+            "namePlaceholder": "Entrez le nom de la promotion",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Entrez la description de la promotion",
+            "typeLabel": "Type de promotion",
+            "valueLabel": "Valeur",
+            "valuePlaceholder": "Entrez la valeur",
+            "startDateLabel": "Date de début",
+            "endDateLabel": "Date de fin",
+            "minPurchaseLabel": "Achat minimum",
+            "minPurchasePlaceholder": "Entrez le montant minimum d'achat",
+            "usageLimitLabel": "Limite d'utilisation (par utilisateur)",
+            "usageLimitPlaceholder": "Laisser vide pour illimité",
+            "submit": "Créer la promotion",
+            "submitting": "Création en cours...",
+            "success": "Promotion créée avec succès",
+            "error": "Échec de la création de la promotion"
+        },
+        "edit": {
+            "title": "Modifier la promotion",
+            "submit": "Enregistrer les modifications",
+            "submitting": "Enregistrement en cours...",
+            "success": "Promotion mise à jour avec succès",
+            "error": "Échec de la mise à jour de la promotion"
+        },
+        "delete": {
+            "title": "Supprimer la promotion",
+            "message": "Êtes-vous sûr de vouloir supprimer cette promotion ? Cette action est irréversible.",
+            "success": "Promotion supprimée avec succès",
+            "error": "Échec de la suppression de la promotion"
         }
     },
     "events": {
@@ -40,6 +96,10 @@
             "noEventsFiltered": "Aucun événement ne correspond à vos filtres.",
             "noEventsAvailable": "Il n'y a pas d'événements pour le moment.",
             "viewDetails": "Voir les détails →",
+            "searchPlaceholder": "Rechercher des événements...",
+            "upcoming": "Événements à venir",
+            "past": "Événements passés",
+            "all": "Tous les événements",
             "loading": "Chargement des événements...",
             "error": "Échec du chargement des événements"
         },
@@ -57,19 +117,88 @@
             "clearFilters": "Effacer les filtres"
         },
         "card": {
+            "date": "{{date}}",
+            "time": "{{time}}",
+            "location": "{{location}}",
+            "capacity": "{{current}}/{{max}} places",
             "unlimited": "Illimité",
             "full": "Complet",
             "spotsLeft": "{{count}} places restantes",
-            "attending": "participants"
+            "attending": "participants",
+            "registered": "Inscrit",
+            "ended": "Terminé",
+            "cancelled": "Annulé",
+            "points": "+{{points}} points"
         },
         "status": {
             "upcoming": "À venir",
             "ended": "Terminé",
             "happeningNow": "En cours"
         },
+        "detail": {
+            "title": "Détails de l'événement",
+            "description": "Description",
+            "dateTime": "Date et heure",
+            "location": "Lieu",
+            "capacity": "Capacité",
+            "pointsReward": "Récompense en points",
+            "registrationDeadline": "Date limite d'inscription",
+            "attendees": "Participants",
+            "organizer": "Organisateur"
+        },
         "registration": {
             "register": "S'inscrire",
-            "unregister": "Annuler l'inscription"
+            "registering": "Inscription en cours...",
+            "unregister": "Annuler l'inscription",
+            "unregistering": "Annulation en cours...",
+            "registerSuccess": "Inscription réussie à l'événement",
+            "unregisterSuccess": "Inscription annulée",
+            "alreadyRegistered": "Vous êtes déjà inscrit",
+            "eventFull": "Cet événement est complet",
+            "registrationClosed": "Les inscriptions sont fermées",
+            "error": "Échec du traitement de l'inscription"
+        },
+        "create": {
+            "title": "Créer un événement",
+            "nameLabel": "Nom de l'événement",
+            "namePlaceholder": "Entrez le nom de l'événement",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Entrez la description de l'événement",
+            "dateLabel": "Date",
+            "timeLabel": "Heure",
+            "locationLabel": "Lieu",
+            "locationPlaceholder": "Entrez le lieu de l'événement",
+            "capacityLabel": "Capacité maximale",
+            "capacityPlaceholder": "Entrez le nombre maximum de participants",
+            "pointsLabel": "Récompense en points",
+            "pointsPlaceholder": "Points pour la participation",
+            "deadlineLabel": "Date limite d'inscription",
+            "submit": "Créer l'événement",
+            "submitting": "Création en cours...",
+            "success": "Événement créé avec succès",
+            "error": "Échec de la création de l'événement"
+        },
+        "edit": {
+            "title": "Modifier l'événement",
+            "submit": "Enregistrer les modifications",
+            "submitting": "Enregistrement en cours...",
+            "success": "Événement mis à jour avec succès",
+            "error": "Échec de la mise à jour de l'événement"
+        },
+        "delete": {
+            "title": "Supprimer l'événement",
+            "message": "Êtes-vous sûr de vouloir supprimer cet événement ? Toutes les inscriptions seront annulées.",
+            "success": "Événement supprimé avec succès",
+            "error": "Échec de la suppression de l'événement"
+        },
+        "manage": {
+            "attendees": "Gérer les participants",
+            "checkIn": "Enregistrer la présence",
+            "checkInSuccess": "Participant enregistré avec succès",
+            "markAttended": "Marquer comme présent",
+            "removeAttendee": "Supprimer le participant",
+            "sendReminder": "Envoyer un rappel",
+            "exportList": "Exporter la liste des participants"
         }
     }
 }

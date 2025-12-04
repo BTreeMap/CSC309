@@ -65,6 +65,7 @@
     "processing": "جاري المعالجة...",
     "optional": "اختياري",
     "required": "مطلوب",
+    "redeem": "استبدال",
     "points": "نقاط",
     "points_zero": "{{count}} نقطة",
     "points_one": "نقطة واحدة",

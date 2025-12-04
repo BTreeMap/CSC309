@@ -65,6 +65,7 @@
     "processing": "Traitement en cours...",
     "optional": "Optionnel",
     "required": "Requis",
+    "redeem": "Échanger",
     "points": "Points",
     "points_one": "{{count}} point",
     "points_other": "{{count}} points",

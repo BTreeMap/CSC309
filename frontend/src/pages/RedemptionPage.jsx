@@ -29,9 +29,9 @@ const RedemptionPage = () => {
 
         const amountNum = parseInt(amount, 10);
         if (!amount || isNaN(amountNum) || amountNum <= 0) {
-            newErrors.amount = 'Please enter a valid positive amount';
+            newErrors.amount = t('redemption.error.invalidAmount');
         } else if (amountNum > user.points) {
-            newErrors.amount = `Insufficient points. You have ${user.points} points available.`;
+            newErrors.amount = t('redemption.error.insufficientPoints');
         }
 
         setErrors(newErrors);
@@ -79,7 +79,7 @@ const RedemptionPage = () => {
     if (authLoading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading..." />
+                <LoadingSpinner text={t('common:loading')} />
             </Layout>
         );
     }
@@ -90,48 +90,49 @@ const RedemptionPage = () => {
             <Layout>
                 <div className="redemption-page">
                     <div className="redemption-success">
-                        <div className="success-icon">✓</div>
-                        <h1>Redemption Request Created!</h1>
-                        <p>Your redemption request has been submitted successfully.</p>
+                        <div className="success-content">
+                            <span className="success-icon">✅</span>
+                            <h2>{t('redemption.successTitle')}</h2>
+                            <p>{t('redemption.successMessage')}</p>
+                            <div className="redemption-details">
+                                <div className="detail-row">
+                                    <span>{t('redemption.transactionId')}:</span>
+                                    <span>#{redemptionResult.id}</span>
+                                </div>
+                                <div className="detail-row">
+                                    <span>{t('common:points')}:</span>
+                                    <span>{redemptionResult.amount?.toLocaleString() || parseInt(amount, 10).toLocaleString()}</span>
+                                </div>
+                                <div className="detail-row">
+                                    <span>{t('common:status')}:</span>
+                                    <span className="status-pending">{t('redemption.pendingProcessing')}</span>
+                                </div>
+                            </div>
 
-                        <div className="redemption-details">
-                            <div className="detail-row">
-                                <span>Request ID:</span>
-                                <span>#{redemptionResult.id}</span>
+                            <div className="success-actions">
+                                <button
+                                    className="btn btn-primary view-qr-button"
+                                    onClick={() => navigate(`/redeem/${redemptionResult.id}/qr`)}
+                                >
+                                    <span>📱</span> {t('redemption.viewQRCode')}
+                                </button>
+                                <button
+                                    className="btn btn-secondary view-transactions-button"
+                                    onClick={() => navigate('/transactions')}
+                                >
+                                    {t('redemption.viewMyTransactions')}
+                                </button>
+                                <button
+                                    className="btn btn-secondary new-redemption-button"
+                                    onClick={() => {
+                                        setRedemptionResult(null);
+                                        setAmount('');
+                                        setRemark('');
+                                    }}
+                                >
+                                    {t('redemption.createAnother')}
+                                </button>
                             </div>
-                            <div className="detail-row">
-                                <span>Points:</span>
-                                <span>{redemptionResult.amount?.toLocaleString() || parseInt(amount, 10).toLocaleString()}</span>
-                            </div>
-                            <div className="detail-row">
-                                <span>Status:</span>
-                                <span className="status-pending">Pending Processing</span>
-                            </div>
-                        </div>
-
-                        <div className="success-actions">
-                            <button
-                                className="btn btn-primary view-qr-button"
-                                onClick={() => navigate(`/redeem/${redemptionResult.id}/qr`)}
-                            >
-                                <span>📱</span> View QR Code
-                            </button>
-                            <button
-                                className="btn btn-secondary view-transactions-button"
-                                onClick={() => navigate('/transactions')}
-                            >
-                                View My Transactions
-                            </button>
-                            <button
-                                className="btn btn-secondary new-redemption-button"
-                                onClick={() => {
-                                    setRedemptionResult(null);
-                                    setAmount('');
-                                    setRemark('');
-                                }}
-                            >
-                                Create Another Redemption
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -166,7 +167,7 @@ const RedemptionPage = () => {
                                     setAmount(e.target.value);
                                     if (errors.amount) setErrors(prev => ({ ...prev, amount: null }));
                                 }}
-                                placeholder="Enter amount"
+                                placeholder={t('redemption.enterAmount')}
                                 min="1"
                                 max={user?.points || 0}
                                 disabled={loading}
@@ -174,7 +175,7 @@ const RedemptionPage = () => {
                             {errors.amount && <span className="input-error">{errors.amount}</span>}
 
                             <div className="quick-amounts">
-                                <span className="quick-label">Quick select:</span>
+                                <span className="quick-label">{t('redemption.quickSelect')}</span>
                                 {quickAmounts.map(qa => (
                                     <button
                                         key={qa}
@@ -190,30 +191,30 @@ const RedemptionPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="remark" className="form-label">Remark (Optional)</label>
+                            <label htmlFor="remark" className="form-label">{t('redemption.remarkLabel')}</label>
                             <textarea
                                 id="remark"
                                 className="form-textarea"
                                 value={remark}
                                 onChange={(e) => setRemark(e.target.value)}
-                                placeholder="Add a note for this redemption"
+                                placeholder={t('redemption.remarkPlaceholder')}
                                 rows={3}
                                 disabled={loading}
                             />
                         </div>
 
                         <div className="redemption-summary">
-                            <h3>Redemption Summary</h3>
+                            <h3>{t('redemption.summary')}</h3>
                             <div className="summary-row">
-                                <span>Points to redeem:</span>
+                                <span>{t('redemption.pointsToRedeemSummary')}</span>
                                 <span>{amount ? parseInt(amount, 10).toLocaleString() : '-'}</span>
                             </div>
                             <div className="summary-row">
-                                <span>Your balance after:</span>
+                                <span>{t('redemption.balanceAfter')}</span>
                                 <span>
                                     {amount && !isNaN(parseInt(amount, 10))
-                                        ? `${(user.points - parseInt(amount, 10)).toLocaleString()} points`
-                                        : `${user?.points?.toLocaleString() || 0} points`
+                                        ? `${(user.points - parseInt(amount, 10)).toLocaleString()} ${t('common:points')}`
+                                        : `${user?.points?.toLocaleString() || 0} ${t('common:points')}`
                                     }
                                 </span>
                             </div>
@@ -226,24 +227,24 @@ const RedemptionPage = () => {
                                 onClick={() => navigate(-1)}
                                 disabled={loading}
                             >
-                                Cancel
+                                {t('common:cancel')}
                             </button>
                             <button
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={loading || !amount}
                             >
-                                {loading ? 'Processing...' : 'Create Redemption Request'}
+                                {loading ? t('common:processing') : t('redemption.createRequest')}
                             </button>
                         </div>
                     </form>
 
                     <div className="redemption-info">
-                        <h3>How Redemption Works</h3>
+                        <h3>{t('redemption.howItWorks.title')}</h3>
                         <ol>
-                            <li>Create a redemption request with the number of points you want to redeem</li>
-                            <li>Show the generated QR code to a cashier</li>
-                            <li>The cashier will process your request and you'll receive your reward</li>
+                            <li>{t('redemption.howItWorks.step1')}</li>
+                            <li>{t('redemption.howItWorks.step2')}</li>
+                            <li>{t('redemption.howItWorks.step3')}</li>
                         </ol>
                     </div>
                 </div>
@@ -252,9 +253,9 @@ const RedemptionPage = () => {
                     isOpen={showConfirm}
                     onClose={() => setShowConfirm(false)}
                     onConfirm={handleConfirmRedemption}
-                    title="Confirm Redemption"
-                    message={`Are you sure you want to redeem ${parseInt(amount, 10)?.toLocaleString() || 0} points?`}
-                    confirmText="Redeem"
+                    title={t('redemption.confirmTitle')}
+                    message={t('redemption.confirmMessage', { points: parseInt(amount, 10)?.toLocaleString() || 0 })}
+                    confirmText={t('common:redeem')}
                     variant="primary"
                 />
             </div>

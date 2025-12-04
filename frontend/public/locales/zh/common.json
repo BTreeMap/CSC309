@@ -65,6 +65,7 @@
     "processing": "处理中...",
     "optional": "可选",
     "required": "必填",
+    "redeem": "兑换",
     "points": "积分",
     "points_other": "{{count}} 积分",
     "brand": {
