@@ -1,7 +1,19 @@
 /* ==========================================================================
    PageHeader Component
    Standardized page header with icon, title, subtitle, and optional actions
+   Ensures consistent, strictly left-aligned titles across all pages
    ========================================================================== */
+
+.page-header {
+    margin-bottom: var(--space-6);
+}
+
+.page-header.page-header-flex {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
 
 .page-header-content {
     flex: 1;
@@ -12,6 +24,8 @@
     display: flex;
     align-items: center;
     gap: var(--space-3);
+    margin: 0;
+    padding: 0;
 }
 
 .page-title-icon {
@@ -31,6 +45,28 @@
     height: 24px;
 }
 
+.page-title-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    align-items: flex-start;
+    text-align: left;
+}
+
+.page-title-text h1,
+.page-title-text .page-title {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.page-title-text p,
+.page-title-text .page-subtitle {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
 .page-header-actions {
     display: flex;
     align-items: flex-start;
@@ -40,6 +76,10 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .page-header {
+        margin-bottom: var(--space-5);
+    }
+
     .page-title-icon {
         width: 40px;
         height: 40px;
@@ -66,6 +106,10 @@
 }
 
 @media (max-width: 480px) {
+    .page-header {
+        margin-bottom: var(--space-4);
+    }
+
     .page-title-row {
         gap: var(--space-2);
     }
