@@ -3,11 +3,6 @@
         "title": "Promotions",
         "subtitle": "Discover available promotions and earn bonus points",
         "manageTitle": "Manage Promotions",
-        "manageSubtitle": "Create, edit, and manage promotional campaigns",
-        "createPromotion": "Create Promotion",
-        "loading": "Loading promotions...",
-        "noPromotions": "No promotions yet",
-        "noPromotionsDesc": "Create your first promotion to engage customers.",
         "list": {
             "noPromotions": "No promotions found",
             "noPromotionsFiltered": "No promotions match your filters.",
@@ -41,99 +36,10 @@
             "minSpending": "Min Spending",
             "points": "Points"
         },
-        "table": {
-            "id": "ID",
-            "name": "Name",
-            "type": "Type",
-            "duration": "Duration",
-            "benefit": "Benefit",
-            "status": "Status",
-            "actions": "Actions",
-            "to": "to",
-            "rate": "+{{rate}}% rate",
-            "points": "+{{points}} pts",
-            "auto": "Auto",
-            "code": "Code"
-        },
-        "actions": {
-            "view": "View",
-            "edit": "Edit",
-            "delete": "Delete"
-        },
-        "status": {
-            "active": "Active",
-            "upcoming": "Upcoming",
-            "ended": "Ended"
-        },
-        "form": {
-            "title": "Create Promotion",
-            "editTitle": "Edit Promotion",
-            "nameLabel": "Promotion Name",
-            "namePlaceholder": "e.g., Summer Sale",
-            "descriptionLabel": "Description",
-            "descriptionPlaceholder": "Describe the promotion...",
-            "typeLabel": "Type",
-            "typeAutomatic": "Automatic (Rate-based)",
-            "typeOneTime": "One-Time Code",
-            "startDateLabel": "Start Date",
-            "endDateLabel": "End Date",
-            "rateLabel": "Bonus Rate",
-            "ratePlaceholder": "e.g., 0.5 for 50%",
-            "rateHint": "Enter as decimal (0.5 = 50%)",
-            "minSpendingLabel": "Min Spending ($)",
-            "pointsLabel": "Points",
-            "pointsPlaceholder": "e.g., 100",
-            "saving": "Saving...",
-            "create": "Create Promotion",
-            "update": "Update Promotion"
-        },
-        "delete": {
-            "title": "Delete Promotion",
-            "message": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
-            "confirm": "Delete",
-            "success": "Promotion deleted successfully",
-            "error": "Failed to delete promotion"
-        },
-        "toast": {
-            "created": "Promotion created successfully!",
-            "updated": "Promotion updated successfully!",
-            "deleted": "Promotion deleted successfully!",
-            "errorLoad": "Failed to load promotions",
-            "errorSave": "Failed to save promotion",
-            "errorDelete": "Failed to delete promotion"
-        },
         "detail": {
             "title": "Promotion Details",
-            "notFound": "Promotion Not Found",
-            "notFoundDesc": "The promotion you're looking for doesn't exist or has been removed.",
-            "backToPromotions": "Back to Promotions",
             "description": "Description",
-            "startDate": "Start Date",
-            "endDate": "End Date",
-            "bonusRate": "Bonus Rate",
-            "bonusRateNote": "bonus points on purchases",
-            "minSpending": "Minimum Spending",
-            "minSpendingNote": "per transaction",
-            "pointsReward": "Points Reward",
-            "pointsRewardNote": "one-time bonus points",
-            "howItWorks": "How It Works",
-            "automaticSteps": {
-                "step1": "Make a purchase during the promotion period",
-                "step2": "Ensure your purchase is at least ${{amount}}",
-                "step3": "Earn +{{rate}}% bonus points automatically",
-                "step4": "Bonus points are added to your transaction"
-            },
-            "oneTimeSteps": {
-                "step1": "Get the promotional code from a cashier",
-                "step2": "Redeem the code during checkout",
-                "step3": "Receive +{{points}} bonus points",
-                "step4": "Each code can only be used once"
-            },
-            "managerActions": "Manager Actions",
-            "managePromotions": "Manage Promotions",
             "type": "Type",
-            "typeAutomatic": "Automatic",
-            "typeOneTime": "One-Time Code",
             "value": "Value",
             "validPeriod": "Valid Period",
             "conditions": "Conditions",
@@ -145,20 +51,46 @@
             "multiplier": "Points Multiplier",
             "bonus": "Bonus Points",
             "discount": "Discount",
-            "freeItem": "Free Item",
-            "automatic": "Automatic",
-            "oneTime": "One-Time Code"
+            "freeItem": "Free Item"
+        },
+        "create": {
+            "title": "Create Promotion",
+            "nameLabel": "Promotion Name",
+            "namePlaceholder": "Enter promotion name",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Enter promotion description",
+            "typeLabel": "Promotion Type",
+            "valueLabel": "Value",
+            "valuePlaceholder": "Enter value",
+            "startDateLabel": "Start Date",
+            "endDateLabel": "End Date",
+            "minPurchaseLabel": "Minimum Purchase",
+            "minPurchasePlaceholder": "Enter minimum purchase amount",
+            "usageLimitLabel": "Usage Limit (per user)",
+            "usageLimitPlaceholder": "Leave empty for unlimited",
+            "submit": "Create Promotion",
+            "submitting": "Creating...",
+            "success": "Promotion created successfully",
+            "error": "Failed to create promotion"
+        },
+        "edit": {
+            "title": "Edit Promotion",
+            "submit": "Save Changes",
+            "submitting": "Saving...",
+            "success": "Promotion updated successfully",
+            "error": "Failed to update promotion"
+        },
+        "delete": {
+            "title": "Delete Promotion",
+            "message": "Are you sure you want to delete this promotion? This action cannot be undone.",
+            "success": "Promotion deleted successfully",
+            "error": "Failed to delete promotion"
         }
     },
     "events": {
         "title": "Events",
         "subtitle": "Discover and RSVP to upcoming events",
         "manageTitle": "Manage Events",
-        "manageSubtitle": "Create, edit, and manage events",
-        "createEvent": "Create Event",
-        "loading": "Loading events...",
-        "noEvents": "No events yet",
-        "noEventsDesc": "Create your first event to engage your community.",
         "list": {
             "noEvents": "No events found",
             "noEventsFiltered": "No events match your filters.",
@@ -265,7 +197,8 @@
             "checkInSuccess": "Attendee checked in successfully",
             "markAttended": "Mark as Attended",
             "removeAttendee": "Remove Attendee",
-            "sendReminder": "Send Reminder"
+            "sendReminder": "Send Reminder",
+            "exportList": "Export Attendee List"
         }
     }
 }

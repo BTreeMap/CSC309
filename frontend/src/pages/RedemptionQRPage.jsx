@@ -12,7 +12,6 @@ import './RedemptionQRPage.css';
 const RedemptionQRPage = () => {
     const { transactionId } = useParams();
     const navigate = useNavigate();
-    const { t } = useTranslation(['transactions', 'common']);
 
     const [transaction, setTransaction] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -23,19 +22,19 @@ const RedemptionQRPage = () => {
             try {
                 const data = await transactionsAPI.getTransaction(transactionId);
                 if (data.type !== 'redemption') {
-                    setError(t('transactions:redemptionQr.error.notRedemption'));
+                    setError('This transaction is not a redemption request');
                     return;
                 }
                 setTransaction(data);
             } catch (err) {
-                setError(err.response?.data?.error || t('transactions:redemptionQr.error.loadFailed'));
+                setError(err.response?.data?.error || 'Failed to load redemption details');
             } finally {
                 setLoading(false);
             }
         };
 
         fetchTransaction();
-    }, [transactionId, t]);
+    }, [transactionId]);
 
     // Generate QR code payload with transaction details
     const qrValue = transaction ? createRedemptionPayload(transaction) : '';
@@ -74,15 +73,15 @@ const RedemptionQRPage = () => {
 
     const getStatusBadge = () => {
         if (transaction?.processedAt) {
-            return <span className="status-badge status-processed">{t('transactions:redemptionQr.status.processed')}</span>;
+            return <span className="status-badge status-processed">Processed</span>;
         }
-        return <span className="status-badge status-pending">{t('transactions:redemptionQr.status.pending')}</span>;
+        return <span className="status-badge status-pending">Pending</span>;
     };
 
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text={t('transactions:redemptionQr.loading')} />
+                <LoadingSpinner text="Loading redemption details..." />
             </Layout>
         );
     }
@@ -94,7 +93,7 @@ const RedemptionQRPage = () => {
                     <ErrorMessage message={error} />
                     <div className="error-actions">
                         <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-                            {t('common:goBack')}
+                            Go Back
                         </button>
                     </div>
                 </div>
@@ -103,6 +102,7 @@ const RedemptionQRPage = () => {
     }
 
     const isProcessed = !!transaction?.processedAt;
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
@@ -133,45 +133,45 @@ const RedemptionQRPage = () => {
                                 </div>
                                 <button className="btn btn-primary download-qr-button" onClick={handleDownload}>
                                     <span className="download-icon">📥</span>
-                                    {t('transactions:redemptionQr.downloadQr')}
+                                    Download QR Code
                                 </button>
                             </>
                         )}
                     </div>
 
                     <div className="redemption-details-card">
-                        <h2>{t('transactions:redemptionQr.details.title')}</h2>
+                        <h2>Redemption Details</h2>
 
                         <div className="detail-row">
-                            <span className="detail-label">{t('transactions:redemptionQr.details.requestId')}</span>
+                            <span className="detail-label">Request ID</span>
                             <span className="detail-value">#{transaction.id}</span>
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">{t('transactions:redemptionQr.details.points')}</span>
+                            <span className="detail-label">Points</span>
                             <span className="detail-value points-value">{Math.abs(transaction.amount).toLocaleString()}</span>
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">{t('transactions:redemptionQr.details.status')}</span>
+                            <span className="detail-label">Status</span>
                             {getStatusBadge()}
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">{t('transactions:redemptionQr.details.created')}</span>
+                            <span className="detail-label">Created</span>
                             <span className="detail-value">{formatDate(transaction.createdAt)}</span>
                         </div>
 
                         {transaction.processedAt && (
                             <div className="detail-row">
-                                <span className="detail-label">{t('transactions:redemptionQr.details.processed')}</span>
+                                <span className="detail-label">Processed</span>
                                 <span className="detail-value">{formatDate(transaction.processedAt)}</span>
                             </div>
                         )}
 
                         {transaction.remark && (
                             <div className="detail-row">
-                                <span className="detail-label">{t('transactions:redemptionQr.details.remark')}</span>
+                                <span className="detail-label">Remark</span>
                                 <span className="detail-value">{transaction.remark}</span>
                             </div>
                         )}
@@ -179,10 +179,10 @@ const RedemptionQRPage = () => {
 
                     <div className="qr-actions">
                         <Link to="/transactions" className="action-link">
-                            {t('transactions:redemptionQr.actions.viewAll')}
+                            View All Transactions
                         </Link>
                         <Link to="/redeem" className="action-link">
-                            {t('transactions:redemptionQr.actions.createNew')}
+                            Create New Redemption
                         </Link>
                     </div>
                 </div>

@@ -12,7 +12,6 @@ const ManagePromotionsPage = () => {
     const navigate = useNavigate();
     const { showToast } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { t } = useTranslation(['promotions', 'common']);
 
     const [promotions, setPromotions] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -135,17 +134,17 @@ const ManagePromotionsPage = () => {
 
             if (showEditModal && selectedPromotion) {
                 await promotionsAPI.updatePromotion(selectedPromotion.id, payload);
-                showToast(t('promotions:promotions.toast.updated'), 'success');
+                showToast('Promotion updated successfully!', 'success');
             } else {
                 await promotionsAPI.createPromotion(payload);
-                showToast(t('promotions:promotions.toast.created'), 'success');
+                showToast('Promotion created successfully!', 'success');
             }
 
             setShowCreateModal(false);
             setShowEditModal(false);
             fetchPromotions();
         } catch (err) {
-            setFormError(err.response?.data?.error || t('promotions:promotions.toast.errorSave'));
+            setFormError(err.response?.data?.error || 'Failed to save promotion');
         } finally {
             setFormLoading(false);
         }
@@ -156,11 +155,11 @@ const ManagePromotionsPage = () => {
 
         try {
             await promotionsAPI.deletePromotion(selectedPromotion.id);
-            showToast(t('promotions:promotions.toast.deleted'), 'success');
+            showToast('Promotion deleted successfully!', 'success');
             setShowDeleteConfirm(false);
             fetchPromotions();
         } catch (err) {
-            showToast(err.response?.data?.error || t('promotions:promotions.toast.errorDelete'), 'error');
+            showToast(err.response?.data?.error || 'Failed to delete promotion', 'error');
         }
     };
 
@@ -169,9 +168,9 @@ const ManagePromotionsPage = () => {
         const startDate = new Date(promotion.startTime);
         const endDate = new Date(promotion.endTime);
 
-        if (now < startDate) return { label: t('promotions:promotions.status.upcoming'), className: 'status-upcoming' };
-        if (now > endDate) return { label: t('promotions:promotions.status.ended'), className: 'status-ended' };
-        return { label: t('promotions:promotions.status.active'), className: 'status-active' };
+        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming' };
+        if (now > endDate) return { label: 'Ended', className: 'status-ended' };
+        return { label: 'Active', className: 'status-active' };
     };
 
     const formatDate = (dateString) => {
@@ -183,6 +182,7 @@ const ManagePromotionsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
+    const { t } = useTranslation(['promotions', 'common']);
 
     return (
         <Layout>
@@ -199,17 +199,17 @@ const ManagePromotionsPage = () => {
                 />
 
                 {loading ? (
-                    <LoadingSpinner text={t('promotions:promotions.loading')} />
+                    <LoadingSpinner text="Loading promotions..." />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchPromotions} />
                 ) : promotions.length === 0 ? (
                     <EmptyState
                         icon={<Gift size={48} strokeWidth={1.5} />}
-                        title={t('promotions:promotions.noPromotions')}
-                        description={t('promotions:promotions.noPromotionsDesc')}
+                        title="No promotions yet"
+                        description="Create your first promotion to engage customers."
                         action={
                             <button onClick={openCreateModal} className="btn btn-primary">
-                                {t('promotions:promotions.createPromotion')}
+                                Create Promotion
                             </button>
                         }
                     />
@@ -219,13 +219,13 @@ const ManagePromotionsPage = () => {
                             <table className="promotions-table">
                                 <thead>
                                     <tr>
-                                        <th>{t('promotions:promotions.table.id')}</th>
-                                        <th>{t('promotions:promotions.table.name')}</th>
-                                        <th>{t('promotions:promotions.table.type')}</th>
-                                        <th>{t('promotions:promotions.table.duration')}</th>
-                                        <th>{t('promotions:promotions.table.benefit')}</th>
-                                        <th>{t('promotions:promotions.table.status')}</th>
-                                        <th>{t('promotions:promotions.table.actions')}</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Duration</th>
+                                        <th>Benefit</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -237,18 +237,18 @@ const ManagePromotionsPage = () => {
                                                 <td className="cell-name">{promotion.name}</td>
                                                 <td>
                                                     <span className={`type-badge ${promotion.type}`}>
-                                                        {promotion.type === 'automatic' ? t('promotions:promotions.table.auto') : t('promotions:promotions.table.code')}
+                                                        {promotion.type === 'automatic' ? 'Auto' : 'Code'}
                                                     </span>
                                                 </td>
                                                 <td className="cell-duration">
                                                     <div>{formatDate(promotion.startTime)}</div>
-                                                    <div className="duration-to">{t('promotions:promotions.table.to')} {formatDate(promotion.endTime)}</div>
+                                                    <div className="duration-to">to {formatDate(promotion.endTime)}</div>
                                                 </td>
                                                 <td className="cell-benefit">
                                                     {promotion.type === 'automatic' ? (
-                                                        <span className="benefit-text">{t('promotions:promotions.table.rate', { rate: (promotion.rate * 100).toFixed(0) })}</span>
+                                                        <span className="benefit-text">+{(promotion.rate * 100).toFixed(0)}% rate</span>
                                                     ) : (
-                                                        <span className="benefit-text">{t('promotions:promotions.table.points', { points: promotion.points })}</span>
+                                                        <span className="benefit-text">+{promotion.points} pts</span>
                                                     )}
                                                 </td>
                                                 <td>
@@ -262,19 +262,19 @@ const ManagePromotionsPage = () => {
                                                             onClick={() => navigate(`/promotions/${promotion.id}`)}
                                                             className="btn-action btn-view"
                                                         >
-                                                            {t('promotions:promotions.actions.view')}
+                                                            View
                                                         </button>
                                                         <button
                                                             onClick={() => openEditModal(promotion)}
                                                             className="btn-action btn-edit"
                                                         >
-                                                            {t('promotions:promotions.actions.edit')}
+                                                            Edit
                                                         </button>
                                                         <button
                                                             onClick={() => openDeleteConfirm(promotion)}
                                                             className="btn-action btn-delete"
                                                         >
-                                                            {t('promotions:promotions.actions.delete')}
+                                                            Delete
                                                         </button>
                                                     </div>
                                                 </td>
@@ -302,7 +302,7 @@ const ManagePromotionsPage = () => {
                         setShowCreateModal(false);
                         setShowEditModal(false);
                     }}
-                    title={showEditModal ? t('promotions:promotions.form.editTitle') : t('promotions:promotions.form.title')}
+                    title={showEditModal ? 'Edit Promotion' : 'Create Promotion'}
                     size="medium"
                 >
                     <form onSubmit={handleSubmit} className="promotion-form">
@@ -311,7 +311,7 @@ const ManagePromotionsPage = () => {
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name" className="form-label">{t('promotions:promotions.form.nameLabel')} *</label>
+                            <label htmlFor="name" className="form-label">Promotion Name *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -319,26 +319,26 @@ const ManagePromotionsPage = () => {
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 required
-                                placeholder={t('promotions:promotions.form.namePlaceholder')}
+                                placeholder="e.g., Summer Sale"
                                 className="form-input"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description" className="form-label">{t('promotions:promotions.form.descriptionLabel')}</label>
+                            <label htmlFor="description" className="form-label">Description</label>
                             <textarea
                                 id="description"
                                 name="description"
                                 value={formData.description}
                                 onChange={handleInputChange}
                                 rows={3}
-                                placeholder={t('promotions:promotions.form.descriptionPlaceholder')}
+                                placeholder="Describe the promotion..."
                                 className="form-textarea"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="type" className="form-label">{t('promotions:promotions.form.typeLabel')} *</label>
+                            <label htmlFor="type" className="form-label">Type *</label>
                             <select
                                 id="type"
                                 name="type"
@@ -347,14 +347,14 @@ const ManagePromotionsPage = () => {
                                 required
                                 className="form-select"
                             >
-                                <option value="automatic">{t('promotions:promotions.form.typeAutomatic')}</option>
-                                <option value="one-time">{t('promotions:promotions.form.typeOneTime')}</option>
+                                <option value="automatic">Automatic (Rate-based)</option>
+                                <option value="one-time">One-Time Code</option>
                             </select>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="startTime" className="form-label">{t('promotions:promotions.form.startDateLabel')} *</label>
+                                <label htmlFor="startTime" className="form-label">Start Date *</label>
                                 <input
                                     type="datetime-local"
                                     id="startTime"
@@ -367,7 +367,7 @@ const ManagePromotionsPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="endTime" className="form-label">{t('promotions:promotions.form.endDateLabel')} *</label>
+                                <label htmlFor="endTime" className="form-label">End Date *</label>
                                 <input
                                     type="datetime-local"
                                     id="endTime"
@@ -383,7 +383,7 @@ const ManagePromotionsPage = () => {
                         {formData.type === 'automatic' ? (
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="rate" className="form-label">{t('promotions:promotions.form.rateLabel')} *</label>
+                                    <label htmlFor="rate" className="form-label">Bonus Rate *</label>
                                     <input
                                         type="number"
                                         id="rate"
@@ -393,15 +393,15 @@ const ManagePromotionsPage = () => {
                                         step="0.01"
                                         min="0"
                                         max="10"
-                                        placeholder={t('promotions:promotions.form.ratePlaceholder')}
+                                        placeholder="e.g., 0.5 for 50%"
                                         required={formData.type === 'automatic'}
                                         className="form-input"
                                     />
-                                    <span className="form-helper">{t('promotions:promotions.form.rateHint')}</span>
+                                    <span className="form-helper">Enter as decimal (0.5 = 50%)</span>
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="minSpending" className="form-label">{t('promotions:promotions.form.minSpendingLabel')}</label>
+                                    <label htmlFor="minSpending" className="form-label">Min Spending ($)</label>
                                     <input
                                         type="number"
                                         id="minSpending"
@@ -417,7 +417,7 @@ const ManagePromotionsPage = () => {
                             </div>
                         ) : (
                             <div className="form-group">
-                                <label htmlFor="points" className="form-label">{t('promotions:promotions.form.pointsLabel')} *</label>
+                                <label htmlFor="points" className="form-label">Points *</label>
                                 <input
                                     type="number"
                                     id="points"
@@ -425,7 +425,7 @@ const ManagePromotionsPage = () => {
                                     value={formData.points}
                                     onChange={handleInputChange}
                                     min="1"
-                                    placeholder={t('promotions:promotions.form.pointsPlaceholder')}
+                                    placeholder="e.g., 100"
                                     required={formData.type === 'one-time'}
                                     className="form-input"
                                 />
@@ -442,10 +442,10 @@ const ManagePromotionsPage = () => {
                                 className="btn btn-secondary"
                                 disabled={formLoading}
                             >
-                                {t('common:cancel')}
+                                Cancel
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={formLoading}>
-                                {formLoading ? t('promotions:promotions.form.saving') : showEditModal ? t('promotions:promotions.form.update') : t('promotions:promotions.form.create')}
+                                {formLoading ? 'Saving...' : showEditModal ? 'Update Promotion' : 'Create Promotion'}
                             </button>
                         </div>
                     </form>
@@ -456,9 +456,9 @@ const ManagePromotionsPage = () => {
                     isOpen={showDeleteConfirm}
                     onClose={() => setShowDeleteConfirm(false)}
                     onConfirm={handleDelete}
-                    title={t('promotions:promotions.delete.title')}
-                    message={t('promotions:promotions.delete.message', { name: selectedPromotion?.name })}
-                    confirmText={t('promotions:promotions.delete.confirm')}
+                    title="Delete Promotion"
+                    message={`Are you sure you want to delete "${selectedPromotion?.name}"? This action cannot be undone.`}
+                    confirmText="Delete"
                     confirmVariant="danger"
                 />
             </div>

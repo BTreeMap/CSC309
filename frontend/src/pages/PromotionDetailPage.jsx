@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { promotionsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -11,7 +10,6 @@ const PromotionDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { activeRole } = useAuth();
-    const { t, i18n } = useTranslation(['promotions', 'common']);
 
     const [promotion, setPromotion] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -27,11 +25,11 @@ const PromotionDetailPage = () => {
             const data = await promotionsAPI.getPromotion(id);
             setPromotion(data);
         } catch (err) {
-            setError(err.response?.data?.error || t('promotions:promotions.toast.errorLoad'));
+            setError(err.response?.data?.error || 'Failed to load promotion');
         } finally {
             setLoading(false);
         }
-    }, [id, t]);
+    }, [id]);
 
     useEffect(() => {
         fetchPromotion();
@@ -42,13 +40,13 @@ const PromotionDetailPage = () => {
         const startDate = new Date(promotion.startTime);
         const endDate = new Date(promotion.endTime);
 
-        if (now < startDate) return { label: t('promotions:promotions.status.upcoming'), className: 'status-upcoming', icon: '🕐' };
-        if (now > endDate) return { label: t('promotions:promotions.status.ended'), className: 'status-ended', icon: '✓' };
-        return { label: t('promotions:promotions.status.active'), className: 'status-active', icon: '🔥' };
+        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', icon: '🕐' };
+        if (now > endDate) return { label: 'Ended', className: 'status-ended', icon: '✓' };
+        return { label: 'Active', className: 'status-active', icon: '🔥' };
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString(i18n.language, {
+        return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
@@ -58,7 +56,7 @@ const PromotionDetailPage = () => {
     };
 
     const getTypeLabel = (type) => {
-        return type === 'automatic' ? t('promotions:promotions.types.automatic') : t('promotions:promotions.types.oneTime');
+        return type === 'automatic' ? 'Automatic' : 'One-Time Code';
     };
 
     const getDaysRemaining = (endTime) => {
@@ -93,10 +91,10 @@ const PromotionDetailPage = () => {
         return (
             <Layout>
                 <div className="not-found">
-                    <h2>{t('promotions:promotions.detail.notFound')}</h2>
-                    <p>{t('promotions:promotions.detail.notFoundDesc')}</p>
+                    <h2>Promotion Not Found</h2>
+                    <p>The promotion you're looking for doesn't exist or has been removed.</p>
                     <button onClick={() => navigate('/promotions')} className="btn btn-secondary">
-                        {t('promotions:promotions.detail.backToPromotions')}
+                        Back to Promotions
                     </button>
                 </div>
             </Layout>
@@ -104,13 +102,13 @@ const PromotionDetailPage = () => {
     }
 
     const status = getPromotionStatus(promotion);
-    const daysRemaining = status.label === t('promotions:promotions.status.active') ? getDaysRemaining(promotion.endTime) : null;
+    const daysRemaining = status.label === 'Active' ? getDaysRemaining(promotion.endTime) : null;
 
     return (
         <Layout>
             <div className="promotion-detail-page">
                 <button onClick={() => navigate(-1)} className="back-button">
-                    ← {t('promotions:promotions.detail.backToPromotions')}
+                    ← Back to Promotions
                 </button>
 
                 <div className="promotion-detail-card">
@@ -131,7 +129,7 @@ const PromotionDetailPage = () => {
 
                     {promotion.description && (
                         <div className="promotion-description-section">
-                            <h2>{t('promotions:promotions.detail.description')}</h2>
+                            <h2>Description</h2>
                             <p>{promotion.description}</p>
                         </div>
                     )}
@@ -140,7 +138,7 @@ const PromotionDetailPage = () => {
                         <div className="info-card">
                             <div className="info-icon">📅</div>
                             <div className="info-content">
-                                <h3>{t('promotions:promotions.detail.startDate')}</h3>
+                                <h3>Start Date</h3>
                                 <p>{formatDate(promotion.startTime)}</p>
                             </div>
                         </div>
@@ -148,7 +146,7 @@ const PromotionDetailPage = () => {
                         <div className="info-card">
                             <div className="info-icon">🏁</div>
                             <div className="info-content">
-                                <h3>{t('promotions:promotions.detail.endDate')}</h3>
+                                <h3>End Date</h3>
                                 <p>{formatDate(promotion.endTime)}</p>
                             </div>
                         </div>
@@ -158,9 +156,9 @@ const PromotionDetailPage = () => {
                                 <div className="info-card highlight">
                                     <div className="info-icon">💰</div>
                                     <div className="info-content">
-                                        <h3>{t('promotions:promotions.detail.bonusRate')}</h3>
+                                        <h3>Bonus Rate</h3>
                                         <p className="bonus-value">+{(promotion.rate * 100).toFixed(0)}%</p>
-                                        <span className="bonus-note">{t('promotions:promotions.detail.bonusRateNote')}</span>
+                                        <span className="bonus-note">bonus points on purchases</span>
                                     </div>
                                 </div>
 
@@ -168,9 +166,9 @@ const PromotionDetailPage = () => {
                                     <div className="info-card">
                                         <div className="info-icon">🛒</div>
                                         <div className="info-content">
-                                            <h3>{t('promotions:promotions.detail.minSpending')}</h3>
+                                            <h3>Minimum Spending</h3>
                                             <p>${promotion.minSpending.toLocaleString()}</p>
-                                            <span className="info-note">{t('promotions:promotions.detail.minSpendingNote')}</span>
+                                            <span className="info-note">per transaction</span>
                                         </div>
                                     </div>
                                 )}
@@ -181,44 +179,44 @@ const PromotionDetailPage = () => {
                             <div className="info-card highlight">
                                 <div className="info-icon">🎯</div>
                                 <div className="info-content">
-                                    <h3>{t('promotions:promotions.detail.pointsReward')}</h3>
+                                    <h3>Points Reward</h3>
                                     <p className="bonus-value">+{promotion.points?.toLocaleString()}</p>
-                                    <span className="bonus-note">{t('promotions:promotions.detail.pointsRewardNote')}</span>
+                                    <span className="bonus-note">one-time bonus points</span>
                                 </div>
                             </div>
                         )}
                     </div>
 
                     <div className="how-it-works">
-                        <h2>{t('promotions:promotions.detail.howItWorks')}</h2>
+                        <h2>How It Works</h2>
                         {promotion.type === 'automatic' ? (
                             <ol className="steps-list">
-                                <li>{t('promotions:promotions.detail.automaticSteps.step1')}</li>
+                                <li>Make a purchase during the promotion period</li>
                                 {promotion.minSpending > 0 && (
-                                    <li>{t('promotions:promotions.detail.automaticSteps.step2', { amount: promotion.minSpending })}</li>
+                                    <li>Ensure your purchase is at least ${promotion.minSpending}</li>
                                 )}
-                                <li>{t('promotions:promotions.detail.automaticSteps.step3', { rate: (promotion.rate * 100).toFixed(0) })}</li>
-                                <li>{t('promotions:promotions.detail.automaticSteps.step4')}</li>
+                                <li>Earn +{(promotion.rate * 100).toFixed(0)}% bonus points automatically</li>
+                                <li>Bonus points are added to your transaction</li>
                             </ol>
                         ) : (
                             <ol className="steps-list">
-                                <li>{t('promotions:promotions.detail.oneTimeSteps.step1')}</li>
-                                <li>{t('promotions:promotions.detail.oneTimeSteps.step2')}</li>
-                                <li>{t('promotions:promotions.detail.oneTimeSteps.step3', { points: promotion.points?.toLocaleString() })}</li>
-                                <li>{t('promotions:promotions.detail.oneTimeSteps.step4')}</li>
+                                <li>Get the promotional code from a cashier</li>
+                                <li>Redeem the code during checkout</li>
+                                <li>Receive +{promotion.points?.toLocaleString()} bonus points</li>
+                                <li>Each code can only be used once</li>
                             </ol>
                         )}
                     </div>
 
                     {isManager && (
                         <div className="manager-actions">
-                            <h2>{t('promotions:promotions.detail.managerActions')}</h2>
+                            <h2>Manager Actions</h2>
                             <div className="action-buttons">
                                 <button
                                     onClick={() => navigate('/promotions/manage')}
                                     className="btn btn-secondary"
                                 >
-                                    ⚙️ {t('promotions:promotions.detail.managePromotions')}
+                                    ⚙️ Manage Promotions
                                 </button>
                             </div>
                         </div>

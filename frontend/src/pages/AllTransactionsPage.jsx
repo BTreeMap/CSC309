@@ -13,7 +13,6 @@ import './AllTransactionsPage.css';
 const AllTransactionsPage = () => {
     const { showToast } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { t } = useTranslation(['transactions', 'common']);
 
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -56,7 +55,7 @@ const AllTransactionsPage = () => {
             setTransactions(data.results || []);
             setTotalCount(data.count || 0);
         } catch (err) {
-            setError(err.response?.data?.error || t('transactions:allTransactions.loading'));
+            setError(err.response?.data?.error || 'Failed to load transactions');
         } finally {
             setLoading(false);
         }
@@ -153,6 +152,7 @@ const AllTransactionsPage = () => {
 
     const totalPages = Math.ceil(totalCount / limit);
     const hasActiveFilters = type || userId || promotionId || suspicious || amount || relatedId;
+    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
@@ -166,60 +166,60 @@ const AllTransactionsPage = () => {
                 <div className="filters-bar">
                     <div className="filters-row">
                         <div className="filter-group">
-                            <label className="form-label">{t('transactions:filters.type')}</label>
+                            <label className="form-label">Type</label>
                             <select
                                 value={type}
                                 onChange={(e) => handleFilterChange('type', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">{t('transactions:filters.allTypes')}</option>
-                                <option value="purchase">{t('transactions:types.purchase')}</option>
-                                <option value="redemption">{t('transactions:types.redemption')}</option>
-                                <option value="transfer">{t('transactions:types.transfer')}</option>
-                                <option value="adjustment">{t('transactions:types.adjustment')}</option>
-                                <option value="event">{t('transactions:types.event')}</option>
+                                <option value="">All Types</option>
+                                <option value="purchase">Purchase</option>
+                                <option value="redemption">Redemption</option>
+                                <option value="transfer">Transfer</option>
+                                <option value="adjustment">Adjustment</option>
+                                <option value="event">Event</option>
                             </select>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">{t('transactions:filters.userId')}</label>
+                            <label className="form-label">User ID</label>
                             <input
                                 type="text"
                                 value={userId}
                                 onChange={(e) => handleFilterChange('userId', e.target.value)}
-                                placeholder={t('transactions:filters.userIdPlaceholder')}
+                                placeholder="e.g. john_doe"
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">{t('transactions:filters.relatedId')}</label>
+                            <label className="form-label">Related ID</label>
                             <input
                                 type="text"
                                 value={relatedId}
                                 onChange={(e) => handleFilterChange('relatedId', e.target.value)}
-                                placeholder={t('transactions:filters.relatedIdPlaceholder')}
+                                placeholder="e.g. transfer user"
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">{t('transactions:filters.suspicious')}</label>
+                            <label className="form-label">Suspicious</label>
                             <select
                                 value={suspicious}
                                 onChange={(e) => handleFilterChange('suspicious', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">{t('transactions:filters.all')}</option>
-                                <option value="true">{t('transactions:filters.suspiciousOnly')}</option>
-                                <option value="false">{t('transactions:filters.notSuspicious')}</option>
+                                <option value="">All</option>
+                                <option value="true">Suspicious Only</option>
+                                <option value="false">Not Suspicious</option>
                             </select>
                         </div>
                     </div>
 
                     <div className="filters-row">
                         <div className="filter-group filter-amount">
-                            <label className="form-label">{t('transactions:filters.amount')}</label>
+                            <label className="form-label">Amount</label>
                             <div className="amount-filter">
                                 <select
                                     value={operator}
@@ -233,44 +233,44 @@ const AllTransactionsPage = () => {
                                     type="number"
                                     value={amount}
                                     onChange={(e) => handleFilterChange('amount', e.target.value)}
-                                    placeholder={t('transactions:filters.amountPlaceholder')}
+                                    placeholder="Points"
                                     className="form-input amount-input"
                                 />
                             </div>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">{t('transactions:filters.promotionId')}</label>
+                            <label className="form-label">Promotion ID</label>
                             <input
                                 type="text"
                                 value={promotionId}
                                 onChange={(e) => handleFilterChange('promotionId', e.target.value)}
-                                placeholder={t('transactions:filters.promotionIdPlaceholder')}
+                                placeholder="e.g. 123"
                                 className="form-input"
                             />
                         </div>
 
                         {hasActiveFilters && (
                             <button onClick={clearAllFilters} className="btn btn-ghost btn-danger btn-sm">
-                                {t('transactions:filters.clearAllFilters')}
+                                Clear All Filters
                             </button>
                         )}
                     </div>
                 </div>
 
                 {loading ? (
-                    <LoadingSpinner text={t('transactions:allTransactions.loading')} />
+                    <LoadingSpinner text="Loading transactions..." />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchTransactions} />
                 ) : transactions.length === 0 ? (
                     <EmptyState
                         icon={<ClipboardList size={48} strokeWidth={1.5} />}
-                        title={t('transactions:allTransactions.noTransactions')}
-                        description={hasActiveFilters ? t('transactions:allTransactions.noTransactionsFiltered') : t('transactions:allTransactions.noTransactionsSystem')}
+                        title="No transactions found"
+                        description={hasActiveFilters ? "No transactions match your filters." : "No transactions in the system yet."}
                         action={
                             hasActiveFilters && (
                                 <button onClick={clearAllFilters} className="btn btn-secondary">
-                                    {t('common:clearFilters')}
+                                    Clear Filters
                                 </button>
                             )
                         }
@@ -278,20 +278,20 @@ const AllTransactionsPage = () => {
                 ) : (
                     <>
                         <div className="transactions-summary">
-                            {t('transactions:allTransactions.showing', { count: transactions.length, total: totalCount.toLocaleString() })}
+                            Showing {transactions.length} of {totalCount.toLocaleString()} transactions
                         </div>
 
                         <div className="transactions-table-container">
                             <table className="transactions-table">
                                 <thead>
                                     <tr>
-                                        <th>{t('transactions:list.columns.id')}</th>
-                                        <th>{t('transactions:list.columns.type')}</th>
-                                        <th>{t('transactions:list.columns.user')}</th>
-                                        <th>{t('transactions:list.columns.amount')}</th>
-                                        <th>{t('transactions:list.columns.date')}</th>
-                                        <th>{t('transactions:list.columns.status')}</th>
-                                        <th>{t('transactions:list.columns.actions')}</th>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>User</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -370,7 +370,7 @@ const AllTransactionsPage = () => {
                 <Modal
                     isOpen={!!selectedTransaction}
                     onClose={() => setSelectedTransaction(null)}
-                    title={t('transactions:allTransactions.transactionDetails')}
+                    title="Transaction Details"
                     size="medium"
                 >
                     {selectedTransaction && (
@@ -387,19 +387,19 @@ const AllTransactionsPage = () => {
 
                             <div className="detail-grid">
                                 <div className="detail-item">
-                                    <label>{t('transactions:list.columns.amount')}</label>
+                                    <label>Amount</label>
                                     <span className={`detail-amount ${selectedTransaction.amount > 0 ? 'amount-positive' : 'amount-negative'}`}>
-                                        {selectedTransaction.amount > 0 ? '+' : ''}{selectedTransaction.amount.toLocaleString()} {t('common:points')}
+                                        {selectedTransaction.amount > 0 ? '+' : ''}{selectedTransaction.amount.toLocaleString()} points
                                     </span>
                                 </div>
 
                                 <div className="detail-item">
-                                    <label>{t('transactions:list.columns.user')}</label>
+                                    <label>User</label>
                                     <span>{selectedTransaction.utorid}</span>
                                 </div>
 
                                 <div className="detail-item">
-                                    <label>{t('transactions:list.columns.date')}</label>
+                                    <label>Created</label>
                                     <span>{formatDate(selectedTransaction.createdAt)}</span>
                                 </div>
 

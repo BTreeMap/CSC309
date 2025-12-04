@@ -16,70 +16,6 @@
             "actions": "Actions"
         }
     },
-    "management": {
-        "title": "User Management",
-        "subtitle": "View and manage user accounts",
-        "createUser": "Create User",
-        "loading": "Loading users...",
-        "noUsersFound": "No users found",
-        "noUsersFiltered": "No users match your filters.",
-        "noUsersInSystem": "No users in the system.",
-        "showingUsers": "Showing {{count}} of {{total}} users"
-    },
-    "filters": {
-        "search": "Search",
-        "searchPlaceholder": "Search by name or UTORid...",
-        "role": "Role",
-        "allRoles": "All Roles",
-        "verified": "Verified",
-        "all": "All",
-        "activated": "Activated",
-        "notActivated": "Not Activated",
-        "clear": "Clear"
-    },
-    "table": {
-        "user": "User",
-        "utorid": "UTORid",
-        "role": "Role",
-        "points": "Points",
-        "status": "Status",
-        "actions": "Actions"
-    },
-    "modal": {
-        "adjustPoints": "Adjust Points",
-        "userDetails": "User Details",
-        "editUser": "Edit User",
-        "currentPoints": "Current Points",
-        "adjustmentAmount": "Adjustment Amount",
-        "adjustmentPlaceholder": "e.g., 100 or -50",
-        "adjustmentHint": "Positive to add, negative to subtract",
-        "reason": "Reason (Optional)",
-        "reasonPlaceholder": "e.g., Bonus for promotion",
-        "utoridLabel": "UTORid",
-        "verificationStatus": "Verification Status",
-        "createdAt": "Created At",
-        "lastLogin": "Last Login",
-        "never": "Never",
-        "verifyUser": "Check to verify this user",
-        "alreadyVerified": "User is already verified",
-        "roleHintManager": "Managers can only set role to Regular or Cashier",
-        "roleHintSuperuser": "Superusers can set any role",
-        "roleCannotSet": "Current role ({{role}}) cannot be set by your role level",
-        "noChanges": "No changes to save",
-        "saveChanges": "Save Changes"
-    },
-    "actions": {
-        "view": "View",
-        "edit": "Edit",
-        "adjust": "Adjust",
-        "editUser": "Edit User",
-        "adjustPoints": "Adjust Points",
-        "noPermission": "You do not have permission to edit this user",
-        "delete": "Delete User",
-        "verify": "Verify User",
-        "changeRole": "Change Role",
-        "resetPassword": "Reset Password"
-    },
     "profile": {
         "title": "Profile",
         "utorid": "UTORid",
@@ -128,8 +64,16 @@
         "active": "Active",
         "inactive": "Inactive",
         "verified": "Verified",
-        "unverified": "Unverified",
         "pending": "Pending"
+    },
+    "actions": {
+        "view": "View User",
+        "edit": "Edit User",
+        "delete": "Delete User",
+        "verify": "Verify User",
+        "changeRole": "Change Role",
+        "resetPassword": "Reset Password",
+        "adjustPoints": "Adjust Points"
     },
     "delete": {
         "title": "Delete User",
@@ -145,19 +89,8 @@
         "reasonLabel": "Reason",
         "reasonPlaceholder": "Enter reason for adjustment",
         "submit": "Apply Adjustment",
-        "adjusting": "Adjusting...",
         "success": "Points adjusted successfully",
         "error": "Failed to adjust points"
-    },
-    "toast": {
-        "pointsAdjusted": "Points adjusted successfully!",
-        "userUpdated": "User updated successfully!",
-        "noChanges": "No changes to save",
-        "invalidAmount": "Please enter a valid amount",
-        "noPermission": "You do not have permission to edit this user",
-        "errorLoadUsers": "Failed to load users",
-        "errorUpdateUser": "Failed to update user",
-        "errorAdjustPoints": "Failed to adjust points"
     },
     "qrCode": {
         "title": "My QR Code",

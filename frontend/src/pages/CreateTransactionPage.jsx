@@ -205,14 +205,14 @@ const CreateTransactionPage = () => {
 
                 <div className="transaction-form-container">
                     <div className="form-section">
-                        <h2>{t('transactions:create.step1')}</h2>
+                        <h2>Step 1: Identify Customer</h2>
                         <div className="customer-lookup">
                             <div className="lookup-input-group">
                                 <input
                                     type="text"
                                     value={utorid}
                                     onChange={(e) => setUtorid(e.target.value)}
-                                    placeholder={t('transactions:create.utoridPlaceholder')}
+                                    placeholder="Enter UTORid or User ID"
                                     className="form-input lookup-input"
                                     onKeyDown={(e) => e.key === 'Enter' && handleLookupUser()}
                                 />
@@ -222,12 +222,12 @@ const CreateTransactionPage = () => {
                                     className="btn btn-primary"
                                     disabled={lookupLoading}
                                 >
-                                    {lookupLoading ? t('transactions:create.lookingUp') : t('transactions:create.lookUp')}
+                                    {lookupLoading ? 'Looking up...' : 'Look Up'}
                                 </button>
                             </div>
 
                             <button type="button" onClick={handleScanQR} className="btn btn-secondary">
-                                📷 {t('transactions:create.scanQr')}
+                                📷 Scan QR Code
                             </button>
                         </div>
 
@@ -246,12 +246,12 @@ const CreateTransactionPage = () => {
                                     <h3>{userInfo.name}</h3>
                                     <p className="customer-utorid">@{userInfo.utorid}</p>
                                     <p className="customer-points">
-                                        {t('common:currentPoints')}: <strong>{userInfo.points?.toLocaleString() || 0}</strong>
+                                        Current Points: <strong>{userInfo.points?.toLocaleString() || 0}</strong>
                                     </p>
                                     <div className="account-status">
-                                        <span className="status-label">{t('common:accountStatus')}:</span>
+                                        <span className="status-label">Account Status:</span>
                                         <span className={`status-badge ${userInfo.verified ? 'verified' : 'unverified'}`}>
-                                            {userInfo.verified ? `✓ ${t('common:verified')}` : `⚠️ ${t('common:unverified')}`}
+                                            {userInfo.verified ? '✓ Verified' : '⚠️ Unverified'}
                                         </span>
                                     </div>
                                 </div>
@@ -262,10 +262,10 @@ const CreateTransactionPage = () => {
                     {userInfo && (
                         <form onSubmit={handleSubmit}>
                             <div className="form-section">
-                                <h2>{t('transactions:create.step2')}</h2>
+                                <h2>Step 2: Transaction Details</h2>
 
                                 <div className="form-group">
-                                    <label htmlFor="spent" className="form-label">{t('transactions:create.amountLabel')} *</label>
+                                    <label htmlFor="spent" className="form-label">Amount Spent ($) *</label>
                                     <div className="amount-input-wrapper">
                                         <span className="currency-symbol">$</span>
                                         <input
@@ -282,19 +282,19 @@ const CreateTransactionPage = () => {
                                     </div>
                                     {spent && parseFloat(spent) > 0 && (
                                         <div className="points-preview">
-                                            {t('transactions:create.basePoints')}: <strong>{Math.floor(parseFloat(spent) * 4)}</strong>
+                                            Base points: <strong>{Math.floor(parseFloat(spent) * 4)}</strong>
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="remark" className="form-label">{t('transactions:create.remarkLabel')}</label>
+                                    <label htmlFor="remark" className="form-label">Remark (Optional)</label>
                                     <input
                                         type="text"
                                         id="remark"
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)}
-                                        placeholder={t('transactions:create.remarkPlaceholder')}
+                                        placeholder="e.g., Coffee and sandwich"
                                         maxLength={200}
                                     />
                                 </div>
@@ -302,7 +302,7 @@ const CreateTransactionPage = () => {
 
                             {availablePromotions.length > 0 && (
                                 <div className="form-section">
-                                    <h2>{t('transactions:create.step3')}</h2>
+                                    <h2>Step 3: Apply Promotions (Optional)</h2>
                                     <div className="promotions-list">
                                         {availablePromotions.map((promo) => {
                                             const meetsMinSpending = !promo.minSpending || (spent && parseFloat(spent) >= promo.minSpending);
@@ -335,10 +335,10 @@ const CreateTransactionPage = () => {
 
                             <div className="form-actions">
                                 <button type="button" onClick={() => navigate(-1)} className="btn btn-secondary">
-                                    {t('common:cancel')}
+                                    Cancel
                                 </button>
                                 <button type="submit" className="btn btn-primary" disabled={loading}>
-                                    {loading ? t('transactions:create.submitting') : t('transactions:create.submit')}
+                                    {loading ? 'Processing...' : 'Create Transaction'}
                                 </button>
                             </div>
                         </form>
@@ -350,23 +350,23 @@ const CreateTransactionPage = () => {
                     isOpen={showConfirm}
                     onClose={() => setShowConfirm(false)}
                     onConfirm={handleConfirmTransaction}
-                    title={t('transactions:create.confirmTitle')}
+                    title="Confirm Transaction"
                     message={
                         calculatedPoints && (
                             <div className="confirm-details">
-                                <p>{t('transactions:create.confirmCustomer')}: <strong>{userInfo?.name}</strong></p>
-                                <p>{t('transactions:create.confirmAmount')}: <strong>${parseFloat(spent).toFixed(2)}</strong></p>
+                                <p>Customer: <strong>{userInfo?.name}</strong></p>
+                                <p>Amount: <strong>${parseFloat(spent).toFixed(2)}</strong></p>
                                 <div className="points-breakdown">
-                                    <p>{t('transactions:create.confirmBasePoints')}: <strong>{calculatedPoints.basePoints}</strong></p>
+                                    <p>Base Points: <strong>{calculatedPoints.basePoints}</strong></p>
                                     {calculatedPoints.bonusPoints > 0 && (
-                                        <p>{t('transactions:create.confirmBonusPoints')}: <strong>+{calculatedPoints.bonusPoints}</strong></p>
+                                        <p>Bonus Points: <strong>+{calculatedPoints.bonusPoints}</strong></p>
                                     )}
-                                    <p className="total-points">{t('transactions:create.confirmTotalPoints')}: <strong>{calculatedPoints.total}</strong></p>
+                                    <p className="total-points">Total Points: <strong>{calculatedPoints.total}</strong></p>
                                 </div>
                             </div>
                         )
                     }
-                    confirmText={t('transactions:create.confirmButton')}
+                    confirmText="Confirm Transaction"
                 />
 
                 {/* QR Scanner Modal */}
