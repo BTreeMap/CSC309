@@ -1,7 +1,8 @@
 /*
   # Content Security Policy
   # Note: worker-src 'self' blob: is required for qr-scanner Web Worker
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https://csc309-backend.joefang.org data: blob:; connect-src 'self' https://csc309-backend.joefang.org; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  # Note: ragnarok.joefang.org is allowed for default avatar images
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https://csc309-backend.joefang.org https://ragnarok.joefang.org data: blob:; connect-src 'self' https://csc309-backend.joefang.org; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
   
   # Security Headers
   X-Content-Type-Options: nosniff

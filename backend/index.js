@@ -42,6 +42,11 @@ if (!JWT_SECRET) {
 
 // Backend URL for absolute URLs (e.g., avatar images)
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+
+// Default avatar for users who haven't uploaded one
+const DEFAULT_AVATAR_URL = 'https://ragnarok.joefang.org/static/x3prqghikuetgr1ge0q2oijgm7s35nf41.svg';
+
+// Resolve relative URL to absolute
 const resolveRelativeUrl = (relativePath) => new URL(relativePath, BACKEND_URL).toString();
 
 // Health check endpoint (before other middleware for fast response)
@@ -859,7 +864,7 @@ app.get('/users', requireRole('manager'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: resolveRelativeUrl(user.avatarUrl),
+            avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL,
         }));
 
         res.json({ count, results: formattedResults });
@@ -919,7 +924,7 @@ app.get('/users/me', requireRole('regular'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: resolveRelativeUrl(user.avatarUrl),
+            avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL,
             promotions: availablePromotions
         });
     } catch (error) {
@@ -1017,7 +1022,7 @@ app.patch('/users/me', requireRole('regular'), (req, res, next) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: resolveRelativeUrl(user.avatarUrl),
+            avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL,
         });
     } catch (error) {
         if (error.code === 'P2002') {
@@ -1080,7 +1085,7 @@ app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) =>
             name: user.name,
             points: user.points,
             verified: user.isVerified,
-            avatarUrl: resolveRelativeUrl(user.avatarUrl)
+            avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL
         });
     } catch (error) {
         console.error('Lookup user error:', error);
@@ -1163,7 +1168,7 @@ app.get('/users/:userId', requireRole('cashier'), async (req, res) => {
             createdAt: user.createdAt,
             lastLogin: user.lastLogin,
             verified: user.isVerified,
-            avatarUrl: resolveRelativeUrl(user.avatarUrl),
+            avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL,
             promotions: availablePromotions
         });
     } catch (error) {
