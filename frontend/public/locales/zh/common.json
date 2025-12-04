@@ -92,6 +92,8 @@
         "deleteTitle": "确认删除",
         "deleteMessage": "您确定要删除此项目吗？此操作无法撤销。"
     },
+    "na": "不适用",
+    "saving": "保存中...",
     "toast": {
         "success": "操作成功完成",
         "error": "发生错误",

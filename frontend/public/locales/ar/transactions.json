@@ -6,6 +6,11 @@
         "allTitle": "جميع المعاملات",
         "searchPlaceholder": "البحث عن المعاملات...",
         "noTransactions": "لم يتم العثور على معاملات",
+        "noTransactionsFiltered": "لا توجد معاملات تطابق عوامل التصفية.",
+        "noTransactionsYet": "ليس لديك أي معاملات بعد.",
+        "noTransactionsSystem": "لا توجد معاملات في النظام بعد.",
+        "loadingTransactions": "جاري تحميل المعاملات...",
+        "showingTransactions": "عرض {{count}} من {{total}} معاملة",
         "columns": {
             "id": "المعرف",
             "type": "النوع",
@@ -17,6 +22,76 @@
             "status": "الحالة",
             "description": "الوصف",
             "actions": "الإجراءات"
+        }
+    },
+    "myTransactions": {
+        "title": "معاملاتي",
+        "subtitle": "عرض سجل معاملاتك ونشاط النقاط",
+        "currentPoints": "النقاط الحالية",
+        "filterByType": "تصفية حسب النوع",
+        "allTypes": "جميع الأنواع",
+        "viewQRCode": "عرض رمز QR",
+        "pointsLabel": "نقاط"
+    },
+    "allTransactions": {
+        "title": "جميع المعاملات",
+        "subtitle": "عرض وإدارة جميع معاملات النظام",
+        "filterType": "النوع",
+        "userId": "معرف المستخدم",
+        "userIdPlaceholder": "مثال: john_doe",
+        "relatedId": "المعرف ذو الصلة",
+        "relatedIdPlaceholder": "مثال: مستخدم التحويل",
+        "suspicious": "مشبوه",
+        "amount": "المبلغ",
+        "promotionId": "معرف العرض",
+        "promotionIdPlaceholder": "مثال: 123",
+        "allTypes": "جميع الأنواع",
+        "suspiciousOnly": "المشبوه فقط",
+        "notSuspicious": "غير مشبوه",
+        "clearAllFilters": "مسح جميع عوامل التصفية",
+        "clearFilters": "مسح التصفية",
+        "loading": "جاري تحميل المعاملات...",
+        "noTransactions": "لم يتم العثور على معاملات",
+        "noTransactionsFiltered": "لا توجد معاملات تطابق التصفية.",
+        "noTransactionsYet": "لا توجد معاملات في النظام بعد.",
+        "showingCount": "عرض {{showing}} من {{total}} معاملة",
+        "tableId": "المعرف",
+        "tableType": "النوع",
+        "tableUser": "المستخدم",
+        "tableAmount": "المبلغ",
+        "tableDate": "التاريخ",
+        "tableStatus": "الحالة",
+        "tableActions": "الإجراءات",
+        "processed": "تمت المعالجة",
+        "pending": "قيد الانتظار",
+        "view": "عرض",
+        "flag": "تحديد",
+        "unmark": "إلغاء التحديد",
+        "markedSuspicious": "تم تحديد المعاملة كمشبوهة",
+        "unmarkedSuspicious": "تم إلغاء تحديد المعاملة كمشبوهة",
+        "modal": {
+            "title": "تفاصيل المعاملة",
+            "transactionId": "معاملة رقم {{id}}",
+            "amount": "المبلغ",
+            "points": "نقطة",
+            "user": "المستخدم",
+            "created": "تم الإنشاء",
+            "processed": "تمت المعالجة",
+            "promotionsApplied": "العروض المطبقة",
+            "relatedId": "المعرف ذو الصلة",
+            "remark": "ملاحظة",
+            "status": "الحالة",
+            "suspicious": "مشبوه",
+            "normal": "عادي",
+            "userInfo": "معلومات المستخدم",
+            "loadingUserInfo": "جاري تحميل معلومات المستخدم...",
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "currentPoints": "النقاط الحالية",
+            "role": "الدور",
+            "removeSuspiciousFlag": "إزالة علامة المشبوه",
+            "markAsSuspicious": "تحديد كمشبوه",
+            "close": "إغلاق"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "في انتظار المعالجة",
         "viewQRCode": "عرض رمز QR",
         "viewMyTransactions": "عرض معاملاتي",
+        "viewAllTransactions": "عرض جميع المعاملات",
         "createAnother": "إنشاء استبدال آخر",
         "howItWorks": {
             "title": "كيف يعمل الاستبدال",
@@ -144,6 +220,8 @@
         "scanQr": "مسح رمز QR العميل",
         "success": "تم استبدال {{points}} نقطة بنجاح",
         "processSuccess": "تمت معالجة الاستبدال بنجاح",
+        "requestSuccess": "تم إنشاء طلب الاستبدال بنجاح!",
+        "requestFailed": "فشل إنشاء طلب الاستبدال",
         "error": {
             "insufficientPoints": "نقاط غير كافية لهذا الاستبدال",
             "invalidAmount": "يرجى إدخال مبلغ موجب صالح",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "تمت معالجة هذا الاستبدال بالفعل",
             "generic": "فشل معالجة الاستبدال"
         }
+    },
+    "redeem": {
+        "title": "استبدال النقاط",
+        "subtitle": "استخدم نقاطك للحصول على مكافآت",
+        "yourAvailablePoints": "نقاطك المتاحة",
+        "pointsToRedeem": "النقاط للاستبدال"
     },
     "detail": {
         "title": "تفاصيل المعاملة",
@@ -165,7 +249,9 @@
         "status": "الحالة",
         "description": "الوصف",
         "promotion": "العرض المطبق",
-        "relatedUser": "المستخدم ذو الصلة"
+        "relatedUser": "المستخدم ذو الصلة",
+        "from": "من",
+        "toUser": "إلى"
     },
     "filters": {
         "type": "نوع المعاملة",

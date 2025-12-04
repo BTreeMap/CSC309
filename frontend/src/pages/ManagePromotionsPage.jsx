@@ -163,14 +163,16 @@ const ManagePromotionsPage = () => {
         }
     };
 
+    const { t } = useTranslation(['promotions', 'common']);
+
     const getPromotionStatus = (promotion) => {
         const now = new Date();
         const startDate = new Date(promotion.startTime);
         const endDate = new Date(promotion.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming' };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended' };
-        return { label: 'Active', className: 'status-active' };
+        if (now < startDate) return { label: t('promotions.manage.statusUpcoming'), className: 'status-upcoming' };
+        if (now > endDate) return { label: t('promotions.manage.statusEnded'), className: 'status-ended' };
+        return { label: t('promotions.manage.statusActive'), className: 'status-active' };
     };
 
     const formatDate = (dateString) => {
@@ -182,7 +184,6 @@ const ManagePromotionsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
-    const { t } = useTranslation(['promotions', 'common']);
 
     return (
         <Layout>
@@ -199,17 +200,17 @@ const ManagePromotionsPage = () => {
                 />
 
                 {loading ? (
-                    <LoadingSpinner text="Loading promotions..." />
+                    <LoadingSpinner text={t('promotions.manage.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchPromotions} />
                 ) : promotions.length === 0 ? (
                     <EmptyState
                         icon={<Gift size={48} strokeWidth={1.5} />}
-                        title="No promotions yet"
-                        description="Create your first promotion to engage customers."
+                        title={t('promotions.manage.noPromotions')}
+                        description={t('promotions.manage.noPromotionsYet')}
                         action={
                             <button onClick={openCreateModal} className="btn btn-primary">
-                                Create Promotion
+                                {t('promotions.createPromotion')}
                             </button>
                         }
                     />
@@ -220,12 +221,12 @@ const ManagePromotionsPage = () => {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Duration</th>
-                                        <th>Benefit</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>{t('common:name')}</th>
+                                        <th>{t('promotions.manage.tableType')}</th>
+                                        <th>{t('promotions.manage.tableDuration')}</th>
+                                        <th>{t('promotions.manage.tableBenefit')}</th>
+                                        <th>{t('common:status')}</th>
+                                        <th>{t('common:actions')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -237,18 +238,18 @@ const ManagePromotionsPage = () => {
                                                 <td className="cell-name">{promotion.name}</td>
                                                 <td>
                                                     <span className={`type-badge ${promotion.type}`}>
-                                                        {promotion.type === 'automatic' ? 'Auto' : 'Code'}
+                                                        {promotion.type === 'automatic' ? t('promotions.manage.typeAuto') : t('promotions.manage.typeCode')}
                                                     </span>
                                                 </td>
                                                 <td className="cell-duration">
                                                     <div>{formatDate(promotion.startTime)}</div>
-                                                    <div className="duration-to">to {formatDate(promotion.endTime)}</div>
+                                                    <div className="duration-to">{t('promotions.manage.to')} {formatDate(promotion.endTime)}</div>
                                                 </td>
                                                 <td className="cell-benefit">
                                                     {promotion.type === 'automatic' ? (
-                                                        <span className="benefit-text">+{(promotion.rate * 100).toFixed(0)}% rate</span>
+                                                        <span className="benefit-text">+{(promotion.rate * 100).toFixed(0)}% {t('promotions.card.rate').replace('+{{rate}}%', '').trim()}</span>
                                                     ) : (
-                                                        <span className="benefit-text">+{promotion.points} pts</span>
+                                                        <span className="benefit-text">+{promotion.points} {t('promotions.card.points')}</span>
                                                     )}
                                                 </td>
                                                 <td>
@@ -262,19 +263,19 @@ const ManagePromotionsPage = () => {
                                                             onClick={() => navigate(`/promotions/${promotion.id}`)}
                                                             className="btn-action btn-view"
                                                         >
-                                                            View
+                                                            {t('promotions.manage.view')}
                                                         </button>
                                                         <button
                                                             onClick={() => openEditModal(promotion)}
                                                             className="btn-action btn-edit"
                                                         >
-                                                            Edit
+                                                            {t('promotions.manage.edit')}
                                                         </button>
                                                         <button
                                                             onClick={() => openDeleteConfirm(promotion)}
                                                             className="btn-action btn-delete"
                                                         >
-                                                            Delete
+                                                            {t('promotions.manage.delete')}
                                                         </button>
                                                     </div>
                                                 </td>
@@ -442,10 +443,10 @@ const ManagePromotionsPage = () => {
                                 className="btn btn-secondary"
                                 disabled={formLoading}
                             >
-                                Cancel
+                                {t('common:cancel')}
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={formLoading}>
-                                {formLoading ? 'Saving...' : showEditModal ? 'Update Promotion' : 'Create Promotion'}
+                                {formLoading ? t('promotions.manage.saving') : showEditModal ? t('promotions.manage.updatePromotion') : t('promotions.createPromotion')}
                             </button>
                         </div>
                     </form>

@@ -6,6 +6,11 @@
         "allTitle": "Todas las transacciones",
         "searchPlaceholder": "Buscar transacciones...",
         "noTransactions": "No se encontraron transacciones",
+        "noTransactionsFiltered": "No hay transacciones que coincidan con los filtros.",
+        "noTransactionsYet": "Aún no tienes transacciones.",
+        "noTransactionsSystem": "Aún no hay transacciones en el sistema.",
+        "loadingTransactions": "Cargando transacciones...",
+        "showingTransactions": "Mostrando {{count}} de {{total}} transacciones",
         "columns": {
             "id": "ID",
             "type": "Tipo",
@@ -17,6 +22,76 @@
             "status": "Estado",
             "description": "Descripción",
             "actions": "Acciones"
+        }
+    },
+    "myTransactions": {
+        "title": "Mis Transacciones",
+        "subtitle": "Ver tu historial de transacciones y actividad de puntos",
+        "currentPoints": "Puntos Actuales",
+        "filterByType": "Filtrar por Tipo",
+        "allTypes": "Todos los Tipos",
+        "viewQRCode": "Ver Código QR",
+        "pointsLabel": "puntos"
+    },
+    "allTransactions": {
+        "title": "Todas las Transacciones",
+        "subtitle": "Ver y administrar todas las transacciones del sistema",
+        "filterType": "Tipo",
+        "userId": "ID de Usuario",
+        "userIdPlaceholder": "ej. john_doe",
+        "relatedId": "ID Relacionado",
+        "relatedIdPlaceholder": "ej. usuario de transferencia",
+        "suspicious": "Sospechoso",
+        "amount": "Monto",
+        "promotionId": "ID de Promoción",
+        "promotionIdPlaceholder": "ej. 123",
+        "allTypes": "Todos los Tipos",
+        "suspiciousOnly": "Solo Sospechosos",
+        "notSuspicious": "No Sospechosos",
+        "clearAllFilters": "Limpiar Todos los Filtros",
+        "clearFilters": "Limpiar Filtros",
+        "loading": "Cargando transacciones...",
+        "noTransactions": "No se encontraron transacciones",
+        "noTransactionsFiltered": "Ninguna transacción coincide con tus filtros.",
+        "noTransactionsYet": "Aún no hay transacciones en el sistema.",
+        "showingCount": "Mostrando {{showing}} de {{total}} transacciones",
+        "tableId": "ID",
+        "tableType": "Tipo",
+        "tableUser": "Usuario",
+        "tableAmount": "Monto",
+        "tableDate": "Fecha",
+        "tableStatus": "Estado",
+        "tableActions": "Acciones",
+        "processed": "Procesado",
+        "pending": "Pendiente",
+        "view": "Ver",
+        "flag": "Marcar",
+        "unmark": "Desmarcar",
+        "markedSuspicious": "Transacción marcada como sospechosa",
+        "unmarkedSuspicious": "Transacción desmarcada como sospechosa",
+        "modal": {
+            "title": "Detalles de la Transacción",
+            "transactionId": "Transacción #{{id}}",
+            "amount": "Monto",
+            "points": "puntos",
+            "user": "Usuario",
+            "created": "Creado",
+            "processed": "Procesado",
+            "promotionsApplied": "Promociones Aplicadas",
+            "relatedId": "ID Relacionado",
+            "remark": "Observación",
+            "status": "Estado",
+            "suspicious": "Sospechoso",
+            "normal": "Normal",
+            "userInfo": "Información del Usuario",
+            "loadingUserInfo": "Cargando información del usuario...",
+            "name": "Nombre",
+            "email": "Correo",
+            "currentPoints": "Puntos Actuales",
+            "role": "Rol",
+            "removeSuspiciousFlag": "Quitar Marca de Sospechoso",
+            "markAsSuspicious": "Marcar como Sospechoso",
+            "close": "Cerrar"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "Procesamiento pendiente",
         "viewQRCode": "Ver código QR",
         "viewMyTransactions": "Ver mis transacciones",
+        "viewAllTransactions": "Ver todas las transacciones",
         "createAnother": "Crear otro canje",
         "howItWorks": {
             "title": "Cómo funciona el canje",
@@ -144,6 +220,8 @@
         "scanQr": "Escanear QR del cliente",
         "success": "Se canjearon {{points}} puntos correctamente",
         "processSuccess": "Canje procesado correctamente",
+        "requestSuccess": "¡Solicitud de canje creada correctamente!",
+        "requestFailed": "Error al crear solicitud de canje",
         "error": {
             "insufficientPoints": "Puntos insuficientes para este canje",
             "invalidAmount": "Por favor ingrese una cantidad positiva válida",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "Este canje ya fue procesado",
             "generic": "No se pudo procesar el canje"
         }
+    },
+    "redeem": {
+        "title": "Canjear Puntos",
+        "subtitle": "Use sus puntos para obtener recompensas",
+        "yourAvailablePoints": "Sus Puntos Disponibles",
+        "pointsToRedeem": "Puntos a Canjear"
     },
     "detail": {
         "title": "Detalles de la transacción",
@@ -165,7 +249,9 @@
         "status": "Estado",
         "description": "Descripción",
         "promotion": "Promoción aplicada",
-        "relatedUser": "Usuario relacionado"
+        "relatedUser": "Usuario relacionado",
+        "from": "De",
+        "toUser": "Para"
     },
     "filters": {
         "type": "Tipo de transacción",

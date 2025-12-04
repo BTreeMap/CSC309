@@ -133,20 +133,20 @@ const MyTransactionsPage = () => {
                 </div>
 
                 {loading ? (
-                    <LoadingSpinner text="Loading transactions..." />
+                    <LoadingSpinner text={t('transactions:list.loadingTransactions')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchTransactions} />
                 ) : transactions.length === 0 ? (
                     <EmptyState
                         icon={<ClipboardList size={48} strokeWidth={1.5} />}
-                        title="No transactions found"
-                        description={type ? `No ${type} transactions found.` : "You don't have any transactions yet."}
+                        title={t('transactions:list.noTransactions')}
+                        description={type ? t('transactions:list.noTransactionsFiltered') : t('transactions:list.noTransactionsYet')}
                         action={
-                            <button
+                            type && <button
                                 className="btn btn-ghost btn-danger btn-sm"
                                 onClick={() => handleFilterChange('')}
                             >
-                                Clear Filters
+                                {t('transactions:allTransactions.clearFilters')}
                             </button>
                         }
                     />
@@ -167,7 +167,7 @@ const MyTransactionsPage = () => {
                                                     className="transaction-type"
                                                     style={{ color: TRANSACTION_TYPE_COLORS[transaction.type] }}
                                                 >
-                                                    {TRANSACTION_TYPE_LABELS[transaction.type] || transaction.type}
+                                                    {t(`transactions:types.${transaction.type}`, { defaultValue: transaction.type })}
                                                 </span>
                                                 <span className="transaction-date">{formatDate(transaction.createdAt)}</span>
                                             </div>
@@ -178,7 +178,7 @@ const MyTransactionsPage = () => {
                                                 )}
                                                 {transaction.relatedId && transaction.type === 'transfer' && (
                                                     <span className="transaction-related">
-                                                        {transaction.amount > 0 ? 'From' : 'To'} User #{transaction.relatedId}
+                                                        {transaction.amount > 0 ? t('transactions:detail.from') : t('transactions:detail.toUser')} #{transaction.relatedId}
                                                     </span>
                                                 )}
                                                 {transaction.type === 'redemption' && !transaction.processedAt && (
@@ -186,7 +186,7 @@ const MyTransactionsPage = () => {
                                                         to={`/redeem/${transaction.id}/qr`}
                                                         className="view-qr-link"
                                                     >
-                                                        View QR Code
+                                                        {t('transactions:myTransactions.viewQRCode')}
                                                     </Link>
                                                 )}
                                             </div>
@@ -196,10 +196,10 @@ const MyTransactionsPage = () => {
                                             <span className={`transaction-amount ${amountDisplay.className}`}>
                                                 {amountDisplay.value}
                                             </span>
-                                            <span className="points-text">points</span>
+                                            <span className="points-text">{t('transactions:myTransactions.pointsLabel')}</span>
                                             {transaction.type === 'redemption' && (
                                                 <span className={`status-badge ${transaction.processedAt ? 'status-processed' : 'status-pending'}`}>
-                                                    {transaction.processedAt ? 'Processed' : 'Pending'}
+                                                    {transaction.processedAt ? t('transactions:status.processed') : t('transactions:status.pending')}
                                                 </span>
                                             )}
                                         </div>

@@ -156,14 +156,16 @@ const ManageEventsPage = () => {
         }
     };
 
+    const { t } = useTranslation(['promotions', 'common']);
+
     const getEventStatus = (event) => {
         const now = new Date();
         const startDate = new Date(event.startTime);
         const endDate = new Date(event.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming' };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended' };
-        return { label: 'Active', className: 'status-active' };
+        if (now < startDate) return { label: t('events.manage.statusUpcoming'), className: 'status-upcoming' };
+        if (now > endDate) return { label: t('events.manage.statusEnded'), className: 'status-ended' };
+        return { label: t('events.manage.statusActive'), className: 'status-active' };
     };
 
     const formatDate = (dateString) => {
@@ -176,7 +178,6 @@ const ManageEventsPage = () => {
     };
 
     const totalPages = Math.ceil(totalCount / limit);
-    const { t } = useTranslation(['promotions', 'common']);
 
     return (
         <Layout>
@@ -193,17 +194,17 @@ const ManageEventsPage = () => {
                 />
 
                 {loading ? (
-                    <LoadingSpinner text="Loading events..." />
+                    <LoadingSpinner text={t('events.manage.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchEvents} />
                 ) : events.length === 0 ? (
                     <EmptyState
                         icon={<Calendar size={48} strokeWidth={1.5} />}
-                        title="No events yet"
-                        description="Create your first event to engage users."
+                        title={t('events.manage.noEvents')}
+                        description={t('events.manage.noEventsYet')}
                         action={
                             <button onClick={openCreateModal} className="btn btn-primary">
-                                Create Event
+                                {t('events.createEvent')}
                             </button>
                         }
                     />
@@ -214,13 +215,13 @@ const ManageEventsPage = () => {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Location</th>
-                                        <th>Date</th>
-                                        <th>Attendance</th>
-                                        <th>Points</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>{t('common:name')}</th>
+                                        <th>{t('events.detail.location')}</th>
+                                        <th>{t('common:date')}</th>
+                                        <th>{t('events.manage.tableCapacity')}</th>
+                                        <th>{t('common:points')}</th>
+                                        <th>{t('common:status')}</th>
+                                        <th>{t('common:actions')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -237,7 +238,7 @@ const ManageEventsPage = () => {
                                                 </td>
                                                 <td className="cell-points">
                                                     {event.pointsRemain > 0 ? (
-                                                        <span className="points-available">{event.pointsRemain} left</span>
+                                                        <span className="points-available">{event.pointsRemain} {t('events.manage.spotsLeft', { count: event.pointsRemain }).split(' ').pop()}</span>
                                                     ) : (
                                                         <span className="points-none">—</span>
                                                     )}
@@ -253,25 +254,25 @@ const ManageEventsPage = () => {
                                                             onClick={() => navigate(`/events/${event.id}`)}
                                                             className="btn-action btn-view"
                                                         >
-                                                            View
+                                                            {t('events.manage.view')}
                                                         </button>
                                                         <button
                                                             onClick={() => openEditModal(event)}
                                                             className="btn-action btn-edit"
                                                         >
-                                                            Edit
+                                                            {t('events.manage.edit')}
                                                         </button>
                                                         <button
                                                             onClick={() => navigate(`/events/${event.id}`)}
                                                             className="btn-action btn-guests"
                                                         >
-                                                            Details
+                                                            {t('events.manage.details')}
                                                         </button>
                                                         <button
                                                             onClick={() => openDeleteConfirm(event)}
                                                             className="btn-action btn-delete"
                                                         >
-                                                            Delete
+                                                            {t('events.manage.delete')}
                                                         </button>
                                                     </div>
                                                 </td>

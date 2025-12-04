@@ -85,7 +85,34 @@
             "message": "Are you sure you want to delete this promotion? This action cannot be undone.",
             "success": "Promotion deleted successfully",
             "error": "Failed to delete promotion"
-        }
+        },
+        "manage": {
+            "loading": "Loading promotions...",
+            "noPromotions": "No promotions yet",
+            "noPromotionsYet": "Create your first promotion to engage customers.",
+            "tableId": "ID",
+            "tableName": "Name",
+            "tableType": "Type",
+            "tableDuration": "Duration",
+            "tableBenefit": "Benefit",
+            "tableStatus": "Status",
+            "tableActions": "Actions",
+            "typeAuto": "Auto",
+            "typeCode": "Code",
+            "to": "to",
+            "rate": "+{{rate}}% rate",
+            "points": "+{{points}} pts",
+            "statusUpcoming": "Upcoming",
+            "statusActive": "Active",
+            "statusEnded": "Ended",
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete",
+            "saving": "Saving...",
+            "updatePromotion": "Update Promotion",
+            "createPromotion": "Create Promotion"
+        },
+        "createPromotion": "Create Promotion"
     },
     "events": {
         "title": "Events",
@@ -198,7 +225,28 @@
             "markAttended": "Mark as Attended",
             "removeAttendee": "Remove Attendee",
             "sendReminder": "Send Reminder",
-            "exportList": "Export Attendee List"
+            "exportList": "Export Attendee List",
+            "view": "View",
+            "edit": "Edit",
+            "details": "Details",
+            "delete": "Delete",
+            "showingCount": "Showing {{showing}} of {{total}} events",
+            "loading": "Loading events...",
+            "noEvents": "No events found",
+            "noEventsYet": "No events in the system yet.",
+            "createFirst": "Create your first event",
+            "tableEvent": "Event",
+            "tableLocation": "Location",
+            "tableTime": "Date/Time",
+            "tableCapacity": "Capacity",
+            "tablePoints": "Points",
+            "tableStatus": "Status",
+            "tableActions": "Actions",
+            "spotsLeft": "{{count}} left",
+            "unlimited": "Unlimited",
+            "statusUpcoming": "Upcoming",
+            "statusActive": "Active",
+            "statusEnded": "Ended"
         }
     }
 }

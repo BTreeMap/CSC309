@@ -93,6 +93,8 @@
         "deleteTitle": "Confirmer la suppression",
         "deleteMessage": "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible."
     },
+    "na": "N/A",
+    "saving": "Enregistrement...",
     "toast": {
         "success": "Opération réussie",
         "error": "Une erreur s'est produite",

@@ -6,6 +6,11 @@
         "allTitle": "所有交易",
         "searchPlaceholder": "搜索交易...",
         "noTransactions": "未找到交易",
+        "noTransactionsFiltered": "没有符合筛选条件的交易。",
+        "noTransactionsYet": "您还没有任何交易。",
+        "noTransactionsSystem": "系统中还没有交易。",
+        "loadingTransactions": "正在加载交易...",
+        "showingTransactions": "显示 {{count}}/{{total}} 笔交易",
         "columns": {
             "id": "ID",
             "type": "类型",
@@ -17,6 +22,76 @@
             "status": "状态",
             "description": "描述",
             "actions": "操作"
+        }
+    },
+    "myTransactions": {
+        "title": "我的交易",
+        "subtitle": "查看您的交易历史和积分活动",
+        "currentPoints": "当前积分",
+        "filterByType": "按类型筛选",
+        "allTypes": "所有类型",
+        "viewQRCode": "查看二维码",
+        "pointsLabel": "积分"
+    },
+    "allTransactions": {
+        "title": "所有交易",
+        "subtitle": "查看和管理所有系统交易",
+        "filterType": "类型",
+        "userId": "用户ID",
+        "userIdPlaceholder": "例如 john_doe",
+        "relatedId": "关联ID",
+        "relatedIdPlaceholder": "例如 转账用户",
+        "suspicious": "可疑",
+        "amount": "金额",
+        "promotionId": "促销ID",
+        "promotionIdPlaceholder": "例如 123",
+        "allTypes": "所有类型",
+        "suspiciousOnly": "仅可疑",
+        "notSuspicious": "非可疑",
+        "clearAllFilters": "清除所有筛选",
+        "clearFilters": "清除筛选",
+        "loading": "加载交易中...",
+        "noTransactions": "未找到交易",
+        "noTransactionsFiltered": "没有符合筛选条件的交易。",
+        "noTransactionsYet": "系统中暂无交易。",
+        "showingCount": "显示 {{showing}} / {{total}} 条交易",
+        "tableId": "ID",
+        "tableType": "类型",
+        "tableUser": "用户",
+        "tableAmount": "金额",
+        "tableDate": "日期",
+        "tableStatus": "状态",
+        "tableActions": "操作",
+        "processed": "已处理",
+        "pending": "待处理",
+        "view": "查看",
+        "flag": "标记",
+        "unmark": "取消标记",
+        "markedSuspicious": "交易已标记为可疑",
+        "unmarkedSuspicious": "交易可疑标记已取消",
+        "modal": {
+            "title": "交易详情",
+            "transactionId": "交易 #{{id}}",
+            "amount": "金额",
+            "points": "积分",
+            "user": "用户",
+            "created": "创建时间",
+            "processed": "处理时间",
+            "promotionsApplied": "应用的促销",
+            "relatedId": "关联ID",
+            "remark": "备注",
+            "status": "状态",
+            "suspicious": "可疑",
+            "normal": "正常",
+            "userInfo": "用户信息",
+            "loadingUserInfo": "加载用户信息中...",
+            "name": "姓名",
+            "email": "邮箱",
+            "currentPoints": "当前积分",
+            "role": "角色",
+            "removeSuspiciousFlag": "移除可疑标记",
+            "markAsSuspicious": "标记为可疑",
+            "close": "关闭"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "等待处理",
         "viewQRCode": "查看二维码",
         "viewMyTransactions": "查看我的交易",
+        "viewAllTransactions": "查看所有交易",
         "createAnother": "创建另一个兑换",
         "howItWorks": {
             "title": "兑换流程说明",
@@ -144,6 +220,8 @@
         "scanQr": "扫描客户二维码",
         "success": "成功兑换 {{points}} 积分",
         "processSuccess": "兑换处理成功",
+        "requestSuccess": "兑换请求创建成功！",
+        "requestFailed": "创建兑换请求失败",
         "error": {
             "insufficientPoints": "积分不足，无法完成此兑换",
             "invalidAmount": "请输入有效的正数金额",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "此兑换已被处理",
             "generic": "处理兑换失败"
         }
+    },
+    "redeem": {
+        "title": "兑换积分",
+        "subtitle": "使用您的积分兑换奖励",
+        "yourAvailablePoints": "您的可用积分",
+        "pointsToRedeem": "要兑换的积分"
     },
     "detail": {
         "title": "交易详情",
@@ -165,7 +249,9 @@
         "status": "状态",
         "description": "描述",
         "promotion": "应用的促销",
-        "relatedUser": "相关用户"
+        "relatedUser": "相关用户",
+        "from": "来自",
+        "toUser": "发送至"
     },
     "filters": {
         "type": "交易类型",

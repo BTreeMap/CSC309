@@ -6,6 +6,11 @@
         "allTitle": "All Transactions",
         "searchPlaceholder": "Search transactions...",
         "noTransactions": "No transactions found",
+        "noTransactionsFiltered": "No transactions match your filters.",
+        "noTransactionsYet": "You don't have any transactions yet.",
+        "noTransactionsSystem": "No transactions in the system yet.",
+        "loadingTransactions": "Loading transactions...",
+        "showingTransactions": "Showing {{count}} of {{total}} transactions",
         "columns": {
             "id": "ID",
             "type": "Type",
@@ -17,6 +22,76 @@
             "status": "Status",
             "description": "Description",
             "actions": "Actions"
+        }
+    },
+    "myTransactions": {
+        "title": "My Transactions",
+        "subtitle": "View your transaction history and points activity",
+        "currentPoints": "Current Points",
+        "filterByType": "Filter by Type",
+        "allTypes": "All Types",
+        "viewQRCode": "View QR Code",
+        "pointsLabel": "points"
+    },
+    "allTransactions": {
+        "title": "All Transactions",
+        "subtitle": "View and manage all system transactions",
+        "filterType": "Type",
+        "userId": "User ID",
+        "userIdPlaceholder": "e.g. john_doe",
+        "relatedId": "Related ID",
+        "relatedIdPlaceholder": "e.g. transfer user",
+        "suspicious": "Suspicious",
+        "amount": "Amount",
+        "promotionId": "Promotion ID",
+        "promotionIdPlaceholder": "e.g. 123",
+        "allTypes": "All Types",
+        "suspiciousOnly": "Suspicious Only",
+        "notSuspicious": "Not Suspicious",
+        "clearAllFilters": "Clear All Filters",
+        "clearFilters": "Clear Filters",
+        "loading": "Loading transactions...",
+        "noTransactions": "No transactions found",
+        "noTransactionsFiltered": "No transactions match your filters.",
+        "noTransactionsYet": "No transactions in the system yet.",
+        "showingCount": "Showing {{showing}} of {{total}} transactions",
+        "tableId": "ID",
+        "tableType": "Type",
+        "tableUser": "User",
+        "tableAmount": "Amount",
+        "tableDate": "Date",
+        "tableStatus": "Status",
+        "tableActions": "Actions",
+        "processed": "Processed",
+        "pending": "Pending",
+        "view": "View",
+        "flag": "Flag",
+        "unmark": "Unmark",
+        "markedSuspicious": "Transaction marked as suspicious",
+        "unmarkedSuspicious": "Transaction unmarked as suspicious",
+        "modal": {
+            "title": "Transaction Details",
+            "transactionId": "Transaction #{{id}}",
+            "amount": "Amount",
+            "points": "points",
+            "user": "User",
+            "created": "Created",
+            "processed": "Processed",
+            "promotionsApplied": "Promotions Applied",
+            "relatedId": "Related ID",
+            "remark": "Remark",
+            "status": "Status",
+            "suspicious": "Suspicious",
+            "normal": "Normal",
+            "userInfo": "User Information",
+            "loadingUserInfo": "Loading user info...",
+            "name": "Name",
+            "email": "Email",
+            "currentPoints": "Current Points",
+            "role": "Role",
+            "removeSuspiciousFlag": "Remove Suspicious Flag",
+            "markAsSuspicious": "Mark as Suspicious",
+            "close": "Close"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "Pending Processing",
         "viewQRCode": "View QR Code",
         "viewMyTransactions": "View My Transactions",
+        "viewAllTransactions": "View All Transactions",
         "createAnother": "Create Another Redemption",
         "howItWorks": {
             "title": "How Redemption Works",
@@ -144,6 +220,8 @@
         "scanQr": "Scan Customer QR",
         "success": "Successfully redeemed {{points}} points",
         "processSuccess": "Redemption processed successfully",
+        "requestSuccess": "Redemption request created successfully!",
+        "requestFailed": "Failed to create redemption request",
         "error": {
             "insufficientPoints": "Insufficient points for this redemption",
             "invalidAmount": "Please enter a valid positive amount",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "This redemption has already been processed",
             "generic": "Failed to process redemption"
         }
+    },
+    "redeem": {
+        "title": "Redeem Points",
+        "subtitle": "Use your points for rewards",
+        "yourAvailablePoints": "Your Available Points",
+        "pointsToRedeem": "Points to Redeem"
     },
     "detail": {
         "title": "Transaction Details",
@@ -165,7 +249,9 @@
         "status": "Status",
         "description": "Description",
         "promotion": "Applied Promotion",
-        "relatedUser": "Related User"
+        "relatedUser": "Related User",
+        "from": "From",
+        "toUser": "To"
     },
     "filters": {
         "type": "Transaction Type",

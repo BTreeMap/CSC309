@@ -6,6 +6,11 @@
         "allTitle": "Toutes les transactions",
         "searchPlaceholder": "Rechercher des transactions...",
         "noTransactions": "Aucune transaction trouvée",
+        "noTransactionsFiltered": "Aucune transaction ne correspond à vos filtres.",
+        "noTransactionsYet": "Vous n'avez pas encore de transactions.",
+        "noTransactionsSystem": "Aucune transaction dans le système.",
+        "loadingTransactions": "Chargement des transactions...",
+        "showingTransactions": "Affichage de {{count}} sur {{total}} transactions",
         "columns": {
             "id": "ID",
             "type": "Type",
@@ -17,6 +22,76 @@
             "status": "Statut",
             "description": "Description",
             "actions": "Actions"
+        }
+    },
+    "myTransactions": {
+        "title": "Mes Transactions",
+        "subtitle": "Voir votre historique de transactions et activité de points",
+        "currentPoints": "Points Actuels",
+        "filterByType": "Filtrer par Type",
+        "allTypes": "Tous les Types",
+        "viewQRCode": "Voir Code QR",
+        "pointsLabel": "points"
+    },
+    "allTransactions": {
+        "title": "Toutes les Transactions",
+        "subtitle": "Voir et gérer toutes les transactions du système",
+        "filterType": "Type",
+        "userId": "ID Utilisateur",
+        "userIdPlaceholder": "ex. john_doe",
+        "relatedId": "ID Associé",
+        "relatedIdPlaceholder": "ex. utilisateur de transfert",
+        "suspicious": "Suspect",
+        "amount": "Montant",
+        "promotionId": "ID Promotion",
+        "promotionIdPlaceholder": "ex. 123",
+        "allTypes": "Tous les Types",
+        "suspiciousOnly": "Suspects Uniquement",
+        "notSuspicious": "Non Suspects",
+        "clearAllFilters": "Effacer Tous les Filtres",
+        "clearFilters": "Effacer Filtres",
+        "loading": "Chargement des transactions...",
+        "noTransactions": "Aucune transaction trouvée",
+        "noTransactionsFiltered": "Aucune transaction ne correspond à vos filtres.",
+        "noTransactionsYet": "Aucune transaction dans le système pour le moment.",
+        "showingCount": "Affichage de {{showing}} sur {{total}} transactions",
+        "tableId": "ID",
+        "tableType": "Type",
+        "tableUser": "Utilisateur",
+        "tableAmount": "Montant",
+        "tableDate": "Date",
+        "tableStatus": "Statut",
+        "tableActions": "Actions",
+        "processed": "Traité",
+        "pending": "En attente",
+        "view": "Voir",
+        "flag": "Signaler",
+        "unmark": "Désignaler",
+        "markedSuspicious": "Transaction marquée comme suspecte",
+        "unmarkedSuspicious": "Transaction démarquée comme suspecte",
+        "modal": {
+            "title": "Détails de la Transaction",
+            "transactionId": "Transaction #{{id}}",
+            "amount": "Montant",
+            "points": "points",
+            "user": "Utilisateur",
+            "created": "Créé",
+            "processed": "Traité",
+            "promotionsApplied": "Promotions Appliquées",
+            "relatedId": "ID Associé",
+            "remark": "Remarque",
+            "status": "Statut",
+            "suspicious": "Suspect",
+            "normal": "Normal",
+            "userInfo": "Informations Utilisateur",
+            "loadingUserInfo": "Chargement des informations utilisateur...",
+            "name": "Nom",
+            "email": "E-mail",
+            "currentPoints": "Points Actuels",
+            "role": "Rôle",
+            "removeSuspiciousFlag": "Retirer le Signalement",
+            "markAsSuspicious": "Marquer comme Suspect",
+            "close": "Fermer"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "En attente de traitement",
         "viewQRCode": "Voir le code QR",
         "viewMyTransactions": "Voir mes transactions",
+        "viewAllTransactions": "Voir toutes les transactions",
         "createAnother": "Créer un autre échange",
         "howItWorks": {
             "title": "Comment fonctionne l'échange",
@@ -144,6 +220,8 @@
         "scanQr": "Scanner le QR du client",
         "success": "{{points}} points échangés avec succès",
         "processSuccess": "Échange traité avec succès",
+        "requestSuccess": "Demande d'échange créée avec succès !",
+        "requestFailed": "Échec de la création de la demande d'échange",
         "error": {
             "insufficientPoints": "Points insuffisants pour cet échange",
             "invalidAmount": "Veuillez entrer un montant positif valide",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "Cet échange a déjà été traité",
             "generic": "Échec du traitement de l'échange"
         }
+    },
+    "redeem": {
+        "title": "Échanger des Points",
+        "subtitle": "Utilisez vos points pour des récompenses",
+        "yourAvailablePoints": "Vos Points Disponibles",
+        "pointsToRedeem": "Points à Échanger"
     },
     "detail": {
         "title": "Détails de la transaction",
@@ -165,7 +249,9 @@
         "status": "Statut",
         "description": "Description",
         "promotion": "Promotion appliquée",
-        "relatedUser": "Utilisateur concerné"
+        "relatedUser": "Utilisateur concerné",
+        "from": "De",
+        "toUser": "À"
     },
     "filters": {
         "type": "Type de transaction",

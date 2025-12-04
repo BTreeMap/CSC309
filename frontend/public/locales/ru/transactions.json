@@ -6,6 +6,11 @@
         "allTitle": "Все транзакции",
         "searchPlaceholder": "Поиск транзакций...",
         "noTransactions": "Транзакции не найдены",
+        "noTransactionsFiltered": "Нет транзакций, соответствующих фильтрам.",
+        "noTransactionsYet": "У вас пока нет транзакций.",
+        "noTransactionsSystem": "В системе пока нет транзакций.",
+        "loadingTransactions": "Загрузка транзакций...",
+        "showingTransactions": "Показано {{count}} из {{total}} транзакций",
         "columns": {
             "id": "ID",
             "type": "Тип",
@@ -17,6 +22,76 @@
             "status": "Статус",
             "description": "Описание",
             "actions": "Действия"
+        }
+    },
+    "myTransactions": {
+        "title": "Мои Транзакции",
+        "subtitle": "Просмотр истории транзакций и активности баллов",
+        "currentPoints": "Текущие Баллы",
+        "filterByType": "Фильтр по Типу",
+        "allTypes": "Все Типы",
+        "viewQRCode": "Показать QR-код",
+        "pointsLabel": "баллов"
+    },
+    "allTransactions": {
+        "title": "Все Транзакции",
+        "subtitle": "Просмотр и управление всеми транзакциями системы",
+        "filterType": "Тип",
+        "userId": "ID Пользователя",
+        "userIdPlaceholder": "напр. john_doe",
+        "relatedId": "Связанный ID",
+        "relatedIdPlaceholder": "напр. пользователь перевода",
+        "suspicious": "Подозрительные",
+        "amount": "Сумма",
+        "promotionId": "ID Акции",
+        "promotionIdPlaceholder": "напр. 123",
+        "allTypes": "Все Типы",
+        "suspiciousOnly": "Только Подозрительные",
+        "notSuspicious": "Не Подозрительные",
+        "clearAllFilters": "Сбросить Все Фильтры",
+        "clearFilters": "Сбросить Фильтры",
+        "loading": "Загрузка транзакций...",
+        "noTransactions": "Транзакции не найдены",
+        "noTransactionsFiltered": "Нет транзакций, соответствующих вашим фильтрам.",
+        "noTransactionsYet": "В системе пока нет транзакций.",
+        "showingCount": "Показано {{showing}} из {{total}} транзакций",
+        "tableId": "ID",
+        "tableType": "Тип",
+        "tableUser": "Пользователь",
+        "tableAmount": "Сумма",
+        "tableDate": "Дата",
+        "tableStatus": "Статус",
+        "tableActions": "Действия",
+        "processed": "Обработано",
+        "pending": "Ожидание",
+        "view": "Просмотр",
+        "flag": "Отметить",
+        "unmark": "Снять отметку",
+        "markedSuspicious": "Транзакция отмечена как подозрительная",
+        "unmarkedSuspicious": "Отметка о подозрительности снята",
+        "modal": {
+            "title": "Детали Транзакции",
+            "transactionId": "Транзакция #{{id}}",
+            "amount": "Сумма",
+            "points": "баллов",
+            "user": "Пользователь",
+            "created": "Создано",
+            "processed": "Обработано",
+            "promotionsApplied": "Применённые Акции",
+            "relatedId": "Связанный ID",
+            "remark": "Примечание",
+            "status": "Статус",
+            "suspicious": "Подозрительно",
+            "normal": "Нормально",
+            "userInfo": "Информация о Пользователе",
+            "loadingUserInfo": "Загрузка информации о пользователе...",
+            "name": "Имя",
+            "email": "Эл. почта",
+            "currentPoints": "Текущие Баллы",
+            "role": "Роль",
+            "removeSuspiciousFlag": "Снять Отметку",
+            "markAsSuspicious": "Отметить как Подозрительную",
+            "close": "Закрыть"
         }
     },
     "types": {
@@ -125,6 +200,7 @@
         "pendingProcessing": "Ожидает обработки",
         "viewQRCode": "Просмотреть QR-код",
         "viewMyTransactions": "Просмотреть мои транзакции",
+        "viewAllTransactions": "Просмотреть все транзакции",
         "createAnother": "Создать ещё одно погашение",
         "howItWorks": {
             "title": "Как работает погашение",
@@ -144,6 +220,8 @@
         "scanQr": "Сканировать QR клиента",
         "success": "Успешно использовано {{points}} баллов",
         "processSuccess": "Погашение обработано успешно",
+        "requestSuccess": "Запрос на погашение успешно создан!",
+        "requestFailed": "Не удалось создать запрос на погашение",
         "error": {
             "insufficientPoints": "Недостаточно баллов для этого погашения",
             "invalidAmount": "Пожалуйста, введите положительную сумму",
@@ -152,6 +230,12 @@
             "alreadyProcessed": "Это погашение уже обработано",
             "generic": "Не удалось обработать погашение"
         }
+    },
+    "redeem": {
+        "title": "Использовать Баллы",
+        "subtitle": "Используйте ваши баллы для получения вознаграждений",
+        "yourAvailablePoints": "Ваши Доступные Баллы",
+        "pointsToRedeem": "Баллы для Погашения"
     },
     "detail": {
         "title": "Детали транзакции",
@@ -165,7 +249,9 @@
         "status": "Статус",
         "description": "Описание",
         "promotion": "Применённая акция",
-        "relatedUser": "Связанный пользователь"
+        "relatedUser": "Связанный пользователь",
+        "from": "От",
+        "toUser": "Кому"
     },
     "filters": {
         "type": "Тип транзакции",

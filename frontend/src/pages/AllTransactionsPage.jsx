@@ -166,60 +166,60 @@ const AllTransactionsPage = () => {
                 <div className="filters-bar">
                     <div className="filters-row">
                         <div className="filter-group">
-                            <label className="form-label">Type</label>
+                            <label className="form-label">{t('transactions:allTransactions.filterType')}</label>
                             <select
                                 value={type}
                                 onChange={(e) => handleFilterChange('type', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">All Types</option>
-                                <option value="purchase">Purchase</option>
-                                <option value="redemption">Redemption</option>
-                                <option value="transfer">Transfer</option>
-                                <option value="adjustment">Adjustment</option>
-                                <option value="event">Event</option>
+                                <option value="">{t('transactions:allTransactions.allTypes')}</option>
+                                <option value="purchase">{t('transactions:types.purchase')}</option>
+                                <option value="redemption">{t('transactions:types.redemption')}</option>
+                                <option value="transfer">{t('transactions:types.transfer')}</option>
+                                <option value="adjustment">{t('transactions:types.adjustment')}</option>
+                                <option value="event">{t('transactions:types.event')}</option>
                             </select>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">User ID</label>
+                            <label className="form-label">{t('transactions:allTransactions.userId')}</label>
                             <input
                                 type="text"
                                 value={userId}
                                 onChange={(e) => handleFilterChange('userId', e.target.value)}
-                                placeholder="e.g. john_doe"
+                                placeholder={t('transactions:allTransactions.userIdPlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Related ID</label>
+                            <label className="form-label">{t('transactions:allTransactions.relatedId')}</label>
                             <input
                                 type="text"
                                 value={relatedId}
                                 onChange={(e) => handleFilterChange('relatedId', e.target.value)}
-                                placeholder="e.g. transfer user"
+                                placeholder={t('transactions:allTransactions.relatedIdPlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Suspicious</label>
+                            <label className="form-label">{t('transactions:allTransactions.suspicious')}</label>
                             <select
                                 value={suspicious}
                                 onChange={(e) => handleFilterChange('suspicious', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">All</option>
-                                <option value="true">Suspicious Only</option>
-                                <option value="false">Not Suspicious</option>
+                                <option value="">{t('common:all')}</option>
+                                <option value="true">{t('transactions:allTransactions.suspiciousOnly')}</option>
+                                <option value="false">{t('transactions:allTransactions.notSuspicious')}</option>
                             </select>
                         </div>
                     </div>
 
                     <div className="filters-row">
                         <div className="filter-group filter-amount">
-                            <label className="form-label">Amount</label>
+                            <label className="form-label">{t('transactions:allTransactions.amount')}</label>
                             <div className="amount-filter">
                                 <select
                                     value={operator}
@@ -233,44 +233,44 @@ const AllTransactionsPage = () => {
                                     type="number"
                                     value={amount}
                                     onChange={(e) => handleFilterChange('amount', e.target.value)}
-                                    placeholder="Points"
+                                    placeholder={t('common:points')}
                                     className="form-input amount-input"
                                 />
                             </div>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Promotion ID</label>
+                            <label className="form-label">{t('transactions:allTransactions.promotionId')}</label>
                             <input
                                 type="text"
                                 value={promotionId}
                                 onChange={(e) => handleFilterChange('promotionId', e.target.value)}
-                                placeholder="e.g. 123"
+                                placeholder={t('transactions:allTransactions.promotionIdPlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         {hasActiveFilters && (
                             <button onClick={clearAllFilters} className="btn btn-ghost btn-danger btn-sm">
-                                Clear All Filters
+                                {t('transactions:allTransactions.clearAllFilters')}
                             </button>
                         )}
                     </div>
                 </div>
 
                 {loading ? (
-                    <LoadingSpinner text="Loading transactions..." />
+                    <LoadingSpinner text={t('transactions:allTransactions.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchTransactions} />
                 ) : transactions.length === 0 ? (
                     <EmptyState
                         icon={<ClipboardList size={48} strokeWidth={1.5} />}
-                        title="No transactions found"
-                        description={hasActiveFilters ? "No transactions match your filters." : "No transactions in the system yet."}
+                        title={t('transactions:allTransactions.noTransactions')}
+                        description={hasActiveFilters ? t('transactions:allTransactions.noTransactionsFiltered') : t('transactions:allTransactions.noTransactionsYet')}
                         action={
                             hasActiveFilters && (
                                 <button onClick={clearAllFilters} className="btn btn-secondary">
-                                    Clear Filters
+                                    {t('transactions:allTransactions.clearFilters')}
                                 </button>
                             )
                         }
@@ -278,20 +278,20 @@ const AllTransactionsPage = () => {
                 ) : (
                     <>
                         <div className="transactions-summary">
-                            Showing {transactions.length} of {totalCount.toLocaleString()} transactions
+                            {t('transactions:allTransactions.showingCount', { showing: transactions.length, total: totalCount.toLocaleString() })}
                         </div>
 
                         <div className="transactions-table-container">
                             <table className="transactions-table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Type</th>
-                                        <th>User</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>{t('transactions:allTransactions.tableId')}</th>
+                                        <th>{t('transactions:allTransactions.tableType')}</th>
+                                        <th>{t('transactions:allTransactions.tableUser')}</th>
+                                        <th>{t('transactions:allTransactions.tableAmount')}</th>
+                                        <th>{t('transactions:allTransactions.tableDate')}</th>
+                                        <th>{t('transactions:allTransactions.tableStatus')}</th>
+                                        <th>{t('transactions:allTransactions.tableActions')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -328,7 +328,7 @@ const AllTransactionsPage = () => {
                                                         )}
                                                         {transaction.type === 'redemption' && (
                                                             <span className={`badge ${transaction.processedAt ? 'badge-processed' : 'badge-pending'}`}>
-                                                                {transaction.processedAt ? 'Processed' : 'Pending'}
+                                                                {transaction.processedAt ? t('transactions:allTransactions.processed') : t('transactions:allTransactions.pending')}
                                                             </span>
                                                         )}
                                                     </div>
@@ -339,13 +339,13 @@ const AllTransactionsPage = () => {
                                                             onClick={() => handleViewDetails(transaction)}
                                                             className="btn-action btn-view"
                                                         >
-                                                            View
+                                                            {t('transactions:allTransactions.view')}
                                                         </button>
                                                         <button
                                                             onClick={() => handleMarkSuspicious(transaction)}
                                                             className={`btn-action ${transaction.suspicious ? 'btn-unsuspicious' : 'btn-suspicious'}`}
                                                         >
-                                                            {transaction.suspicious ? 'Unmark' : 'Flag'}
+                                                            {transaction.suspicious ? t('transactions:allTransactions.unmark') : t('transactions:allTransactions.flag')}
                                                         </button>
                                                     </div>
                                                 </td>
@@ -370,7 +370,7 @@ const AllTransactionsPage = () => {
                 <Modal
                     isOpen={!!selectedTransaction}
                     onClose={() => setSelectedTransaction(null)}
-                    title="Transaction Details"
+                    title={t('transactions:allTransactions.modal.title')}
                     size="medium"
                 >
                     {selectedTransaction && (
@@ -381,67 +381,67 @@ const AllTransactionsPage = () => {
                                 </span>
                                 <div className="detail-title">
                                     <h3>{TRANSACTION_TYPE_LABELS[selectedTransaction.type] || selectedTransaction.type}</h3>
-                                    <span className="detail-id">Transaction #{selectedTransaction.id}</span>
+                                    <span className="detail-id">{t('transactions:allTransactions.modal.transactionId', { id: selectedTransaction.id })}</span>
                                 </div>
                             </div>
 
                             <div className="detail-grid">
                                 <div className="detail-item">
-                                    <label>Amount</label>
+                                    <label>{t('transactions:allTransactions.modal.amount')}</label>
                                     <span className={`detail-amount ${selectedTransaction.amount > 0 ? 'amount-positive' : 'amount-negative'}`}>
-                                        {selectedTransaction.amount > 0 ? '+' : ''}{selectedTransaction.amount.toLocaleString()} points
+                                        {selectedTransaction.amount > 0 ? '+' : ''}{selectedTransaction.amount.toLocaleString()} {t('common:points')}
                                     </span>
                                 </div>
 
                                 <div className="detail-item">
-                                    <label>User</label>
+                                    <label>{t('transactions:allTransactions.modal.user')}</label>
                                     <span>{selectedTransaction.utorid}</span>
                                 </div>
 
                                 <div className="detail-item">
-                                    <label>Created</label>
+                                    <label>{t('transactions:allTransactions.modal.created')}</label>
                                     <span>{formatDate(selectedTransaction.createdAt)}</span>
                                 </div>
 
                                 {selectedTransaction.processedAt && (
                                     <div className="detail-item">
-                                        <label>Processed</label>
+                                        <label>{t('transactions:allTransactions.modal.processed')}</label>
                                         <span>{formatDate(selectedTransaction.processedAt)}</span>
                                     </div>
                                 )}
 
                                 {selectedTransaction.promotionIds && selectedTransaction.promotionIds.length > 0 && (
                                     <div className="detail-item">
-                                        <label>Promotions Applied</label>
+                                        <label>{t('transactions:allTransactions.modal.promotionsApplied')}</label>
                                         <span>{selectedTransaction.promotionIds.join(', ')}</span>
                                     </div>
                                 )}
 
                                 {selectedTransaction.relatedId && (
                                     <div className="detail-item">
-                                        <label>Related ID</label>
+                                        <label>{t('transactions:allTransactions.modal.relatedId')}</label>
                                         <span>{selectedTransaction.relatedId}</span>
                                     </div>
                                 )}
 
                                 {selectedTransaction.remark && (
                                     <div className="detail-item full-width">
-                                        <label>Remark</label>
+                                        <label>{t('transactions:allTransactions.modal.remark')}</label>
                                         <span className="remark-text">{selectedTransaction.remark}</span>
                                     </div>
                                 )}
 
                                 <div className="detail-item">
-                                    <label>Status</label>
+                                    <label>{t('transactions:allTransactions.modal.status')}</label>
                                     <div className="status-badges">
                                         {selectedTransaction.suspicious ? (
-                                            <span className="badge badge-suspicious">⚠️ Suspicious</span>
+                                            <span className="badge badge-suspicious">⚠️ {t('transactions:allTransactions.modal.suspicious')}</span>
                                         ) : (
-                                            <span className="badge badge-normal">✓ Normal</span>
+                                            <span className="badge badge-normal">✓ {t('transactions:allTransactions.modal.normal')}</span>
                                         )}
                                         {selectedTransaction.type === 'redemption' && (
                                             <span className={`badge ${selectedTransaction.processedAt ? 'badge-processed' : 'badge-pending'}`}>
-                                                {selectedTransaction.processedAt ? 'Processed' : 'Pending'}
+                                                {selectedTransaction.processedAt ? t('transactions:allTransactions.processed') : t('transactions:allTransactions.pending')}
                                             </span>
                                         )}
                                     </div>
@@ -449,15 +449,15 @@ const AllTransactionsPage = () => {
                             </div>
 
                             {loadingUser ? (
-                                <div className="user-info loading">Loading user info...</div>
+                                <div className="user-info loading">{t('transactions:allTransactions.modal.loadingUserInfo')}</div>
                             ) : transactionUser && (
                                 <div className="user-info">
-                                    <h4>User Information</h4>
+                                    <h4>{t('transactions:allTransactions.modal.userInfo')}</h4>
                                     <div className="user-details">
-                                        <span><strong>Name:</strong> {transactionUser.name}</span>
-                                        <span><strong>Email:</strong> {transactionUser.email}</span>
-                                        <span><strong>Current Points:</strong> {transactionUser.points?.toLocaleString()}</span>
-                                        <span><strong>Role:</strong> {transactionUser.role}</span>
+                                        <span><strong>{t('transactions:allTransactions.modal.name')}:</strong> {transactionUser.name}</span>
+                                        <span><strong>{t('transactions:allTransactions.modal.email')}:</strong> {transactionUser.email}</span>
+                                        <span><strong>{t('transactions:allTransactions.modal.currentPoints')}:</strong> {transactionUser.points?.toLocaleString()}</span>
+                                        <span><strong>{t('transactions:allTransactions.modal.role')}:</strong> {transactionUser.role}</span>
                                     </div>
                                 </div>
                             )}
@@ -467,10 +467,10 @@ const AllTransactionsPage = () => {
                                     onClick={() => handleMarkSuspicious(selectedTransaction)}
                                     className={`btn ${selectedTransaction.suspicious ? 'btn-secondary' : 'btn-warning'}`}
                                 >
-                                    {selectedTransaction.suspicious ? 'Remove Suspicious Flag' : 'Mark as Suspicious'}
+                                    {selectedTransaction.suspicious ? t('transactions:allTransactions.modal.removeSuspiciousFlag') : t('transactions:allTransactions.modal.markAsSuspicious')}
                                 </button>
                                 <button onClick={() => setSelectedTransaction(null)} className="btn btn-secondary">
-                                    Close
+                                    {t('transactions:allTransactions.modal.close')}
                                 </button>
                             </div>
                         </div>

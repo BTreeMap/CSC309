@@ -241,78 +241,78 @@ const UsersListPage = () => {
                 <div className="filters-bar">
                     <div className="filters-row">
                         <div className="filter-group search-group">
-                            <label className="form-label">Search</label>
+                            <label className="form-label">{t('common:search')}</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => handleFilterChange('name', e.target.value)}
-                                placeholder="Search by name or UTORid..."
+                                placeholder={t('users:management.searchPlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Role</label>
+                            <label className="form-label">{t('users:management.role')}</label>
                             <select
                                 value={role}
                                 onChange={(e) => handleFilterChange('role', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">All Roles</option>
-                                <option value="regular">Regular</option>
-                                <option value="cashier">Cashier</option>
-                                <option value="manager">Manager</option>
-                                <option value="superuser">Superuser</option>
+                                <option value="">{t('users:management.allRoles')}</option>
+                                <option value="regular">{t('users:roles.regular')}</option>
+                                <option value="cashier">{t('users:roles.cashier')}</option>
+                                <option value="manager">{t('users:roles.manager')}</option>
+                                <option value="superuser">{t('users:roles.superuser')}</option>
                             </select>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Verified</label>
+                            <label className="form-label">{t('users:management.verified')}</label>
                             <select
                                 value={verified}
                                 onChange={(e) => handleFilterChange('verified', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">All</option>
-                                <option value="true">Verified</option>
-                                <option value="false">Unverified</option>
+                                <option value="">{t('common:all')}</option>
+                                <option value="true">{t('users:management.verifiedOption')}</option>
+                                <option value="false">{t('users:management.unverifiedOption')}</option>
                             </select>
                         </div>
 
                         <div className="filter-group">
-                            <label className="form-label">Activated</label>
+                            <label className="form-label">{t('users:management.activated')}</label>
                             <select
                                 value={activated}
                                 onChange={(e) => handleFilterChange('activated', e.target.value)}
                                 className="form-select"
                             >
-                                <option value="">All</option>
-                                <option value="true">Activated</option>
-                                <option value="false">Not Activated</option>
+                                <option value="">{t('common:all')}</option>
+                                <option value="true">{t('users:management.activatedOption')}</option>
+                                <option value="false">{t('users:management.notActivatedOption')}</option>
                             </select>
                         </div>
 
                         {hasFilters && (
                             <button onClick={clearFilters} className="btn btn-ghost btn-danger btn-sm">
-                                Clear
+                                {t('common:clear')}
                             </button>
                         )}
                     </div>
                 </div>
 
                 {loading ? (
-                    <LoadingSpinner text="Loading users..." />
+                    <LoadingSpinner text={t('users:management.loading')} />
                 ) : error ? (
                     <ErrorMessage message={error} onRetry={fetchUsers} />
                 ) : users.length === 0 ? (
                     <EmptyState
                         icon={<Users size={48} strokeWidth={1.5} />}
-                        title="No users found"
-                        description={hasFilters ? "No users match your filters." : "No users in the system."}
+                        title={t('users:management.noUsers')}
+                        description={hasFilters ? t('users:management.noUsersFiltered') : t('users:management.noUsersYet')}
                         action={
                             hasFilters && (
                                 <button onClick={clearFilters} className="btn btn-secondary">
-                                    Clear Filters
+                                    {t('users:management.clearFilters')}
                                 </button>
                             )
                         }
@@ -320,19 +320,19 @@ const UsersListPage = () => {
                 ) : (
                     <>
                         <div className="users-summary">
-                            Showing {users.length} of {totalCount.toLocaleString()} users
+                            {t('users:management.showingCount', { showing: users.length, total: totalCount.toLocaleString() })}
                         </div>
 
                         <div className="users-table-container">
                             <table className="users-table">
                                 <thead>
                                     <tr>
-                                        <th>User</th>
-                                        <th>UTORid</th>
-                                        <th>Role</th>
-                                        <th>Points</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>{t('users:management.tableUser')}</th>
+                                        <th>{t('users:management.tableUtorid')}</th>
+                                        <th>{t('users:management.tableRole')}</th>
+                                        <th>{t('users:management.tablePoints')}</th>
+                                        <th>{t('users:management.tableStatus')}</th>
+                                        <th>{t('users:management.tableActions')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -366,10 +366,10 @@ const UsersListPage = () => {
                                             <td>
                                                 <div className="status-badges">
                                                     <span className={`status-badge ${user.verified ? 'verified' : 'unverified'}`}>
-                                                        {user.verified ? '✓ Verified' : '○ Unverified'}
+                                                        {user.verified ? t('users:management.verifiedBadge') : t('users:management.unverifiedBadge')}
                                                     </span>
                                                     {!user.lastLogin && (
-                                                        <span className="status-badge inactive">Not Activated</span>
+                                                        <span className="status-badge inactive">{t('users:management.notActivatedBadge')}</span>
                                                     )}
                                                 </div>
                                             </td>
@@ -379,29 +379,29 @@ const UsersListPage = () => {
                                                         onClick={() => handleOpenView(user)}
                                                         className="btn-action btn-view"
                                                     >
-                                                        View
+                                                        {t('common:view')}
                                                     </button>
                                                     {canEditUser(user) ? (
                                                         <button
                                                             onClick={() => handleOpenEdit(user)}
                                                             className="btn-action btn-edit"
                                                         >
-                                                            Edit
+                                                            {t('common:edit')}
                                                         </button>
                                                     ) : (
                                                         <button
                                                             disabled
                                                             className="btn-action btn-edit"
-                                                            title="You do not have permission to edit this user"
+                                                            title={t('users:management.noPermissionEdit')}
                                                         >
-                                                            Edit
+                                                            {t('common:edit')}
                                                         </button>
                                                     )}
                                                     <button
                                                         onClick={() => handleOpenAdjust(user)}
                                                         className="btn-action btn-adjust"
                                                     >
-                                                        Adjust
+                                                        {t('users:management.adjust')}
                                                     </button>
                                                 </div>
                                             </td>
@@ -425,35 +425,35 @@ const UsersListPage = () => {
                 <Modal
                     isOpen={showAdjustModal}
                     onClose={() => setShowAdjustModal(false)}
-                    title="Adjust Points"
+                    title={t('users:management.adjustPoints')}
                     size="small"
                 >
                     {selectedUser && (
                         <div className="adjust-modal">
                             <div className="user-summary">
                                 <strong>{selectedUser.name}</strong>
-                                <span>Current Points: {selectedUser.points?.toLocaleString() || 0}</span>
+                                <span>{t('users:management.currentPoints')}: {selectedUser.points?.toLocaleString() || 0}</span>
                             </div>
 
                             <div className="form-group">
-                                <label>Adjustment Amount</label>
+                                <label>{t('users:management.adjustmentAmount')}</label>
                                 <input
                                     type="number"
                                     value={adjustmentAmount}
                                     onChange={(e) => setAdjustmentAmount(e.target.value)}
-                                    placeholder="e.g., 100 or -50"
+                                    placeholder={t('users:management.adjustmentPlaceholder')}
                                     className="adjustment-input"
                                 />
-                                <span className="input-hint">Positive to add, negative to subtract</span>
+                                <span className="input-hint">{t('users:management.adjustmentHint')}</span>
                             </div>
 
                             <div className="form-group">
-                                <label>Reason (Optional)</label>
+                                <label>{t('users:management.reasonOptional')}</label>
                                 <input
                                     type="text"
                                     value={adjustmentRemark}
                                     onChange={(e) => setAdjustmentRemark(e.target.value)}
-                                    placeholder="e.g., Bonus for promotion"
+                                    placeholder={t('users:management.reasonPlaceholder')}
                                 />
                             </div>
 
@@ -463,14 +463,14 @@ const UsersListPage = () => {
                                     className="btn btn-secondary"
                                     disabled={adjustmentLoading}
                                 >
-                                    Cancel
+                                    {t('common:cancel')}
                                 </button>
                                 <button
                                     onClick={handleAdjustPoints}
                                     className="btn btn-primary"
                                     disabled={adjustmentLoading || !adjustmentAmount}
                                 >
-                                    {adjustmentLoading ? 'Adjusting...' : 'Adjust Points'}
+                                    {adjustmentLoading ? t('users:management.adjusting') : t('users:management.adjustPoints')}
                                 </button>
                             </div>
                         </div>
@@ -481,7 +481,7 @@ const UsersListPage = () => {
                 <Modal
                     isOpen={showViewModal}
                     onClose={() => setShowViewModal(false)}
-                    title="User Details"
+                    title={t('users:management.userDetails')}
                     size="medium"
                 >
                     {selectedUser && (
@@ -502,11 +502,11 @@ const UsersListPage = () => {
 
                             <div className="user-detail-grid">
                                 <div className="detail-item">
-                                    <label>UTORid</label>
+                                    <label>{t('users:management.utorid')}</label>
                                     <span>{selectedUser.utorid}</span>
                                 </div>
                                 <div className="detail-item">
-                                    <label>Role</label>
+                                    <label>{t('users:management.role')}</label>
                                     <span
                                         className="role-badge"
                                         style={{ backgroundColor: getRoleColor(selectedUser.role) + '20', color: getRoleColor(selectedUser.role) }}
@@ -515,22 +515,22 @@ const UsersListPage = () => {
                                     </span>
                                 </div>
                                 <div className="detail-item">
-                                    <label>Points</label>
+                                    <label>{t('common:points')}</label>
                                     <span className="points-value">{selectedUser.points?.toLocaleString() || 0}</span>
                                 </div>
                                 <div className="detail-item">
-                                    <label>Verification Status</label>
+                                    <label>{t('users:management.verificationStatus')}</label>
                                     <span className={`status-badge ${selectedUser.verified ? 'verified' : 'unverified'}`}>
-                                        {selectedUser.verified ? '✓ Verified' : '○ Unverified'}
+                                        {selectedUser.verified ? t('users:management.verifiedBadge') : t('users:management.unverifiedBadge')}
                                     </span>
                                 </div>
                                 <div className="detail-item">
-                                    <label>Created At</label>
-                                    <span>{selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString() : 'N/A'}</span>
+                                    <label>{t('users:management.createdAt')}</label>
+                                    <span>{selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString() : t('common:na')}</span>
                                 </div>
                                 <div className="detail-item">
-                                    <label>Last Login</label>
-                                    <span>{selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleDateString() : 'Never'}</span>
+                                    <label>{t('users:management.lastLogin')}</label>
+                                    <span>{selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleDateString() : t('users:management.never')}</span>
                                 </div>
                             </div>
 
@@ -543,7 +543,7 @@ const UsersListPage = () => {
                                         }}
                                         className="btn btn-secondary"
                                     >
-                                        Edit User
+                                        {t('users:management.editUser')}
                                     </button>
                                 )}
                                 <button
@@ -553,13 +553,13 @@ const UsersListPage = () => {
                                     }}
                                     className="btn btn-secondary"
                                 >
-                                    Adjust Points
+                                    {t('users:management.adjustPoints')}
                                 </button>
                                 <button
                                     onClick={() => setShowViewModal(false)}
                                     className="btn btn-primary"
                                 >
-                                    Close
+                                    {t('common:close')}
                                 </button>
                             </div>
                         </div>
@@ -570,14 +570,14 @@ const UsersListPage = () => {
                 <Modal
                     isOpen={showEditModal}
                     onClose={() => setShowEditModal(false)}
-                    title="Edit User"
+                    title={t('users:management.editUser')}
                     size="medium"
                 >
                     {selectedUser && (
                         <div className="edit-user-modal">
                             <div className="user-summary">
                                 <strong>{selectedUser.name}</strong>
-                                <span>UTORid: {selectedUser.utorid}</span>
+                                <span>{t('users:management.utorid')}: {selectedUser.utorid}</span>
                             </div>
 
                             <div className="form-group">
@@ -588,18 +588,18 @@ const UsersListPage = () => {
                                         onChange={(e) => setEditForm({ ...editForm, verified: e.target.checked })}
                                         disabled={selectedUser.verified}
                                     />
-                                    <span>Verified</span>
+                                    <span>{t('users:management.verified')}</span>
                                 </label>
                                 {selectedUser.verified && (
-                                    <span className="input-hint">User is already verified</span>
+                                    <span className="input-hint">{t('users:management.alreadyVerified')}</span>
                                 )}
                                 {!selectedUser.verified && (
-                                    <span className="input-hint">Check to verify this user</span>
+                                    <span className="input-hint">{t('users:management.checkToVerify')}</span>
                                 )}
                             </div>
 
                             <div className="form-group">
-                                <label>Role</label>
+                                <label>{t('users:management.role')}</label>
                                 {(() => {
                                     const availableRoles = getAvailableRoleOptions();
                                     const userCurrentRole = selectedUser.role;
@@ -620,14 +620,14 @@ const UsersListPage = () => {
                                             </select>
                                             {!canSetCurrentRole && (
                                                 <span className="input-hint" style={{ color: 'var(--color-warning)' }}>
-                                                    Current role ({ROLE_LABELS[userCurrentRole] || userCurrentRole}) cannot be set by your role level
+                                                    {t('users:management.cannotSetRole', { role: ROLE_LABELS[userCurrentRole] || userCurrentRole })}
                                                 </span>
                                             )}
                                             <span className="input-hint">
                                                 {currentUser?.role === 'manager'
-                                                    ? 'Managers can only set role to Regular or Cashier'
+                                                    ? t('users:management.managerRoleHint')
                                                     : currentUser?.role === 'superuser'
-                                                        ? 'Superusers can set any role'
+                                                        ? t('users:management.superuserRoleHint')
                                                         : ''}
                                             </span>
                                         </>
@@ -641,14 +641,14 @@ const UsersListPage = () => {
                                     className="btn btn-secondary"
                                     disabled={editLoading}
                                 >
-                                    Cancel
+                                    {t('common:cancel')}
                                 </button>
                                 <button
                                     onClick={handleEditUser}
                                     className="btn btn-primary"
                                     disabled={editLoading}
                                 >
-                                    {editLoading ? 'Saving...' : 'Save Changes'}
+                                    {editLoading ? t('common:saving') : t('users:management.saveChanges')}
                                 </button>
                             </div>
                         </div>
