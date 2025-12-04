@@ -62,14 +62,14 @@
   color: var(--color-accent);
 }
 
-.filters-row {
+.manage-promotions-page .filters-row {
   display: flex;
   gap: var(--space-3);
   flex: 1;
   justify-content: flex-end;
 }
 
-.filters-row select {
+.manage-promotions-page .filters-row select {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);

@@ -12,7 +12,7 @@
 }
 
 /* Filters Bar - Page Specific Layout */
-.filters-bar {
+.users-list-page .filters-bar {
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
@@ -20,21 +20,21 @@
   margin-bottom: var(--space-6);
 }
 
-.filters-row {
+.users-list-page .filters-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
   align-items: flex-end;
 }
 
-.filter-group {
+.users-list-page .filter-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   min-width: 150px;
 }
 
-.filter-group.search-group {
+.users-list-page .filter-group.search-group {
   flex: 1;
   min-width: 200px;
 }

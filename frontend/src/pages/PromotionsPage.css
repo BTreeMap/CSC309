@@ -19,7 +19,7 @@
   align-items: flex-end;
 }
 
-.filter-group {
+.promotions-page .filter-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -27,14 +27,14 @@
 }
 
 /* Override label styling for filters */
-.filter-group .form-label {
+.promotions-page .filter-group .form-label {
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
 }
 
 /* Override select sizing for filters */
-.filter-group .form-select {
+.promotions-page .filter-group .form-select {
   padding: var(--space-3) var(--space-4);
   font-size: var(--text-sm);
 }
@@ -174,7 +174,7 @@
 }
 
 @media (max-width: 768px) {
-  .page-header {
+  .promotions-page .page-header {
     flex-direction: column;
     align-items: stretch;
   }
@@ -187,7 +187,7 @@
     flex-direction: column;
   }
 
-  .filter-group {
+  .promotions-page .filter-group {
     width: 100%;
   }
 

@@ -36,30 +36,16 @@
 
 /* ==========================================================================
    PAGE HEADERS
-   Strictly left-aligned titles and subtitles
+   Note: .page-title and .page-subtitle are defined in Layout.css
+   These selectors ensure consistent left alignment across all pages
    ========================================================================== */
 
-/* Title typography */
-.page-title {
-    font-family: var(--font-serif);
-    font-size: var(--text-2xl);
-    font-weight: var(--font-bold);
-    color: var(--color-text-primary);
-    margin: 0;
-    padding: 0;
+/* Ensure page headers never center or right-align */
+.page-header,
+.page-header-content,
+.page-title-row,
+.page-title-text {
     text-align: left;
-    line-height: 1.2;
-}
-
-/* Subtitle typography */
-.page-subtitle {
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    line-height: 1.5;
 }
 
 /* ==========================================================================
@@ -268,10 +254,6 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
-    .page-title {
-        font-size: var(--text-xl);
-    }
-
     .page-section {
         margin-bottom: var(--space-6);
     }
@@ -299,10 +281,6 @@
 }
 
 @media (max-width: 480px) {
-    .page-title {
-        font-size: var(--text-lg);
-    }
-
     .page-card {
         padding: var(--space-4);
     }

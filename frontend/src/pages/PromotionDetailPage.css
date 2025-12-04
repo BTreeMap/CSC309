@@ -7,9 +7,9 @@
    ========================================================================== */
 
 .promotion-detail-page {
-  padding: var(--space-8);
-  max-width: var(--max-width-4xl);
+  max-width: var(--container-xl);
   margin: 0 auto;
+  padding: var(--space-2) 0;
   animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
