@@ -3,6 +3,7 @@
         "title": "Promotions",
         "subtitle": "Discover available promotions and earn bonus points",
         "manageTitle": "Manage Promotions",
+        "manageSubtitle": "Create and manage promotions for your customers",
         "list": {
             "noPromotions": "No promotions found",
             "noPromotionsFiltered": "No promotions match your filters.",
@@ -118,6 +119,8 @@
         "title": "Events",
         "subtitle": "Discover and RSVP to upcoming events",
         "manageTitle": "Manage Events",
+        "manageSubtitle": "Create and manage events for your customers",
+        "createEvent": "Create Event",
         "list": {
             "noEvents": "No events found",
             "noEventsFiltered": "No events match your filters.",

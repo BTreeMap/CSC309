@@ -1,5 +1,10 @@
 {
     "title": "Utilisateurs",
+    "fields": {
+        "name": "Nom",
+        "email": "E-mail",
+        "utorid": "UTORid"
+    },
     "list": {
         "title": "Gestion des utilisateurs",
         "searchPlaceholder": "Rechercher des utilisateurs...",

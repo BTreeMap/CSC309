@@ -3,6 +3,7 @@
         "title": "العروض الترويجية",
         "subtitle": "اكتشف العروض المتاحة واكسب نقاط إضافية",
         "manageTitle": "إدارة العروض",
+        "manageSubtitle": "إنشاء وإدارة العروض الترويجية لعملائك",
         "list": {
             "noPromotions": "لم يتم العثور على عروض",
             "noPromotionsFiltered": "لا توجد عروض تطابق معايير البحث.",
@@ -85,12 +86,41 @@
             "message": "هل أنت متأكد أنك تريد حذف هذا العرض؟ لا يمكن التراجع عن هذا الإجراء.",
             "success": "تم حذف العرض بنجاح",
             "error": "فشل حذف العرض"
-        }
+        },
+        "manage": {
+            "loading": "جاري تحميل العروض...",
+            "noPromotions": "لا توجد عروض حتى الآن",
+            "noPromotionsYet": "أنشئ أول عرض لجذب العملاء.",
+            "tableId": "المعرف",
+            "tableName": "الاسم",
+            "tableType": "النوع",
+            "tableDuration": "المدة",
+            "tableBenefit": "الميزة",
+            "tableStatus": "الحالة",
+            "tableActions": "الإجراءات",
+            "typeAuto": "تلقائي",
+            "typeCode": "رمز",
+            "to": "إلى",
+            "rate": "+{{rate}}% معدل",
+            "points": "+{{points}} نقطة",
+            "statusUpcoming": "قادم",
+            "statusActive": "نشط",
+            "statusEnded": "منتهٍ",
+            "view": "عرض",
+            "edit": "تعديل",
+            "delete": "حذف",
+            "saving": "جاري الحفظ...",
+            "updatePromotion": "تحديث العرض",
+            "createPromotion": "إنشاء عرض"
+        },
+        "createPromotion": "إنشاء عرض"
     },
     "events": {
         "title": "الفعاليات",
         "subtitle": "اكتشف الفعاليات القادمة وسجل فيها",
         "manageTitle": "إدارة الفعاليات",
+        "manageSubtitle": "إنشاء وإدارة الفعاليات لعملائك",
+        "createEvent": "إنشاء فعالية",
         "list": {
             "noEvents": "لم يتم العثور على فعاليات",
             "noEventsFiltered": "لا توجد فعاليات تطابق معايير البحث.",
@@ -198,7 +228,28 @@
             "markAttended": "تحديد كحاضر",
             "removeAttendee": "إزالة المشارك",
             "sendReminder": "إرسال تذكير",
-            "exportList": "تصدير قائمة المشاركين"
+            "exportList": "تصدير قائمة المشاركين",
+            "view": "عرض",
+            "edit": "تعديل",
+            "details": "التفاصيل",
+            "delete": "حذف",
+            "showingCount": "عرض {{showing}} من {{total}} فعالية",
+            "loading": "جاري تحميل الفعاليات...",
+            "noEvents": "لم يتم العثور على فعاليات",
+            "noEventsYet": "لا توجد فعاليات في النظام حتى الآن.",
+            "createFirst": "أنشئ فعاليتك الأولى",
+            "tableEvent": "الفعالية",
+            "tableLocation": "الموقع",
+            "tableTime": "التاريخ/الوقت",
+            "tableCapacity": "السعة",
+            "tablePoints": "النقاط",
+            "tableStatus": "الحالة",
+            "tableActions": "الإجراءات",
+            "spotsLeft": "{{count}} متبقي",
+            "unlimited": "غير محدود",
+            "statusUpcoming": "قادمة",
+            "statusActive": "نشطة",
+            "statusEnded": "انتهت"
         }
     }
 }

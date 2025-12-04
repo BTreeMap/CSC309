@@ -178,6 +178,11 @@
             "generic": "Échec du transfert de points"
         }
     },
+    "redemptionQr": {
+        "title": "Code QR d'échange",
+        "subtitle": "Montrez ce code au caissier pour compléter votre échange",
+        "alreadyProcessed": "Cet échange a déjà été traité"
+    },
     "redemption": {
         "title": "Échanger des points",
         "processTitle": "Traiter l'échange",

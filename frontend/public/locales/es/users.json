@@ -1,5 +1,10 @@
 {
     "title": "Usuarios",
+    "fields": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "utorid": "UTORid"
+    },
     "list": {
         "title": "Gestión de usuarios",
         "searchPlaceholder": "Buscar usuarios...",
@@ -30,16 +35,29 @@
     },
     "edit": {
         "title": "Editar perfil",
+        "subtitle": "Actualice su información personal",
         "nameLabel": "Nombre completo",
         "namePlaceholder": "Ingrese su nombre completo",
-        "emailLabel": "Dirección de correo electrónico",
-        "emailPlaceholder": "Ingrese su dirección de correo electrónico",
+        "emailLabel": "Correo electrónico",
+        "emailPlaceholder": "ejemplo@mail.utoronto.ca",
+        "emailHint": "Debe ser una dirección de correo electrónico válida de UofT",
         "birthdayLabel": "Cumpleaños",
         "avatarLabel": "Foto de perfil",
+        "choosePhoto": "Elegir foto",
+        "avatarHint": "JPG, PNG o GIF. Tamaño máximo 5MB",
+        "utoridCannotChange": "El UTORid no se puede cambiar",
         "submit": "Guardar cambios",
         "submitting": "Guardando...",
         "success": "Perfil actualizado correctamente",
-        "error": "No se pudo actualizar el perfil"
+        "noChanges": "No hay cambios para guardar",
+        "error": "No se pudo actualizar el perfil",
+        "loading": "Cargando perfil...",
+        "avatarTooLarge": "La imagen de avatar debe ser menor a 5MB",
+        "validation": {
+            "nameLength": "El nombre debe tener entre 1 y 50 caracteres",
+            "invalidEmail": "El correo electrónico debe ser una dirección UofT válida",
+            "invalidDate": "Formato de fecha inválido"
+        }
     },
     "roles": {
         "regular": "Usuario regular",

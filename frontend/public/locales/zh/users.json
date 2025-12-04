@@ -1,5 +1,10 @@
 {
     "title": "用户",
+    "fields": {
+        "name": "姓名",
+        "email": "电子邮件",
+        "utorid": "UTORid"
+    },
     "list": {
         "title": "用户管理",
         "searchPlaceholder": "搜索用户...",

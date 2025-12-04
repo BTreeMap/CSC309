@@ -3,6 +3,7 @@
         "title": "Promociones",
         "subtitle": "Descubre promociones disponibles y gana puntos extra",
         "manageTitle": "Gestionar promociones",
+        "manageSubtitle": "Cree y gestione promociones para sus clientes",
         "list": {
             "noPromotions": "No se encontraron promociones",
             "noPromotionsFiltered": "No hay promociones que coincidan con tus filtros.",
@@ -85,12 +86,41 @@
             "message": "¿Está seguro de que desea eliminar esta promoción? Esta acción no se puede deshacer.",
             "success": "Promoción eliminada correctamente",
             "error": "No se pudo eliminar la promoción"
-        }
+        },
+        "manage": {
+            "loading": "Cargando promociones...",
+            "noPromotions": "Aún no hay promociones",
+            "noPromotionsYet": "Cree su primera promoción para atraer clientes.",
+            "tableId": "ID",
+            "tableName": "Nombre",
+            "tableType": "Tipo",
+            "tableDuration": "Duración",
+            "tableBenefit": "Beneficio",
+            "tableStatus": "Estado",
+            "tableActions": "Acciones",
+            "typeAuto": "Auto",
+            "typeCode": "Código",
+            "to": "a",
+            "rate": "+{{rate}}% tasa",
+            "points": "+{{points}} pts",
+            "statusUpcoming": "Próxima",
+            "statusActive": "Activa",
+            "statusEnded": "Finalizada",
+            "view": "Ver",
+            "edit": "Editar",
+            "delete": "Eliminar",
+            "saving": "Guardando...",
+            "updatePromotion": "Actualizar promoción",
+            "createPromotion": "Crear promoción"
+        },
+        "createPromotion": "Crear promoción"
     },
     "events": {
         "title": "Eventos",
         "subtitle": "Descubre próximos eventos y confirma tu asistencia",
         "manageTitle": "Gestionar eventos",
+        "manageSubtitle": "Cree y gestione eventos para sus clientes",
+        "createEvent": "Crear evento",
         "list": {
             "noEvents": "No se encontraron eventos",
             "noEventsFiltered": "No hay eventos que coincidan con tus filtros.",
@@ -198,7 +228,28 @@
             "markAttended": "Marcar como asistido",
             "removeAttendee": "Eliminar asistente",
             "sendReminder": "Enviar recordatorio",
-            "exportList": "Exportar lista de asistentes"
+            "exportList": "Exportar lista de asistentes",
+            "view": "Ver",
+            "edit": "Editar",
+            "details": "Detalles",
+            "delete": "Eliminar",
+            "showingCount": "Mostrando {{showing}} de {{total}} eventos",
+            "loading": "Cargando eventos...",
+            "noEvents": "No se encontraron eventos",
+            "noEventsYet": "Aún no hay eventos en el sistema.",
+            "createFirst": "Cree su primer evento",
+            "tableEvent": "Evento",
+            "tableLocation": "Ubicación",
+            "tableTime": "Fecha/Hora",
+            "tableCapacity": "Capacidad",
+            "tablePoints": "Puntos",
+            "tableStatus": "Estado",
+            "tableActions": "Acciones",
+            "spotsLeft": "{{count}} disponibles",
+            "unlimited": "Ilimitado",
+            "statusUpcoming": "Próximo",
+            "statusActive": "Activo",
+            "statusEnded": "Finalizado"
         }
     }
 }

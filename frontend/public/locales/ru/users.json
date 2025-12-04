@@ -1,5 +1,10 @@
 {
     "title": "Пользователи",
+    "fields": {
+        "name": "Имя",
+        "email": "Электронная почта",
+        "utorid": "UTORid"
+    },
     "list": {
         "title": "Управление пользователями",
         "searchPlaceholder": "Поиск пользователей...",
@@ -30,16 +35,29 @@
     },
     "edit": {
         "title": "Редактировать профиль",
+        "subtitle": "Обновите вашу личную информацию",
         "nameLabel": "Полное имя",
         "namePlaceholder": "Введите полное имя",
-        "emailLabel": "Адрес электронной почты",
-        "emailPlaceholder": "Введите адрес электронной почты",
+        "emailLabel": "Электронная почта",
+        "emailPlaceholder": "example@mail.utoronto.ca",
+        "emailHint": "Должен быть действительный адрес электронной почты UofT",
         "birthdayLabel": "День рождения",
         "avatarLabel": "Фото профиля",
+        "choosePhoto": "Выбрать фото",
+        "avatarHint": "JPG, PNG или GIF. Макс. размер 5МБ",
+        "utoridCannotChange": "UTORid нельзя изменить",
         "submit": "Сохранить изменения",
         "submitting": "Сохранение...",
         "success": "Профиль успешно обновлён",
-        "error": "Не удалось обновить профиль"
+        "noChanges": "Нет изменений для сохранения",
+        "error": "Не удалось обновить профиль",
+        "loading": "Загрузка профиля...",
+        "avatarTooLarge": "Изображение аватара должно быть меньше 5МБ",
+        "validation": {
+            "nameLength": "Имя должно содержать от 1 до 50 символов",
+            "invalidEmail": "Email должен быть действительным адресом UofT",
+            "invalidDate": "Неверный формат даты"
+        }
     },
     "roles": {
         "regular": "Обычный пользователь",

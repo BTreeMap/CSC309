@@ -178,6 +178,11 @@
             "generic": "No se pudieron transferir los puntos"
         }
     },
+    "redemptionQr": {
+        "title": "Código QR de canje",
+        "subtitle": "Muestre este código al cajero para completar su canje",
+        "alreadyProcessed": "Este canje ya ha sido procesado"
+    },
     "redemption": {
         "title": "Canjear puntos",
         "processTitle": "Procesar canje",

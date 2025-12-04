@@ -3,6 +3,7 @@
         "title": "Акции",
         "subtitle": "Откройте доступные акции и зарабатывайте бонусные баллы",
         "manageTitle": "Управление акциями",
+        "manageSubtitle": "Создавайте и управляйте акциями для ваших клиентов",
         "list": {
             "noPromotions": "Акции не найдены",
             "noPromotionsFiltered": "Нет акций, соответствующих вашим фильтрам.",
@@ -85,12 +86,41 @@
             "message": "Вы уверены, что хотите удалить эту акцию? Это действие нельзя отменить.",
             "success": "Акция успешно удалена",
             "error": "Не удалось удалить акцию"
-        }
+        },
+        "manage": {
+            "loading": "Загрузка акций...",
+            "noPromotions": "Акций пока нет",
+            "noPromotionsYet": "Создайте первую акцию для привлечения клиентов.",
+            "tableId": "ID",
+            "tableName": "Название",
+            "tableType": "Тип",
+            "tableDuration": "Период",
+            "tableBenefit": "Выгода",
+            "tableStatus": "Статус",
+            "tableActions": "Действия",
+            "typeAuto": "Авто",
+            "typeCode": "Код",
+            "to": "до",
+            "rate": "+{{rate}}% ставка",
+            "points": "+{{points}} балл.",
+            "statusUpcoming": "Скоро",
+            "statusActive": "Активна",
+            "statusEnded": "Завершена",
+            "view": "Просмотр",
+            "edit": "Изменить",
+            "delete": "Удалить",
+            "saving": "Сохранение...",
+            "updatePromotion": "Обновить акцию",
+            "createPromotion": "Создать акцию"
+        },
+        "createPromotion": "Создать акцию"
     },
     "events": {
         "title": "События",
         "subtitle": "Откройте предстоящие события и зарегистрируйтесь",
         "manageTitle": "Управление событиями",
+        "manageSubtitle": "Создавайте и управляйте событиями для ваших клиентов",
+        "createEvent": "Создать событие",
         "list": {
             "noEvents": "События не найдены",
             "noEventsFiltered": "Нет событий, соответствующих вашим фильтрам.",
@@ -198,7 +228,28 @@
             "markAttended": "Отметить как посетившего",
             "removeAttendee": "Удалить участника",
             "sendReminder": "Отправить напоминание",
-            "exportList": "Экспортировать список участников"
+            "exportList": "Экспортировать список участников",
+            "view": "Просмотр",
+            "edit": "Изменить",
+            "details": "Подробности",
+            "delete": "Удалить",
+            "showingCount": "Показано {{showing}} из {{total}} событий",
+            "loading": "Загрузка событий...",
+            "noEvents": "События не найдены",
+            "noEventsYet": "В системе пока нет событий.",
+            "createFirst": "Создайте первое событие",
+            "tableEvent": "Событие",
+            "tableLocation": "Место",
+            "tableTime": "Дата/Время",
+            "tableCapacity": "Вместимость",
+            "tablePoints": "Баллы",
+            "tableStatus": "Статус",
+            "tableActions": "Действия",
+            "spotsLeft": "{{count}} осталось",
+            "unlimited": "Неограничено",
+            "statusUpcoming": "Предстоящее",
+            "statusActive": "Активное",
+            "statusEnded": "Завершено"
         }
     }
 }

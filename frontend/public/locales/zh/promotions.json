@@ -3,6 +3,7 @@
         "title": "促销活动",
         "subtitle": "发现可用促销活动，赚取奖励积分",
         "manageTitle": "管理促销",
+        "manageSubtitle": "为您的客户创建和管理促销活动",
         "list": {
             "noPromotions": "未找到促销活动",
             "noPromotionsFiltered": "没有符合筛选条件的促销活动。",
@@ -85,12 +86,41 @@
             "message": "您确定要删除此促销吗？此操作无法撤销。",
             "success": "促销删除成功",
             "error": "删除促销失败"
-        }
+        },
+        "manage": {
+            "loading": "正在加载促销活动...",
+            "noPromotions": "暂无促销活动",
+            "noPromotionsYet": "创建您的第一个促销活动来吸引客户。",
+            "tableId": "编号",
+            "tableName": "名称",
+            "tableType": "类型",
+            "tableDuration": "持续时间",
+            "tableBenefit": "优惠",
+            "tableStatus": "状态",
+            "tableActions": "操作",
+            "typeAuto": "自动",
+            "typeCode": "代码",
+            "to": "至",
+            "rate": "+{{rate}}% 比率",
+            "points": "+{{points}} 积分",
+            "statusUpcoming": "即将开始",
+            "statusActive": "进行中",
+            "statusEnded": "已结束",
+            "view": "查看",
+            "edit": "编辑",
+            "delete": "删除",
+            "saving": "保存中...",
+            "updatePromotion": "更新促销",
+            "createPromotion": "创建促销"
+        },
+        "createPromotion": "创建促销"
     },
     "events": {
         "title": "活动",
         "subtitle": "发现即将举行的活动并报名参加",
         "manageTitle": "管理活动",
+        "manageSubtitle": "为您的客户创建和管理活动",
+        "createEvent": "创建活动",
         "list": {
             "noEvents": "未找到活动",
             "noEventsFiltered": "没有符合筛选条件的活动。",
@@ -198,7 +228,28 @@
             "markAttended": "标记为已参与",
             "removeAttendee": "移除参与者",
             "sendReminder": "发送提醒",
-            "exportList": "导出参与者名单"
+            "exportList": "导出参与者名单",
+            "view": "查看",
+            "edit": "编辑",
+            "details": "详情",
+            "delete": "删除",
+            "showingCount": "显示 {{showing}} / {{total}} 个活动",
+            "loading": "正在加载活动...",
+            "noEvents": "未找到活动",
+            "noEventsYet": "系统中暂无活动。",
+            "createFirst": "创建您的第一个活动",
+            "tableEvent": "活动",
+            "tableLocation": "地点",
+            "tableTime": "日期/时间",
+            "tableCapacity": "容量",
+            "tablePoints": "积分",
+            "tableStatus": "状态",
+            "tableActions": "操作",
+            "spotsLeft": "剩余 {{count}}",
+            "unlimited": "无限制",
+            "statusUpcoming": "即将开始",
+            "statusActive": "进行中",
+            "statusEnded": "已结束"
         }
     }
 }

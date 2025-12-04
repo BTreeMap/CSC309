@@ -175,8 +175,13 @@
             "invalidQr": "无效的二维码",
             "redemptionQr": "这是兑换二维码。请扫描用户的个人二维码。",
             "qrExtractFailed": "无法从二维码中提取用户信息",
-            "generic": "转账失败"
+            "generic": "转移积分失败"
         }
+    },
+    "redemptionQr": {
+        "title": "兑换二维码",
+        "subtitle": "向收银员出示此代码以完成兑换",
+        "alreadyProcessed": "此兑换已经处理过"
     },
     "redemption": {
         "title": "兑换积分",

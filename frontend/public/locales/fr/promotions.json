@@ -3,6 +3,7 @@
         "title": "Promotions",
         "subtitle": "Découvrez les promotions disponibles et gagnez des points bonus",
         "manageTitle": "Gérer les promotions",
+        "manageSubtitle": "Créez et gérez des promotions pour vos clients",
         "list": {
             "noPromotions": "Aucune promotion trouvée",
             "noPromotionsFiltered": "Aucune promotion ne correspond à vos filtres.",
@@ -85,12 +86,41 @@
             "message": "Êtes-vous sûr de vouloir supprimer cette promotion ? Cette action est irréversible.",
             "success": "Promotion supprimée avec succès",
             "error": "Échec de la suppression de la promotion"
-        }
+        },
+        "manage": {
+            "loading": "Chargement des promotions...",
+            "noPromotions": "Aucune promotion pour le moment",
+            "noPromotionsYet": "Créez votre première promotion pour attirer des clients.",
+            "tableId": "ID",
+            "tableName": "Nom",
+            "tableType": "Type",
+            "tableDuration": "Durée",
+            "tableBenefit": "Avantage",
+            "tableStatus": "Statut",
+            "tableActions": "Actions",
+            "typeAuto": "Auto",
+            "typeCode": "Code",
+            "to": "au",
+            "rate": "+{{rate}}% taux",
+            "points": "+{{points}} pts",
+            "statusUpcoming": "À venir",
+            "statusActive": "Active",
+            "statusEnded": "Terminée",
+            "view": "Voir",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "saving": "Enregistrement...",
+            "updatePromotion": "Mettre à jour la promotion",
+            "createPromotion": "Créer une promotion"
+        },
+        "createPromotion": "Créer une promotion"
     },
     "events": {
         "title": "Événements",
         "subtitle": "Découvrez les événements à venir et inscrivez-vous",
         "manageTitle": "Gérer les événements",
+        "manageSubtitle": "Créez et gérez des événements pour vos clients",
+        "createEvent": "Créer un événement",
         "list": {
             "noEvents": "Aucun événement trouvé",
             "noEventsFiltered": "Aucun événement ne correspond à vos filtres.",
@@ -198,7 +228,28 @@
             "markAttended": "Marquer comme présent",
             "removeAttendee": "Supprimer le participant",
             "sendReminder": "Envoyer un rappel",
-            "exportList": "Exporter la liste des participants"
+            "exportList": "Exporter la liste des participants",
+            "view": "Voir",
+            "edit": "Modifier",
+            "details": "Détails",
+            "delete": "Supprimer",
+            "showingCount": "Affichage de {{showing}} sur {{total}} événements",
+            "loading": "Chargement des événements...",
+            "noEvents": "Aucun événement trouvé",
+            "noEventsYet": "Aucun événement dans le système pour le moment.",
+            "createFirst": "Créez votre premier événement",
+            "tableEvent": "Événement",
+            "tableLocation": "Lieu",
+            "tableTime": "Date/Heure",
+            "tableCapacity": "Capacité",
+            "tablePoints": "Points",
+            "tableStatus": "Statut",
+            "tableActions": "Actions",
+            "spotsLeft": "{{count}} restantes",
+            "unlimited": "Illimité",
+            "statusUpcoming": "À venir",
+            "statusActive": "Actif",
+            "statusEnded": "Terminé"
         }
     }
 }

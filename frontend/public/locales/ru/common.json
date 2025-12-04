@@ -9,6 +9,7 @@
     "confirm": "Подтвердить",
     "close": "Закрыть",
     "back": "Назад",
+    "goBack": "Вернуться",
     "next": "Далее",
     "previous": "Предыдущий",
     "submit": "Отправить",
@@ -70,6 +71,7 @@
     "points_one": "{{count}} балл",
     "points_few": "{{count}} балла",
     "points_many": "{{count}} баллов",
+    "points_other": "{{count}} баллов",
     "brand": {
         "name": "Программа лояльности",
         "shortName": "Лояльность",

@@ -178,6 +178,11 @@
             "generic": "Failed to transfer points"
         }
     },
+    "redemptionQr": {
+        "title": "Redemption QR Code",
+        "subtitle": "Show this code to a cashier to complete your redemption",
+        "alreadyProcessed": "This redemption has already been processed"
+    },
     "redemption": {
         "title": "Redeem Points",
         "processTitle": "Process Redemption",

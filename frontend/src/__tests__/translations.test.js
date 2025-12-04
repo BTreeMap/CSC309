@@ -295,52 +295,124 @@ describe('Interpolation Placeholder Consistency', () => {
 describe('Used Translation Keys Validation', () => {
     // Find all source files
     const sourceFiles = findFiles(SRC_DIR, ['.js', '.jsx', '.ts', '.tsx']);
-    const usedKeys = extractUsedTranslationKeys(sourceFiles);
 
-    test('All used translation keys should exist in English translations', () => {
-        const invalidKeys = [];
+    // Extract used keys with context about which file uses them
+    function extractUsedKeysWithContext(sourceFiles) {
+        const usedKeysWithContext = [];
 
-        for (const [fullKey, locations] of usedKeys.entries()) {
-            // Skip non-translation keys (like variables or partial matches)
-            if (!fullKey.includes(':') && !fullKey.includes('.')) continue;
+        for (const file of sourceFiles) {
+            const content = fs.readFileSync(file, 'utf8');
+            const relativePath = path.relative(SRC_DIR, file);
 
-            let namespace, keyPath;
+            // Extract namespaces used in this file from useTranslation calls
+            const namespaceMatch = content.match(/useTranslation\s*\(\s*\[([^\]]+)\]/);
+            const singleNamespaceMatch = content.match(/useTranslation\s*\(\s*['"`](\w+)['"`]\s*\)/);
 
-            if (fullKey.includes(':')) {
-                [namespace, keyPath] = fullKey.split(':');
-            } else {
-                // Default namespace is 'common'
-                namespace = 'common';
-                keyPath = fullKey;
+            let fileNamespaces = ['common']; // default
+            if (namespaceMatch) {
+                fileNamespaces = namespaceMatch[1]
+                    .split(',')
+                    .map(s => s.trim().replace(/['"]/g, ''))
+                    .filter(s => s.length > 0);
+            } else if (singleNamespaceMatch) {
+                fileNamespaces = [singleNamespaceMatch[1]];
             }
 
-            // Skip if namespace doesn't exist
-            if (!NAMESPACES.includes(namespace)) continue;
+            // Extract t() calls
+            const tCallPattern = /\bt\s*\(\s*['"`]([^'"`]+)['"`]/g;
+            let match;
+            while ((match = tCallPattern.exec(content)) !== null) {
+                const key = match[1];
+                // Skip dynamic keys
+                if (key.includes('${') || key.includes('`')) continue;
 
-            const englishData = allTranslations[REFERENCE_LOCALE][namespace];
-            if (!englishData || englishData.__parseError) continue;
-
-            const value = getNestedValue(englishData, keyPath);
-
-            if (value === undefined) {
-                invalidKeys.push({
-                    key: fullKey,
-                    namespace,
-                    keyPath,
-                    usedIn: locations
+                usedKeysWithContext.push({
+                    key,
+                    file: relativePath,
+                    namespaces: fileNamespaces
                 });
             }
         }
 
-        if (invalidKeys.length > 0) {
-            console.error(`\n❌ Found ${invalidKeys.length} invalid translation key(s) used in source code:`);
-            invalidKeys.forEach(({ key, namespace, keyPath, usedIn }) => {
-                console.error(`   • "${key}" (namespace: ${namespace}, key: ${keyPath})`);
-                console.error(`     Used in: ${usedIn.slice(0, 3).join(', ')}${usedIn.length > 3 ? ` and ${usedIn.length - 3} more files` : ''}`);
-            });
+        return usedKeysWithContext;
+    }
+
+    const usedKeysWithContext = extractUsedKeysWithContext(sourceFiles);
+
+    test('All used translation keys should exist in English translations', () => {
+        const invalidKeys = [];
+
+        for (const { key, file, namespaces } of usedKeysWithContext) {
+            // Skip non-translation keys (like variables or partial matches)
+            if (!key.includes(':') && !key.includes('.')) continue;
+
+            let namespace, keyPath;
+            let foundInNamespace = false;
+
+            if (key.includes(':')) {
+                // Explicit namespace: namespace:key.path
+                [namespace, keyPath] = key.split(':');
+
+                if (!NAMESPACES.includes(namespace)) continue;
+
+                const englishData = allTranslations[REFERENCE_LOCALE][namespace];
+                if (englishData && !englishData.__parseError) {
+                    const value = getNestedValue(englishData, keyPath);
+                    if (value !== undefined) {
+                        foundInNamespace = true;
+                    }
+                }
+            } else {
+                // No explicit namespace - check all namespaces declared in the file
+                keyPath = key;
+
+                for (const ns of namespaces) {
+                    if (!NAMESPACES.includes(ns)) continue;
+
+                    const englishData = allTranslations[REFERENCE_LOCALE][ns];
+                    if (englishData && !englishData.__parseError) {
+                        const value = getNestedValue(englishData, keyPath);
+                        if (value !== undefined) {
+                            foundInNamespace = true;
+                            namespace = ns;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!foundInNamespace) {
+                invalidKeys.push({
+                    key,
+                    namespace: namespace || namespaces.join(' or '),
+                    keyPath,
+                    file
+                });
+            }
         }
 
-        expect(invalidKeys).toEqual([]);
+        // Deduplicate by key
+        const uniqueInvalidKeys = [];
+        const seenKeys = new Set();
+        for (const item of invalidKeys) {
+            if (!seenKeys.has(item.key)) {
+                seenKeys.add(item.key);
+                uniqueInvalidKeys.push(item);
+            }
+        }
+
+        if (uniqueInvalidKeys.length > 0) {
+            console.error(`\n❌ Found ${uniqueInvalidKeys.length} invalid translation key(s) used in source code:`);
+            uniqueInvalidKeys.slice(0, 20).forEach(({ key, namespace, keyPath, file }) => {
+                console.error(`   • "${key}" (namespace: ${namespace}, key: ${keyPath})`);
+                console.error(`     Used in: ${file}`);
+            });
+            if (uniqueInvalidKeys.length > 20) {
+                console.error(`   ... and ${uniqueInvalidKeys.length - 20} more`);
+            }
+        }
+
+        expect(uniqueInvalidKeys).toEqual([]);
     });
 });
 
