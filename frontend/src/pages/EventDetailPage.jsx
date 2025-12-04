@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -12,6 +13,7 @@ const EventDetailPage = () => {
     const navigate = useNavigate();
     const { user, activeRole } = useAuth();
     const { showToast } = useToast();
+    const { t } = useTranslation(['events', 'common']);
 
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -29,7 +31,7 @@ const EventDetailPage = () => {
             const data = await eventsAPI.getEvent(id);
             setEvent(data);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to load event');
+            setError(err.response?.data?.error || t('events:events.toast.errorLoad'));
         } finally {
             setLoading(false);
         }
@@ -43,10 +45,10 @@ const EventDetailPage = () => {
         setRsvpLoading(true);
         try {
             await eventsAPI.rsvpEvent(id);
-            showToast('Successfully RSVP\'d to event!', 'success');
+            showToast(t('events:events.toast.rsvpSuccess'), 'success');
             fetchEvent();
         } catch (err) {
-            showToast(err.response?.data?.error || 'Failed to RSVP', 'error');
+            showToast(err.response?.data?.error || t('events:events.toast.errorRsvp'), 'error');
         } finally {
             setRsvpLoading(false);
         }
@@ -56,11 +58,11 @@ const EventDetailPage = () => {
         setRsvpLoading(true);
         try {
             await eventsAPI.removeGuest(id, user.id);
-            showToast('RSVP cancelled successfully', 'success');
+            showToast(t('events:events.toast.rsvpCancelled'), 'success');
             setShowCancelConfirm(false);
             fetchEvent();
         } catch (err) {
-            showToast(err.response?.data?.error || 'Failed to cancel RSVP', 'error');
+            showToast(err.response?.data?.error || t('events:events.toast.errorRsvp'), 'error');
         } finally {
             setRsvpLoading(false);
         }
@@ -72,9 +74,9 @@ const EventDetailPage = () => {
         const startDate = new Date(event.startTime);
         const endDate = new Date(event.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', canRSVP: true };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended', canRSVP: false };
-        return { label: 'Happening Now', className: 'status-active', canRSVP: true };
+        if (now < startDate) return { label: t('events:events.status.upcoming'), className: 'status-upcoming', canRSVP: true };
+        if (now > endDate) return { label: t('events:events.status.past'), className: 'status-ended', canRSVP: false };
+        return { label: t('events:events.status.ongoing'), className: 'status-active', canRSVP: true };
     };
 
     const formatDate = (dateString) => {
@@ -123,7 +125,7 @@ const EventDetailPage = () => {
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading event..." />
+                <LoadingSpinner text={t('events:events.loading')} />
             </Layout>
         );
     }
@@ -140,10 +142,10 @@ const EventDetailPage = () => {
         return (
             <Layout>
                 <div className="not-found">
-                    <h2>Event Not Found</h2>
-                    <p>The event you're looking for doesn't exist or has been removed.</p>
+                    <h2>{t('events:events.detail.notFound')}</h2>
+                    <p>{t('events:events.detail.notFoundDesc')}</p>
                     <button onClick={() => navigate('/events')} className="btn btn-secondary">
-                        Back to Events
+                        {t('events:events.detail.backToEvents')}
                     </button>
                 </div>
             </Layout>
@@ -158,7 +160,7 @@ const EventDetailPage = () => {
         <Layout>
             <div className="event-detail-page">
                 <button onClick={() => navigate(-1)} className="back-button">
-                    ← Back to Events
+                    ← {t('events:events.detail.backToEvents')}
                 </button>
 
                 <div className="event-detail-card">
@@ -198,27 +200,27 @@ const EventDetailPage = () => {
                         <div className="event-main">
                             {event.description && (
                                 <div className="section">
-                                    <h2>About This Event</h2>
+                                    <h2>{t('events:events.detail.aboutEvent')}</h2>
                                     <p className="description-text">{event.description}</p>
                                 </div>
                             )}
 
                             <div className="section">
-                                <h2>Date & Time</h2>
+                                <h2>{t('events:events.form.startTimeLabel')} & {t('events:events.form.endTimeLabel')}</h2>
                                 <div className="datetime-grid">
                                     <div className="datetime-item">
-                                        <span className="datetime-label">Starts</span>
+                                        <span className="datetime-label">{t('events:events.form.startTimeLabel')}</span>
                                         <span className="datetime-value">{formatDate(event.startTime)}</span>
                                     </div>
                                     <div className="datetime-item">
-                                        <span className="datetime-label">Ends</span>
+                                        <span className="datetime-label">{t('events:events.form.endTimeLabel')}</span>
                                         <span className="datetime-value">{formatDate(event.endTime)}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="section">
-                                <h2>Location</h2>
+                                <h2>{t('events:events.detail.location')}</h2>
                                 <div className="location-display">
                                     <span className="location-icon">📍</span>
                                     <span className="location-text">{event.location}</span>
@@ -265,7 +267,7 @@ const EventDetailPage = () => {
                                 {attending ? (
                                     <div className="attending-section">
                                         <div className="attending-badge">
-                                            ✓ You're attending
+                                            ✓ {t('events:events.detail.youreAttending')}
                                         </div>
                                         {status.canRSVP && (
                                             <button
@@ -273,7 +275,7 @@ const EventDetailPage = () => {
                                                 className="btn btn-danger-outline"
                                                 disabled={rsvpLoading}
                                             >
-                                                Cancel RSVP
+                                                {t('events:events.rsvp.cancelRsvp')}
                                             </button>
                                         )}
                                     </div>
@@ -283,35 +285,35 @@ const EventDetailPage = () => {
                                         className="btn btn-primary btn-block"
                                         disabled={rsvpLoading}
                                     >
-                                        {rsvpLoading ? 'Processing...' : 'RSVP Now'}
+                                        {rsvpLoading ? t('events:events.detail.processing') : t('events:events.detail.rsvpNow')}
                                     </button>
                                 ) : full ? (
                                     <div className="full-notice">
-                                        This event is at capacity
+                                        {t('events:events.detail.eventAtCapacity')}
                                     </div>
                                 ) : (
                                     <div className="ended-notice">
-                                        This event has ended
+                                        {t('events:events.detail.eventEnded')}
                                     </div>
                                 )}
 
                                 {event.pointsRemain > 0 && event.pointsAwarded > 0 && (
                                     <div className="points-info">
                                         <span className="points-icon">🎁</span>
-                                        <span>Earn up to <strong>{event.pointsAwarded}</strong> points by attending!</span>
+                                        <span>{t('events:events.detail.earnPoints', { points: event.pointsAwarded })}</span>
                                     </div>
                                 )}
                             </div>
 
                             {isManager && (
                                 <div className="manager-card">
-                                    <h3>Manager Actions</h3>
+                                    <h3>{t('events:events.detail.managerActions')}</h3>
                                     <div className="manager-actions">
                                         <button
                                             onClick={() => navigate('/events/manage')}
                                             className="btn btn-secondary btn-block"
                                         >
-                                            ✏️ Manage Events
+                                            ✏️ {t('events:events.detail.manageEvents')}
                                         </button>
                                     </div>
                                 </div>
@@ -324,9 +326,9 @@ const EventDetailPage = () => {
                     isOpen={showCancelConfirm}
                     onClose={() => setShowCancelConfirm(false)}
                     onConfirm={handleCancelRSVP}
-                    title="Cancel RSVP"
-                    message="Are you sure you want to cancel your RSVP for this event?"
-                    confirmText="Cancel RSVP"
+                    title={t('events:events.rsvp.cancelRsvpTitle')}
+                    message={t('events:events.rsvp.cancelRsvpMessage')}
+                    confirmText={t('events:events.rsvp.confirmCancel')}
                     confirmVariant="danger"
                 />
             </div>

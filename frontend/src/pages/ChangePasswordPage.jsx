@@ -28,12 +28,12 @@ const ChangePasswordPage = () => {
 
     const validatePassword = (password) => {
         const errors = [];
-        if (password.length < 8) errors.push('At least 8 characters');
-        if (password.length > 20) errors.push('At most 20 characters');
-        if (!/[A-Z]/.test(password)) errors.push('One uppercase letter');
-        if (!/[a-z]/.test(password)) errors.push('One lowercase letter');
-        if (!/[0-9]/.test(password)) errors.push('One number');
-        if (!/[^A-Za-z0-9]/.test(password)) errors.push('One special character');
+        if (password.length < 8) errors.push(t('auth:changePassword.requirements.minLength'));
+        if (password.length > 20) errors.push(t('validation:maxLength', { max: 20 }));
+        if (!/[A-Z]/.test(password)) errors.push(t('auth:changePassword.requirements.uppercase'));
+        if (!/[a-z]/.test(password)) errors.push(t('auth:changePassword.requirements.lowercase'));
+        if (!/[0-9]/.test(password)) errors.push(t('auth:changePassword.requirements.number'));
+        if (!/[^A-Za-z0-9]/.test(password)) errors.push(t('auth:changePassword.requirements.special'));
         return errors;
     };
 
@@ -41,20 +41,20 @@ const ChangePasswordPage = () => {
         const newErrors = {};
 
         if (!formData.currentPassword) {
-            newErrors.currentPassword = 'Current password is required';
+            newErrors.currentPassword = t('validation:required');
         }
 
         const passwordErrors = validatePassword(formData.newPassword);
         if (passwordErrors.length > 0) {
-            newErrors.newPassword = `Password must contain: ${passwordErrors.join(', ')}`;
+            newErrors.newPassword = passwordErrors.join(', ');
         }
 
         if (formData.newPassword !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
+            newErrors.confirmPassword = t('auth:changePassword.error.mismatch');
         }
 
         if (formData.currentPassword === formData.newPassword) {
-            newErrors.newPassword = 'New password must be different from current password';
+            newErrors.newPassword = t('auth:changePassword.error.samePassword');
         }
 
         setErrors(newErrors);
@@ -105,9 +105,9 @@ const ChangePasswordPage = () => {
         const errors = validatePassword(password);
         const strength = 6 - errors.length;
 
-        if (strength <= 2) return { level: 'weak', label: 'Weak', color: '#f44336' };
-        if (strength <= 4) return { level: 'medium', label: 'Medium', color: '#ff9800' };
-        return { level: 'strong', label: 'Strong', color: '#4caf50' };
+        if (strength <= 2) return { level: 'weak', label: t('auth:changePassword.strength.weak'), color: '#f44336' };
+        if (strength <= 4) return { level: 'medium', label: t('auth:changePassword.strength.medium'), color: '#ff9800' };
+        return { level: 'strong', label: t('auth:changePassword.strength.strong'), color: '#4caf50' };
     };
 
     const passwordStrength = getPasswordStrength();
@@ -123,7 +123,7 @@ const ChangePasswordPage = () => {
 
                 <form onSubmit={handleSubmit} className="change-password-form">
                     <div className="form-group">
-                        <label htmlFor="currentPassword" className="form-label">Current Password</label>
+                        <label htmlFor="currentPassword" className="form-label">{t('auth:changePassword.currentPassword')}</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.current ? 'text' : 'password'}
@@ -132,7 +132,7 @@ const ChangePasswordPage = () => {
                                 className="form-input"
                                 value={formData.currentPassword}
                                 onChange={handleChange}
-                                placeholder="Enter your current password"
+                                placeholder={t('auth:changePassword.currentPasswordPlaceholder')}
                                 autoComplete="current-password"
                             />
                             <button
@@ -148,7 +148,7 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="newPassword" className="form-label">New Password</label>
+                        <label htmlFor="newPassword" className="form-label">{t('auth:changePassword.newPassword')}</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.new ? 'text' : 'password'}
@@ -157,7 +157,7 @@ const ChangePasswordPage = () => {
                                 className="form-input"
                                 value={formData.newPassword}
                                 onChange={handleChange}
-                                placeholder="Enter your new password"
+                                placeholder={t('auth:changePassword.newPasswordPlaceholder')}
                                 autoComplete="new-password"
                             />
                             <button
@@ -184,29 +184,29 @@ const ChangePasswordPage = () => {
                         )}
                         {errors.newPassword && <span className="input-error">{errors.newPassword}</span>}
                         <div className="password-requirements">
-                            <p>Password must contain:</p>
+                            <p>{t('auth:changePassword.requirements.title')}:</p>
                             <ul>
                                 <li className={formData.newPassword.length >= 8 && formData.newPassword.length <= 20 ? 'met' : ''}>
-                                    8-20 characters
+                                    {t('auth:changePassword.requirements.length')}
                                 </li>
                                 <li className={/[A-Z]/.test(formData.newPassword) ? 'met' : ''}>
-                                    One uppercase letter
+                                    {t('auth:changePassword.requirements.uppercase')}
                                 </li>
                                 <li className={/[a-z]/.test(formData.newPassword) ? 'met' : ''}>
-                                    One lowercase letter
+                                    {t('auth:changePassword.requirements.lowercase')}
                                 </li>
                                 <li className={/[0-9]/.test(formData.newPassword) ? 'met' : ''}>
-                                    One number
+                                    {t('auth:changePassword.requirements.number')}
                                 </li>
                                 <li className={/[^A-Za-z0-9]/.test(formData.newPassword) ? 'met' : ''}>
-                                    One special character
+                                    {t('auth:changePassword.requirements.special')}
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="confirmPassword" className="form-label">Confirm New Password</label>
+                        <label htmlFor="confirmPassword" className="form-label">{t('auth:changePassword.confirmPassword')}</label>
                         <div className="password-input-wrapper">
                             <input
                                 type={showPasswords.confirm ? 'text' : 'password'}
@@ -215,7 +215,7 @@ const ChangePasswordPage = () => {
                                 className="form-input"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                placeholder="Re-enter your new password"
+                                placeholder={t('auth:changePassword.confirmPasswordPlaceholder')}
                                 autoComplete="new-password"
                             />
                             <button
@@ -237,14 +237,14 @@ const ChangePasswordPage = () => {
                             onClick={() => navigate('/profile')}
                             disabled={loading}
                         >
-                            Cancel
+                            {t('common:cancel')}
                         </button>
                         <button
                             type="submit"
                             className="btn btn-primary"
                             disabled={loading}
                         >
-                            {loading ? 'Changing...' : 'Change Password'}
+                            {loading ? t('auth:changePassword.submitting') : t('auth:changePassword.submit')}
                         </button>
                     </div>
                 </form>

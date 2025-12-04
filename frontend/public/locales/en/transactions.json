@@ -37,11 +37,21 @@
     "create": {
         "title": "Create Transaction",
         "subtitle": "Process a new transaction for a customer",
+        "step1": "Step 1: Identify Customer",
+        "step2": "Step 2: Transaction Details",
+        "step3": "Step 3: Apply Promotions (Optional)",
         "utoridLabel": "Customer UTORid",
-        "utoridPlaceholder": "Enter or scan customer UTORid",
+        "utoridPlaceholder": "Enter UTORid or User ID",
         "scanQr": "Scan QR Code",
-        "amountLabel": "Transaction Amount",
-        "amountPlaceholder": "Enter amount",
+        "lookUp": "Look Up",
+        "lookingUp": "Looking up...",
+        "amountLabel": "Amount Spent ($)",
+        "amountPlaceholder": "0.00",
+        "remarkLabel": "Remark (Optional)",
+        "remarkPlaceholder": "e.g., Coffee and sandwich",
+        "basePoints": "Base points",
+        "bonusPoints": "Bonus Points",
+        "totalPoints": "Total Points",
         "typeLabel": "Transaction Type",
         "descriptionLabel": "Description",
         "descriptionPlaceholder": "Enter transaction description (optional)",
@@ -49,13 +59,28 @@
         "promotionPlaceholder": "Select a promotion",
         "noPromotion": "No promotion",
         "pointsPreview": "Points to earn: {{points}}",
-        "submit": "Process Transaction",
+        "minSpending": "Min: ${{amount}}",
+        "bonusRate": "+{{rate}}% bonus",
+        "submit": "Create Transaction",
         "submitting": "Processing...",
-        "success": "Transaction processed successfully. Customer earned {{points}} points.",
+        "confirmTitle": "Confirm Transaction",
+        "confirmCustomer": "Customer",
+        "confirmAmount": "Amount",
+        "confirmBasePoints": "Base Points",
+        "confirmBonusPoints": "Bonus Points",
+        "confirmTotalPoints": "Total Points",
+        "confirmButton": "Confirm Transaction",
+        "success": "Purchase recorded! {{points}} points earned.",
+        "customerFound": "Customer found!",
         "error": {
-            "userNotFound": "Customer not found",
-            "invalidAmount": "Invalid amount",
-            "generic": "Failed to process transaction"
+            "enterUser": "Please enter a UTORid or User ID",
+            "lookupFirst": "Please look up a user first",
+            "invalidAmount": "Please enter a valid amount",
+            "userNotFound": "User not found",
+            "redemptionQr": "This is a redemption QR code. Please scan a customer's personal QR code.",
+            "qrExtractFailed": "Could not extract user information from QR code",
+            "invalidQr": "Invalid QR code",
+            "generic": "Failed to create transaction"
         }
     },
     "transfer": {
@@ -102,6 +127,48 @@
             "generic": "Failed to transfer points"
         }
     },
+    "redeem": {
+        "title": "Redeem Points",
+        "subtitle": "Exchange your points for rewards",
+        "yourAvailablePoints": "Your Available Points",
+        "pointsToRedeem": "Points to Redeem",
+        "remarkLabel": "Remark (Optional)",
+        "remarkPlaceholder": "Add a note for this redemption",
+        "quickSelect": "Quick select:",
+        "enterAmount": "Enter amount",
+        "summary": {
+            "title": "Redemption Summary",
+            "pointsToRedeem": "Points to redeem:",
+            "balanceAfter": "Your balance after:"
+        },
+        "howItWorks": {
+            "title": "How Redemption Works",
+            "step1": "Create a redemption request with the number of points you want to redeem",
+            "step2": "Show the generated QR code to a cashier",
+            "step3": "The cashier will process your request and you'll receive your reward"
+        },
+        "success": {
+            "title": "Redemption Request Created!",
+            "message": "Your redemption request has been submitted successfully.",
+            "requestId": "Request ID:",
+            "points": "Points:",
+            "status": "Status:",
+            "pendingProcessing": "Pending Processing",
+            "viewQr": "View QR Code",
+            "viewTransactions": "View My Transactions",
+            "createAnother": "Create Another Redemption"
+        },
+        "submit": "Create Redemption Request",
+        "submitting": "Processing...",
+        "confirmTitle": "Confirm Redemption",
+        "confirmMessage": "Are you sure you want to redeem {{points}} points?",
+        "confirmButton": "Redeem",
+        "error": {
+            "invalidAmount": "Please enter a valid positive amount",
+            "insufficientPoints": "Insufficient points. You have {{points}} points available.",
+            "generic": "Failed to create redemption request"
+        }
+    },
     "redemption": {
         "title": "Redeem Points",
         "processTitle": "Process Redemption",
@@ -128,6 +195,38 @@
             "generic": "Failed to process redemption"
         }
     },
+    "processRedemption": {
+        "title": "Process Redemption",
+        "subtitle": "Scan a customer's redemption QR code or enter the ID",
+        "reviewSubtitle": "Review and process this redemption request",
+        "loading": "Loading redemption details...",
+        "notFound": "Redemption Not Found",
+        "notFoundDesc": "The redemption request could not be found.",
+        "scanQR": "Scan QR Code",
+        "orEnterManually": "or enter redemption ID manually",
+        "enterRedemptionId": "Enter Redemption ID",
+        "lookUp": "Look Up",
+        "redemptionId": "Redemption ID",
+        "customerInfo": "Customer Information",
+        "currentPoints": "Current Points",
+        "accountStatus": "Account Status",
+        "verified": "Verified",
+        "unverified": "Unverified",
+        "redemptionDetails": "Redemption Details",
+        "pointsToRedeem": "Points to Redeem",
+        "requestedOn": "Requested On",
+        "processedOn": "Processed On",
+        "alreadyProcessed": "This redemption has already been processed",
+        "warningMessage": "Processing this redemption will deduct <strong>{{points}} points</strong> from the customer's balance. Make sure to provide the equivalent value.",
+        "processButton": "Process Redemption",
+        "processing": "Processing...",
+        "confirmTitle": "Confirm Redemption Processing",
+        "confirmMessage": "You are about to process this redemption:",
+        "customer": "Customer",
+        "points": "Points",
+        "confirmWarning": "Make sure you have provided the customer with their redeemed value before confirming.",
+        "confirmButton": "Confirm Processing"
+    },
     "detail": {
         "title": "Transaction Details",
         "id": "Transaction ID",
@@ -148,6 +247,67 @@
         "dateRange": "Date Range",
         "minAmount": "Min Amount",
         "maxAmount": "Max Amount",
-        "user": "User"
+        "user": "User",
+        "allTypes": "All Types",
+        "userId": "User ID",
+        "userIdPlaceholder": "e.g. john_doe",
+        "relatedId": "Related ID",
+        "relatedIdPlaceholder": "e.g. transfer user",
+        "suspicious": "Suspicious",
+        "all": "All",
+        "suspiciousOnly": "Suspicious Only",
+        "notSuspicious": "Not Suspicious",
+        "amount": "Amount",
+        "amountPlaceholder": "Points",
+        "promotionId": "Promotion ID",
+        "promotionIdPlaceholder": "e.g. 123",
+        "clearAllFilters": "Clear All Filters"
+    },
+    "allTransactions": {
+        "title": "All Transactions",
+        "subtitle": "View and manage all transactions in the system",
+        "loading": "Loading transactions...",
+        "noTransactions": "No transactions found",
+        "noTransactionsFiltered": "No transactions match your filters.",
+        "noTransactionsSystem": "No transactions in the system yet.",
+        "showing": "Showing {{count}} of {{total}} transactions",
+        "markSuspicious": "Mark as Suspicious",
+        "clearSuspicious": "Clear Suspicious Flag",
+        "transactionDetails": "Transaction Details"
+    },
+    "myTransactions": {
+        "title": "My Transactions",
+        "subtitle": "View your transaction history",
+        "loading": "Loading transactions...",
+        "noTransactions": "No transactions yet",
+        "noTransactionsDesc": "Your transaction history will appear here once you make your first transaction."
+    },
+    "redemptionQr": {
+        "title": "Redemption QR Code",
+        "subtitle": "Show this QR code to a cashier to redeem your points",
+        "alreadyProcessed": "This redemption has already been processed",
+        "downloadQr": "Download QR Code",
+        "details": {
+            "title": "Redemption Details",
+            "requestId": "Request ID",
+            "points": "Points",
+            "status": "Status",
+            "created": "Created",
+            "processed": "Processed",
+            "remark": "Remark"
+        },
+        "status": {
+            "pending": "Pending",
+            "processed": "Processed"
+        },
+        "actions": {
+            "viewAll": "View All Transactions",
+            "createNew": "Create New Redemption"
+        },
+        "loading": "Loading redemption details...",
+        "error": {
+            "notRedemption": "This transaction is not a redemption request",
+            "loadFailed": "Failed to load redemption details"
+        }
     }
 }

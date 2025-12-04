@@ -1,0 +1,133 @@
+{
+    "events": {
+        "title": "Events",
+        "subtitle": "Explore and RSVP to upcoming events",
+        "manageTitle": "Manage Events",
+        "manageSubtitle": "Create, edit, and manage events",
+        "createEvent": "Create Event",
+        "loading": "Loading events...",
+        "noEvents": "No events yet",
+        "noEventsDesc": "Create your first event to engage users.",
+        "noEventsFiltered": "No events match your filters.",
+        "list": {
+            "viewDetails": "View Details →",
+            "searchPlaceholder": "Search events...",
+            "spotsLeft": "{{count}} spots left",
+            "eventFull": "Event Full",
+            "freeEvent": "Free Event",
+            "pointsReward": "+{{points}} points"
+        },
+        "filters": {
+            "status": "Status",
+            "allStatuses": "All Statuses",
+            "upcoming": "Upcoming",
+            "ongoing": "Ongoing",
+            "past": "Past",
+            "showFull": "Show Full Events"
+        },
+        "status": {
+            "upcoming": "Upcoming",
+            "ongoing": "Ongoing",
+            "past": "Past",
+            "cancelled": "Cancelled"
+        },
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "dateTime": "Date/Time",
+            "location": "Location",
+            "capacity": "Capacity",
+            "guests": "Guests",
+            "points": "Points",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "form": {
+            "title": "Create Event",
+            "editTitle": "Edit Event",
+            "nameLabel": "Event Name",
+            "namePlaceholder": "e.g., Summer Meetup",
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Describe the event...",
+            "locationLabel": "Location",
+            "locationPlaceholder": "e.g., Conference Room A",
+            "capacityLabel": "Maximum Capacity",
+            "capacityPlaceholder": "e.g., 100",
+            "capacityUnlimited": "Leave empty for unlimited",
+            "startTimeLabel": "Start Time",
+            "endTimeLabel": "End Time",
+            "pointsLabel": "Points to Award",
+            "pointsPlaceholder": "e.g., 50",
+            "pointsHelper": "Total points pool for attendees",
+            "isPublishedLabel": "Published",
+            "isPublishedHint": "Published events are visible to all users",
+            "saving": "Saving...",
+            "create": "Create Event",
+            "update": "Update Event"
+        },
+        "delete": {
+            "title": "Delete Event",
+            "message": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+            "confirm": "Delete",
+            "success": "Event deleted successfully",
+            "error": "Failed to delete event"
+        },
+        "toast": {
+            "created": "Event created successfully!",
+            "updated": "Event updated successfully!",
+            "deleted": "Event deleted successfully!",
+            "rsvpSuccess": "RSVP successful!",
+            "rsvpCancelled": "RSVP cancelled successfully!",
+            "errorLoad": "Failed to load events",
+            "errorSave": "Failed to save event",
+            "errorDelete": "Failed to delete event",
+            "errorRsvp": "Failed to RSVP"
+        },
+        "detail": {
+            "title": "Event Details",
+            "notFound": "Event Not Found",
+            "notFoundDesc": "The event you're looking for doesn't exist or has been removed.",
+            "backToEvents": "Back to Events",
+            "aboutEvent": "About This Event",
+            "location": "Location",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "capacity": "Capacity",
+            "unlimited": "Unlimited",
+            "spotsRemaining": "{{count}} spots remaining",
+            "attendees": "Attendees",
+            "pointsReward": "Points Reward",
+            "earnPoints": "Earn up to {{points}} points by attending!",
+            "managerActions": "Manager Actions",
+            "manageEvents": "Manage Events",
+            "viewAttendees": "View Attendees",
+            "editEvent": "Edit Event",
+            "youreAttending": "You're attending",
+            "rsvpNow": "RSVP Now",
+            "processing": "Processing...",
+            "eventAtCapacity": "This event is at capacity",
+            "eventEnded": "This event has ended",
+            "organizers": "Organizers",
+            "spotsLeft": "{{count}} spots left"
+        },
+        "rsvp": {
+            "rsvp": "RSVP",
+            "rsvped": "RSVP'd",
+            "cancelRsvp": "Cancel RSVP",
+            "cancelRsvpTitle": "Cancel RSVP",
+            "cancelRsvpMessage": "Are you sure you want to cancel your RSVP for this event?",
+            "confirmCancel": "Cancel RSVP",
+            "eventFull": "Event Full",
+            "alreadyRsvped": "You're already RSVP'd",
+            "mustLogin": "Please log in to RSVP",
+            "attending": "attending"
+        },
+        "actions": {
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete",
+            "publish": "Publish",
+            "unpublish": "Unpublish"
+        }
+    }
+}

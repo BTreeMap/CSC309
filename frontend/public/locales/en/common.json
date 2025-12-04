@@ -9,6 +9,7 @@
     "confirm": "Confirm",
     "close": "Close",
     "back": "Back",
+    "goBack": "Go Back",
     "next": "Next",
     "previous": "Previous",
     "submit": "Submit",
@@ -109,5 +110,21 @@
         "minLength": "Must be at least {{min}} characters",
         "maxLength": "Must be at most {{max}} characters",
         "passwordMismatch": "Passwords do not match"
-    }
+    },
+    "goBack": "Go Back",
+    "clearFilters": "Clear Filters",
+    "showing": "Showing {{count}} of {{total}}",
+    "lookUp": "Look Up",
+    "lookingUp": "Looking...",
+    "scanQRCode": "Scan QR Code",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "notActivated": "Not Activated",
+    "accountStatus": "Account Status",
+    "currentPoints": "Current Points",
+    "saving": "Saving...",
+    "creating": "Creating...",
+    "updating": "Updating...",
+    "deleting": "Deleting...",
+    "adjusting": "Adjusting..."
 }

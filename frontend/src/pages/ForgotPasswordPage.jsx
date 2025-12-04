@@ -26,10 +26,10 @@ const ForgotPasswordPage = () => {
     try {
       const response = await authAPI.requestPasswordReset(utorid);
       setResetToken(response.resetToken);
-      setSuccess(`Password reset token generated. Valid until ${new Date(response.expiresAt).toLocaleString()}`);
+      setSuccess(t('auth:forgotPassword.success', { expiresAt: new Date(response.expiresAt).toLocaleString() }));
       setStep(2);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to request password reset');
+      setError(err.response?.data?.error || t('auth:forgotPassword.error.generic'));
     }
 
     setLoading(false);
@@ -42,25 +42,25 @@ const ForgotPasswordPage = () => {
     setLoading(true);
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('auth:forgotPassword.error.mismatch'));
       setLoading(false);
       return;
     }
 
     if (newPassword.length < 8 || newPassword.length > 20) {
-      setError('Password must be between 8-20 characters');
+      setError(t('auth:forgotPassword.error.length'));
       setLoading(false);
       return;
     }
 
     try {
       await authAPI.resetPassword(resetToken, utorid, newPassword);
-      setSuccess('Password reset successful! Redirecting to login...');
+      setSuccess(t('auth:forgotPassword.resetSuccess'));
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to reset password');
+      setError(err.response?.data?.error || t('auth:forgotPassword.error.resetFailed'));
     }
 
     setLoading(false);
@@ -70,7 +70,7 @@ const ForgotPasswordPage = () => {
     <div className="forgot-password-page">
       <div className="forgot-password-container">
         <div className="forgot-password-header">
-          <h1>Reset Password</h1>
+          <h1>{t('auth:forgotPassword.title')}</h1>
         </div>
 
         {step === 1 ? (
@@ -79,14 +79,14 @@ const ForgotPasswordPage = () => {
             {success && <div className="alert-success">{success}</div>}
 
             <div className="form-group">
-              <label htmlFor="utorid" className="form-label">UTORid</label>
+              <label htmlFor="utorid" className="form-label">{t('auth:forgotPassword.utoridLabel')}</label>
               <input
                 type="text"
                 id="utorid"
                 className="form-input"
                 value={utorid}
                 onChange={(e) => setUtorid(e.target.value)}
-                placeholder="Enter your UTORid"
+                placeholder={t('auth:forgotPassword.utoridPlaceholder')}
                 required
               />
             </div>
@@ -96,7 +96,7 @@ const ForgotPasswordPage = () => {
               className="btn btn-primary btn-block"
               disabled={loading}
             >
-              {loading ? 'Requesting...' : 'Request Password Reset'}
+              {loading ? t('auth:forgotPassword.submitting') : t('auth:forgotPassword.submit')}
             </button>
           </form>
         ) : (
@@ -105,40 +105,40 @@ const ForgotPasswordPage = () => {
             {success && <div className="alert-success">{success}</div>}
 
             <div className="form-group">
-              <label htmlFor="resetToken" className="form-label">Reset Token</label>
+              <label htmlFor="resetToken" className="form-label">{t('auth:forgotPassword.resetTokenLabel')}</label>
               <input
                 type="text"
                 id="resetToken"
                 className="form-input"
                 value={resetToken}
                 onChange={(e) => setResetToken(e.target.value)}
-                placeholder="Enter reset token"
+                placeholder={t('auth:forgotPassword.resetTokenPlaceholder')}
                 required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="newPassword" className="form-label">New Password</label>
+              <label htmlFor="newPassword" className="form-label">{t('auth:forgotPassword.newPasswordLabel')}</label>
               <input
                 type="password"
                 id="newPassword"
                 className="form-input"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="8-20 characters, include uppercase, lowercase, number and special character"
+                placeholder={t('auth:forgotPassword.newPasswordPlaceholder')}
                 required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword" className="form-label">Confirm New Password</label>
+              <label htmlFor="confirmPassword" className="form-label">{t('auth:forgotPassword.confirmPasswordLabel')}</label>
               <input
                 type="password"
                 id="confirmPassword"
                 className="form-input"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter new password"
+                placeholder={t('auth:forgotPassword.confirmPasswordPlaceholder')}
                 required
               />
             </div>
@@ -148,14 +148,14 @@ const ForgotPasswordPage = () => {
               className="btn btn-primary btn-block"
               disabled={loading}
             >
-              {loading ? 'Resetting...' : 'Reset Password'}
+              {loading ? t('auth:forgotPassword.resetting') : t('auth:forgotPassword.resetSubmit')}
             </button>
           </form>
         )}
 
         <div className="forgot-password-footer">
           <Link to="/login" className="back-to-login-link">
-            Back to Login
+            {t('auth:forgotPassword.backToLogin')}
           </Link>
         </div>
       </div>
