@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usersAPI } from '../api';
 import Layout from '../components/Layout';
+import { PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { UserPlus } from 'lucide-react';
 import './RegisterPage.css';
 
 const RegisterPage = () => {
@@ -148,19 +150,20 @@ const RegisterPage = () => {
     return (
         <Layout>
             <div className="register-page">
-                <div className="register-card">
-                    <div className="card-header">
-                        <h1>Register New User</h1>
-                        <p>Create a new user account in the system</p>
-                    </div>
+                <PageHeader
+                    icon={<UserPlus />}
+                    title={t('auth:register.title')}
+                    subtitle={t('auth:register.subtitle')}
+                />
 
+                <div className="register-card">
                     <form onSubmit={handleSubmit} className="register-form">
                         {error && (
                             <div className="alert-error">{error}</div>
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="utorid" className="form-label">UTORid *</label>
+                            <label htmlFor="utorid" className="form-label">{t('auth:register.utoridLabel')} *</label>
                             <input
                                 type="text"
                                 id="utorid"
@@ -168,15 +171,15 @@ const RegisterPage = () => {
                                 className="form-input"
                                 value={formData.utorid}
                                 onChange={handleChange}
-                                placeholder="e.g., johnd123"
+                                placeholder={t('auth:register.utoridPlaceholder')}
                                 required
                                 maxLength={8}
                             />
-                            <span className="form-helper">4-8 alphanumeric characters</span>
+                            <span className="form-helper">{t('validation:utorid.format')}</span>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="name" className="form-label">Full Name *</label>
+                            <label htmlFor="name" className="form-label">{t('auth:register.nameLabel')} *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -184,13 +187,13 @@ const RegisterPage = () => {
                                 className="form-input"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder="e.g., John Doe"
+                                placeholder={t('auth:register.namePlaceholder')}
                                 required
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email" className="form-label">Email Address *</label>
+                            <label htmlFor="email" className="form-label">{t('auth:register.emailLabel')} *</label>
                             <input
                                 type="email"
                                 id="email"
@@ -198,26 +201,18 @@ const RegisterPage = () => {
                                 className="form-input"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="e.g., john.doe@mail.utoronto.ca"
+                                placeholder={t('auth:register.emailPlaceholder')}
                                 required
                             />
-                            <span className="form-helper">Preferably a UofT email address</span>
-                        </div>
-
-                        <div className="info-box">
-                            <span className="info-icon">ℹ️</span>
-                            <p>
-                                After registration, the user will receive a password reset token to set their initial password.
-                                Make sure to share this token with the user securely.
-                            </p>
+                            <span className="form-helper">{t('validation:email.hint')}</span>
                         </div>
 
                         <div className="form-actions">
                             <button type="button" onClick={() => navigate(-1)} className="btn btn-secondary">
-                                Cancel
+                                {t('common:cancel')}
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={loading}>
-                                {loading ? 'Registering...' : 'Register User'}
+                                {loading ? t('auth:register.submitting') : t('auth:register.submit')}
                             </button>
                         </div>
                     </form>

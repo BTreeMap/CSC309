@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../components/shared';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { EventMap } from '../components/maps';
+import { Calendar, MapPin, Clock, Users, Gift, ArrowLeft } from 'lucide-react';
 import './EventDetailPage.css';
 
 const EventDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { t } = useTranslation(['promotions', 'common']);
     const { user, activeRole } = useAuth();
     const { showToast } = useToast();
 
@@ -44,10 +47,10 @@ const EventDetailPage = () => {
         setRsvpLoading(true);
         try {
             await eventsAPI.rsvpEvent(id);
-            showToast('Successfully RSVP\'d to event!', 'success');
+            showToast(t('events.registration.registerSuccess'), 'success');
             fetchEvent();
         } catch (err) {
-            showToast(err.response?.data?.error || 'Failed to RSVP', 'error');
+            showToast(err.response?.data?.error || t('events.registration.error'), 'error');
         } finally {
             setRsvpLoading(false);
         }
@@ -57,11 +60,11 @@ const EventDetailPage = () => {
         setRsvpLoading(true);
         try {
             await eventsAPI.removeGuest(id, user.id);
-            showToast('RSVP cancelled successfully', 'success');
+            showToast(t('events.registration.unregisterSuccess'), 'success');
             setShowCancelConfirm(false);
             fetchEvent();
         } catch (err) {
-            showToast(err.response?.data?.error || 'Failed to cancel RSVP', 'error');
+            showToast(err.response?.data?.error || t('events.registration.error'), 'error');
         } finally {
             setRsvpLoading(false);
         }
@@ -73,13 +76,13 @@ const EventDetailPage = () => {
         const startDate = new Date(event.startTime);
         const endDate = new Date(event.endTime);
 
-        if (now < startDate) return { label: 'Upcoming', className: 'status-upcoming', canRSVP: true };
-        if (now > endDate) return { label: 'Ended', className: 'status-ended', canRSVP: false };
-        return { label: 'Happening Now', className: 'status-active', canRSVP: true };
+        if (now < startDate) return { label: t('events.status.upcoming'), className: 'status-upcoming', canRSVP: true };
+        if (now > endDate) return { label: t('events.status.ended'), className: 'status-ended', canRSVP: false };
+        return { label: t('events.status.happeningNow'), className: 'status-active', canRSVP: true };
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString(undefined, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -90,7 +93,7 @@ const EventDetailPage = () => {
     };
 
     const formatShortDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString(undefined, {
             month: 'short',
             day: 'numeric',
             hour: '2-digit',
@@ -124,7 +127,7 @@ const EventDetailPage = () => {
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading event..." />
+                <LoadingSpinner text={t('events.list.loading')} />
             </Layout>
         );
     }
@@ -140,11 +143,12 @@ const EventDetailPage = () => {
     if (!event) {
         return (
             <Layout>
-                <div className="not-found">
-                    <h2>Event Not Found</h2>
-                    <p>The event you're looking for doesn't exist or has been removed.</p>
+                <div className="empty-state">
+                    <div className="empty-state-icon">📅</div>
+                    <h2 className="empty-state-title">{t('events.list.noEvents')}</h2>
+                    <p className="empty-state-description">{t('events.list.noEventsAvailable')}</p>
                     <button onClick={() => navigate('/events')} className="btn btn-secondary">
-                        Back to Events
+                        {t('common:back')}
                     </button>
                 </div>
             </Layout>
@@ -158,172 +162,172 @@ const EventDetailPage = () => {
     return (
         <Layout>
             <div className="event-detail-page">
-                <button onClick={() => navigate(-1)} className="back-button">
-                    ← Back to Events
+                <button onClick={() => navigate('/events')} className="btn btn-ghost back-button">
+                    <ArrowLeft size={16} />
+                    {t('common:back')}
                 </button>
 
-                <div className="event-detail-card">
-                    <div className="event-hero">
-                        <div className="hero-content">
+                <PageHeader
+                    icon={<Calendar />}
+                    title={event.name}
+                    subtitle={t('events.detail.title')}
+                />
+
+                <div className="event-content">
+                    <div className="event-main">
+                        <div className="content-section">
                             <div className="event-badges">
-                                <span className={`event-status ${status.className}`}>
+                                <span className={`badge ${status.className}`}>
                                     {status.label}
                                 </span>
                                 {event.pointsRemain > 0 && (
-                                    <span className="points-badge">
-                                        🎁 {event.pointsRemain.toLocaleString()} points available
+                                    <span className="badge badge-success">
+                                        <Gift size={14} />
+                                        {t('events.card.points', { points: event.pointsRemain.toLocaleString() })}
                                     </span>
                                 )}
                             </div>
+                        </div>
 
-                            <h1 className="event-title">{event.name}</h1>
+                        {event.description && (
+                            <div className="content-section">
+                                <h2>{t('events.detail.description')}</h2>
+                                <p className="event-description">{event.description}</p>
+                            </div>
+                        )}
 
-                            <div className="event-quick-info">
-                                <div className="quick-item">
-                                    <span className="quick-icon">📍</span>
-                                    <span>{event.location}</span>
+                        <div className="content-section">
+                            <h2>{t('events.detail.dateTime')}</h2>
+                            <div className="event-details-grid">
+                                <div className="detail-item">
+                                    <div className="detail-icon">
+                                        <Calendar size={20} />
+                                    </div>
+                                    <div className="detail-content">
+                                        <span className="label">{t('common:date')}</span>
+                                        <span className="value">{formatDate(event.startTime)}</span>
+                                    </div>
                                 </div>
-                                <div className="quick-item">
-                                    <span className="quick-icon">🗓️</span>
-                                    <span>{formatShortDate(event.startTime)}</span>
-                                </div>
-                                <div className="quick-item">
-                                    <span className="quick-icon">⏱️</span>
-                                    <span>{getDuration()}</span>
+                                <div className="detail-item">
+                                    <div className="detail-icon">
+                                        <Clock size={20} />
+                                    </div>
+                                    <div className="detail-content">
+                                        <span className="label">{t('common:duration')}</span>
+                                        <span className="value">{getDuration()}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div className="content-section">
+                            <h2>{t('events.detail.location')}</h2>
+                            <div className="location-display">
+                                <MapPin size={20} />
+                                <span className="location-text">{event.location}</span>
+                            </div>
+                            <EventMap
+                                location={event.location}
+                                eventName={event.name}
+                                height={250}
+                                className="event-location-map"
+                            />
+                        </div>
+
+                        {isManager && event.organizers && event.organizers.length > 0 && (
+                            <div className="content-section">
+                                <h2>{t('events.detail.organizer')}</h2>
+                                <div className="organizers-list">
+                                    {event.organizers.map((org, index) => (
+                                        <div key={index} className="organizer-item">
+                                            <span className="organizer-avatar">👤</span>
+                                            <span>{org.utorid}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    <div className="event-body">
-                        <div className="event-main">
-                            {event.description && (
-                                <div className="section">
-                                    <h2>About This Event</h2>
-                                    <p className="description-text">{event.description}</p>
+                    <div className="event-sidebar">
+                        <div className="sidebar-card rsvp-card">
+                            <div className="attendance-info">
+                                <div className="attendance-count">
+                                    <Users size={20} />
+                                    <span className="count-number">{event.numGuests}</span>
+                                    <span className="count-label">{t('events.card.attending')}</span>
                                 </div>
-                            )}
-
-                            <div className="section">
-                                <h2>Date & Time</h2>
-                                <div className="datetime-grid">
-                                    <div className="datetime-item">
-                                        <span className="datetime-label">Starts</span>
-                                        <span className="datetime-value">{formatDate(event.startTime)}</span>
-                                    </div>
-                                    <div className="datetime-item">
-                                        <span className="datetime-label">Ends</span>
-                                        <span className="datetime-value">{formatDate(event.endTime)}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="section">
-                                <h2>Location</h2>
-                                <div className="location-display">
-                                    <span className="location-icon">📍</span>
-                                    <span className="location-text">{event.location}</span>
-                                </div>
-                                <EventMap
-                                    location={event.location}
-                                    eventName={event.name}
-                                    height={250}
-                                    className="event-location-map"
-                                />
-                            </div>
-
-                            {isManager && event.organizers && event.organizers.length > 0 && (
-                                <div className="section">
-                                    <h2>Organizers</h2>
-                                    <div className="organizers-list">
-                                        {event.organizers.map((org, index) => (
-                                            <div key={index} className="organizer-item">
-                                                <span className="organizer-avatar">👤</span>
-                                                <span>{org.utorid}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="event-sidebar">
-                            <div className="rsvp-card">
-                                <div className="attendance-info">
-                                    <div className="attendance-count">
-                                        <span className="count-number">{event.numGuests}</span>
-                                        <span className="count-label">attending</span>
-                                    </div>
-                                    {event.capacity && (
-                                        <div className="capacity-info">
-                                            <span className={`capacity-text ${full ? 'full' : ''}`}>
-                                                {full ? 'Event is full' : `${event.capacity - event.numGuests} spots left`}
-                                            </span>
-                                            <div className="capacity-bar">
+                                {event.capacity && (
+                                    <div className="capacity-info">
+                                        <span className={`capacity-text ${full ? 'full' : ''}`}>
+                                            {full ? t('events.registration.eventFull') : t('events.card.spotsLeft', { count: event.capacity - event.numGuests })}
+                                        </span>
+                                        <div className="capacity-bar">
+                                            <div className="capacity-track">
                                                 <div
                                                     className="capacity-fill"
                                                     style={{ width: `${Math.min(100, (event.numGuests / event.capacity) * 100)}%` }}
                                                 />
                                             </div>
                                         </div>
-                                    )}
-                                </div>
-
-                                {attending ? (
-                                    <div className="attending-section">
-                                        <div className="attending-badge">
-                                            ✓ You're attending
-                                        </div>
-                                        {status.canRSVP && (
-                                            <button
-                                                onClick={() => setShowCancelConfirm(true)}
-                                                className="btn btn-danger-outline"
-                                                disabled={rsvpLoading}
-                                            >
-                                                Cancel RSVP
-                                            </button>
-                                        )}
-                                    </div>
-                                ) : status.canRSVP && !full ? (
-                                    <button
-                                        onClick={handleRSVP}
-                                        className="btn btn-primary btn-block"
-                                        disabled={rsvpLoading}
-                                    >
-                                        {rsvpLoading ? 'Processing...' : 'RSVP Now'}
-                                    </button>
-                                ) : full ? (
-                                    <div className="full-notice">
-                                        This event is at capacity
-                                    </div>
-                                ) : (
-                                    <div className="ended-notice">
-                                        This event has ended
-                                    </div>
-                                )}
-
-                                {event.pointsRemain > 0 && event.pointsAwarded > 0 && (
-                                    <div className="points-info">
-                                        <span className="points-icon">🎁</span>
-                                        <span>Earn up to <strong>{event.pointsAwarded}</strong> points by attending!</span>
                                     </div>
                                 )}
                             </div>
 
-                            {isManager && (
-                                <div className="manager-card">
-                                    <h3>Manager Actions</h3>
-                                    <div className="manager-actions">
-                                        <button
-                                            onClick={() => navigate('/events/manage')}
-                                            className="btn btn-secondary btn-block"
-                                        >
-                                            ✏️ Manage Events
-                                        </button>
+                            {attending ? (
+                                <div className="attending-section">
+                                    <div className="attending-badge">
+                                        ✓ {t('events.registration.alreadyRegistered')}
                                     </div>
+                                    {status.canRSVP && (
+                                        <button
+                                            onClick={() => setShowCancelConfirm(true)}
+                                            className="btn btn-danger-outline btn-block"
+                                            disabled={rsvpLoading}
+                                        >
+                                            {t('events.registration.unregister')}
+                                        </button>
+                                    )}
+                                </div>
+                            ) : status.canRSVP && !full ? (
+                                <button
+                                    onClick={handleRSVP}
+                                    className="btn btn-primary btn-block"
+                                    disabled={rsvpLoading}
+                                >
+                                    {rsvpLoading ? t('events.registration.registering') : t('events.registration.register')}
+                                </button>
+                            ) : full ? (
+                                <div className="full-notice">
+                                    {t('events.registration.eventFull')}
+                                </div>
+                            ) : (
+                                <div className="ended-notice">
+                                    {t('events.registration.registrationClosed')}
+                                </div>
+                            )}
+
+                            {event.pointsRemain > 0 && event.pointsAwarded > 0 && (
+                                <div className="points-info">
+                                    <Gift size={16} />
+                                    <span>{t('events.detail.pointsReward')}: <strong>{event.pointsAwarded}</strong></span>
                                 </div>
                             )}
                         </div>
+
+                        {isManager && (
+                            <div className="sidebar-card manager-card">
+                                <h3>{t('common:actions')}</h3>
+                                <div className="manager-actions">
+                                    <button
+                                        onClick={() => navigate('/events/manage')}
+                                        className="btn btn-secondary btn-block"
+                                    >
+                                        {t('events.manage.edit')}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -331,9 +335,9 @@ const EventDetailPage = () => {
                     isOpen={showCancelConfirm}
                     onClose={() => setShowCancelConfirm(false)}
                     onConfirm={handleCancelRSVP}
-                    title="Cancel RSVP"
-                    message="Are you sure you want to cancel your RSVP for this event?"
-                    confirmText="Cancel RSVP"
+                    title={t('events.registration.unregister')}
+                    message={t('events.delete.message')}
+                    confirmText={t('events.registration.unregister')}
                     confirmVariant="danger"
                 />
             </div>

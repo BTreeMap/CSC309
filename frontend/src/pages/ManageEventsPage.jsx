@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { LocationInput } from '../components/maps';
-import { CalendarCog } from 'lucide-react';
+import { CalendarCog, Calendar, Eye, Edit, Trash2, Users } from 'lucide-react';
 import './ManageEventsPage.css';
 
 const ManageEventsPage = () => {
@@ -170,7 +170,7 @@ const ManageEventsPage = () => {
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString(undefined, {
             month: 'short',
             day: 'numeric',
             hour: '2-digit',
@@ -301,7 +301,7 @@ const ManageEventsPage = () => {
                         setShowCreateModal(false);
                         setShowEditModal(false);
                     }}
-                    title={showEditModal ? 'Edit Event' : 'Create Event'}
+                    title={showEditModal ? t('events.edit.title') : t('events.create.title')}
                     size="medium"
                 >
                     <form onSubmit={handleSubmit} className="event-form">
@@ -310,7 +310,7 @@ const ManageEventsPage = () => {
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name" className="form-label">Event Name *</label>
+                            <label htmlFor="name" className="form-label">{t('events.create.nameLabel')} *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -318,40 +318,40 @@ const ManageEventsPage = () => {
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 required
-                                placeholder="e.g., Tech Meetup"
+                                placeholder={t('events.create.namePlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description" className="form-label">Description</label>
+                            <label htmlFor="description" className="form-label">{t('events.create.descriptionLabel')}</label>
                             <textarea
                                 id="description"
                                 name="description"
                                 value={formData.description}
                                 onChange={handleInputChange}
                                 rows={3}
-                                placeholder="Describe the event..."
+                                placeholder={t('events.create.descriptionPlaceholder')}
                                 className="form-textarea"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="location" className="form-label">Location *</label>
+                            <label htmlFor="location" className="form-label">{t('events.create.locationLabel')} *</label>
                             <LocationInput
                                 id="location"
                                 name="location"
                                 value={formData.location}
                                 onChange={handleInputChange}
                                 required
-                                placeholder="e.g., Bahen Centre, Toronto"
+                                placeholder={t('events.create.locationPlaceholder')}
                                 showSuggestions={true}
                             />
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="startTime" className="form-label">Start Date & Time *</label>
+                                <label htmlFor="startTime" className="form-label">{t('common:startDate')} *</label>
                                 <input
                                     type="datetime-local"
                                     id="startTime"
@@ -364,7 +364,7 @@ const ManageEventsPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="endTime" className="form-label">End Date & Time *</label>
+                                <label htmlFor="endTime" className="form-label">{t('common:endDate')} *</label>
                                 <input
                                     type="datetime-local"
                                     id="endTime"
@@ -379,7 +379,7 @@ const ManageEventsPage = () => {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="capacity" className="form-label">Capacity</label>
+                                <label htmlFor="capacity" className="form-label">{t('events.create.capacityLabel')}</label>
                                 <input
                                     type="number"
                                     id="capacity"
@@ -387,13 +387,13 @@ const ManageEventsPage = () => {
                                     value={formData.capacity}
                                     onChange={handleInputChange}
                                     min="1"
-                                    placeholder="Leave empty for unlimited"
+                                    placeholder={t('events.create.capacityPlaceholder')}
                                     className="form-input"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="points" className="form-label">Points to Award</label>
+                                <label htmlFor="points" className="form-label">{t('events.create.pointsLabel')}</label>
                                 <input
                                     type="number"
                                     id="points"
@@ -401,10 +401,10 @@ const ManageEventsPage = () => {
                                     value={formData.points}
                                     onChange={handleInputChange}
                                     min="0"
-                                    placeholder="0"
+                                    placeholder={t('events.create.pointsPlaceholder')}
                                     className="form-input"
                                 />
-                                <span className="form-helper">Total points pool for attendees</span>
+                                <span className="form-helper">{t('events.detail.pointsReward')}</span>
                             </div>
                         </div>
 
@@ -418,10 +418,10 @@ const ManageEventsPage = () => {
                                 className="btn btn-secondary"
                                 disabled={formLoading}
                             >
-                                Cancel
+                                {t('common:cancel')}
                             </button>
                             <button type="submit" className="btn btn-primary" disabled={formLoading}>
-                                {formLoading ? 'Saving...' : showEditModal ? 'Update Event' : 'Create Event'}
+                                {formLoading ? t('events.edit.submitting') : showEditModal ? t('events.edit.submit') : t('events.create.submit')}
                             </button>
                         </div>
                     </form>
@@ -432,9 +432,9 @@ const ManageEventsPage = () => {
                     isOpen={showDeleteConfirm}
                     onClose={() => setShowDeleteConfirm(false)}
                     onConfirm={handleDelete}
-                    title="Delete Event"
-                    message={`Are you sure you want to delete "${selectedEvent?.name}"? This action cannot be undone.`}
-                    confirmText="Delete"
+                    title={t('events.delete.title')}
+                    message={t('events.delete.message')}
+                    confirmText={t('common:delete')}
                     confirmVariant="danger"
                 />
             </div>
