@@ -9,9 +9,9 @@
     "confirm": "确认",
     "close": "关闭",
     "back": "返回",
-    "goBack": "返回上一页",
-    "next": "下一个",
-    "previous": "上一个",
+    "goBack": "返回",
+    "next": "下一步",
+    "previous": "上一步",
     "submit": "提交",
     "search": "搜索",
     "filter": "筛选",
@@ -41,6 +41,9 @@
     "status": "状态",
     "date": "日期",
     "time": "时间",
+    "duration": "时长",
+    "startDate": "开始日期和时间",
+    "endDate": "结束日期和时间",
     "name": "名称",
     "description": "描述",
     "type": "类型",
@@ -71,36 +74,36 @@
     "points_one": "{{count}} 积分",
     "points_other": "{{count}} 积分",
     "brand": {
-        "name": "忠诚度计划",
-        "shortName": "忠诚度",
-        "tagline": "每次访问都能赚取奖励"
+        "name": "会员积分计划",
+        "shortName": "会员",
+        "tagline": "每次光临都能赢取奖励"
     },
     "pagination": {
         "page": "第 {{current}} 页，共 {{total}} 页",
-        "itemsPerPage": "每页项目数",
-        "showingItems": "显示第 {{start}} 至 {{end}} 项，共 {{total}} 项",
-        "first": "第一页",
-        "last": "最后一页",
-        "goToPage": "跳转到页面"
+        "itemsPerPage": "每页条数",
+        "showingItems": "显示第 {{start}} 至 {{end}} 条，共 {{total}} 条",
+        "first": "首页",
+        "last": "末页",
+        "goToPage": "跳转到页"
     },
     "table": {
         "sortAsc": "升序排列",
         "sortDesc": "降序排列",
-        "noData": "无数据显示"
+        "noData": "暂无数据"
     },
     "confirmDialog": {
         "title": "确认操作",
         "message": "您确定要继续吗？",
         "deleteTitle": "确认删除",
-        "deleteMessage": "您确定要删除此项目吗？此操作无法撤销。"
+        "deleteMessage": "您确定要删除此项吗？此操作无法撤销。"
     },
     "na": "不适用",
     "saving": "保存中...",
     "toast": {
-        "success": "操作成功完成",
+        "success": "操作成功",
         "error": "发生错误",
         "warning": "警告",
-        "info": "信息"
+        "info": "提示"
     },
     "empty": {
         "title": "暂无数据",

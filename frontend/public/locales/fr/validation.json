@@ -2,7 +2,8 @@
     "required": "Ce champ est requis",
     "email": {
         "required": "L'adresse e-mail est requise",
-        "invalid": "Veuillez entrer une adresse e-mail valide"
+        "invalid": "Veuillez entrer une adresse e-mail valide",
+        "hint": "De préférence une adresse e-mail UofT"
     },
     "minLength": "Doit contenir au moins {{min}} caractères",
     "maxLength": "Doit contenir au maximum {{max}} caractères",

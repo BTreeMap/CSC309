@@ -9,7 +9,7 @@
     "confirm": "Confirmer",
     "close": "Fermer",
     "back": "Retour",
-    "goBack": "Retourner",
+    "goBack": "Revenir",
     "next": "Suivant",
     "previous": "Précédent",
     "submit": "Soumettre",
@@ -19,7 +19,7 @@
     "reset": "Réinitialiser",
     "refresh": "Actualiser",
     "view": "Voir",
-    "viewAll": "Tout voir",
+    "viewAll": "Voir tout",
     "viewDetails": "Voir les détails",
     "create": "Créer",
     "update": "Mettre à jour",
@@ -29,7 +29,7 @@
     "no": "Non",
     "or": "ou",
     "and": "et",
-    "all": "Tous",
+    "all": "Tout",
     "none": "Aucun",
     "select": "Sélectionner",
     "selectAll": "Tout sélectionner",
@@ -41,6 +41,9 @@
     "status": "Statut",
     "date": "Date",
     "time": "Heure",
+    "duration": "Durée",
+    "startDate": "Date et heure de début",
+    "endDate": "Date et heure de fin",
     "name": "Nom",
     "description": "Description",
     "type": "Type",
@@ -64,7 +67,7 @@
     "failed": "Échoué",
     "cancelled": "Annulé",
     "processing": "Traitement en cours...",
-    "optional": "Optionnel",
+    "optional": "Facultatif",
     "required": "Requis",
     "redeem": "Échanger",
     "points": "Points",
@@ -79,13 +82,13 @@
         "page": "Page {{current}} sur {{total}}",
         "itemsPerPage": "Éléments par page",
         "showingItems": "Affichage de {{start}} à {{end}} sur {{total}} éléments",
-        "first": "Premier",
-        "last": "Dernier",
+        "first": "Première",
+        "last": "Dernière",
         "goToPage": "Aller à la page"
     },
     "table": {
-        "sortAsc": "Trier par ordre croissant",
-        "sortDesc": "Trier par ordre décroissant",
+        "sortAsc": "Tri croissant",
+        "sortDesc": "Tri décroissant",
         "noData": "Aucune donnée à afficher"
     },
     "confirmDialog": {
@@ -94,12 +97,12 @@
         "deleteTitle": "Confirmer la suppression",
         "deleteMessage": "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible."
     },
-    "na": "N/A",
+    "na": "N/D",
     "saving": "Enregistrement...",
     "toast": {
         "success": "Opération réussie",
         "error": "Une erreur s'est produite",
-        "warning": "Attention",
+        "warning": "Avertissement",
         "info": "Information"
     },
     "empty": {

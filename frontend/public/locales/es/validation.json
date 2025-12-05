@@ -2,7 +2,8 @@
     "required": "Este campo es obligatorio",
     "email": {
         "required": "El correo electrónico es obligatorio",
-        "invalid": "Por favor, ingrese una dirección de correo electrónico válida"
+        "invalid": "Por favor, ingrese una dirección de correo electrónico válida",
+        "hint": "Preferiblemente una dirección de correo de UofT"
     },
     "minLength": "Debe tener al menos {{min}} caracteres",
     "maxLength": "Debe tener como máximo {{max}} caracteres",
