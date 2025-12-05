@@ -222,7 +222,7 @@ const ManageEventsPage = () => {
                                         <th>{t('events.manage.tableCapacity')}</th>
                                         <th>{t('common:points')}</th>
                                         <th>{t('common:status')}</th>
-                                        <th>{t('common:actions')}</th>
+                                        <th>{t('common:actionsLabel')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

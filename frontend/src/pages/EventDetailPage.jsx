@@ -317,7 +317,7 @@ const EventDetailPage = () => {
 
                         {isManager && (
                             <div className="sidebar-card manager-card">
-                                <h3>{t('common:actions')}</h3>
+                                <h3>{t('common:actionsLabel')}</h3>
                                 <div className="manager-actions">
                                     <button
                                         onClick={() => navigate('/events/manage')}

@@ -226,7 +226,7 @@ const ManagePromotionsPage = () => {
                                         <th>{t('promotions.manage.tableDuration')}</th>
                                         <th>{t('promotions.manage.tableBenefit')}</th>
                                         <th>{t('common:status')}</th>
-                                        <th>{t('common:actions')}</th>
+                                        <th>{t('common:actionsLabel')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
