@@ -60,7 +60,7 @@ const ForgotPasswordPage = () => {
     try {
       const response = await authAPI.requestPasswordReset(utorid);
       setResetToken(response.resetToken);
-      setSuccess(t('auth:forgotPassword.tokenGenerated', { expiry: new Date(response.expiresAt).toLocaleString() }));
+      setSuccess(t('auth:forgotPassword.tokenGenerated', { expiry: new Date(response.expiresAt).toLocaleString('en-US') }));
       setStep(2);
     } catch (err) {
       setError(err.response?.data?.error || t('auth:forgotPassword.requestError'));

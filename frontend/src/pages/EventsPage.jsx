@@ -92,7 +92,7 @@ const EventsPage = () => {
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString(undefined, {
+        return new Date(dateString).toLocaleDateString('en-US', {
             weekday: 'short',
             month: 'short',
             day: 'numeric',

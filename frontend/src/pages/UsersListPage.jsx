@@ -526,11 +526,11 @@ const UsersListPage = () => {
                                 </div>
                                 <div className="detail-item">
                                     <label>{t('users:management.createdAt')}</label>
-                                    <span>{selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString() : t('common:na')}</span>
+                                    <span>{selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString('en-US') : t('common:na')}</span>
                                 </div>
                                 <div className="detail-item">
                                     <label>{t('users:management.lastLogin')}</label>
-                                    <span>{selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleDateString() : t('users:management.never')}</span>
+                                    <span>{selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleDateString('en-US') : t('users:management.never')}</span>
                                 </div>
                             </div>
 
