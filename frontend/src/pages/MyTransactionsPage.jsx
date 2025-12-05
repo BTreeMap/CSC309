@@ -179,7 +179,12 @@ const MyTransactionsPage = () => {
                                                 {transaction.remark && (
                                                     <span className="transaction-remark">{transaction.remark}</span>
                                                 )}
-                                                {transaction.relatedId && transaction.type === 'transfer' && (
+                                                {transaction.type === 'transfer' && transaction.relatedUserUtorid && (
+                                                    <span className="transaction-related">
+                                                        {transaction.amount > 0 ? t('transactions:detail.from') : t('transactions:detail.toUser')} @{transaction.relatedUserUtorid}
+                                                    </span>
+                                                )}
+                                                {transaction.type === 'transfer' && !transaction.relatedUserUtorid && transaction.relatedId && (
                                                     <span className="transaction-related">
                                                         {transaction.amount > 0 ? t('transactions:detail.from') : t('transactions:detail.toUser')} #{transaction.relatedId}
                                                     </span>

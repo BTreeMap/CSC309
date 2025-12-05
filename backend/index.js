@@ -2003,6 +2003,24 @@ app.get('/users/me/transactions', requireRole('regular'), async (req, res) => {
             })
         ]);
 
+        // Get related user utorids for transactions with relatedId
+        const relatedUserIdsSet = new Set(
+            results
+                .filter(tx => tx.relatedId !== null && (tx.type === 'transfer' || tx.type === 'adjustment' || tx.type === 'event'))
+                .map(tx => tx.relatedId)
+        );
+        
+        const relatedUserIds = Array.from(relatedUserIdsSet);
+        
+        const relatedUsers = relatedUserIds.length > 0
+            ? await prisma.user.findMany({
+                where: { id: { in: relatedUserIds } },
+                select: { id: true, utorid: true }
+            })
+            : [];
+        
+        const relatedUsersMap = new Map(relatedUsers.map(u => [u.id, u.utorid]));
+
         // Format results - for own transactions, we don't include createdBy and suspicious
         const formattedResults = results.map(tx => {
             const base = {
@@ -2021,6 +2039,9 @@ app.get('/users/me/transactions', requireRole('regular'), async (req, res) => {
                 base.spent = tx.spent;
             } else if (tx.type === 'adjustment' || tx.type === 'transfer' || tx.type === 'event') {
                 base.relatedId = tx.relatedId;
+                if (tx.relatedId && relatedUsersMap.has(tx.relatedId)) {
+                    base.relatedUserUtorid = relatedUsersMap.get(tx.relatedId);
+                }
             } else if (tx.type === 'redemption') {
                 // For redemptions, show the redeemed amount
                 base.redeemed = tx.redeemed;
