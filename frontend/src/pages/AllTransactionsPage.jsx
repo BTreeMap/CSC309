@@ -92,7 +92,7 @@ const AllTransactionsPage = () => {
         setLoadingUser(true);
 
         try {
-            const userData = await usersAPI.getUser(transaction.utorid);
+            const userData = await usersAPI.lookupUser(transaction.utorid);
             setTransactionUser(userData);
         } catch {
             // User data optional

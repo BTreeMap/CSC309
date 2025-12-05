@@ -1743,8 +1743,8 @@ app.get('/transactions', requireRole('manager'), async (req, res) => {
     }
 });
 
-// GET /transactions/:transactionId - Get transaction details (Manager+)
-app.get('/transactions/:transactionId', requireRole('manager'), async (req, res) => {
+// GET /transactions/:transactionId - Get transaction details (Cashier+)
+app.get('/transactions/:transactionId', requireRole('cashier'), async (req, res) => {
     try {
         const transactionId = parseInt(req.params.transactionId);
 

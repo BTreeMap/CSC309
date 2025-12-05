@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { transactionsAPI, usersAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage, ConfirmDialog, QrScanner, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
@@ -14,6 +15,7 @@ const ProcessRedemptionPage = () => {
     const navigate = useNavigate();
     const { showToast } = useToast();
     const { t } = useTranslation(['transactions', 'common']);
+    const { updateUser } = useAuth();
 
     const [transaction, setTransaction] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
@@ -42,7 +44,7 @@ const ProcessRedemptionPage = () => {
             setTransaction(txn);
 
             // Fetch user info
-            const user = await usersAPI.getUser(txn.utorid);
+            const user = await usersAPI.lookupUser(txn.utorid);
             setUserInfo(user);
         } catch (err) {
             setError(err.response?.data?.error || t('processRedemption.error.loadFailed'));
@@ -99,6 +101,10 @@ const ProcessRedemptionPage = () => {
 
         try {
             await transactionsAPI.processRedemption(transaction.id);
+            
+            const updatedUser = await usersAPI.getMe();
+            updateUser(updatedUser);
+            
             showToast(t('processRedemption.successMessage'), 'success');
             navigate('/cashier/redemption');
         } catch (err) {
