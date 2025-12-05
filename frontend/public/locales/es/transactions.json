@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "Código QR de canje",
         "subtitle": "Muestre este código al cajero para completar su canje",
-        "alreadyProcessed": "Este canje ya ha sido procesado"
+        "alreadyProcessed": "Este canje ya ha sido procesado",
+        "loading": "Cargando detalles del canje...",
+        "downloadQr": "Descargar código QR",
+        "detailsTitle": "Detalles del canje",
+        "requestId": "ID de solicitud",
+        "points": "Puntos",
+        "status": "Estado",
+        "statusProcessed": "Procesado",
+        "statusPending": "Pendiente",
+        "created": "Creado",
+        "processed": "Procesado",
+        "remark": "Nota",
+        "viewAllTransactions": "Ver todas las transacciones",
+        "createNewRedemption": "Crear nuevo canje"
     },
     "redemption": {
         "title": "Canjear puntos",

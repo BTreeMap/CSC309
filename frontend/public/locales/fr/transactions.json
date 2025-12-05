@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "Code QR d'Échange",
         "subtitle": "Montrez ce code à un caissier pour compléter votre échange",
-        "alreadyProcessed": "Cet échange a déjà été traité"
+        "alreadyProcessed": "Cet échange a déjà été traité",
+        "loading": "Chargement des détails de l'échange...",
+        "downloadQr": "Télécharger le code QR",
+        "detailsTitle": "Détails de l'échange",
+        "requestId": "ID de demande",
+        "points": "Points",
+        "status": "Statut",
+        "statusProcessed": "Traité",
+        "statusPending": "En attente",
+        "created": "Créé",
+        "processed": "Traité",
+        "remark": "Remarque",
+        "viewAllTransactions": "Voir toutes les transactions",
+        "createNewRedemption": "Créer un nouvel échange"
     },
     "redemption": {
         "title": "Échanger des Points",

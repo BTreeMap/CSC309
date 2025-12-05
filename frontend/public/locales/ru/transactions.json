@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "QR-код Погашения",
         "subtitle": "Покажите этот код кассиру для завершения погашения",
-        "alreadyProcessed": "Это погашение уже обработано"
+        "alreadyProcessed": "Это погашение уже обработано",
+        "loading": "Загрузка деталей погашения...",
+        "downloadQr": "Скачать QR-код",
+        "detailsTitle": "Детали погашения",
+        "requestId": "ID запроса",
+        "points": "Баллы",
+        "status": "Статус",
+        "statusProcessed": "Обработано",
+        "statusPending": "Ожидание",
+        "created": "Создано",
+        "processed": "Обработано",
+        "remark": "Примечание",
+        "viewAllTransactions": "Просмотреть все транзакции",
+        "createNewRedemption": "Создать новое погашение"
     },
     "redemption": {
         "title": "Обменять Баллы",

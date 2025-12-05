@@ -99,6 +99,16 @@
     },
     "na": "N/A",
     "saving": "Saving...",
+    "actions": {
+        "goBack": "Go Back",
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+    },
     "toast": {
         "success": "Operation completed successfully",
         "error": "An error occurred",

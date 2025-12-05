@@ -37,7 +37,6 @@
     "noData": "Aucune donnée disponible",
     "showMore": "Afficher plus",
     "showLess": "Afficher moins",
-    "actions": "Actions",
     "status": "Statut",
     "date": "Date",
     "time": "Heure",
@@ -99,6 +98,16 @@
     },
     "na": "N/D",
     "saving": "Enregistrement...",
+    "actions": {
+        "goBack": "Retour",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "confirm": "Confirmer",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe"
+    },
     "toast": {
         "success": "Opération réussie",
         "error": "Une erreur s'est produite",

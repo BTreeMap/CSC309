@@ -37,7 +37,6 @@
     "noData": "暂无数据",
     "showMore": "显示更多",
     "showLess": "显示较少",
-    "actions": "操作",
     "status": "状态",
     "date": "日期",
     "time": "时间",
@@ -99,6 +98,16 @@
     },
     "na": "不适用",
     "saving": "保存中...",
+    "actions": {
+        "goBack": "返回",
+        "cancel": "取消",
+        "save": "保存",
+        "edit": "编辑",
+        "delete": "删除",
+        "confirm": "确认",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码"
+    },
     "toast": {
         "success": "操作成功",
         "error": "发生错误",

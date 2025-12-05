@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "رمز QR للاستبدال",
         "subtitle": "اعرض هذا الرمز لأمين الصندوق لإكمال عملية الاستبدال",
-        "alreadyProcessed": "تمت معالجة هذا الاستبدال بالفعل"
+        "alreadyProcessed": "تمت معالجة هذا الاستبدال بالفعل",
+        "loading": "جاري تحميل تفاصيل الاستبدال...",
+        "downloadQr": "تنزيل رمز QR",
+        "detailsTitle": "تفاصيل الاستبدال",
+        "requestId": "معرف الطلب",
+        "points": "النقاط",
+        "status": "الحالة",
+        "statusProcessed": "تمت المعالجة",
+        "statusPending": "قيد الانتظار",
+        "created": "تاريخ الإنشاء",
+        "processed": "تاريخ المعالجة",
+        "remark": "ملاحظة",
+        "viewAllTransactions": "عرض جميع المعاملات",
+        "createNewRedemption": "إنشاء استبدال جديد"
     },
     "redemption": {
         "title": "استبدال النقاط",

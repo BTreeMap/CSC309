@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "Redemption QR Code",
         "subtitle": "Show this code to a cashier to complete your redemption",
-        "alreadyProcessed": "This redemption has already been processed"
+        "alreadyProcessed": "This redemption has already been processed",
+        "loading": "Loading redemption details...",
+        "downloadQr": "Download QR Code",
+        "detailsTitle": "Redemption Details",
+        "requestId": "Request ID",
+        "points": "Points",
+        "status": "Status",
+        "statusProcessed": "Processed",
+        "statusPending": "Pending",
+        "created": "Created",
+        "processed": "Processed",
+        "remark": "Remark",
+        "viewAllTransactions": "View All Transactions",
+        "createNewRedemption": "Create New Redemption"
     },
     "redemption": {
         "title": "Redeem Points",

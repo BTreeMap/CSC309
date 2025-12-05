@@ -200,7 +200,20 @@
     "redemptionQr": {
         "title": "兑换二维码",
         "subtitle": "向收银员出示此二维码以完成兑换",
-        "alreadyProcessed": "此兑换已处理"
+        "alreadyProcessed": "此兑换已处理",
+        "loading": "正在加载兑换详情...",
+        "downloadQr": "下载二维码",
+        "detailsTitle": "兑换详情",
+        "requestId": "请求ID",
+        "points": "积分",
+        "status": "状态",
+        "statusProcessed": "已处理",
+        "statusPending": "待处理",
+        "created": "创建时间",
+        "processed": "处理时间",
+        "remark": "备注",
+        "viewAllTransactions": "查看所有交易",
+        "createNewRedemption": "创建新兑换"
     },
     "redemption": {
         "title": "兑换积分",

@@ -10,6 +10,7 @@ import { QrCode } from 'lucide-react';
 import './RedemptionQRPage.css';
 
 const RedemptionQRPage = () => {
+    const { t } = useTranslation(['transactions', 'common']);
     const { transactionId } = useParams();
     const navigate = useNavigate();
 
@@ -73,15 +74,15 @@ const RedemptionQRPage = () => {
 
     const getStatusBadge = () => {
         if (transaction?.processedAt) {
-            return <span className="status-badge status-processed">Processed</span>;
+            return <span className="status-badge status-processed">{t('transactions:redemptionQr.statusProcessed')}</span>;
         }
-        return <span className="status-badge status-pending">Pending</span>;
+        return <span className="status-badge status-pending">{t('transactions:redemptionQr.statusPending')}</span>;
     };
 
     if (loading) {
         return (
             <Layout>
-                <LoadingSpinner text="Loading redemption details..." />
+                <LoadingSpinner text={t('transactions:redemptionQr.loading')} />
             </Layout>
         );
     }
@@ -93,7 +94,7 @@ const RedemptionQRPage = () => {
                     <ErrorMessage message={error} />
                     <div className="error-actions">
                         <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-                            Go Back
+                            {t('common:actions.goBack')}
                         </button>
                     </div>
                 </div>
@@ -102,7 +103,6 @@ const RedemptionQRPage = () => {
     }
 
     const isProcessed = !!transaction?.processedAt;
-    const { t } = useTranslation(['transactions', 'common']);
 
     return (
         <Layout>
@@ -133,45 +133,45 @@ const RedemptionQRPage = () => {
                                 </div>
                                 <button className="btn btn-primary download-qr-button" onClick={handleDownload}>
                                     <span className="download-icon">📥</span>
-                                    Download QR Code
+                                    {t('transactions:redemptionQr.downloadQr')}
                                 </button>
                             </>
                         )}
                     </div>
 
                     <div className="redemption-details-card">
-                        <h2>Redemption Details</h2>
+                        <h2>{t('transactions:redemptionQr.detailsTitle')}</h2>
 
                         <div className="detail-row">
-                            <span className="detail-label">Request ID</span>
+                            <span className="detail-label">{t('transactions:redemptionQr.requestId')}</span>
                             <span className="detail-value">#{transaction.id}</span>
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">Points</span>
+                            <span className="detail-label">{t('transactions:redemptionQr.points')}</span>
                             <span className="detail-value points-value">{Math.abs(transaction.amount).toLocaleString()}</span>
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">Status</span>
+                            <span className="detail-label">{t('transactions:redemptionQr.status')}</span>
                             {getStatusBadge()}
                         </div>
 
                         <div className="detail-row">
-                            <span className="detail-label">Created</span>
+                            <span className="detail-label">{t('transactions:redemptionQr.created')}</span>
                             <span className="detail-value">{formatDate(transaction.createdAt)}</span>
                         </div>
 
                         {transaction.processedAt && (
                             <div className="detail-row">
-                                <span className="detail-label">Processed</span>
+                                <span className="detail-label">{t('transactions:redemptionQr.processed')}</span>
                                 <span className="detail-value">{formatDate(transaction.processedAt)}</span>
                             </div>
                         )}
 
                         {transaction.remark && (
                             <div className="detail-row">
-                                <span className="detail-label">Remark</span>
+                                <span className="detail-label">{t('transactions:redemptionQr.remark')}</span>
                                 <span className="detail-value">{transaction.remark}</span>
                             </div>
                         )}
@@ -179,10 +179,10 @@ const RedemptionQRPage = () => {
 
                     <div className="qr-actions">
                         <Link to="/transactions" className="action-link">
-                            View All Transactions
+                            {t('transactions:redemptionQr.viewAllTransactions')}
                         </Link>
                         <Link to="/redeem" className="action-link">
-                            Create New Redemption
+                            {t('transactions:redemptionQr.createNewRedemption')}
                         </Link>
                     </div>
                 </div>

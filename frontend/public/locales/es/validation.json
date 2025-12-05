@@ -3,7 +3,8 @@
     "email": {
         "required": "El correo electrónico es obligatorio",
         "invalid": "Por favor, ingrese una dirección de correo electrónico válida",
-        "hint": "Preferiblemente una dirección de correo de UofT"
+        "hint": "Preferiblemente una dirección de correo de UofT",
+        "utoronto": "El correo debe ser de UofT (@mail.utoronto.ca o @utoronto.ca)"
     },
     "minLength": "Debe tener al menos {{min}} caracteres",
     "maxLength": "Debe tener como máximo {{max}} caracteres",
@@ -11,6 +12,28 @@
     "max": "Debe ser como máximo {{max}}",
     "pattern": "Formato inválido",
     "passwordMatch": "Las contraseñas no coinciden",
+    "password": {
+        "placeholder": "8-20 caracteres con mayúscula, minúscula, número y carácter especial",
+        "requirements": "8-20 caracteres con mayúscula, minúscula, número y carácter especial",
+        "complexity": "La contraseña debe tener 8-20 caracteres con mayúscula, minúscula, número y carácter especial",
+        "mismatch": "Las contraseñas no coinciden",
+        "mustContain": "La contraseña debe contener",
+        "mustBeDifferent": "La nueva contraseña debe ser diferente a la actual",
+        "currentRequired": "La contraseña actual es obligatoria",
+        "currentIncorrect": "La contraseña actual es incorrecta",
+        "minLength": "Al menos 8 caracteres",
+        "maxLength": "Máximo 20 caracteres",
+        "lengthRange": "8-20 caracteres",
+        "uppercase": "Una letra mayúscula",
+        "lowercase": "Una letra minúscula",
+        "number": "Un número",
+        "special": "Un carácter especial",
+        "strength": {
+            "weak": "Débil",
+            "medium": "Media",
+            "strong": "Fuerte"
+        }
+    },
     "passwordStrength": {
         "weak": "La contraseña es muy débil",
         "minLength": "La contraseña debe tener al menos {{min}} caracteres",
@@ -22,7 +45,7 @@
     "utorid": {
         "required": "El UTORid es obligatorio",
         "invalid": "Por favor, ingrese un UTORid válido",
-        "format": "El UTORid debe tener entre 4 y 8 caracteres alfanuméricos"
+        "format": "El UTORid debe tener entre 7 y 8 caracteres alfanuméricos"
     },
     "name": {
         "required": "El nombre es obligatorio"

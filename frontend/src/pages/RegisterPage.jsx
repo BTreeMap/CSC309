@@ -29,15 +29,15 @@ const RegisterPage = () => {
     };
 
     const validateUtorid = (utorid) => {
-        // UTORid should be alphanumeric, 4-8 characters
-        const regex = /^[a-zA-Z0-9]{4,8}$/;
+        // UTORid should be alphanumeric, 7-8 characters (matching backend)
+        const regex = /^[a-zA-Z0-9]{7,8}$/;
         return regex.test(utorid);
     };
 
     const validateEmail = (email) => {
-        // Should be a valid email format, preferably @mail.utoronto.ca or @utoronto.ca
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
+        // Must be a valid UofT email (matching backend)
+        if (typeof email !== 'string') return false;
+        return email.endsWith('@mail.utoronto.ca') || email.endsWith('@utoronto.ca');
     };
 
     const handleSubmit = async (e) => {
@@ -89,7 +89,7 @@ const RegisterPage = () => {
     };
 
     const copyResetLink = () => {
-        const link = `${window.location.origin}/reset-password?token=${success.resetToken}`;
+        const link = `${window.location.origin}/forgot-password?token=${success.resetToken}&utorid=${success.user.utorid}`;
         navigator.clipboard.writeText(link);
         showToast(t('auth:register.linkCopied'), 'success');
     };

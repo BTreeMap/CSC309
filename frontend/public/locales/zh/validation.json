@@ -3,7 +3,8 @@
     "email": {
         "required": "电子邮件地址为必填项",
         "invalid": "请输入有效的电子邮件地址",
-        "hint": "建议使用多伦多大学电子邮件地址"
+        "hint": "建议使用多伦多大学电子邮件地址",
+        "utoronto": "邮箱必须是多伦多大学邮箱 (@mail.utoronto.ca 或 @utoronto.ca)"
     },
     "minLength": "至少需要 {{min}} 个字符",
     "maxLength": "最多允许 {{max}} 个字符",
@@ -11,6 +12,28 @@
     "max": "最大值为 {{max}}",
     "pattern": "格式无效",
     "passwordMatch": "密码不匹配",
+    "password": {
+        "placeholder": "8-20个字符，包含大写、小写字母、数字和特殊字符",
+        "requirements": "8-20个字符，包含大写、小写字母、数字和特殊字符",
+        "complexity": "密码必须为8-20个字符，包含大写、小写字母、数字和特殊字符",
+        "mismatch": "密码不匹配",
+        "mustContain": "密码必须包含",
+        "mustBeDifferent": "新密码必须与当前密码不同",
+        "currentRequired": "当前密码为必填项",
+        "currentIncorrect": "当前密码不正确",
+        "minLength": "至少8个字符",
+        "maxLength": "最多20个字符",
+        "lengthRange": "8-20个字符",
+        "uppercase": "一个大写字母",
+        "lowercase": "一个小写字母",
+        "number": "一个数字",
+        "special": "一个特殊字符",
+        "strength": {
+            "weak": "弱",
+            "medium": "中",
+            "strong": "强"
+        }
+    },
     "passwordStrength": {
         "weak": "密码强度太弱",
         "minLength": "密码至少需要 {{min}} 个字符",
@@ -22,7 +45,7 @@
     "utorid": {
         "required": "UTORid 为必填项",
         "invalid": "请输入有效的 UTORid",
-        "format": "UTORid 必须是 4-8 个字母数字字符"
+        "format": "UTORid 必须是 7-8 个字母数字字符"
     },
     "name": {
         "required": "姓名为必填项"

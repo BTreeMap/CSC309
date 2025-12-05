@@ -3,7 +3,8 @@
     "email": {
         "required": "Email is required",
         "invalid": "Please enter a valid email address",
-        "hint": "Preferably a UofT email address"
+        "hint": "Preferably a UofT email address",
+        "utoronto": "Email must be a UofT email (@mail.utoronto.ca or @utoronto.ca)"
     },
     "minLength": "Must be at least {{min}} characters",
     "maxLength": "Must be at most {{max}} characters",
@@ -11,6 +12,28 @@
     "max": "Must be at most {{max}}",
     "pattern": "Invalid format",
     "passwordMatch": "Passwords do not match",
+    "password": {
+        "placeholder": "8-20 characters with uppercase, lowercase, number, and special character",
+        "requirements": "8-20 characters with uppercase, lowercase, number, and special character",
+        "complexity": "Password must be 8-20 characters with uppercase, lowercase, number, and special character",
+        "mismatch": "Passwords do not match",
+        "mustContain": "Password must contain",
+        "mustBeDifferent": "New password must be different from current password",
+        "currentRequired": "Current password is required",
+        "currentIncorrect": "Current password is incorrect",
+        "minLength": "At least 8 characters",
+        "maxLength": "At most 20 characters",
+        "lengthRange": "8-20 characters",
+        "uppercase": "One uppercase letter",
+        "lowercase": "One lowercase letter",
+        "number": "One number",
+        "special": "One special character",
+        "strength": {
+            "weak": "Weak",
+            "medium": "Medium",
+            "strong": "Strong"
+        }
+    },
     "passwordStrength": {
         "weak": "Password is too weak",
         "minLength": "Password must be at least {{min}} characters",
@@ -22,7 +45,7 @@
     "utorid": {
         "required": "UTORid is required",
         "invalid": "Please enter a valid UTORid",
-        "format": "UTORid must be 4-8 alphanumeric characters"
+        "format": "UTORid must be 7-8 alphanumeric characters"
     },
     "name": {
         "required": "Name is required"
