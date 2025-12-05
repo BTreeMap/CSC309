@@ -121,7 +121,8 @@ const EventDetailPage = () => {
 
     const isFull = () => {
         if (!event || !event.capacity) return false;
-        return event.numGuests >= event.capacity;
+        const numGuests = event.numGuests ?? event.guests?.length ?? 0;
+        return numGuests >= event.capacity;
     };
 
     if (loading) {
@@ -254,19 +255,19 @@ const EventDetailPage = () => {
                             <div className="attendance-info">
                                 <div className="attendance-count">
                                     <Users size={20} />
-                                    <span className="count-number">{event.numGuests}</span>
+                                    <span className="count-number">{event.numGuests ?? event.guests?.length ?? 0}</span>
                                     <span className="count-label">{t('events.card.attending')}</span>
                                 </div>
                                 {event.capacity && (
                                     <div className="capacity-info">
                                         <span className={`capacity-text ${full ? 'full' : ''}`}>
-                                            {full ? t('events.registration.eventFull') : t('events.card.spotsLeft', { count: event.capacity - event.numGuests })}
+                                            {full ? t('events.registration.eventFull') : t('events.card.spotsLeft', { count: event.capacity - (event.numGuests || event.guests?.length || 0) })}
                                         </span>
                                         <div className="capacity-bar">
                                             <div className="capacity-track">
                                                 <div
                                                     className="capacity-fill"
-                                                    style={{ width: `${Math.min(100, (event.numGuests / event.capacity) * 100)}%` }}
+                                                    style={{ width: `${Math.min(100, ((event.numGuests || event.guests?.length || 0) / event.capacity) * 100)}%` }}
                                                 />
                                             </div>
                                         </div>

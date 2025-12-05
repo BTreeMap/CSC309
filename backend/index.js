@@ -2491,6 +2491,7 @@ app.get('/events/:eventId', requireRole('regular'), async (req, res) => {
                 startTime: event.startTime,
                 endTime: event.endTime,
                 capacity: event.capacity,
+                numGuests,
                 pointsRemain: event.pointsRemain,
                 pointsAwarded: event.pointsAwarded,
                 published: event.published,
