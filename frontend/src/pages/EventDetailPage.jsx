@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage, ConfirmDialog } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { EventMap } from '../components/maps';
 import './EventDetailPage.css';
 
 const EventDetailPage = () => {
@@ -223,6 +224,12 @@ const EventDetailPage = () => {
                                     <span className="location-icon">📍</span>
                                     <span className="location-text">{event.location}</span>
                                 </div>
+                                <EventMap
+                                    location={event.location}
+                                    eventName={event.name}
+                                    height={250}
+                                    className="event-location-map"
+                                />
                             </div>
 
                             {isManager && event.organizers && event.organizers.length > 0 && (

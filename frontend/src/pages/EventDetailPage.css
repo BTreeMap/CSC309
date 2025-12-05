@@ -315,3 +315,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Event Location Map */
+.event-location-map {
+  margin-top: var(--space-4);
+  border: 1px solid var(--color-border-light);
+}
+
+.event-location-map .leaflet-container {
+  border-radius: var(--radius-md);
+}

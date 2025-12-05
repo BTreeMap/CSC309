@@ -5,6 +5,7 @@ import { eventsAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, ConfirmDialog, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { LocationInput } from '../components/maps';
 import { CalendarCog } from 'lucide-react';
 import './ManageEventsPage.css';
 
@@ -337,15 +338,14 @@ const ManageEventsPage = () => {
 
                         <div className="form-group">
                             <label htmlFor="location" className="form-label">Location *</label>
-                            <input
-                                type="text"
+                            <LocationInput
                                 id="location"
                                 name="location"
                                 value={formData.location}
                                 onChange={handleInputChange}
                                 required
-                                placeholder="e.g., Room 101, Main Building"
-                                className="form-input"
+                                placeholder="e.g., Bahen Centre, Toronto"
+                                showSuggestions={true}
                             />
                         </div>
 
