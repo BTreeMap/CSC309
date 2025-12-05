@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../contexts/AuthContext';
 import './UnauthorizedPage.css';
 
 const UnauthorizedPage = () => {
   const { t } = useTranslation(['errors', 'common']);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="unauthorized-page">
@@ -17,9 +19,11 @@ const UnauthorizedPage = () => {
             <Link to="/dashboard" className="btn btn-primary">
               {t('errors:unauthorizedPage.backHome')}
             </Link>
-            <Link to="/login" className="btn btn-secondary">
-              {t('auth:login.submit')}
-            </Link>
+            {!isAuthenticated && (
+              <Link to="/login" className="btn btn-secondary">
+                {t('auth:login.submit')}
+              </Link>
+            )}
           </div>
         </div>
       </div>
