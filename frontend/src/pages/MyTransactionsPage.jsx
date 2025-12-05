@@ -77,7 +77,10 @@ const MyTransactionsPage = () => {
     };
 
     const getAmountDisplay = (transaction) => {
-        const amount = transaction.amount;
+        let amount = transaction.amount ?? 0;
+        if (transaction.type === 'redemption' && transaction.redeemed !== undefined) {
+            amount = -transaction.redeemed;
+        }
         const isPositive = amount > 0;
         return {
             value: isPositive ? `+${amount.toLocaleString()}` : amount.toLocaleString(),

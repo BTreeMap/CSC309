@@ -131,10 +131,14 @@ const AllTransactionsPage = () => {
     };
 
     const getAmountDisplay = (transaction) => {
-        const amount = Math.abs(transaction.amount);
-        const isPositive = transaction.amount > 0;
+        let amount = transaction.amount ?? 0;
+        if (transaction.type === 'redemption' && transaction.redeemed !== undefined) {
+            amount = -transaction.redeemed;
+        }
+        const absAmount = Math.abs(amount);
+        const isPositive = amount > 0;
         return {
-            value: isPositive ? `+${amount.toLocaleString()}` : `-${amount.toLocaleString()}`,
+            value: isPositive ? `+${absAmount.toLocaleString()}` : `-${absAmount.toLocaleString()}`,
             className: isPositive ? 'amount-positive' : 'amount-negative',
         };
     };
@@ -388,8 +392,20 @@ const AllTransactionsPage = () => {
                             <div className="detail-grid">
                                 <div className="detail-item">
                                     <label>{t('transactions:allTransactions.modal.amount')}</label>
-                                    <span className={`detail-amount ${selectedTransaction.amount > 0 ? 'amount-positive' : 'amount-negative'}`}>
-                                        {selectedTransaction.amount > 0 ? '+' : ''}{selectedTransaction.amount.toLocaleString()} {t('common:points')}
+                                    <span className={`detail-amount ${(() => {
+                                        let amount = selectedTransaction.amount ?? 0;
+                                        if (selectedTransaction.type === 'redemption' && selectedTransaction.redeemed !== undefined) {
+                                            amount = -selectedTransaction.redeemed;
+                                        }
+                                        return amount > 0 ? 'amount-positive' : 'amount-negative';
+                                    })()}`}>
+                                        {(() => {
+                                            let amount = selectedTransaction.amount ?? 0;
+                                            if (selectedTransaction.type === 'redemption' && selectedTransaction.redeemed !== undefined) {
+                                                amount = -selectedTransaction.redeemed;
+                                            }
+                                            return (amount > 0 ? '+' : '') + amount.toLocaleString() + ' ' + t('common:points');
+                                        })()}
                                     </span>
                                 </div>
 

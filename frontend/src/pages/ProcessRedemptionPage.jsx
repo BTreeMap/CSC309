@@ -212,7 +212,9 @@ const ProcessRedemptionPage = () => {
     }
 
     const isProcessed = !!transaction.processedAt;
-    const pointsToDeduct = Math.abs(transaction.amount);
+    const pointsToDeduct = transaction.type === 'redemption' && transaction.redeemed !== undefined 
+        ? transaction.redeemed 
+        : Math.abs(transaction.amount ?? 0);
 
     return (
         <Layout>

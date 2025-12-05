@@ -149,7 +149,12 @@ const RedemptionQRPage = () => {
 
                         <div className="detail-row">
                             <span className="detail-label">{t('transactions:redemptionQr.points')}</span>
-                            <span className="detail-value points-value">{Math.abs(transaction.amount).toLocaleString()}</span>
+                            <span className="detail-value points-value">{(() => {
+                                const amount = transaction.type === 'redemption' && transaction.redeemed !== undefined 
+                                    ? transaction.redeemed 
+                                    : Math.abs(transaction.amount ?? 0);
+                                return amount.toLocaleString();
+                            })()}</span>
                         </div>
 
                         <div className="detail-row">

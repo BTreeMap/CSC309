@@ -60,12 +60,16 @@ export const createRedemptionPayload = (transaction) => {
         throw new Error('Transaction must have an id');
     }
 
+    const amount = transaction.type === 'redemption' && transaction.redeemed !== undefined 
+        ? transaction.redeemed 
+        : Math.abs(transaction.amount ?? 0);
+    
     const payload = {
         v: QR_PROTOCOL_VERSION,
         t: QR_PAYLOAD_TYPES.REDEMPTION,
         d: {
             transactionId: transaction.id,
-            amount: Math.abs(transaction.amount),
+            amount: amount,
             createdAt: transaction.createdAt,
         },
     };
