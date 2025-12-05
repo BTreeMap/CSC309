@@ -6,7 +6,7 @@ RESTful API backend for the CSSU Rewards loyalty program management system.
 
 - **Express 5** - Web framework
 - **Prisma ORM** - Database toolkit
-- **SQLite** - Database (development)
+- **SQLite / PostgreSQL** - Database (supports both)
 - **JWT** - Authentication
 - **bcrypt** - Password hashing
 - **Zod** - Request validation
@@ -28,6 +28,9 @@ npm install
 cp .env.example .env
 # Edit .env with your configuration
 
+# Set up database (auto-detects SQLite or PostgreSQL from DATABASE_URL)
+npm run setup-db
+
 # Run database migrations
 npx prisma migrate dev
 
@@ -37,9 +40,39 @@ npx prisma generate
 
 ### Database Setup
 
+The backend supports both **SQLite** (for development) and **PostgreSQL** (for production).
+
+#### SQLite (Development)
+
 ```bash
+# In .env file:
+DATABASE_URL=file:./dev.db
+```
+
+#### PostgreSQL (Production)
+
+```bash
+# In .env file:
+DATABASE_URL=postgresql://user:password@localhost:5432/dbname?schema=public
+
+# With SSL (recommended for production):
+DATABASE_URL=postgresql://user:password@host:5432/dbname?schema=public&sslmode=require
+```
+
+#### Database Commands
+
+```bash
+# Auto-detect database and generate Prisma client
+npm run setup-db
+
 # Run migrations
-npx prisma migrate dev
+npm run db:migrate
+
+# Push schema changes (without migrations)
+npm run db:push
+
+# Regenerate Prisma client
+npm run db:generate
 
 # Seed the database with sample data
 npm run seed
@@ -58,6 +91,22 @@ node index.js
 The API will be available at `http://localhost:3000`.
 
 ## Available Scripts
+
+### `npm run setup-db`
+
+Detects the database type from `DATABASE_URL` and generates the appropriate Prisma client.
+
+### `npm run db:migrate`
+
+Runs Prisma migrations.
+
+### `npm run db:push`
+
+Pushes schema changes to the database without creating a migration.
+
+### `npm run db:generate`
+
+Regenerates the Prisma client.
 
 ### `npm run seed`
 
@@ -81,6 +130,8 @@ backend/
 │   ├── migrations/       # Database migrations
 │   ├── seed.js           # Database seeding script
 │   └── createsu.js       # Superuser creation script
+├── scripts/
+│   └── setup-db.js       # Database setup script
 ├── Dockerfile            # Docker configuration
 └── package.json
 ```

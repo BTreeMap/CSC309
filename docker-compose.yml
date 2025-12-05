@@ -12,7 +12,11 @@ services:
     environment:
       - NODE_ENV=production
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
+      # Database: SQLite (default) or PostgreSQL
+      # For SQLite:
       - DATABASE_URL=file:/app/data/database.db
+      # For PostgreSQL (uncomment and set your connection string):
+      # - DATABASE_URL=postgresql://postgres:password@postgres:5432/csc309?schema=public
       # Backend URL for absolute URLs (e.g., avatar images)
       - BACKEND_URL=${BACKEND_URL:-http://localhost:3000}
       # CORS: Set to your frontend URL (e.g., https://your-app.pages.dev)
@@ -20,10 +24,14 @@ services:
       # Auto-migrate: Set to "true" to run migrations on startup
       - AUTO_MIGRATE=${AUTO_MIGRATE:-true}
     volumes:
-      # Persist SQLite database
+      # Persist SQLite database (not needed when using PostgreSQL)
       - backend-data:/app/data
       # Persist uploaded files
       - backend-uploads:/app/uploads
+    # Uncomment when using PostgreSQL:
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
       interval: 30s
@@ -31,6 +39,25 @@ services:
       retries: 3
       start_period: 10s
 
+  # Uncomment to use PostgreSQL instead of SQLite:
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: csc309-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: csc309
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
 volumes:
   backend-data:
   backend-uploads:
+  # Uncomment when using PostgreSQL:
+  # postgres-data:

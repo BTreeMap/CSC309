@@ -19,7 +19,7 @@ RUN npm ci --no-audit --no-fund
 
 # Copy prisma schema and generate client
 COPY prisma ./prisma/
-RUN npx prisma generate
+RUN npm exec --no -- prisma generate
 
 # OPTIMIZATION START: Clean up in the Builder stage
 # 1. Prune to production dependencies
@@ -78,11 +78,12 @@ EXPOSE 3000
 
 # Run database migrations (if enabled) and start the server
 # Uses "prisma migrate deploy" which safely applies pending migrations
+# Uses "npm exec --no" to ensure only locally installed prisma is used (no network requests)
 # Port is passed as argument: docker run -p 3000:3000 image 3000
 ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "\
     if [ \"$AUTO_MIGRATE\" = 'true' ]; then \
         echo 'Running database migrations...' && \
-        npx prisma migrate deploy; \
+        npm exec --no -- prisma migrate deploy; \
     fi && \
     exec node index.js \"$@\"", "--"]
 CMD ["3000"]
