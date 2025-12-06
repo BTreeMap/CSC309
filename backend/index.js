@@ -56,7 +56,7 @@ app.get('/health', (_req, res) => {
 
 // CORS configuration for React frontend
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -2900,7 +2900,8 @@ app.post('/events/:eventId/guests/me', requireRole('regular'), async (req, res) 
         const event = await prisma.event.findUnique({
             where: { id: eventId },
             include: {
-                guests: true
+                guests: true,
+                organizers: true
             }
         });
 
@@ -2919,6 +2920,11 @@ app.post('/events/:eventId/guests/me', requireRole('regular'), async (req, res) 
 
         if (isDefined(event.capacity) && event.guests.length >= event.capacity) {
             return res.status(410).json({ error: 'Event is full' });
+        }
+
+        // Check if user is an organizer
+        if (event.organizers.some(o => o.userId === req.auth.sub)) {
+            return res.status(400).json({ error: 'User is an organizer' });
         }
 
         // Check if already RSVP'd
