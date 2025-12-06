@@ -465,6 +465,10 @@ const EventDetailPage = () => {
                                         </button>
                                     )}
                                 </div>
+                            ) : isOrganizer ? (
+                                <div className="organizer-notice">
+                                    {t('events.registration.organizerNotice')}
+                                </div>
                             ) : status.canRSVP && !full ? (
                                 <button
                                     onClick={handleRSVP}
