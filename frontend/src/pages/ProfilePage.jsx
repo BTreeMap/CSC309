@@ -7,7 +7,7 @@ import { LoadingSpinner, ErrorMessage } from '../components/shared';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
-    const { t, i18n } = useTranslation(['users', 'common']);
+    const { t, i18n } = useTranslation(['users', 'common', 'auth']);
     const { user, loading } = useAuth();
     const [error, setError] = useState(null);
 
@@ -122,7 +122,7 @@ const ProfilePage = () => {
                                 <span className="security-icon">🔒</span>
                                 <div className="security-action-content">
                                     <span className="security-action-title">{t('auth:changePassword.title')}</span>
-                                    <span className="security-action-description">{t('auth:changePassword.submit')}</span>
+                                    <span className="security-action-description">{t('auth:changePassword.subtitle')}</span>
                                 </div>
                                 <span className="security-arrow">→</span>
                             </Link>
