@@ -1055,6 +1055,8 @@ app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) =>
                     id: true,
                     utorid: true,
                     name: true,
+                    email: true,
+                    role: true,
                     points: true,
                     isVerified: true,
                     avatarUrl: true
@@ -1068,6 +1070,8 @@ app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) =>
                     id: true,
                     utorid: true,
                     name: true,
+                    email: true,
+                    role: true,
                     points: true,
                     isVerified: true,
                     avatarUrl: true
@@ -1083,6 +1087,8 @@ app.get('/users/lookup/:identifier', requireRole('regular'), async (req, res) =>
             id: user.id,
             utorid: user.utorid,
             name: user.name,
+            email: user.email,
+            role: user.role,
             points: user.points,
             verified: user.isVerified,
             avatarUrl: user.avatarUrl ? resolveRelativeUrl(user.avatarUrl) : DEFAULT_AVATAR_URL

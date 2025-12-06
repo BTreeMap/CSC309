@@ -5,7 +5,7 @@ import { transactionsAPI, usersAPI } from '../api';
 import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
-import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS } from '../utils/constants';
+import { TRANSACTION_TYPE_LABELS, TRANSACTION_TYPE_COLORS, ROLE_LABELS } from '../utils/constants';
 import { ShoppingCart, Gift, Settings, ArrowLeftRight, Calendar, ClipboardList, BarChart3 } from 'lucide-react';
 import '../styles/design-system.css';
 import './AllTransactionsPage.css';
@@ -516,7 +516,7 @@ const AllTransactionsPage = () => {
                                         <span><strong>{t('transactions:allTransactions.modal.name')}:</strong> {transactionUser.name}</span>
                                         <span><strong>{t('transactions:allTransactions.modal.email')}:</strong> {transactionUser.email}</span>
                                         <span><strong>{t('transactions:allTransactions.modal.currentPoints')}:</strong> {transactionUser.points?.toLocaleString()}</span>
-                                        <span><strong>{t('transactions:allTransactions.modal.role')}:</strong> {transactionUser.role}</span>
+                                        <span><strong>{t('transactions:allTransactions.modal.role')}:</strong> {ROLE_LABELS[transactionUser.role] || transactionUser.role}</span>
                                     </div>
                                 </div>
                             )}
