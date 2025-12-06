@@ -7,7 +7,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, ErrorMessage, ConfirmDialog, PageHeader, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { EventMap } from '../components/maps';
-import { Calendar, MapPin, Clock, Users, Gift, ArrowLeft, UserPlus, UserMinus } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Gift, ArrowLeft, UserPlus, UserMinus, Award } from 'lucide-react';
 import './EventDetailPage.css';
 
 const EventDetailPage = () => {
@@ -27,8 +27,21 @@ const EventDetailPage = () => {
     const [addLoading, setAddLoading] = useState(false);
     const [removeUserId, setRemoveUserId] = useState(null);
     const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
+    const [showAwardPoints, setShowAwardPoints] = useState(false);
+    const [awardUtorid, setAwardUtorid] = useState('');
+    const [awardAmount, setAwardAmount] = useState('');
+    const [awardRemark, setAwardRemark] = useState('');
+    const [awardAll, setAwardAll] = useState(false);
+    const [awardLoading, setAwardLoading] = useState(false);
+    const [showManageOrganizers, setShowManageOrganizers] = useState(false);
+    const [addOrganizerUtorid, setAddOrganizerUtorid] = useState('');
+    const [addOrganizerLoading, setAddOrganizerLoading] = useState(false);
+    const [removeOrganizerUserId, setRemoveOrganizerUserId] = useState(null);
+    const [showRemoveOrganizerConfirm, setShowRemoveOrganizerConfirm] = useState(false);
 
     const isManager = ['manager', 'superuser'].includes(activeRole);
+    const isOrganizer = event?.organizers?.some(org => (org.utorid || org.user?.utorid) === user?.utorid) || false;
+    const canManage = isManager || isOrganizer;
 
     const fetchEvent = async () => {
         setLoading(true);
@@ -111,6 +124,95 @@ const EventDetailPage = () => {
     const openRemoveConfirm = (userId) => {
         setRemoveUserId(userId);
         setShowRemoveConfirm(true);
+    };
+
+    const handleAwardPoints = async () => {
+        if (!awardAmount || parseInt(awardAmount, 10) <= 0) {
+            showToast('Please enter a valid amount', 'error');
+            return;
+        }
+
+        if (!awardAll && !awardUtorid.trim()) {
+            showToast('Please enter a UTORid or select "Award All"', 'error');
+            return;
+        }
+
+        setAwardLoading(true);
+        try {
+            const payload = {
+                amount: parseInt(awardAmount, 10),
+            };
+            if (awardRemark.trim()) {
+                payload.remark = awardRemark.trim();
+            }
+            if (!awardAll) {
+                payload.utorid = awardUtorid.trim();
+            }
+
+            await eventsAPI.awardPoints(id, payload);
+            showToast(
+                awardAll 
+                    ? `Points awarded to all ${event.guests?.length || 0} guests successfully!`
+                    : 'Points awarded successfully!',
+                'success'
+            );
+            setShowAwardPoints(false);
+            setAwardUtorid('');
+            setAwardAmount('');
+            setAwardRemark('');
+            setAwardAll(false);
+            fetchEvent();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to award points', 'error');
+        } finally {
+            setAwardLoading(false);
+        }
+    };
+
+    const openAwardPoints = () => {
+        setAwardUtorid('');
+        setAwardAmount('');
+        setAwardRemark('');
+        setAwardAll(false);
+        setShowAwardPoints(true);
+    };
+
+    const handleAddOrganizer = async () => {
+        if (!addOrganizerUtorid.trim()) {
+            showToast('Please enter a UTORid', 'error');
+            return;
+        }
+
+        setAddOrganizerLoading(true);
+        try {
+            await eventsAPI.addOrganizer(id, addOrganizerUtorid.trim());
+            showToast('Organizer added successfully', 'success');
+            setAddOrganizerUtorid('');
+            fetchEvent();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to add organizer', 'error');
+        } finally {
+            setAddOrganizerLoading(false);
+        }
+    };
+
+    const handleRemoveOrganizer = async () => {
+        if (!removeOrganizerUserId) return;
+
+        try {
+            await eventsAPI.removeOrganizer(id, removeOrganizerUserId);
+            showToast('Organizer removed successfully', 'success');
+            setShowRemoveOrganizerConfirm(false);
+            setRemoveOrganizerUserId(null);
+            fetchEvent();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to remove organizer', 'error');
+        }
+    };
+
+    const openRemoveOrganizerConfirm = (userId) => {
+        setRemoveOrganizerUserId(userId);
+        setShowRemoveOrganizerConfirm(true);
     };
 
     const getEventStatus = () => {
@@ -278,19 +380,48 @@ const EventDetailPage = () => {
                             />
                         </div>
 
-                        {isManager && event.organizers && event.organizers.length > 0 && (
-                            <div className="content-section">
-                                <h2>{t('events.detail.organizer')}</h2>
-                                <div className="organizers-list">
-                                    {event.organizers.map((org, index) => (
-                                        <div key={index} className="organizer-item">
-                                            <span className="organizer-avatar">👤</span>
-                                            <span>{org.utorid}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                        <div className="content-section">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)' }}>
+                                <h2 style={{ margin: 0 }}>{t('events.detail.organizer')}</h2>
+                                {isManager && (
+                                    <button
+                                        onClick={() => setShowManageOrganizers(true)}
+                                        className="btn btn-secondary btn-sm"
+                                    >
+                                        <Users size={14} />
+                                        Manage Organizers
+                                    </button>
+                                )}
                             </div>
-                        )}
+                            {event.organizers && event.organizers.length > 0 ? (
+                                <div className="organizers-list">
+                                    {event.organizers.map((org, index) => {
+                                        const orgUtorid = org.utorid || org.user?.utorid;
+                                        const orgUserId = org.id || org.userId || org.user?.id;
+                                        const isCurrentUser = orgUtorid === user?.utorid;
+                                        return (
+                                            <div key={index} className={`organizer-item ${isCurrentUser ? 'current-user' : ''}`}>
+                                                <span className="organizer-avatar">👤</span>
+                                                <span>{orgUtorid}</span>
+                                                {isCurrentUser && <span className="organizer-badge">You</span>}
+                                                {isManager && !isCurrentUser && (
+                                                    <button
+                                                        onClick={() => openRemoveOrganizerConfirm(orgUserId)}
+                                                        className="btn btn-danger-outline btn-sm"
+                                                        style={{ marginLeft: 'auto' }}
+                                                    >
+                                                        <UserMinus size={12} />
+                                                        Remove
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <p style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>No organizers assigned yet.</p>
+                            )}
+                        </div>
                     </div>
 
                     <div className="event-sidebar">
@@ -359,12 +490,18 @@ const EventDetailPage = () => {
                             )}
                         </div>
 
-                        {isManager && (
+                        {canManage && (
                             <div className="sidebar-card manager-card">
                                 <h3>{t('common:actionsLabel')}</h3>
                                 <div className="manager-actions">
                                     <button
-                                        onClick={() => navigate('/events/manage')}
+                                        onClick={() => {
+                                            if (isManager) {
+                                                navigate('/events/manage');
+                                            } else {
+                                                navigate(`/events/manage?edit=${id}`);
+                                            }
+                                        }}
                                         className="btn btn-secondary btn-block"
                                     >
                                         {t('events.manage.edit')}
@@ -376,6 +513,15 @@ const EventDetailPage = () => {
                                         <Users size={16} />
                                         Manage Guests
                                     </button>
+                                    {event.pointsRemain > 0 && event.guests && event.guests.length > 0 && (
+                                        <button
+                                            onClick={openAwardPoints}
+                                            className="btn btn-primary btn-block"
+                                        >
+                                            <Award size={16} />
+                                            Award Points
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -470,6 +616,186 @@ const EventDetailPage = () => {
                     confirmText="Remove"
                     confirmVariant="danger"
                 />
+
+                <Modal
+                    isOpen={showManageOrganizers}
+                    onClose={() => setShowManageOrganizers(false)}
+                    title="Manage Event Organizers"
+                    size="medium"
+                >
+                    {event && (
+                        <div className="manage-organizers-modal">
+                            <div className="add-organizer-section">
+                                <h3>Add Organizer</h3>
+                                <div className="add-organizer-form">
+                                    <input
+                                        type="text"
+                                        value={addOrganizerUtorid}
+                                        onChange={(e) => setAddOrganizerUtorid(e.target.value)}
+                                        placeholder="Enter UTORid"
+                                        className="form-input"
+                                        onKeyDown={(e) => e.key === 'Enter' && handleAddOrganizer()}
+                                    />
+                                    <button
+                                        onClick={handleAddOrganizer}
+                                        className="btn btn-primary"
+                                        disabled={addOrganizerLoading || !addOrganizerUtorid.trim()}
+                                    >
+                                        <UserPlus size={16} />
+                                        {addOrganizerLoading ? 'Adding...' : 'Add Organizer'}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="organizers-list-section">
+                                <h3>Current Organizers ({event.organizers?.length || 0})</h3>
+                                {event.organizers && event.organizers.length > 0 ? (
+                                    <div className="organizers-list">
+                                        {event.organizers.map((org, index) => {
+                                            const orgUtorid = org.utorid || org.user?.utorid;
+                                            const orgUserId = org.id || org.userId || org.user?.id;
+                                            const isCurrentUser = orgUtorid === user?.utorid;
+                                            return (
+                                                <div key={index} className={`organizer-item ${isCurrentUser ? 'current-user' : ''}`}>
+                                                    <div className="organizer-info">
+                                                        <span className="organizer-avatar">👤</span>
+                                                        <span>{orgUtorid}</span>
+                                                        {isCurrentUser && <span className="organizer-badge">You</span>}
+                                                    </div>
+                                                    {!isCurrentUser && (
+                                                        <button
+                                                            onClick={() => openRemoveOrganizerConfirm(orgUserId)}
+                                                            className="btn btn-danger-outline btn-sm"
+                                                        >
+                                                            <UserMinus size={14} />
+                                                            Remove
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="no-organizers">
+                                        <p>No organizers assigned yet.</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </Modal>
+
+                <ConfirmDialog
+                    isOpen={showRemoveOrganizerConfirm}
+                    onClose={() => {
+                        setShowRemoveOrganizerConfirm(false);
+                        setRemoveOrganizerUserId(null);
+                    }}
+                    onConfirm={handleRemoveOrganizer}
+                    title="Remove Organizer"
+                    message="Are you sure you want to remove this organizer from the event?"
+                    confirmText="Remove"
+                    confirmVariant="danger"
+                />
+
+                <Modal
+                    isOpen={showAwardPoints}
+                    onClose={() => setShowAwardPoints(false)}
+                    title="Award Points to Guests"
+                    size="medium"
+                >
+                    {event && (
+                        <div className="award-points-modal">
+                            <div className="event-summary">
+                                <p><strong>Event:</strong> {event.name}</p>
+                                <p><strong>Points Remaining:</strong> {event.pointsRemain?.toLocaleString() || 0}</p>
+                                <p><strong>Guests:</strong> {event.guests?.length || 0}</p>
+                            </div>
+
+                            <div className="form-group">
+                                <label className="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={awardAll}
+                                        onChange={(e) => {
+                                            setAwardAll(e.target.checked);
+                                            if (e.target.checked) {
+                                                setAwardUtorid('');
+                                            }
+                                        }}
+                                    />
+                                    <span>Award to all guests ({event.guests?.length || 0} guests)</span>
+                                </label>
+                            </div>
+
+                            {!awardAll && (
+                                <div className="form-group">
+                                    <label htmlFor="awardUtorid" className="form-label">Guest UTORid *</label>
+                                    <input
+                                        type="text"
+                                        id="awardUtorid"
+                                        value={awardUtorid}
+                                        onChange={(e) => setAwardUtorid(e.target.value)}
+                                        placeholder="Enter UTORid"
+                                        className="form-input"
+                                        required={!awardAll}
+                                    />
+                                </div>
+                            )}
+
+                            <div className="form-group">
+                                <label htmlFor="awardAmount" className="form-label">Points Amount *</label>
+                                <input
+                                    type="number"
+                                    id="awardAmount"
+                                    value={awardAmount}
+                                    onChange={(e) => setAwardAmount(e.target.value)}
+                                    placeholder="Enter points to award"
+                                    className="form-input"
+                                    min="1"
+                                    max={awardAll ? event.pointsRemain : undefined}
+                                    required
+                                />
+                                <span className="form-helper">
+                                    {awardAll 
+                                        ? `Total: ${awardAmount ? (parseInt(awardAmount, 10) * (event.guests?.length || 0)).toLocaleString() : 0} points to ${event.guests?.length || 0} guests`
+                                        : `Maximum: ${event.pointsRemain?.toLocaleString() || 0} points available`
+                                    }
+                                </span>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="awardRemark" className="form-label">Remark (Optional)</label>
+                                <input
+                                    type="text"
+                                    id="awardRemark"
+                                    value={awardRemark}
+                                    onChange={(e) => setAwardRemark(e.target.value)}
+                                    placeholder="Enter remark"
+                                    className="form-input"
+                                    maxLength={200}
+                                />
+                            </div>
+
+                            <div className="modal-actions">
+                                <button
+                                    onClick={() => setShowAwardPoints(false)}
+                                    className="btn btn-secondary"
+                                    disabled={awardLoading}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleAwardPoints}
+                                    className="btn btn-primary"
+                                    disabled={awardLoading || !awardAmount || (!awardAll && !awardUtorid.trim())}
+                                >
+                                    {awardLoading ? 'Awarding...' : 'Award Points'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </Modal>
             </div>
         </Layout>
     );

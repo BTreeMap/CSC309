@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { eventsAPI } from '../api';
 import Layout from '../components/Layout';
@@ -59,6 +59,43 @@ const ManageEventsPage = () => {
     useEffect(() => {
         fetchEvents();
     }, [fetchEvents]);
+
+    useEffect(() => {
+        const editId = searchParams.get('edit');
+        if (editId && !showEditModal && !loading) {
+            const handleEdit = async () => {
+                if (events.length > 0) {
+                    const eventToEdit = events.find(e => e.id === parseInt(editId, 10));
+                    if (eventToEdit) {
+                        openEditModal(eventToEdit);
+                        const params = new URLSearchParams(searchParams);
+                        params.delete('edit');
+                        setSearchParams(params, { replace: true });
+                        return;
+                    }
+                }
+                try {
+                    const eventData = await eventsAPI.getEvent(editId);
+                    openEditModal({
+                        id: eventData.id,
+                        name: eventData.name,
+                        description: eventData.description,
+                        location: eventData.location,
+                        startTime: eventData.startTime,
+                        endTime: eventData.endTime,
+                        capacity: eventData.capacity,
+                        pointsAwarded: eventData.pointsAwarded,
+                    });
+                    const params = new URLSearchParams(searchParams);
+                    params.delete('edit');
+                    setSearchParams(params, { replace: true });
+                } catch {
+                    showToast('Event not found', 'error');
+                }
+            };
+            handleEdit();
+        }
+    }, [events, searchParams, showEditModal, loading]);
 
     const handlePageChange = (newPage) => {
         const params = new URLSearchParams(searchParams);
