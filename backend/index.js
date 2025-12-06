@@ -1194,7 +1194,7 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
 
         const targetUser = await prisma.user.findUnique({
             where: { id: userId },
-            select: { role: true, suspicious: true }
+            select: { role: true, suspicious: true, isVerified: true }
         });
 
         if (!targetUser) {
@@ -1208,6 +1208,14 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
             if (targetRoleIndex >= managerRoleIndex) {
                 return res.status(403).json({ error: 'Managers cannot edit users with manager or superuser roles' });
             }
+        }
+
+        if (req.auth.role === 'superuser' && req.auth.sub === userId && isDefined(req.body.role)) {
+            return res.status(403).json({ error: 'Superusers cannot modify their own role' });
+        }
+
+        if (req.auth.role === 'superuser' && targetUser.role === 'superuser' && req.auth.sub !== userId && isDefined(req.body.role)) {
+            return res.status(403).json({ error: 'Superusers cannot modify other superusers\' roles' });
         }
 
         const { email, verified, suspicious, role } = req.body;
@@ -1250,6 +1258,16 @@ app.patch('/users/:userId', requireRole('manager'), async (req, res) => {
             // Manager can only set to regular or cashier
             if (req.auth.role === 'manager' && role !== 'regular' && role !== 'cashier') {
                 return res.status(403).json({ error: 'Managers can only set role to regular or cashier' });
+            }
+
+            const currentRoleIndex = RoleOrderMap.get(targetUser.role);
+            const newRoleIndex = RoleOrderMap.get(role);
+
+            if (newRoleIndex > currentRoleIndex) {
+                const willBeVerified = isDefined(verified) ? verified : targetUser.isVerified;
+                if (!willBeVerified) {
+                    return res.status(400).json({ error: 'User must be verified before role promotion' });
+                }
             }
 
             // Check if promoting to cashier - must verify user is not suspicious
@@ -2772,6 +2790,10 @@ app.post('/events/:eventId/organizers', requireRole('manager'), async (req, res)
             return res.status(404).json({ error: 'User not found' });
         }
 
+        if (!user.isVerified) {
+            return res.status(400).json({ error: 'User must be verified before becoming an organizer' });
+        }
+
         // Check if user is already a guest
         if (event.guests.some(g => g.userId === user.id)) {
             return res.status(400).json({ error: 'User is already a guest' });
@@ -2841,6 +2863,14 @@ app.delete('/events/:eventId/organizers/:userId', requireRole('manager'), async 
             return res.status(404).json({ error: 'Organizer not found' });
         }
 
+        const organizerCount = await prisma.eventOrganizer.count({
+            where: { eventId }
+        });
+
+        if (organizerCount <= 1) {
+            return res.status(400).json({ error: 'Event must have at least one organizer' });
+        }
+
         await prisma.eventOrganizer.delete({
             where: { id: organizer.id }
         });
@@ -2892,8 +2922,12 @@ app.post('/events/:eventId/guests/me', requireRole('regular'), async (req, res) 
 
         const currentUser = await prisma.user.findUnique({
             where: { id: req.auth.sub },
-            select: { id: true, utorid: true, name: true }
+            select: { id: true, utorid: true, name: true, isVerified: true }
         });
+
+        if (!currentUser.isVerified) {
+            return res.status(400).json({ error: 'User must be verified before RSVPing to events' });
+        }
 
         await prisma.eventGuest.create({
             data: {
@@ -3009,6 +3043,10 @@ app.post('/events/:eventId/guests', requireRole('regular'), async (req, res) => 
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (!user.isVerified) {
+            return res.status(400).json({ error: 'User must be verified before being added to events' });
         }
 
         // Check if user is already a guest
