@@ -64,6 +64,7 @@
         "tableActions": "Actions",
         "processed": "Traité",
         "pending": "En attente",
+        "completed": "Terminé",
         "view": "Voir",
         "flag": "Signaler",
         "unmark": "Retirer",

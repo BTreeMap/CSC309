@@ -371,10 +371,12 @@ const AllTransactionsPage = () => {
                                                         {transaction.suspicious && (
                                                             <span className="badge badge-suspicious">⚠️ Suspicious</span>
                                                         )}
-                                                        {transaction.type === 'redemption' && (
+                                                        {transaction.type === 'redemption' ? (
                                                             <span className={`badge ${transaction.processedAt ? 'badge-processed' : 'badge-pending'}`}>
                                                                 {transaction.processedAt ? t('transactions:allTransactions.processed') : t('transactions:allTransactions.pending')}
                                                             </span>
+                                                        ) : (
+                                                            <span className="badge badge-normal">✓ {t('transactions:allTransactions.completed')}</span>
                                                         )}
                                                     </div>
                                                 </td>

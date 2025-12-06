@@ -64,6 +64,7 @@
         "tableActions": "Acciones",
         "processed": "Procesado",
         "pending": "Pendiente",
+        "completed": "Completado",
         "view": "Ver",
         "flag": "Marcar",
         "unmark": "Desmarcar",
