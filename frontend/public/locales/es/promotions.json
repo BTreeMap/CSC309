@@ -181,6 +181,7 @@
             "registering": "Registrando...",
             "unregister": "Cancelar registro",
             "unregistering": "Cancelando...",
+            "unregisterConfirm": "¿Está seguro de que desea cancelar su registro para este evento?",
             "registerSuccess": "Se registró en el evento correctamente",
             "unregisterSuccess": "Registro cancelado",
             "alreadyRegistered": "Ya está registrado",

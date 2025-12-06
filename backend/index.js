@@ -2505,6 +2505,8 @@ app.get('/events/:eventId', requireRole('regular'), async (req, res) => {
         }
 
         // Public view
+        const userGuest = event.guests.find(g => g.userId === req.auth.sub);
+        
         res.json({
             id: event.id,
             name: event.name,
@@ -2514,7 +2516,12 @@ app.get('/events/:eventId', requireRole('regular'), async (req, res) => {
             endTime: event.endTime,
             capacity: event.capacity,
             numGuests,
-            organizers: organizersList
+            organizers: organizersList,
+            guests: userGuest ? [{
+                id: userGuest.user.id,
+                utorid: userGuest.user.utorid,
+                name: userGuest.user.name
+            }] : []
         });
     } catch (error) {
         console.error('Get event error:', error);

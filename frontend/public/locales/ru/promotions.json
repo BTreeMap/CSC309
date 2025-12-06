@@ -181,6 +181,7 @@
             "registering": "Регистрация...",
             "unregister": "Отменить регистрацию",
             "unregistering": "Отмена...",
+            "unregisterConfirm": "Вы уверены, что хотите отменить регистрацию на это событие?",
             "registerSuccess": "Вы успешно зарегистрировались на событие",
             "unregisterSuccess": "Регистрация отменена",
             "alreadyRegistered": "Вы уже зарегистрированы",

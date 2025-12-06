@@ -59,7 +59,7 @@ const EventDetailPage = () => {
     const handleCancelRSVP = async () => {
         setRsvpLoading(true);
         try {
-            await eventsAPI.removeGuest(id, user.id);
+            await eventsAPI.cancelRsvp(id);
             showToast(t('events.registration.unregisterSuccess'), 'success');
             setShowCancelConfirm(false);
             fetchEvent();
@@ -337,7 +337,7 @@ const EventDetailPage = () => {
                     onClose={() => setShowCancelConfirm(false)}
                     onConfirm={handleCancelRSVP}
                     title={t('events.registration.unregister')}
-                    message={t('events.delete.message')}
+                    message={t('events.registration.unregisterConfirm')}
                     confirmText={t('events.registration.unregister')}
                     confirmVariant="danger"
                 />

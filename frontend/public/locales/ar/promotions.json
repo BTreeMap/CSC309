@@ -181,6 +181,7 @@
             "registering": "جاري التسجيل...",
             "unregister": "إلغاء التسجيل",
             "unregistering": "جاري الإلغاء...",
+            "unregisterConfirm": "هل أنت متأكد من أنك تريد إلغاء تسجيلك في هذه الفعالية؟",
             "registerSuccess": "تم التسجيل في الفعالية بنجاح",
             "unregisterSuccess": "تم إلغاء التسجيل",
             "alreadyRegistered": "أنت مسجل بالفعل",

@@ -181,6 +181,7 @@
             "registering": "报名中...",
             "unregister": "取消报名",
             "unregistering": "取消中...",
+            "unregisterConfirm": "您确定要取消此活动的报名吗？",
             "registerSuccess": "活动报名成功",
             "unregisterSuccess": "已取消报名",
             "alreadyRegistered": "您已经报名",

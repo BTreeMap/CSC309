@@ -181,6 +181,7 @@
             "registering": "Inscription en cours...",
             "unregister": "Annuler l'inscription",
             "unregistering": "Annulation en cours...",
+            "unregisterConfirm": "Êtes-vous sûr de vouloir annuler votre inscription à cet événement ?",
             "registerSuccess": "Inscription réussie à l'événement",
             "unregisterSuccess": "Inscription annulée",
             "alreadyRegistered": "Vous êtes déjà inscrit",
