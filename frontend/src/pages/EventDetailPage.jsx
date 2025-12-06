@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { eventsAPI } from '../api';
+import { eventsAPI, usersAPI } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { LoadingSpinner, ErrorMessage, ConfirmDialog, PageHeader } from '../components/shared';
+import { LoadingSpinner, ErrorMessage, ConfirmDialog, PageHeader, Modal } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { EventMap } from '../components/maps';
-import { Calendar, MapPin, Clock, Users, Gift, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Gift, ArrowLeft, UserPlus, UserMinus } from 'lucide-react';
 import './EventDetailPage.css';
 
 const EventDetailPage = () => {
@@ -22,6 +22,11 @@ const EventDetailPage = () => {
     const [error, setError] = useState(null);
     const [rsvpLoading, setRsvpLoading] = useState(false);
     const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+    const [showManageGuests, setShowManageGuests] = useState(false);
+    const [addUtorid, setAddUtorid] = useState('');
+    const [addLoading, setAddLoading] = useState(false);
+    const [removeUserId, setRemoveUserId] = useState(null);
+    const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
 
     const isManager = ['manager', 'superuser'].includes(activeRole);
 
@@ -70,6 +75,44 @@ const EventDetailPage = () => {
         }
     };
 
+    const handleAddGuest = async () => {
+        if (!addUtorid.trim()) {
+            showToast('Please enter a UTORid', 'error');
+            return;
+        }
+
+        setAddLoading(true);
+        try {
+            await eventsAPI.addGuest(id, addUtorid.trim());
+            showToast('Guest added successfully', 'success');
+            setAddUtorid('');
+            fetchEvent();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to add guest', 'error');
+        } finally {
+            setAddLoading(false);
+        }
+    };
+
+    const handleRemoveGuest = async () => {
+        if (!removeUserId) return;
+
+        try {
+            await eventsAPI.removeGuest(id, removeUserId);
+            showToast('Guest removed successfully', 'success');
+            setShowRemoveConfirm(false);
+            setRemoveUserId(null);
+            fetchEvent();
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to remove guest', 'error');
+        }
+    };
+
+    const openRemoveConfirm = (userId) => {
+        setRemoveUserId(userId);
+        setShowRemoveConfirm(true);
+    };
+
     const getEventStatus = () => {
         if (!event) return null;
         const now = new Date();
@@ -116,7 +159,7 @@ const EventDetailPage = () => {
 
     const isUserAttending = () => {
         if (!event || !user) return false;
-        return event.guests?.some(g => g.utorid === user.utorid);
+        return event.guests?.some(g => (g.utorid || g.user?.utorid) === user.utorid);
     };
 
     const isFull = () => {
@@ -326,6 +369,13 @@ const EventDetailPage = () => {
                                     >
                                         {t('events.manage.edit')}
                                     </button>
+                                    <button
+                                        onClick={() => setShowManageGuests(true)}
+                                        className="btn btn-secondary btn-block"
+                                    >
+                                        <Users size={16} />
+                                        Manage Guests
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -339,6 +389,85 @@ const EventDetailPage = () => {
                     title={t('events.registration.unregister')}
                     message={t('events.registration.unregisterConfirm')}
                     confirmText={t('events.registration.unregister')}
+                    confirmVariant="danger"
+                />
+
+                <Modal
+                    isOpen={showManageGuests}
+                    onClose={() => setShowManageGuests(false)}
+                    title="Manage Event Guests"
+                    size="medium"
+                >
+                    <div className="manage-guests-modal">
+                        <div className="add-guest-section">
+                            <h3>Add Guest</h3>
+                            <div className="add-guest-form">
+                                <input
+                                    type="text"
+                                    value={addUtorid}
+                                    onChange={(e) => setAddUtorid(e.target.value)}
+                                    placeholder="Enter UTORid"
+                                    className="form-input"
+                                    onKeyDown={(e) => e.key === 'Enter' && handleAddGuest()}
+                                />
+                                <button
+                                    onClick={handleAddGuest}
+                                    className="btn btn-primary"
+                                    disabled={addLoading || !addUtorid.trim()}
+                                >
+                                    <UserPlus size={16} />
+                                    {addLoading ? 'Adding...' : 'Add Guest'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="guests-list-section">
+                            <h3>Current Guests ({event?.guests?.length || 0})</h3>
+                            {event?.guests && event.guests.length > 0 ? (
+                                <div className="guests-list">
+                                    {event.guests.map((guest) => {
+                                        const userId = guest.id;
+                                        const utorid = guest.utorid;
+                                        const name = guest.name;
+                                        return (
+                                            <div key={userId} className="guest-item">
+                                                <div className="guest-info">
+                                                    <span className="guest-avatar">👤</span>
+                                                    <div className="guest-details">
+                                                        <span className="guest-name">{name || utorid}</span>
+                                                        <span className="guest-utorid">@{utorid}</span>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => openRemoveConfirm(userId)}
+                                                    className="btn btn-danger-outline btn-sm"
+                                                >
+                                                    <UserMinus size={14} />
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="no-guests">
+                                    <p>No guests registered yet.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </Modal>
+
+                <ConfirmDialog
+                    isOpen={showRemoveConfirm}
+                    onClose={() => {
+                        setShowRemoveConfirm(false);
+                        setRemoveUserId(null);
+                    }}
+                    onConfirm={handleRemoveGuest}
+                    title="Remove Guest"
+                    message="Are you sure you want to remove this guest from the event?"
+                    confirmText="Remove"
                     confirmVariant="danger"
                 />
             </div>

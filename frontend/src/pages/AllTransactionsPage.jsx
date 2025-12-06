@@ -24,6 +24,12 @@ const AllTransactionsPage = () => {
     const [transactionUser, setTransactionUser] = useState(null);
     const [loadingUser, setLoadingUser] = useState(false);
 
+    // Adjustment transaction modal
+    const [showAdjustmentModal, setShowAdjustmentModal] = useState(false);
+    const [adjustmentAmount, setAdjustmentAmount] = useState('');
+    const [adjustmentRemark, setAdjustmentRemark] = useState('');
+    const [adjustmentLoading, setAdjustmentLoading] = useState(false);
+
     // Parse query params
     const page = parseInt(searchParams.get('page') || '1', 10);
     const type = searchParams.get('type') || '';
@@ -114,6 +120,41 @@ const AllTransactionsPage = () => {
             }
         } catch (err) {
             showToast(err.response?.data?.error || 'Failed to update transaction', 'error');
+        }
+    };
+
+    const handleOpenAdjustment = () => {
+        setAdjustmentAmount('');
+        setAdjustmentRemark('');
+        setShowAdjustmentModal(true);
+    };
+
+    const handleCreateAdjustment = async () => {
+        if (!selectedTransaction) return;
+
+        if (!adjustmentAmount || parseInt(adjustmentAmount, 10) === 0) {
+            showToast('Please enter a valid amount', 'error');
+            return;
+        }
+
+        setAdjustmentLoading(true);
+        try {
+            await transactionsAPI.createAdjustment({
+                utorid: selectedTransaction.utorid,
+                amount: parseInt(adjustmentAmount, 10),
+                relatedId: selectedTransaction.id,
+                remark: adjustmentRemark.trim() || undefined,
+            });
+            showToast('Adjustment transaction created successfully!', 'success');
+            setShowAdjustmentModal(false);
+            setAdjustmentAmount('');
+            setAdjustmentRemark('');
+            fetchTransactions();
+            setSelectedTransaction(null);
+        } catch (err) {
+            showToast(err.response?.data?.error || 'Failed to create adjustment transaction', 'error');
+        } finally {
+            setAdjustmentLoading(false);
         }
     };
 
@@ -480,6 +521,13 @@ const AllTransactionsPage = () => {
 
                             <div className="modal-actions">
                                 <button
+                                    onClick={handleOpenAdjustment}
+                                    className="btn btn-primary"
+                                >
+                                    <Settings size={16} />
+                                    Create Adjustment
+                                </button>
+                                <button
                                     onClick={() => handleMarkSuspicious(selectedTransaction)}
                                     className={`btn ${selectedTransaction.suspicious ? 'btn-secondary' : 'btn-warning'}`}
                                 >
@@ -487,6 +535,70 @@ const AllTransactionsPage = () => {
                                 </button>
                                 <button onClick={() => setSelectedTransaction(null)} className="btn btn-secondary">
                                     {t('transactions:allTransactions.modal.close')}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </Modal>
+
+                {/* Create Adjustment Modal */}
+                <Modal
+                    isOpen={showAdjustmentModal}
+                    onClose={() => setShowAdjustmentModal(false)}
+                    title="Create Adjustment Transaction"
+                    size="small"
+                >
+                    {selectedTransaction && (
+                        <div className="adjustment-modal">
+                            <div className="transaction-summary">
+                                <p><strong>Related Transaction:</strong> #{selectedTransaction.id}</p>
+                                <p><strong>User:</strong> {selectedTransaction.utorid}</p>
+                                <p><strong>Type:</strong> {TRANSACTION_TYPE_LABELS[selectedTransaction.type] || selectedTransaction.type}</p>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="adjustmentAmount" className="form-label">Adjustment Amount *</label>
+                                <input
+                                    type="number"
+                                    id="adjustmentAmount"
+                                    value={adjustmentAmount}
+                                    onChange={(e) => setAdjustmentAmount(e.target.value)}
+                                    placeholder="Enter positive or negative amount"
+                                    className="form-input"
+                                    required
+                                />
+                                <span className="form-helper">
+                                    Positive values add points, negative values subtract points
+                                </span>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="adjustmentRemark" className="form-label">Remark (Optional)</label>
+                                <input
+                                    type="text"
+                                    id="adjustmentRemark"
+                                    value={adjustmentRemark}
+                                    onChange={(e) => setAdjustmentRemark(e.target.value)}
+                                    placeholder="Enter reason for adjustment"
+                                    className="form-input"
+                                    maxLength={200}
+                                />
+                            </div>
+
+                            <div className="modal-actions">
+                                <button
+                                    onClick={() => setShowAdjustmentModal(false)}
+                                    className="btn btn-secondary"
+                                    disabled={adjustmentLoading}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleCreateAdjustment}
+                                    className="btn btn-primary"
+                                    disabled={adjustmentLoading || !adjustmentAmount}
+                                >
+                                    {adjustmentLoading ? 'Creating...' : 'Create Adjustment'}
                                 </button>
                             </div>
                         </div>

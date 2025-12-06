@@ -314,6 +314,100 @@
   color: var(--color-text-muted);
 }
 
+/* Manage Guests Modal */
+.manage-guests-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.add-guest-section h3,
+.guests-list-section h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.add-guest-form {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.add-guest-form .form-input {
+  flex: 1;
+}
+
+.guests-list-section {
+  border-top: 1px solid var(--color-border-light);
+  padding-top: var(--space-4);
+}
+
+.guests-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.guest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  gap: var(--space-3);
+}
+
+.guest-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.guest-avatar {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent-light);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  flex-shrink: 0;
+}
+
+.guest-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.guest-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.guest-utorid {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.no-guests {
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .event-content {
@@ -336,5 +430,14 @@
 
   .sidebar-card {
     padding: var(--space-4);
+  }
+
+  .add-guest-form {
+    flex-direction: column;
+  }
+
+  .guest-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
