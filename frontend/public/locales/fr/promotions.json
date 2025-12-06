@@ -187,6 +187,7 @@
             "alreadyRegistered": "Vous êtes déjà inscrit",
             "eventFull": "Cet événement est complet",
             "registrationClosed": "Les inscriptions sont fermées",
+            "organizerNotice": "Vous êtes organisateur de cet événement",
             "error": "Échec du traitement de l'inscription"
         },
         "create": {

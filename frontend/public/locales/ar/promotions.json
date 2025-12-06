@@ -187,6 +187,7 @@
             "alreadyRegistered": "أنت مسجل بالفعل",
             "eventFull": "هذه الفعالية ممتلئة",
             "registrationClosed": "التسجيل مغلق",
+            "organizerNotice": "أنت منظم لهذه الفعالية",
             "error": "فشل معالجة التسجيل"
         },
         "create": {

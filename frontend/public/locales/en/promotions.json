@@ -187,6 +187,7 @@
             "alreadyRegistered": "You are already registered",
             "eventFull": "This event is full",
             "registrationClosed": "Registration is closed",
+            "organizerNotice": "You are an organizer of this event",
             "error": "Failed to process registration"
         },
         "create": {

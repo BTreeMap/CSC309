@@ -187,6 +187,7 @@
             "alreadyRegistered": "您已经报名",
             "eventFull": "该活动已满",
             "registrationClosed": "报名已关闭",
+            "organizerNotice": "您是此活动的组织者",
             "error": "处理报名失败"
         },
         "create": {
