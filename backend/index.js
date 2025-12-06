@@ -1546,6 +1546,15 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
                 }
             }
 
+            // Check if adjustment would result in negative points
+            const currentPoints = user.points ?? 0;
+            const newPoints = currentPoints + amount;
+            if (newPoints < 0) {
+                return res.status(400).json({ 
+                    error: `Adjustment would result in negative points. Current points: ${currentPoints}, Adjustment: ${amount}, Result: ${newPoints}` 
+                });
+            }
+
             const transaction = await prisma.transaction.create({
                 data: {
                     userId: user.id,
