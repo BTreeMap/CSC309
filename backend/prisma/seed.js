@@ -647,6 +647,261 @@ async function main() {
         transactions.push(tx);
     }
 
+    console.log('Creating comprehensive transaction scenarios for All Transactions page...');
+
+    // Additional Purchase transactions with various scenarios
+    const additionalPurchases = [
+        { userIdx: 0, amount: 150, spent: 75.0, promoIds: [oneTimePromo1.id], createdAt: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000) },
+        { userIdx: 1, amount: 200, spent: 100.0, promoIds: [oneTimePromo2.id], createdAt: new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000) },
+        { userIdx: 2, amount: 60, spent: 30.0, promoIds: [autoPromo1.id, autoPromo2.id], createdAt: new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000) },
+        { userIdx: 3, amount: 90, spent: 45.0, promoIds: [], createdAt: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000) },
+        { userIdx: 4, amount: 130, spent: 65.0, promoIds: [autoPromo3.id], createdAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000) },
+        { userIdx: 5, amount: 45, spent: 22.5, promoIds: [], createdAt: new Date(now.getTime() - 12 * 24 * 60 * 60 * 1000) },
+        { userIdx: 6, amount: 180, spent: 90.0, promoIds: [oneTimePromo2.id, autoPromo1.id], createdAt: new Date(now.getTime() - 9 * 24 * 60 * 60 * 1000) },
+        { userIdx: 7, amount: 95, spent: 47.5, promoIds: [autoPromo2.id], createdAt: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) }
+    ];
+
+    for (const purchase of additionalPurchases) {
+        const txData = {
+            userId: regularUsers[purchase.userIdx].id,
+            type: 'purchase',
+            amount: purchase.amount,
+            spent: purchase.spent,
+            createdById: cashier.id,
+            createdAt: purchase.createdAt
+        };
+        if (purchase.promoIds && purchase.promoIds.length > 0) {
+            txData.promotions = {
+                create: purchase.promoIds.map(promoId => ({ promotionId: promoId }))
+            };
+        }
+        const tx = await prisma.transaction.create({ data: txData });
+        transactions.push(tx);
+    }
+
+    // Redemption transactions - both processed and pending
+    const redemptionScenarios = [
+        { userIdx: 0, redeemed: 60, processed: true, daysAgo: 15, suspicious: false },
+        { userIdx: 1, redeemed: 80, processed: false, daysAgo: 3, suspicious: false },
+        { userIdx: 2, redeemed: 45, processed: true, daysAgo: 20, suspicious: false },
+        { userIdx: 3, redeemed: 100, processed: false, daysAgo: 1, suspicious: true },
+        { userIdx: 4, redeemed: 35, processed: true, daysAgo: 11, suspicious: false },
+        { userIdx: 5, redeemed: 70, processed: false, daysAgo: 5, suspicious: false },
+        { userIdx: 6, redeemed: 55, processed: true, daysAgo: 18, suspicious: false },
+        { userIdx: 7, redeemed: 90, processed: false, daysAgo: 2, suspicious: false }
+    ];
+
+    for (const redemption of redemptionScenarios) {
+        const txData = {
+            userId: regularUsers[redemption.userIdx].id,
+            type: 'redemption',
+            amount: -redemption.redeemed,
+            redeemed: redemption.redeemed,
+            createdById: regularUsers[redemption.userIdx].id,
+            suspicious: redemption.suspicious,
+            createdAt: new Date(now.getTime() - redemption.daysAgo * 24 * 60 * 60 * 1000)
+        };
+        if (redemption.processed) {
+            txData.processedAt = new Date(now.getTime() - (redemption.daysAgo - 1) * 24 * 60 * 60 * 1000);
+            txData.processedById = cashier.id;
+        }
+        const tx = await prisma.transaction.create({ data: txData });
+        transactions.push(tx);
+    }
+
+    // Adjustment transactions - comprehensive scenarios
+    const firstPurchaseId = purchase1.id;
+    const adjustmentScenarios = [
+        { userIdx: 0, amount: 75, relatedId: null, remark: 'Customer service compensation', suspicious: false, daysAgo: 14 },
+        { userIdx: 1, amount: -30, relatedId: null, remark: 'Transaction correction', suspicious: false, daysAgo: 13 },
+        { userIdx: 2, amount: 120, relatedId: firstPurchaseId, remark: 'Promotion bonus adjustment', suspicious: false, daysAgo: 12 },
+        { userIdx: 3, amount: -50, relatedId: null, remark: 'Fraudulent activity correction', suspicious: true, daysAgo: 11 },
+        { userIdx: 4, amount: 200, relatedId: null, remark: 'Loyalty program bonus', suspicious: false, daysAgo: 10 },
+        { userIdx: 5, amount: -25, relatedId: purchase2.id, remark: 'Refund adjustment', suspicious: false, daysAgo: 9 },
+        { userIdx: 6, amount: 150, relatedId: null, remark: null, suspicious: false, daysAgo: 8 },
+        { userIdx: 7, amount: -40, relatedId: null, remark: 'Suspicious transaction reversal', suspicious: true, daysAgo: 7 }
+    ];
+
+    for (const adjustment of adjustmentScenarios) {
+        const txData = {
+            userId: regularUsers[adjustment.userIdx].id,
+            type: 'adjustment',
+            amount: adjustment.amount,
+            createdById: manager.id,
+            suspicious: adjustment.suspicious,
+            createdAt: new Date(now.getTime() - adjustment.daysAgo * 24 * 60 * 60 * 1000)
+        };
+        if (adjustment.relatedId) {
+            txData.relatedId = adjustment.relatedId;
+        }
+        if (adjustment.remark) {
+            txData.remark = adjustment.remark;
+        }
+        const tx = await prisma.transaction.create({ data: txData });
+        transactions.push(tx);
+    }
+
+    // Event transactions - various events and scenarios
+    const eventTransactionScenarios = [
+        { userIdx: 0, eventIdx: 0, amount: 50, remark: 'Full attendance bonus', daysAgo: 16 },
+        { userIdx: 1, eventIdx: 1, amount: 60, remark: 'Early arrival bonus', daysAgo: 15 },
+        { userIdx: 2, eventIdx: 2, amount: 45, remark: 'Standard attendance points', daysAgo: 14 },
+        { userIdx: 3, eventIdx: 3, amount: 70, remark: 'VIP attendance reward', daysAgo: 13 },
+        { userIdx: 4, eventIdx: 4, amount: 40, remark: 'Regular attendance', daysAgo: 12 },
+        { userIdx: 5, eventIdx: 0, amount: 50, remark: 'Full attendance bonus', daysAgo: 11 },
+        { userIdx: 6, eventIdx: 1, amount: 60, remark: 'Early arrival bonus', daysAgo: 10 },
+        { userIdx: 7, eventIdx: 2, amount: 45, remark: 'Standard attendance points', daysAgo: 9 }
+    ];
+
+    for (const eventTx of eventTransactionScenarios) {
+        const tx = await prisma.transaction.create({
+            data: {
+                userId: regularUsers[eventTx.userIdx].id,
+                type: 'event',
+                amount: eventTx.amount,
+                createdById: manager.id,
+                relatedId: events[eventTx.eventIdx].id,
+                remark: eventTx.remark,
+                createdAt: new Date(now.getTime() - eventTx.daysAgo * 24 * 60 * 60 * 1000)
+            }
+        });
+        transactions.push(tx);
+    }
+
+    // Transfer transactions - more pairs for comprehensive coverage
+    const transferScenarios = [
+        { senderIdx: 0, receiverIdx: 1, amount: 40, remark: 'Payment for services', daysAgo: 17 },
+        { senderIdx: 1, receiverIdx: 2, amount: 60, remark: 'Gift transfer', daysAgo: 16 },
+        { senderIdx: 2, receiverIdx: 3, amount: 30, remark: 'Shared reward', daysAgo: 15 },
+        { senderIdx: 3, receiverIdx: 4, amount: 50, remark: 'Team collaboration', daysAgo: 14 },
+        { senderIdx: 4, receiverIdx: 5, amount: 35, remark: 'Friend transfer', daysAgo: 13 },
+        { senderIdx: 5, receiverIdx: 6, amount: 45, remark: 'Group activity reward', daysAgo: 12 },
+        { senderIdx: 6, receiverIdx: 7, amount: 55, remark: 'Event participation bonus', daysAgo: 11 },
+        { senderIdx: 7, receiverIdx: 0, amount: 25, remark: 'Small gift', daysAgo: 10 }
+    ];
+
+    for (const transfer of transferScenarios) {
+        const senderTx = await prisma.transaction.create({
+            data: {
+                userId: regularUsers[transfer.senderIdx].id,
+                type: 'transfer',
+                amount: -transfer.amount,
+                relatedId: regularUsers[transfer.receiverIdx].id,
+                createdById: regularUsers[transfer.senderIdx].id,
+                remark: transfer.remark,
+                createdAt: new Date(now.getTime() - transfer.daysAgo * 24 * 60 * 60 * 1000)
+            }
+        });
+        transactions.push(senderTx);
+
+        const receiverTx = await prisma.transaction.create({
+            data: {
+                userId: regularUsers[transfer.receiverIdx].id,
+                type: 'transfer',
+                amount: transfer.amount,
+                relatedId: regularUsers[transfer.senderIdx].id,
+                createdById: regularUsers[transfer.senderIdx].id,
+                remark: `Received from ${regularUsers[transfer.senderIdx].utorid}`,
+                createdAt: new Date(now.getTime() - transfer.daysAgo * 24 * 60 * 60 * 1000)
+            }
+        });
+        transactions.push(receiverTx);
+    }
+
+    // Additional purchase transactions with suspicious flag
+    const suspiciousPurchases = [
+        { userIdx: 0, amount: 500, spent: 250.0, suspicious: true, daysAgo: 6 },
+        { userIdx: 1, amount: 300, spent: 150.0, suspicious: true, daysAgo: 5 }
+    ];
+
+    for (const purchase of suspiciousPurchases) {
+        const tx = await prisma.transaction.create({
+            data: {
+                userId: regularUsers[purchase.userIdx].id,
+                type: 'purchase',
+                amount: purchase.amount,
+                spent: purchase.spent,
+                createdById: cashier.id,
+                suspicious: purchase.suspicious,
+                createdAt: new Date(now.getTime() - purchase.daysAgo * 24 * 60 * 60 * 1000)
+            }
+        });
+        transactions.push(tx);
+    }
+
+    // More transactions with different creators (manager, cashier, superuser)
+    const managerCreatedPurchase = await prisma.transaction.create({
+        data: {
+            userId: regularUsers[0].id,
+            type: 'purchase',
+            amount: 140,
+            spent: 70.0,
+            createdById: manager.id,
+            createdAt: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000)
+        }
+    });
+    transactions.push(managerCreatedPurchase);
+
+    const superuserCreatedAdjustment = await prisma.transaction.create({
+        data: {
+            userId: regularUsers[1].id,
+            type: 'adjustment',
+            amount: 300,
+            createdById: superuser.id,
+            remark: 'Special superuser adjustment',
+            createdAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000)
+        }
+    });
+    transactions.push(superuserCreatedAdjustment);
+
+    // Transactions with edge cases for filtering
+    const edgeCaseTransactions = [
+        { userIdx: 0, type: 'purchase', amount: 1, spent: 0.5, promoIds: [], daysAgo: 19 },
+        { userIdx: 1, type: 'purchase', amount: 1000, spent: 500.0, promoIds: [autoPromo1.id, autoPromo2.id, autoPromo3.id], daysAgo: 18 },
+        { userIdx: 2, type: 'redemption', redeemed: 1, processed: true, daysAgo: 17 },
+        { userIdx: 3, type: 'redemption', redeemed: 500, processed: false, suspicious: true, daysAgo: 2 },
+        { userIdx: 4, type: 'adjustment', amount: 1, remark: 'Minimal adjustment', daysAgo: 6 },
+        { userIdx: 5, type: 'adjustment', amount: -1000, remark: 'Large correction', suspicious: true, daysAgo: 5 }
+    ];
+
+    for (const edgeCase of edgeCaseTransactions) {
+        const txData = {
+            userId: regularUsers[edgeCase.userIdx].id,
+            type: edgeCase.type,
+            createdById: edgeCase.type === 'redemption' ? regularUsers[edgeCase.userIdx].id : (edgeCase.type === 'adjustment' ? manager.id : cashier.id),
+            createdAt: new Date(now.getTime() - edgeCase.daysAgo * 24 * 60 * 60 * 1000)
+        };
+
+        if (edgeCase.type === 'purchase') {
+            txData.amount = edgeCase.amount;
+            txData.spent = edgeCase.spent;
+            if (edgeCase.promoIds && edgeCase.promoIds.length > 0) {
+                txData.promotions = {
+                    create: edgeCase.promoIds.map(promoId => ({ promotionId: promoId }))
+                };
+            }
+        } else if (edgeCase.type === 'redemption') {
+            txData.amount = -edgeCase.redeemed;
+            txData.redeemed = edgeCase.redeemed;
+            if (edgeCase.processed) {
+                txData.processedAt = new Date(now.getTime() - (edgeCase.daysAgo - 1) * 24 * 60 * 60 * 1000);
+                txData.processedById = cashier.id;
+            }
+            if (edgeCase.suspicious) {
+                txData.suspicious = true;
+            }
+        } else if (edgeCase.type === 'adjustment') {
+            txData.amount = edgeCase.amount;
+            txData.remark = edgeCase.remark;
+            if (edgeCase.suspicious) {
+                txData.suspicious = true;
+            }
+        }
+
+        const tx = await prisma.transaction.create({ data: txData });
+        transactions.push(tx);
+    }
+
     // Add some event guests and organizers
     await prisma.eventGuest.create({
         data: {
