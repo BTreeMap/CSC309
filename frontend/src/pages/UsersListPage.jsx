@@ -7,7 +7,7 @@ import Layout from '../components/Layout';
 import { LoadingSpinner, EmptyState, ErrorMessage, Pagination, Modal, PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
 import { ROLE_LABELS, ROLE_HIERARCHY } from '../utils/constants';
-import { Users } from 'lucide-react';
+import { Users, CheckCircle2, AlertCircle } from 'lucide-react';
 import '../styles/design-system.css';
 import './UsersListPage.css';
 
@@ -366,7 +366,17 @@ const UsersListPage = () => {
                                             <td>
                                                 <div className="status-badges">
                                                     <span className={`status-badge ${user.verified ? 'verified' : 'unverified'}`}>
-                                                        {user.verified ? t('users:management.verifiedBadge') : t('users:management.unverifiedBadge')}
+                                                        {user.verified ? (
+                                                            <>
+                                                                <CheckCircle2 size={14} />
+                                                                {t('users:management.verifiedBadge')}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <AlertCircle size={14} />
+                                                                {t('users:management.unverifiedBadge')}
+                                                            </>
+                                                        )}
                                                     </span>
                                                     {!user.lastLogin && (
                                                         <span className="status-badge inactive">{t('users:management.notActivatedBadge')}</span>
@@ -521,7 +531,17 @@ const UsersListPage = () => {
                                 <div className="detail-item">
                                     <label>{t('users:management.verificationStatus')}</label>
                                     <span className={`status-badge ${selectedUser.verified ? 'verified' : 'unverified'}`}>
-                                        {selectedUser.verified ? t('users:management.verifiedBadge') : t('users:management.unverifiedBadge')}
+                                        {selectedUser.verified ? (
+                                                            <>
+                                                                <CheckCircle2 size={14} />
+                                                                {t('users:management.verifiedBadge')}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <AlertCircle size={14} />
+                                                                {t('users:management.unverifiedBadge')}
+                                                            </>
+                                                        )}
                                     </span>
                                 </div>
                                 <div className="detail-item">
