@@ -397,12 +397,13 @@ const EventDetailPage = () => {
                                 <div className="organizers-list">
                                     {event.organizers.map((org, index) => {
                                         const orgUtorid = org.utorid || org.user?.utorid;
+                                        const orgName = org.name || org.user?.name;
                                         const orgUserId = org.id || org.userId || org.user?.id;
                                         const isCurrentUser = orgUtorid === user?.utorid;
                                         return (
                                             <div key={index} className={`organizer-item ${isCurrentUser ? 'current-user' : ''}`}>
                                                 <span className="organizer-avatar">👤</span>
-                                                <span>{orgUtorid}</span>
+                                                <span>{orgName || orgUtorid}</span>
                                                 {isCurrentUser && <span className="organizer-badge">You</span>}
                                                 {isManager && !isCurrentUser && (
                                                     <button
@@ -653,13 +654,14 @@ const EventDetailPage = () => {
                                     <div className="organizers-list">
                                         {event.organizers.map((org, index) => {
                                             const orgUtorid = org.utorid || org.user?.utorid;
+                                            const orgName = org.name || org.user?.name;
                                             const orgUserId = org.id || org.userId || org.user?.id;
                                             const isCurrentUser = orgUtorid === user?.utorid;
                                             return (
                                                 <div key={index} className={`organizer-item ${isCurrentUser ? 'current-user' : ''}`}>
                                                     <div className="organizer-info">
                                                         <span className="organizer-avatar">👤</span>
-                                                        <span>{orgUtorid}</span>
+                                                        <span>{orgName || orgUtorid}</span>
                                                         {isCurrentUser && <span className="organizer-badge">You</span>}
                                                     </div>
                                                     {!isCurrentUser && (
