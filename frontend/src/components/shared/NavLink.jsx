@@ -27,22 +27,23 @@ export function NavLink({
     const handleMouseEnter = () => {
         // Find matching preload function
         // Handle exact paths first
-        if (routePreloads[to]) {
+        const preloadFn = routePreloads[to];
+        if (typeof preloadFn === 'function') {
             if (import.meta.env.DEV) {
                 console.log(`[NavLink] Preloading route: ${to}`);
             }
-            routePreloads[to]();
+            preloadFn();
             return;
         }
 
         // Handle parameterized routes by finding the pattern
         // e.g., /events/123 should preload EventDetailPage (pattern: /events/:id)
         for (const [pattern, preload] of Object.entries(routePreloads)) {
-            if (pattern.includes(':')) {
+            if (pattern.includes(':') && typeof preload === 'function') {
                 // Convert route pattern to regex
                 const regexPattern = pattern.replace(/:[^/]+/g, '[^/]+');
                 const regex = new RegExp(`^${regexPattern}$`);
-                if (regex.test(to) && typeof preload === 'function') {
+                if (regex.test(to)) {
                     if (import.meta.env.DEV) {
                         console.log(`[NavLink] Preloading pattern route: ${pattern} for ${to}`);
                     }
@@ -50,6 +51,10 @@ export function NavLink({
                     return;
                 }
             }
+        }
+
+        if (import.meta.env.DEV) {
+            console.warn(`[NavLink] No preload function found for route: ${to}`);
         }
     };
 

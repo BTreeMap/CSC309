@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import { routePreloads } from '../routes/config';
 import {
     LayoutDashboard,
     Tag,
@@ -101,11 +102,21 @@ const Sidebar = () => {
 
     const NavLink = ({ to, icon, children, exact }) => {
         const active = exact ? location.pathname === to : isActive(to);
+        
+        const handleMouseEnter = () => {
+            const preloadFn = routePreloads[to];
+            if (typeof preloadFn === 'function') {
+                preloadFn();
+            }
+        };
+        
         return (
             <Link
                 to={to}
                 className={`sidebar-link ${active ? 'active' : ''}`}
                 title={collapsed ? children : undefined}
+                onMouseEnter={handleMouseEnter}
+                onFocus={handleMouseEnter}
             >
                 <span className="sidebar-link-icon">{icon}</span>
                 <span className="sidebar-link-text">{children}</span>
@@ -158,9 +169,9 @@ const Sidebar = () => {
                     <div className="sidebar-section">
                         <div className="sidebar-section-title">{t('nav:groups.main')}</div>
                         <NavLink to="/dashboard" icon={<LayoutDashboard size={18} />} exact>{t('nav:links.dashboard')}</NavLink>
-                        <NavLink to="/promotions" icon={<Tag size={18} />}>{t('nav:links.promotions')}</NavLink>
-                        <NavLink to="/events" icon={<Calendar size={18} />}>{t('nav:links.events')}</NavLink>
-                        <NavLink to="/transactions" icon={<CreditCard size={18} />}>{t('nav:links.transactions')}</NavLink>
+                        <NavLink to="/promotions" icon={<Tag size={18} />} exact>{t('nav:links.promotions')}</NavLink>
+                        <NavLink to="/events" icon={<Calendar size={18} />} exact>{t('nav:links.events')}</NavLink>
+                        <NavLink to="/transactions" icon={<CreditCard size={18} />} exact>{t('nav:links.transactions')}</NavLink>
                     </div>
 
                     {/* Cashier Section */}

@@ -178,3 +178,9 @@ export const routePreloads = Object.fromEntries([
     ...guestOnlyRoutes,
     ...protectedRoutes
 ].map(route => [route.path, route.preload]));
+
+// Debug: Log route preloads on module load
+if (import.meta.env.DEV) {
+    console.log('[Routes] routePreloads built:', Object.keys(routePreloads));
+    console.log('[Routes] Sample preload type for /dashboard:', typeof routePreloads['/dashboard']);
+}

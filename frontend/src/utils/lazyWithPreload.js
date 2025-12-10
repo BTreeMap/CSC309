@@ -18,11 +18,28 @@ import { lazy } from 'react';
 export function lazyWithPreload(importFn) {
     // Cache the import promise to avoid duplicate fetches
     let modulePromise = null;
+    let isPreloaded = false;
 
     // Create a wrapper that caches the import
     const load = () => {
         if (!modulePromise) {
+            if (import.meta.env.DEV) {
+                console.log('[Preload] Starting dynamic import...');
+            }
             modulePromise = importFn();
+            // Log when the import completes
+            modulePromise.then(
+                (module) => {
+                    if (import.meta.env.DEV) {
+                        console.log('[Preload] Module loaded successfully:', module);
+                    }
+                },
+                (error) => {
+                    if (import.meta.env.DEV) {
+                        console.error('[Preload] Module failed to load:', error);
+                    }
+                }
+            );
         }
         return modulePromise;
     };
@@ -32,10 +49,17 @@ export function lazyWithPreload(importFn) {
 
     // Add preload method that triggers the import
     LazyComponent.preload = () => {
-        if (import.meta.env.DEV) {
-            console.log('[Preload] Prefetching module...');
+        if (isPreloaded) {
+            if (import.meta.env.DEV) {
+                console.log('[Preload] Module already preloaded, skipping');
+            }
+            return modulePromise;
         }
-        load();
+        isPreloaded = true;
+        if (import.meta.env.DEV) {
+            console.log('[Preload] Calling preload(), importFn type:', typeof importFn);
+        }
+        return load();
     };
 
     return LazyComponent;
