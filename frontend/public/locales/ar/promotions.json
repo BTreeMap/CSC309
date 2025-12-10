@@ -258,7 +258,9 @@
             "unlimited": "غير محدود",
             "statusUpcoming": "قادمة",
             "statusActive": "نشطة",
-            "statusEnded": "انتهت"
+            "statusEnded": "انتهت",
+            "cannotEditOngoing": "لا يمكن تعديل الفعالية الجارية",
+            "cannotEditOngoingMessage": "هذه الفعالية قيد التنفيذ حالياً. لا يُسمح بالتعديل أثناء الفعالية."
         }
     }
 }

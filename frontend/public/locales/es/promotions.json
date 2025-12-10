@@ -258,7 +258,9 @@
             "unlimited": "Ilimitado",
             "statusUpcoming": "Próximo",
             "statusActive": "Activo",
-            "statusEnded": "Finalizado"
+            "statusEnded": "Finalizado",
+            "cannotEditOngoing": "No se puede editar el evento en curso",
+            "cannotEditOngoingMessage": "Este evento está actualmente en progreso. No se permite la edición durante el evento."
         }
     }
 }

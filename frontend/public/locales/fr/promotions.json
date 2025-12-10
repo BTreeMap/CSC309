@@ -258,7 +258,9 @@
             "unlimited": "Illimité",
             "statusUpcoming": "À venir",
             "statusActive": "Actif",
-            "statusEnded": "Terminé"
+            "statusEnded": "Terminé",
+            "cannotEditOngoing": "Impossible de modifier l'événement en cours",
+            "cannotEditOngoingMessage": "Cet événement est actuellement en cours. La modification n'est pas autorisée pendant l'événement."
         }
     }
 }

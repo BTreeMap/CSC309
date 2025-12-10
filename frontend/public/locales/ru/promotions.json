@@ -258,7 +258,9 @@
             "unlimited": "Неограничено",
             "statusUpcoming": "Предстоящее",
             "statusActive": "Активное",
-            "statusEnded": "Завершено"
+            "statusEnded": "Завершено",
+            "cannotEditOngoing": "Нельзя редактировать текущее событие",
+            "cannotEditOngoingMessage": "Это событие проходит в данный момент. Редактирование запрещено во время события."
         }
     }
 }
