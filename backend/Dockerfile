@@ -60,6 +60,7 @@ COPY --from=builder --chown=node:node /app/node_modules ./node_modules/
 
 # Copy application code
 COPY --chown=node:node index.js ./
+COPY --chown=node:node src ./src/
 COPY --chown=node:node prisma ./prisma/
 
 # Create directories for runtime data with correct permissions
