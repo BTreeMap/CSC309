@@ -1,0 +1,8 @@
+Generative AI Usage Disclosure
+
+In this project, Generative AI was utilized as an assistive tool for specific, supervised tasks. Its use was limited to:
+
+- Assisting in the generation of test cases.
+- Generating initial drafts of documentation.
+- Aiding in the implementation of a subset of features. This was performed with detailed prompts and all output was subject to careful human review and validation.
+- Producing translations for the frontend's internationalization (i18n) support for six languages.
