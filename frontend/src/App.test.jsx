@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 // Mock i18n
@@ -71,8 +71,10 @@ describe('App', () => {
     expect(document.body).toBeDefined();
   });
 
-  it('should have the App class on the main container', () => {
+  it('should have the App class on the main container', async () => {
     const { container } = render(<App />);
-    expect(container.querySelector('.App')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(container.querySelector('.App')).toBeInTheDocument();
+    });
   });
 });
