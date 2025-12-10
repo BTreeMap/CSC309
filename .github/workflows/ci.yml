@@ -104,12 +104,11 @@ jobs:
         env:
           DATABASE_URL: "file:./test.db"
 
-      # Uncomment when backend tests are added
-      # - name: Run tests
-      #   run: npm test
-      #   env:
-      #     DATABASE_URL: "file:./test.db"
-      #     JWT_SECRET: "test-secret-key"
+      - name: Run tests
+        run: npm test
+        env:
+          DATABASE_URL: "file:./test.db"
+          JWT_SECRET: "test-secret-key-for-ci"
 
   # ==========================================================================
   # Backend Docker Build Matrix (amd64 + arm64)
