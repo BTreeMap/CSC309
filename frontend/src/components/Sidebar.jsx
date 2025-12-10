@@ -102,14 +102,14 @@ const Sidebar = () => {
 
     const NavLink = ({ to, icon, children, exact }) => {
         const active = exact ? location.pathname === to : isActive(to);
-        
+
         const handleMouseEnter = () => {
             const preloadFn = routePreloads[to];
             if (typeof preloadFn === 'function') {
                 preloadFn();
             }
         };
-        
+
         return (
             <Link
                 to={to}
