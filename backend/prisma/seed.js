@@ -13,68 +13,123 @@ require('dotenv').config(
 );
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const prisma = new PrismaClient();
+
+// Helper: validate UTORid (same as index.js)
+const isValidUtorid = (utorid) => typeof utorid === 'string' && /^[a-zA-Z0-9]{7,8}$/.test(utorid);
+
+// Helper: generate secure password (same as index.js)
+const generateSecurePassword = () => {
+    const randomBytes = crypto.randomBytes(33);
+    return randomBytes.toString('base64url');
+};
 
 async function main() {
     // Check environment and warn if not local
     const isLocal = process.env.ENV_TYPE === 'local';
-    
+
     if (!isLocal) {
         console.log('WARNING: Running seed in non-local environment!');
         console.log('WARNING: This will delete all existing data and replace with test data!');
         console.log('WARNING: Make sure you have a database backup before proceeding!\n');
     }
 
+    // Get superuser credentials from environment (same logic as index.js)
+    const SUPERUSER_UTORID = process.env.SUPERUSER_UTORID || 'superadm';
+    const SUPERUSER_EMAIL = process.env.SUPERUSER_EMAIL || 'admin@utoronto.ca';
+    const SUPERUSER_PASSWORD = process.env.SUPERUSER_PASSWORD;
+
+    // Validate superuser UTORid
+    if (!isValidUtorid(SUPERUSER_UTORID)) {
+        console.error(`Invalid SUPERUSER_UTORID: '${SUPERUSER_UTORID}' (must be 7-8 alphanumeric characters)`);
+        process.exit(1);
+    }
+
     console.log('Clearing all database tables...');
-    
+
     // Delete all data in correct order (respecting foreign key constraints)
     // 1. Delete junction/relation tables first
     console.log('  - Deleting TransactionPromotion...');
     await prisma.transactionPromotion.deleteMany({});
-    
+
     console.log('  - Deleting UserPromotionUse...');
     await prisma.userPromotionUse.deleteMany({});
-    
+
     console.log('  - Deleting EventGuest...');
     await prisma.eventGuest.deleteMany({});
-    
+
     console.log('  - Deleting EventOrganizer...');
     await prisma.eventOrganizer.deleteMany({});
-    
+
     console.log('  - Deleting Transaction...');
     await prisma.transaction.deleteMany({});
-    
+
     console.log('  - Deleting ResetToken...');
     await prisma.resetToken.deleteMany({});
-    
+
     // 2. Delete main tables
     console.log('  - Deleting Promotion...');
     await prisma.promotion.deleteMany({});
-    
+
     console.log('  - Deleting Event...');
     await prisma.event.deleteMany({});
-    
+
     console.log('  - Deleting User...');
     await prisma.user.deleteMany({});
-    
+
     console.log('✓ All tables cleared successfully!\n');
 
     console.log('Creating test data...');
-    const password = await bcrypt.hash('TestPass123!', 12);
+    const testPassword = await bcrypt.hash('TestPass123!', 12);
 
-    // Create superuser
-    const superuser = await prisma.user.create({
+    // Create test superuser (supera82) with hardcoded password for testing
+    const testSuperuser = await prisma.user.create({
         data: {
             utorid: 'supera82',
-            name: 'Super User',
+            name: 'Test Super User',
             email: 'super@mail.utoronto.ca',
-            passwordBcrypt: password,
+            passwordBcrypt: testPassword,
             role: 'superuser',
             isVerified: true,
             points: 1000
         }
     });
+
+    // Create system admin superuser using environment credentials (same logic as index.js)
+    // This is the production admin account that coexists with the test superuser
+    // Generate password if not provided in environment
+    const superuserPassword = SUPERUSER_PASSWORD || generateSecurePassword();
+    const superuserPasswordHash = await bcrypt.hash(superuserPassword, 12);
+
+    const superuser = await prisma.user.create({
+        data: {
+            utorid: SUPERUSER_UTORID,
+            name: 'System Administrator',
+            email: SUPERUSER_EMAIL,
+            passwordBcrypt: superuserPasswordHash,
+            role: 'superuser',
+            isVerified: true,
+            points: 0
+        }
+    });
+
+    console.log('========================================');
+    console.log('SYSTEM ADMIN SUPERUSER CREATED');
+    console.log('========================================');
+    console.log(`UTORid:   ${superuser.utorid}`);
+    console.log(`Email:    ${superuser.email}`);
+    if (!SUPERUSER_PASSWORD) {
+        console.log(`Password: ${superuserPassword}`);
+        console.log('');
+        console.log('IMPORTANT: Save this password now!');
+        console.log('It will not be shown again.');
+        console.log('Set SUPERUSER_PASSWORD env var to use a custom password.');
+    } else {
+        console.log('Password: (from SUPERUSER_PASSWORD env var)');
+    }
+    console.log('========================================\n');
 
     // Create manager
     const manager = await prisma.user.create({
@@ -82,7 +137,7 @@ async function main() {
             utorid: 'manag123',
             name: 'Test Manager',
             email: 'manager@mail.utoronto.ca',
-            passwordBcrypt: password,
+            passwordBcrypt: testPassword,
             role: 'manager',
             isVerified: true,
             points: 500
@@ -95,7 +150,7 @@ async function main() {
             utorid: 'cashi123',
             name: 'Test Cashier',
             email: 'cashier@mail.utoronto.ca',
-            passwordBcrypt: password,
+            passwordBcrypt: testPassword,
             role: 'cashier',
             isVerified: true,
             suspicious: false,
@@ -122,7 +177,7 @@ async function main() {
                 utorid: userData.utorid,
                 name: userData.name,
                 email: userData.email,
-                passwordBcrypt: password,
+                passwordBcrypt: testPassword,
                 role: 'regular',
                 isVerified: true,
                 points: userData.points
@@ -139,7 +194,7 @@ async function main() {
             utorid: 'unver001',
             name: 'Frank Wilson',
             email: 'frank.wilson@mail.utoronto.ca',
-            passwordBcrypt: password,
+            passwordBcrypt: testPassword,
             role: 'regular',
             isVerified: false,
             points: 0
@@ -151,7 +206,7 @@ async function main() {
             utorid: 'unver002',
             name: 'Sarah Lee',
             email: 'sarah.lee@mail.utoronto.ca',
-            passwordBcrypt: password,
+            passwordBcrypt: testPassword,
             role: 'regular',
             isVerified: false,
             points: 0
@@ -931,11 +986,13 @@ async function main() {
     });
 
     console.log('✓ Database seeded successfully!');
-    console.log('\nTest Accounts (all use password: TestPass123!):');
-    console.log('  Superuser: supera82 / super@mail.utoronto.ca');
-    console.log('  Manager:   manag123 / manager@mail.utoronto.ca');
-    console.log('  Cashier:   cashi123 / cashier@mail.utoronto.ca');
-    console.log('  Regular Users (Verified):');
+    console.log('\nTest Accounts:');
+    console.log('  Superusers:');
+    console.log('    supera82 / super@mail.utoronto.ca (password: TestPass123!) - Test account');
+    console.log(`    ${SUPERUSER_UTORID} / ${SUPERUSER_EMAIL} (password from env or shown above) - System admin`);
+    console.log('  Manager:   manag123 / manager@mail.utoronto.ca (password: TestPass123!)');
+    console.log('  Cashier:   cashi123 / cashier@mail.utoronto.ca (password: TestPass123!)');
+    console.log('  Regular Users (Verified, password: TestPass123!):');
     regularUsers.forEach(user => {
         console.log(`    ${user.utorid} / ${user.email} (${user.points} points)`);
     });
