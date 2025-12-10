@@ -5,6 +5,7 @@ import { usersAPI } from '../api';
 import Layout from '../components/Layout';
 import { PageHeader } from '../components/shared';
 import { useToast } from '../components/shared/ToastContext';
+import { useAuth } from '../contexts/AuthContext';
 import { UserPlus } from 'lucide-react';
 import './RegisterPage.css';
 
@@ -12,6 +13,7 @@ const RegisterPage = () => {
     const { t } = useTranslation(['auth', 'validation', 'common', 'users']);
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const { hasRole } = useAuth();
 
     const [formData, setFormData] = useState({
         utorid: '',
@@ -137,9 +139,11 @@ const RegisterPage = () => {
                             <button onClick={handleRegisterAnother} className="btn btn-primary">
                                 {t('auth:register.registerAnother')}
                             </button>
-                            <button onClick={() => navigate('/users')} className="btn btn-secondary">
-                                {t('auth:register.backToUsers')}
-                            </button>
+                            {hasRole('manager') && (
+                                <button onClick={() => navigate('/users')} className="btn btn-secondary">
+                                    {t('auth:register.backToUsers')}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
