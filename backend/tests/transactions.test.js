@@ -182,10 +182,20 @@ describe('Transaction Endpoints', () => {
             expect(res.status).toBe(404);
         });
 
-        test('regular user cannot view other transactions', async () => {
+        test('regular user can view their own transaction', async () => {
             const res = await request(app)
                 .get(`/transactions/${transactionId}`)
                 .set('Authorization', `Bearer ${regularToken}`);
+
+            expect(res.status).toBe(200);
+            expect(res.body.id).toBe(transactionId);
+            expect(res.body.type).toBe('purchase');
+        });
+
+        test('regular user cannot view other users transactions', async () => {
+            const res = await request(app)
+                .get(`/transactions/${transactionId}`)
+                .set('Authorization', `Bearer ${regular2Token}`);
 
             expect(res.status).toBe(403);
         });

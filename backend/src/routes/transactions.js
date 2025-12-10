@@ -435,8 +435,9 @@ router.get('/', requireRole('manager'), async (req, res) => {
     }
 });
 
-// GET /transactions/:transactionId - Get transaction details (Cashier+)
-router.get('/:transactionId', requireRole('cashier'), async (req, res) => {
+// GET /transactions/:transactionId - Get transaction details (Regular+)
+// Regular users can only view their own transactions
+router.get('/:transactionId', requireRole('regular'), async (req, res) => {
     try {
         const transactionId = parseInt(req.params.transactionId);
 
@@ -478,6 +479,13 @@ router.get('/:transactionId', requireRole('cashier'), async (req, res) => {
 
         if (!transaction) {
             return res.status(404).json({ error: 'Transaction not found' });
+        }
+
+        // Regular users can only view their own transactions
+        // Cashier and Manager can view all transactions
+        const isRegularUser = req.auth.role === 'regular';
+        if (isRegularUser && transaction.userId !== req.auth.sub) {
+            return res.status(403).json({ error: 'Forbidden' });
         }
 
         // Format response based on transaction type
