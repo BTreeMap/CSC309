@@ -52,7 +52,9 @@
             "multiplier": "Multiplicador de puntos",
             "bonus": "Puntos de bonificación",
             "discount": "Descuento",
-            "freeItem": "Artículo gratis"
+            "freeItem": "Artículo gratis",
+            "automatic": "Automático (Basado en tasa)",
+            "oneTime": "Código de un solo uso"
         },
         "create": {
             "title": "Crear promoción",
@@ -83,7 +85,7 @@
         },
         "delete": {
             "title": "Eliminar promoción",
-            "message": "¿Está seguro de que desea eliminar esta promoción? Esta acción no se puede deshacer.",
+            "message": "¿Está seguro de que desea eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
             "success": "Promoción eliminada correctamente",
             "error": "No se pudo eliminar la promoción"
         },
@@ -111,7 +113,12 @@
             "delete": "Eliminar",
             "saving": "Guardando...",
             "updatePromotion": "Actualizar promoción",
-            "createPromotion": "Crear promoción"
+            "createPromotion": "Crear promoción",
+            "bonusRate": "Tasa de bonificación",
+            "ratePlaceholder": "ej: 0.5 para 50%",
+            "rateHelper": "Ingrese como decimal (0.5 = 50%)",
+            "minSpending": "Gasto mín. ($)",
+            "pointsPlaceholder": "ej: 100"
         },
         "createPromotion": "Crear promoción"
     },

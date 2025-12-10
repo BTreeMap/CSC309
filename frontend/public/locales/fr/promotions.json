@@ -52,7 +52,9 @@
             "multiplier": "Multiplicateur de points",
             "bonus": "Points bonus",
             "discount": "Réduction",
-            "freeItem": "Article gratuit"
+            "freeItem": "Article gratuit",
+            "automatic": "Automatique (Basé sur le taux)",
+            "oneTime": "Code à usage unique"
         },
         "create": {
             "title": "Créer une promotion",
@@ -83,7 +85,7 @@
         },
         "delete": {
             "title": "Supprimer la promotion",
-            "message": "Êtes-vous sûr de vouloir supprimer cette promotion ? Cette action est irréversible.",
+            "message": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible.",
             "success": "Promotion supprimée avec succès",
             "error": "Échec de la suppression de la promotion"
         },
@@ -111,7 +113,12 @@
             "delete": "Supprimer",
             "saving": "Enregistrement...",
             "updatePromotion": "Mettre à jour la promotion",
-            "createPromotion": "Créer une promotion"
+            "createPromotion": "Créer une promotion",
+            "bonusRate": "Taux de bonus",
+            "ratePlaceholder": "ex: 0.5 pour 50%",
+            "rateHelper": "Entrez en décimal (0.5 = 50%)",
+            "minSpending": "Dépense min. ($)",
+            "pointsPlaceholder": "ex: 100"
         },
         "createPromotion": "Créer une promotion"
     },

@@ -52,7 +52,9 @@
             "multiplier": "积分倍数",
             "bonus": "奖励积分",
             "discount": "折扣",
-            "freeItem": "免费商品"
+            "freeItem": "免费商品",
+            "automatic": "自动（基于比率）",
+            "oneTime": "一次性代码"
         },
         "create": {
             "title": "创建促销",
@@ -83,7 +85,7 @@
         },
         "delete": {
             "title": "删除促销",
-            "message": "您确定要删除此促销吗？此操作无法撤销。",
+            "message": "您确定要删除\"{{name}}\"吗？此操作无法撤销。",
             "success": "促销删除成功",
             "error": "删除促销失败"
         },
@@ -111,7 +113,12 @@
             "delete": "删除",
             "saving": "保存中...",
             "updatePromotion": "更新促销",
-            "createPromotion": "创建促销"
+            "createPromotion": "创建促销",
+            "bonusRate": "奖励比率",
+            "ratePlaceholder": "例如：0.5表示50%",
+            "rateHelper": "输入小数（0.5 = 50%）",
+            "minSpending": "最低消费 ($)",
+            "pointsPlaceholder": "例如：100"
         },
         "createPromotion": "创建促销"
     },

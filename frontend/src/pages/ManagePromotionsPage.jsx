@@ -303,7 +303,7 @@ const ManagePromotionsPage = () => {
                         setShowCreateModal(false);
                         setShowEditModal(false);
                     }}
-                    title={showEditModal ? 'Edit Promotion' : 'Create Promotion'}
+                    title={showEditModal ? t('promotions.edit.title') : t('promotions.create.title')}
                     size="medium"
                 >
                     <form onSubmit={handleSubmit} className="promotion-form">
@@ -312,7 +312,7 @@ const ManagePromotionsPage = () => {
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name" className="form-label">Promotion Name *</label>
+                            <label htmlFor="name" className="form-label">{t('promotions.create.nameLabel')} *</label>
                             <input
                                 type="text"
                                 id="name"
@@ -320,26 +320,26 @@ const ManagePromotionsPage = () => {
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 required
-                                placeholder="e.g., Summer Sale"
+                                placeholder={t('promotions.create.namePlaceholder')}
                                 className="form-input"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description" className="form-label">Description</label>
+                            <label htmlFor="description" className="form-label">{t('promotions.create.descriptionLabel')}</label>
                             <textarea
                                 id="description"
                                 name="description"
                                 value={formData.description}
                                 onChange={handleInputChange}
                                 rows={3}
-                                placeholder="Describe the promotion..."
+                                placeholder={t('promotions.create.descriptionPlaceholder')}
                                 className="form-textarea"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="type" className="form-label">Type *</label>
+                            <label htmlFor="type" className="form-label">{t('promotions.create.typeLabel')} *</label>
                             <select
                                 id="type"
                                 name="type"
@@ -348,14 +348,14 @@ const ManagePromotionsPage = () => {
                                 required
                                 className="form-select"
                             >
-                                <option value="automatic">Automatic (Rate-based)</option>
-                                <option value="one-time">One-Time Code</option>
+                                <option value="automatic">{t('promotions.types.automatic')}</option>
+                                <option value="one-time">{t('promotions.types.oneTime')}</option>
                             </select>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="startTime" className="form-label">Start Date *</label>
+                                <label htmlFor="startTime" className="form-label">{t('common:startDate')} *</label>
                                 <input
                                     type="datetime-local"
                                     id="startTime"
@@ -368,7 +368,7 @@ const ManagePromotionsPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="endTime" className="form-label">End Date *</label>
+                                <label htmlFor="endTime" className="form-label">{t('common:endDate')} *</label>
                                 <input
                                     type="datetime-local"
                                     id="endTime"
@@ -384,7 +384,7 @@ const ManagePromotionsPage = () => {
                         {formData.type === 'automatic' ? (
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="rate" className="form-label">Bonus Rate *</label>
+                                    <label htmlFor="rate" className="form-label">{t('promotions.manage.bonusRate')} *</label>
                                     <input
                                         type="number"
                                         id="rate"
@@ -394,15 +394,15 @@ const ManagePromotionsPage = () => {
                                         step="0.01"
                                         min="0"
                                         max="10"
-                                        placeholder="e.g., 0.5 for 50%"
+                                        placeholder={t('promotions.manage.ratePlaceholder')}
                                         required={formData.type === 'automatic'}
                                         className="form-input"
                                     />
-                                    <span className="form-helper">Enter as decimal (0.5 = 50%)</span>
+                                    <span className="form-helper">{t('promotions.manage.rateHelper')}</span>
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="minSpending" className="form-label">Min Spending ($)</label>
+                                    <label htmlFor="minSpending" className="form-label">{t('promotions.manage.minSpending')}</label>
                                     <input
                                         type="number"
                                         id="minSpending"
@@ -418,7 +418,7 @@ const ManagePromotionsPage = () => {
                             </div>
                         ) : (
                             <div className="form-group">
-                                <label htmlFor="points" className="form-label">Points *</label>
+                                <label htmlFor="points" className="form-label">{t('promotions.manage.points')} *</label>
                                 <input
                                     type="number"
                                     id="points"
@@ -426,7 +426,7 @@ const ManagePromotionsPage = () => {
                                     value={formData.points}
                                     onChange={handleInputChange}
                                     min="1"
-                                    placeholder="e.g., 100"
+                                    placeholder={t('promotions.manage.pointsPlaceholder')}
                                     required={formData.type === 'one-time'}
                                     className="form-input"
                                 />
@@ -457,9 +457,9 @@ const ManagePromotionsPage = () => {
                     isOpen={showDeleteConfirm}
                     onClose={() => setShowDeleteConfirm(false)}
                     onConfirm={handleDelete}
-                    title="Delete Promotion"
-                    message={`Are you sure you want to delete "${selectedPromotion?.name}"? This action cannot be undone.`}
-                    confirmText="Delete"
+                    title={t('promotions.delete.title')}
+                    message={t('promotions.delete.message', { name: selectedPromotion?.name })}
+                    confirmText={t('common:delete')}
                     confirmVariant="danger"
                 />
             </div>
