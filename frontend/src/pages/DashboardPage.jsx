@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import { LoadingSpinner, PageHeader } from '../components/shared';
 import { usersAPI } from '../api';
+import { getQuickActionsByRole } from '../config/quickActions';
 import {
-  QrCode,
-  ClipboardList,
-  Gift,
-  Calendar,
-  ArrowLeftRight,
-  Target,
-  CreditCard,
-  CheckCircle,
-  UserPlus,
-  Users,
-  BarChart3,
-  Tag,
-  CalendarCog,
   Coins,
   ShieldCheck,
   User,
@@ -49,6 +37,16 @@ const DashboardPage = () => {
     fetchUserData();
   }, [updateUser]);
 
+  // Memoize quick actions based on role
+  const quickActions = useMemo(
+    () => getQuickActionsByRole(activeRole),
+    [activeRole]
+  );
+
+  const getRoleDisplayName = (role) => {
+    return t(`nav:roles.${role}`, { defaultValue: role });
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -56,42 +54,6 @@ const DashboardPage = () => {
       </Layout>
     );
   }
-
-  // Role-specific quick actions
-  const getQuickActions = () => {
-    const baseActions = [
-      { to: '/my-qr', icon: <QrCode size={24} />, text: t('dashboard:quickActions.myQr') },
-      { to: '/transactions', icon: <ClipboardList size={24} />, text: t('dashboard:quickActions.myTransactions') },
-      { to: '/promotions', icon: <Gift size={24} />, text: t('dashboard:quickActions.promotions') },
-      { to: '/events', icon: <Calendar size={24} />, text: t('dashboard:quickActions.events') },
-      { to: '/transfer', icon: <ArrowLeftRight size={24} />, text: t('dashboard:quickActions.transfer') },
-      { to: '/redeem', icon: <Target size={24} />, text: t('dashboard:quickActions.redeem') },
-    ];
-
-    const cashierActions = [
-      { to: '/cashier/transaction', icon: <CreditCard size={24} />, text: t('dashboard:quickActions.createTransaction') },
-      { to: '/cashier/redemption', icon: <CheckCircle size={24} />, text: t('dashboard:quickActions.processRedemption') },
-      { to: '/register', icon: <UserPlus size={24} />, text: t('dashboard:quickActions.registerUser') },
-    ];
-
-    const managerActions = [
-      { to: '/users', icon: <Users size={24} />, text: t('dashboard:quickActions.manageUsers') },
-      { to: '/transactions/all', icon: <BarChart3 size={24} />, text: t('dashboard:quickActions.allTransactions') },
-      { to: '/promotions/manage', icon: <Tag size={24} />, text: t('dashboard:quickActions.managePromotions') },
-      { to: '/events/manage', icon: <CalendarCog size={24} />, text: t('dashboard:quickActions.manageEvents') },
-    ];
-
-    if (activeRole === 'superuser' || activeRole === 'manager') {
-      return [...baseActions, ...cashierActions, ...managerActions];
-    } else if (activeRole === 'cashier') {
-      return [...baseActions, ...cashierActions];
-    }
-    return baseActions;
-  };
-
-  const getRoleDisplayName = (role) => {
-    return t(`nav:roles.${role}`, { defaultValue: role });
-  };
 
   return (
     <Layout>
@@ -141,10 +103,10 @@ const DashboardPage = () => {
         <div className="dashboard-quick-actions">
           <h2>{t('dashboard:quickActions.title')}</h2>
           <div className="quick-actions-grid">
-            {getQuickActions().map((action, index) => (
-              <Link key={index} to={action.to} className="quick-action-card">
-                <span className="action-icon">{action.icon}</span>
-                <span className="action-text">{action.text}</span>
+            {quickActions.map(({ to, Icon, i18nKey }) => (
+              <Link key={to} to={to} className="quick-action-card">
+                <span className="action-icon"><Icon size={24} /></span>
+                <span className="action-text">{t(i18nKey)}</span>
               </Link>
             ))}
           </div>
