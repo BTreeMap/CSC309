@@ -40,6 +40,19 @@ function createEventsRouter(deps) {
                 return res.status(400).json({ error: 'Invalid points' });
             }
 
+            const creator = await prisma.user.findUnique({
+                where: { id: req.auth.sub },
+                select: { id: true, isVerified: true }
+            });
+
+            if (!creator) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            if (!creator.isVerified) {
+                return res.status(400).json({ error: 'User must be verified before creating events' });
+            }
+
             const event = await prisma.event.create({
                 data: {
                     name,
@@ -51,7 +64,25 @@ function createEventsRouter(deps) {
                     pointsTotal: points,
                     pointsRemain: points,
                     pointsAwarded: 0,
-                    published: false
+                    published: false,
+                    organizers: {
+                        create: [
+                            { userId: req.auth.sub }
+                        ]
+                    }
+                },
+                include: {
+                    organizers: {
+                        include: {
+                            user: {
+                                select: {
+                                    id: true,
+                                    utorid: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    }
                 }
             });
 
@@ -66,7 +97,7 @@ function createEventsRouter(deps) {
                 pointsRemain: event.pointsRemain,
                 pointsAwarded: event.pointsAwarded,
                 published: event.published,
-                organizers: [],
+                organizers: event.organizers.map(o => o.user),
                 guests: []
             });
         } catch (error) {
