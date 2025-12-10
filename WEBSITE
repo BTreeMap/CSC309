@@ -1,1 +1,5 @@
-https://csc309.joefang.org/
+Demo URL: https://csc309.joefang.org/
+GitHub Repo: https://github.com/BTreeMap/CSC309
+
+NOTE
+Primary development occurred on GitHub and was synced to MarkUs using git subtree. Please refer to the GitHub repository for the complete commit history and accurate contributor details.
