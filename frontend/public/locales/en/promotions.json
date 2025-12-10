@@ -258,7 +258,9 @@
             "unlimited": "Unlimited",
             "statusUpcoming": "Upcoming",
             "statusActive": "Active",
-            "statusEnded": "Ended"
+            "statusEnded": "Ended",
+            "cannotEditOngoing": "Cannot edit ongoing event",
+            "cannotEditOngoingMessage": "This event is currently in progress. Editing is not allowed during the event."
         }
     }
 }

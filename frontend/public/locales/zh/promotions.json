@@ -258,7 +258,9 @@
             "unlimited": "无限制",
             "statusUpcoming": "即将开始",
             "statusActive": "进行中",
-            "statusEnded": "已结束"
+            "statusEnded": "已结束",
+            "cannotEditOngoing": "无法编辑正在进行中的活动",
+            "cannotEditOngoingMessage": "该活动正在进行中，活动期间不允许编辑。"
         }
     }
 }

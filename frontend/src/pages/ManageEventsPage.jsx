@@ -12,6 +12,7 @@ import './ManageEventsPage.css';
 const ManageEventsPage = () => {
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const { t } = useTranslation(['promotions', 'common']);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [events, setEvents] = useState([]);
@@ -121,7 +122,18 @@ const ManageEventsPage = () => {
         setShowCreateModal(true);
     };
 
+    const isEventOngoing = (event) => {
+        const now = new Date();
+        const startDate = new Date(event.startTime);
+        const endDate = new Date(event.endTime);
+        return now >= startDate && now <= endDate;
+    };
+
     const openEditModal = (event) => {
+        if (isEventOngoing(event)) {
+            showToast(t('events.manage.cannotEditOngoingMessage'), 'error');
+            return;
+        }
         setSelectedEvent(event);
         setFormData({
             name: event.name,
@@ -193,8 +205,6 @@ const ManageEventsPage = () => {
             showToast(err.response?.data?.error || 'Failed to delete event', 'error');
         }
     };
-
-    const { t } = useTranslation(['promotions', 'common']);
 
     const getEventStatus = (event) => {
         const now = new Date();
