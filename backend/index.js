@@ -956,7 +956,7 @@ app.patch('/transactions/:transactionId/processed', requireRole('cashier'), asyn
 
 // Events routes
 const createEventsRouter = require('./src/routes/events');
-app.use('/events', createEventsRouter({ prisma, validateRequest, requireRole, hasRoleManager, hasRole, isDefined }));
+app.use('/events', createEventsRouter({ prisma, validateRequest, requireRole, hasRoleManager, hasRole, isDefined, isNullish, isPositiveInteger }));
 
 
 

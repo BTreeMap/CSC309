@@ -11,7 +11,7 @@ const express = require('express');
  * Factory function to create the events router with dependencies
  */
 function createEventsRouter(deps) {
-  const { prisma, validateRequest, requireRole, hasRoleManager, hasRole, isDefined } = deps;
+  const { prisma, validateRequest, requireRole, hasRoleManager, hasRole, isDefined, isNullish, isPositiveInteger } = deps;
   const router = express.Router();
 
 // ============================================================================
