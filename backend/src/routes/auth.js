@@ -10,13 +10,12 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const prisma = require('../db/prisma');
-const { validateRequest } = require('../validation');
-
 const router = express.Router();
 
-// JWT Secret from environment
-const JWT_SECRET = process.env.JWT_SECRET;
+// These will be injected via the factory function
+let prisma;
+let validateRequest;
+let JWT_SECRET;
 
 // In-memory rate limiting for password resets
 const ResetRateLimits = new Map();
@@ -176,4 +175,14 @@ router.post('/resets/:resetToken', async (req, res) => {
   }
 });
 
-module.exports = router;
+/**
+ * Factory function to create the auth router with dependencies
+ */
+function createAuthRouter(deps) {
+  prisma = deps.prisma;
+  validateRequest = deps.validateRequest;
+  JWT_SECRET = deps.JWT_SECRET;
+  return router;
+}
+
+module.exports = createAuthRouter;
