@@ -16,15 +16,15 @@ import { lazy } from 'react';
  * <Link onMouseEnter={() => DashboardPage.preload()} to="/dashboard">Dashboard</Link>
  */
 export function lazyWithPreload(importFn) {
-  // Store the lazy component
-  const LazyComponent = lazy(importFn);
-  
-  // Add preload method that triggers the import
-  LazyComponent.preload = () => {
-    importFn();
-  };
-  
-  return LazyComponent;
+    // Store the lazy component
+    const LazyComponent = lazy(importFn);
+
+    // Add preload method that triggers the import
+    LazyComponent.preload = () => {
+        importFn();
+    };
+
+    return LazyComponent;
 }
 
 export default lazyWithPreload;

@@ -16,7 +16,7 @@ describe('Transaction Endpoints', () => {
 
     beforeAll(async () => {
         await clearDatabase();
-        
+
         const m = await createUserWithRole('manager', { utorid: 'manager1' });
         manager = m.user;
         managerToken = getToken(manager);

@@ -17,7 +17,7 @@ describe('Promotion Endpoints', () => {
 
     beforeAll(async () => {
         await clearDatabase();
-        
+
         const m = await createUserWithRole('manager', { utorid: 'promomgr' });
         manager = m.user;
         managerToken = getToken(manager);

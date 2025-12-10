@@ -17,7 +17,7 @@ describe('Event Endpoints', () => {
 
     beforeAll(async () => {
         await clearDatabase();
-        
+
         const m = await createUserWithRole('manager', { utorid: 'evtmgr01' });
         manager = m.user;
         managerToken = getToken(manager);
@@ -33,7 +33,7 @@ describe('Event Endpoints', () => {
         // Create a test event directly in database
         const futureDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         const endDate = new Date(Date.now() + 8 * 24 * 60 * 60 * 1000);
-        
+
         const event = await prisma.event.create({
             data: {
                 name: 'Test Event',
@@ -355,7 +355,7 @@ describe('Event Endpoints', () => {
                 });
 
             expect(createRes.status).toBe(201);
-            
+
             const res = await request(app)
                 .delete(`/events/${createRes.body.id}`)
                 .set('Authorization', `Bearer ${managerToken}`);

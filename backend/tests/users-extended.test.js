@@ -16,7 +16,7 @@ describe('User Endpoints (Extended)', () => {
 
     beforeAll(async () => {
         await clearDatabase();
-        
+
         const su = await createUserWithRole('superuser', { utorid: 'superadm' });
         superuser = su.user;
         superuserToken = getToken(superuser);
@@ -329,7 +329,7 @@ describe('User Endpoints (Extended)', () => {
     describe('PATCH /users/me/password', () => {
         test('user can change own password', async () => {
             // Create a fresh user for password change test
-            const { user, password } = await createUserWithRole('regular', { 
+            const { user, password } = await createUserWithRole('regular', {
                 utorid: 'pwdtest1',
                 password: 'OldPass123!'
             });

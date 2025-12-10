@@ -21,32 +21,32 @@ import { Link } from 'react-router-dom';
  *   Go to Dashboard
  * </PrefetchLink>
  */
-export function PrefetchLink({ 
-  to, 
-  preload, 
-  children, 
-  className,
-  style,
-  ...rest 
+export function PrefetchLink({
+    to,
+    preload,
+    children,
+    className,
+    style,
+    ...rest
 }) {
-  const handleInteraction = () => {
-    if (typeof preload === 'function') {
-      preload();
-    }
-  };
+    const handleInteraction = () => {
+        if (typeof preload === 'function') {
+            preload();
+        }
+    };
 
-  return (
-    <Link
-      to={to}
-      className={className}
-      style={style}
-      onMouseEnter={handleInteraction}
-      onFocus={handleInteraction}
-      {...rest}
-    >
-      {children}
-    </Link>
-  );
+    return (
+        <Link
+            to={to}
+            className={className}
+            style={style}
+            onMouseEnter={handleInteraction}
+            onFocus={handleInteraction}
+            {...rest}
+        >
+            {children}
+        </Link>
+    );
 }
 
 export default PrefetchLink;
