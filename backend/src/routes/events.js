@@ -200,7 +200,7 @@ router.get('/', requireRole('regular'), async (req, res) => {
 });
 
 // GET /events/:eventId - Get event details
-router.get('//:eventId', requireRole('regular'), async (req, res) => {
+router.get('/:eventId', requireRole('regular'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
 
@@ -302,7 +302,7 @@ router.get('//:eventId', requireRole('regular'), async (req, res) => {
 });
 
 // PATCH /events/:eventId - Update event (Manager or organizer)
-router.patch('//:eventId', requireRole('regular'), async (req, res) => {
+router.patch('/:eventId', requireRole('regular'), async (req, res) => {
     try {
         // Validate request
         const validation = validateRequest('PATCH /events/:eventId', req.body);
@@ -461,7 +461,7 @@ router.patch('//:eventId', requireRole('regular'), async (req, res) => {
 });
 
 // DELETE /events/:eventId - Delete event (Manager+)
-router.delete('//:eventId', requireRole('manager'), async (req, res) => {
+router.delete('/:eventId', requireRole('manager'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
 
@@ -496,7 +496,7 @@ router.delete('//:eventId', requireRole('manager'), async (req, res) => {
 });
 
 // POST /events/:eventId/organizers - Add organizer (Manager+)
-router.post('//:eventId/organizers', requireRole('manager'), async (req, res) => {
+router.post('/:eventId/organizers', requireRole('manager'), async (req, res) => {
     try {
         // Validate request
         const validation = validateRequest('POST /events/:eventId/organizers', req.body);
@@ -584,7 +584,7 @@ router.post('//:eventId/organizers', requireRole('manager'), async (req, res) =>
 });
 
 // DELETE /events/:eventId/organizers/:userId - Remove organizer (Manager+)
-router.delete('//:eventId/organizers/:userId', requireRole('manager'), async (req, res) => {
+router.delete('/:eventId/organizers/:userId', requireRole('manager'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
         const userId = parseInt(req.params.userId);
@@ -628,7 +628,7 @@ router.delete('//:eventId/organizers/:userId', requireRole('manager'), async (re
 });
 
 // POST /events/:eventId/guests/me - RSVP self (Regular+)
-router.post('//:eventId/guests/me', requireRole('regular'), async (req, res) => {
+router.post('/:eventId/guests/me', requireRole('regular'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
 
@@ -702,7 +702,7 @@ router.post('//:eventId/guests/me', requireRole('regular'), async (req, res) => 
 });
 
 // DELETE /events/:eventId/guests/me - Remove self RSVP (Regular+)
-router.delete('//:eventId/guests/me', requireRole('regular'), async (req, res) => {
+router.delete('/:eventId/guests/me', requireRole('regular'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
 
@@ -746,7 +746,7 @@ router.delete('//:eventId/guests/me', requireRole('regular'), async (req, res) =
 });
 
 // POST /events/:eventId/guests - Add guest (Manager or organizer)
-router.post('//:eventId/guests', requireRole('regular'), async (req, res) => {
+router.post('/:eventId/guests', requireRole('regular'), async (req, res) => {
     try {
         // Validate request
         const validation = validateRequest('POST /events/:eventId/guests', req.body);
@@ -850,7 +850,7 @@ router.post('//:eventId/guests', requireRole('regular'), async (req, res) => {
 });
 
 // DELETE /events/:eventId/guests/:userId - Remove guest (Manager+)
-router.delete('//:eventId/guests/:userId', requireRole('manager'), async (req, res) => {
+router.delete('/:eventId/guests/:userId', requireRole('manager'), async (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
         const userId = parseInt(req.params.userId);
@@ -886,7 +886,7 @@ router.delete('//:eventId/guests/:userId', requireRole('manager'), async (req, r
 });
 
 // POST /events/:eventId/transactions - Award event points (Manager or organizer)
-router.post('//:eventId/transactions', requireRole('regular'), async (req, res) => {
+router.post('/:eventId/transactions', requireRole('regular'), async (req, res) => {
     try {
         // Validate request
         const validation = validateRequest('POST /events/:eventId/transactions', req.body);

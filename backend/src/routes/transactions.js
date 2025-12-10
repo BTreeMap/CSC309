@@ -436,7 +436,7 @@ router.get('/', requireRole('manager'), async (req, res) => {
 });
 
 // GET /transactions/:transactionId - Get transaction details (Cashier+)
-router.get('//:transactionId', requireRole('cashier'), async (req, res) => {
+router.get('/:transactionId', requireRole('cashier'), async (req, res) => {
     try {
         const transactionId = parseInt(req.params.transactionId);
 
@@ -512,7 +512,7 @@ router.get('//:transactionId', requireRole('cashier'), async (req, res) => {
 });
 
 // PATCH /transactions/:transactionId/suspicious - Toggle suspicious (Manager+)
-router.patch('//:transactionId/suspicious', requireRole('manager'), async (req, res) => {
+router.patch('/:transactionId/suspicious', requireRole('manager'), async (req, res) => {
     try {
         // Validate request
         const validation = validateRequest('PATCH /transactions/:transactionId/suspicious', req.body);
