@@ -16,12 +16,26 @@ import { lazy } from 'react';
  * <Link onMouseEnter={() => DashboardPage.preload()} to="/dashboard">Dashboard</Link>
  */
 export function lazyWithPreload(importFn) {
-    // Store the lazy component
-    const LazyComponent = lazy(importFn);
+    // Cache the import promise to avoid duplicate fetches
+    let modulePromise = null;
+
+    // Create a wrapper that caches the import
+    const load = () => {
+        if (!modulePromise) {
+            modulePromise = importFn();
+        }
+        return modulePromise;
+    };
+
+    // Store the lazy component using the cached loader
+    const LazyComponent = lazy(load);
 
     // Add preload method that triggers the import
     LazyComponent.preload = () => {
-        importFn();
+        if (import.meta.env.DEV) {
+            console.log('[Preload] Prefetching module...');
+        }
+        load();
     };
 
     return LazyComponent;

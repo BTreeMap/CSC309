@@ -28,6 +28,9 @@ export function NavLink({
         // Find matching preload function
         // Handle exact paths first
         if (routePreloads[to]) {
+            if (import.meta.env.DEV) {
+                console.log(`[NavLink] Preloading route: ${to}`);
+            }
             routePreloads[to]();
             return;
         }
@@ -39,7 +42,10 @@ export function NavLink({
                 // Convert route pattern to regex
                 const regexPattern = pattern.replace(/:[^/]+/g, '[^/]+');
                 const regex = new RegExp(`^${regexPattern}$`);
-                if (regex.test(to)) {
+                if (regex.test(to) && typeof preload === 'function') {
+                    if (import.meta.env.DEV) {
+                        console.log(`[NavLink] Preloading pattern route: ${pattern} for ${to}`);
+                    }
                     preload();
                     return;
                 }

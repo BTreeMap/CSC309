@@ -44,7 +44,15 @@ const Navbar = () => {
     return names[role] || role;
   };
 
-  const isActive = (path) => {
+  /**
+   * Check if a path is active.
+   * @param {string} path - The path to check
+   * @param {boolean} exact - If true, only match exact path (default: false)
+   */
+  const isActive = (path, exact = false) => {
+    if (exact) {
+      return location.pathname === path;
+    }
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
@@ -94,21 +102,21 @@ const Navbar = () => {
             <div className="nav-group">
               <NavLink
                 to="/promotions"
-                className={`nav-link ${isActive('/promotions') && !isActive('/promotions/manage') ? 'active' : ''}`}
+                className={`nav-link ${isActive('/promotions', true) ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Promotions
               </NavLink>
               <NavLink
                 to="/events"
-                className={`nav-link ${isActive('/events') && !isActive('/events/manage') ? 'active' : ''}`}
+                className={`nav-link ${isActive('/events', true) ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Events
               </NavLink>
               <NavLink
                 to="/transactions"
-                className={`nav-link ${isActive('/transactions') && !isActive('/transactions/all') ? 'active' : ''}`}
+                className={`nav-link ${isActive('/transactions', true) ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Transactions
