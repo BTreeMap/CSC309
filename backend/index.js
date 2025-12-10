@@ -81,9 +81,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// In-memory rate limiting for password resets
-const ResetRateLimits = new Map();
-
 // Configure avatar uploads using modular config
 const uploadDir = path.join(__dirname, 'uploads');
 const upload = createAvatarUpload(uploadDir);
@@ -101,170 +98,12 @@ app.use((req, _, next) => {
 });
 
 // ============================================================================
-// AUTHENTICATION ENDPOINTS
+// ROUTE MODULES
 // ============================================================================
 
-// POST /auth/tokens - Login
-app.post('/auth/tokens', async (req, res) => {
-    try {
-        // Validate request
-        const validation = validateRequest('POST /auth/tokens', req.body);
-        if (!validation.valid) {
-            return res.status(400).json({ error: validation.error });
-        }
-
-        const { utorid, password } = req.body;
-
-        const user = await prisma.user.findUnique({ where: { utorid } });
-
-        if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-
-        const validPassword = await bcrypt.compare(password, user.passwordBcrypt);
-        if (!validPassword) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-
-        // Update last login
-        await prisma.user.update({
-            where: { id: user.id },
-            data: { lastLogin: new Date() }
-        });
-
-        const expiresIn = 2 * 60 * 60; // 2 hours in seconds
-        const token = jwt.sign(
-            { sub: user.id, role: user.role },
-            JWT_SECRET,
-            { expiresIn }
-        );
-
-        const expiresAt = new Date(Date.now() + expiresIn * 1000).toISOString();
-
-        res.json({ token, expiresAt });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-// POST /auth/resets - Request password reset
-app.post('/auth/resets', async (req, res) => {
-    try {
-        // Validate request
-        const validation = validateRequest('POST /auth/resets', req.body);
-        if (!validation.valid) {
-            return res.status(400).json({ error: validation.error });
-        }
-
-        const { utorid } = req.body;
-
-        // Security: Block password reset for default superuser account
-        // Since email verification is not implemented, password reset tokens are exposed in API responses
-        // This prevents unauthorized password resets for the system admin account
-        const DEFAULT_SUPERUSER_UTORID = 'superadm';
-        if (utorid === DEFAULT_SUPERUSER_UTORID) {
-            return res.status(403).json({ error: 'Password reset is disabled for this account' });
-        }
-
-        // Rate limiting by IP
-        const clientIp = req.ip;
-        const now = Date.now();
-        const lastReset = ResetRateLimits.get(clientIp);
-
-        if (lastReset && now - lastReset < 60000) {
-            return res.status(429).json({ error: 'Too many requests' });
-        }
-
-        const user = await prisma.user.findUnique({ where: { utorid } });
-
-        // Always reveal if a user exists because we don't care about leaking user existence.
-        // There are many other ways to leak user existence that are non-mitigatable.
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        ResetRateLimits.set(clientIp, now);
-
-        const resetToken = crypto.randomUUID();
-        const expiresAt = new Date(Date.now() + 3600000); // 1 hour
-
-        // Delete any existing reset tokens for this user (overwrite)
-        await prisma.resetToken.deleteMany({
-            where: { userId: user.id }
-        });
-
-        await prisma.resetToken.create({
-            data: {
-                userId: user.id,
-                token: resetToken,
-                expiry: expiresAt
-            }
-        });
-
-        res.status(202).json({
-            expiresAt: expiresAt.toISOString(),
-            resetToken
-        });
-    } catch (error) {
-        console.error('Reset request error:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-// POST /auth/resets/:resetToken - Consume reset token
-app.post('/auth/resets/:resetToken', async (req, res) => {
-    try {
-        // Validate request
-        const validation = validateRequest('POST /auth/resets/:resetToken', req.body);
-        if (!validation.valid) {
-            return res.status(400).json({ error: validation.error });
-        }
-
-        const { resetToken } = req.params;
-        const { utorid, password } = req.body;
-
-        // Find the reset token and its associated user
-        const tokenRecord = await prisma.resetToken.findUnique({
-            where: { token: resetToken },
-            include: { user: true }
-        });
-
-        if (!tokenRecord) {
-            return res.status(404).json({ error: 'Invalid reset token' });
-        }
-
-        // Check expiration
-        if (new Date() > tokenRecord.expiry) {
-            return res.status(410).json({ error: 'Reset token expired' });
-        }
-
-        // Check if utorid matches
-        if (tokenRecord.user.utorid !== utorid) {
-            return res.status(401).json({ error: 'UTORid does not match reset token' });
-        }
-
-        const passwordHash = await bcrypt.hash(password, 12);
-
-        // Update password and delete the token (verification is separate, done by manager)
-        await prisma.$transaction([
-            prisma.user.update({
-                where: { id: tokenRecord.userId },
-                data: {
-                    passwordBcrypt: passwordHash
-                }
-            }),
-            prisma.resetToken.delete({
-                where: { id: tokenRecord.id }
-            })
-        ]);
-
-        res.json({ message: 'Password reset successful' });
-    } catch (error) {
-        console.error('Reset consumption error:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
+// Auth routes (login, password reset)
+const authRoutes = require('./src/routes/auth');
+app.use('/auth', authRoutes);
 
 // ============================================================================
 // USER MANAGEMENT ENDPOINTS
