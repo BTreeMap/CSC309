@@ -12,93 +12,93 @@ import { useSearchParams } from 'react-router-dom';
  * @returns {Object} Paginated data state and handlers
  */
 export function usePaginatedData(fetchFn, options = {}) {
-  const { limit = 10, filterKeys = [], filterTransforms = {} } = options;
-  
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [totalCount, setTotalCount] = useState(0);
+    const { limit = 10, filterKeys = [], filterTransforms = {} } = options;
 
-  // Parse page from URL
-  const page = parseInt(searchParams.get('page') || '1', 10);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
 
-  // Extract filters from URL params
-  const filters = filterKeys.reduce((acc, key) => {
-    const value = searchParams.get(key);
-    if (value) {
-      // Apply transform if defined, otherwise use raw value
-      const transform = filterTransforms[key];
-      acc[key] = transform ? transform(value) : value;
-    }
-    return acc;
-  }, {});
+    // Parse page from URL
+    const page = parseInt(searchParams.get('page') || '1', 10);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+    // Extract filters from URL params
+    const filters = filterKeys.reduce((acc, key) => {
+        const value = searchParams.get(key);
+        if (value) {
+            // Apply transform if defined, otherwise use raw value
+            const transform = filterTransforms[key];
+            acc[key] = transform ? transform(value) : value;
+        }
+        return acc;
+    }, {});
 
-    try {
-      const params = { page, limit, ...filters };
-      const result = await fetchFn(params);
-      setData(result.results || []);
-      setTotalCount(result.count || 0);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Failed to load data');
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchFn, page, limit, JSON.stringify(filters)]);
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        setError(null);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+        try {
+            const params = { page, limit, ...filters };
+            const result = await fetchFn(params);
+            setData(result.results || []);
+            setTotalCount(result.count || 0);
+        } catch (err) {
+            setError(err.response?.data?.error || 'Failed to load data');
+        } finally {
+            setLoading(false);
+        }
+    }, [fetchFn, page, limit, JSON.stringify(filters)]);
 
-  const handlePageChange = useCallback((newPage) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', newPage.toString());
-    setSearchParams(params);
-  }, [searchParams, setSearchParams]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
-  const handleFilterChange = useCallback((key, value) => {
-    const params = new URLSearchParams(searchParams);
-    if (value !== '' && value !== null && value !== undefined) {
-      params.set(key, String(value));
-    } else {
-      params.delete(key);
-    }
-    params.set('page', '1'); // Reset to first page on filter change
-    setSearchParams(params);
-  }, [searchParams, setSearchParams]);
+    const handlePageChange = useCallback((newPage) => {
+        const params = new URLSearchParams(searchParams);
+        params.set('page', newPage.toString());
+        setSearchParams(params);
+    }, [searchParams, setSearchParams]);
 
-  const clearFilters = useCallback(() => {
-    setSearchParams({ page: '1' });
-  }, [setSearchParams]);
+    const handleFilterChange = useCallback((key, value) => {
+        const params = new URLSearchParams(searchParams);
+        if (value !== '' && value !== null && value !== undefined) {
+            params.set(key, String(value));
+        } else {
+            params.delete(key);
+        }
+        params.set('page', '1'); // Reset to first page on filter change
+        setSearchParams(params);
+    }, [searchParams, setSearchParams]);
 
-  const totalPages = Math.ceil(totalCount / limit);
+    const clearFilters = useCallback(() => {
+        setSearchParams({ page: '1' });
+    }, [setSearchParams]);
 
-  return {
-    // Data state
-    data,
-    loading,
-    error,
-    totalCount,
-    totalPages,
-    
-    // Pagination
-    page,
-    limit,
-    
-    // Filters
-    filters,
-    searchParams,
-    
-    // Handlers
-    handlePageChange,
-    handleFilterChange,
-    clearFilters,
-    refetch: fetchData,
-  };
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return {
+        // Data state
+        data,
+        loading,
+        error,
+        totalCount,
+        totalPages,
+
+        // Pagination
+        page,
+        limit,
+
+        // Filters
+        filters,
+        searchParams,
+
+        // Handlers
+        handlePageChange,
+        handleFilterChange,
+        clearFilters,
+        refetch: fetchData,
+    };
 }
 
 export default usePaginatedData;
