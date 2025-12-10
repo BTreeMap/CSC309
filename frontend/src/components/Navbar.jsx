@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import NavLink from './shared/NavLink';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -81,64 +82,64 @@ const Navbar = () => {
 
         <div className={`navbar-menu ${showMenu ? 'active' : ''}`}>
           <div className="navbar-links">
-            <Link
+            <NavLink
               to="/dashboard"
               className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
               onClick={() => setShowMenu(false)}
             >
               Dashboard
-            </Link>
+            </NavLink>
 
             {/* Regular User Links - Always visible */}
             <div className="nav-group">
-              <Link
+              <NavLink
                 to="/promotions"
                 className={`nav-link ${isActive('/promotions') && !isActive('/promotions/manage') ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Promotions
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/events"
                 className={`nav-link ${isActive('/events') && !isActive('/events/manage') ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Events
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/transactions"
                 className={`nav-link ${isActive('/transactions') && !isActive('/transactions/all') ? 'active' : ''}`}
                 onClick={() => setShowMenu(false)}
               >
                 Transactions
-              </Link>
+              </NavLink>
             </div>
 
             {/* Cashier Links */}
             {hasActiveRole('cashier') && (
               <div className="nav-group cashier-links">
                 <span className="nav-group-label">Cashier</span>
-                <Link
+                <NavLink
                   to="/cashier/transaction"
                   className={`nav-link ${isActive('/cashier/transaction') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Create Transaction
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/cashier/redemption"
                   className={`nav-link ${isActive('/cashier/redemption') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Process Redemption
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/register"
                   className={`nav-link ${isActive('/register') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Register User
-                </Link>
+                </NavLink>
               </div>
             )}
 
@@ -146,34 +147,34 @@ const Navbar = () => {
             {hasActiveRole('manager') && (
               <div className="nav-group manager-links">
                 <span className="nav-group-label">Manager</span>
-                <Link
+                <NavLink
                   to="/users"
                   className={`nav-link ${isActive('/users') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Users
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/transactions/all"
                   className={`nav-link ${isActive('/transactions/all') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   All Transactions
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/promotions/manage"
                   className={`nav-link ${isActive('/promotions/manage') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Manage Promotions
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/events/manage"
                   className={`nav-link ${isActive('/events/manage') ? 'active' : ''}`}
                   onClick={() => setShowMenu(false)}
                 >
                   Manage Events
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
@@ -243,7 +244,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="user-menu-divider"></div>
-                  <Link
+                  <NavLink
                     to="/profile"
                     className="user-menu-item"
                     onClick={() => {
@@ -253,8 +254,8 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">👤</span>
                     View Profile
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/my-qr"
                     className="user-menu-item"
                     onClick={() => {
@@ -264,8 +265,8 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">📱</span>
                     My QR Code
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/transfer"
                     className="user-menu-item"
                     onClick={() => {
@@ -275,8 +276,8 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">💸</span>
                     Transfer Points
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/redeem"
                     className="user-menu-item"
                     onClick={() => {
@@ -286,9 +287,9 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">🎯</span>
                     Redeem Points
-                  </Link>
+                  </NavLink>
                   <div className="user-menu-divider"></div>
-                  <Link
+                  <NavLink
                     to="/profile/edit"
                     className="user-menu-item"
                     onClick={() => {
@@ -298,8 +299,8 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">✏️</span>
                     Edit Profile
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/profile/password"
                     className="user-menu-item"
                     onClick={() => {
@@ -309,7 +310,7 @@ const Navbar = () => {
                   >
                     <span className="menu-icon">🔒</span>
                     Change Password
-                  </Link>
+                  </NavLink>
                   <div className="user-menu-divider"></div>
                   <button
                     className="user-menu-item logout-button"
