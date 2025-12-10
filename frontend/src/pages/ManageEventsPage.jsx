@@ -441,7 +441,6 @@ const ManageEventsPage = () => {
                                     placeholder={t('events.create.pointsPlaceholder')}
                                     className="form-input"
                                 />
-                                <span className="form-helper">{t('events.detail.pointsReward')}</span>
                             </div>
                         </div>
 
