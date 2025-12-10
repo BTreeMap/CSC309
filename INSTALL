@@ -1,0 +1,85 @@
+INSTALL
+
+This file outlines the deployment procedures for the CSC309 project.
+
+DEPLOYMENT OVERVIEW
+
+Our deployment strategy utilizes a modern CI/CD pipeline. Manual package installation on the host machine is not required for the backend, as it is containerized. The frontend is built as static assets.
+
+1. BACKEND DEPLOYMENT
+
+The backend is automatically tested, packaged, and pushed to the GitHub Container Registry upon changes to the main branch.
+
+Prerequisites:
+- Docker Engine
+- Docker Compose
+
+Installation Steps:
+
+A. Pull the Docker Image
+   The latest backend image is available at:
+   ghcr.io/btreemap/csc309:latest
+
+   Run the following command to pull it manually:
+   docker pull ghcr.io/btreemap/csc309:latest
+
+B. Run with Docker Compose (Recommended)
+   We have provided a 'docker-compose.yml' file in the root directory. This file contains reasonable default configurations for the application and database.
+
+   To start the backend services:
+   docker-compose up -d
+
+   To stop the services:
+   docker-compose down
+
+2. FRONTEND DEPLOYMENT
+
+The frontend is currently configured to deploy automatically to Cloudflare Pages. However, it can be built and served independently using any standard web server or object storage.
+
+Prerequisites:
+- Node.js (Version 18 or higher recommended)
+- npm (Node Package Manager)
+
+Installation Steps:
+
+A. Build the Static Assets
+   Navigate to the frontend directory and run:
+   npm install
+   npm run build
+
+   This uses Vite to generate optimized static files in the 'build' output directory.
+
+B. Serve the Frontend
+   Copy the contents of the 'build' directory to your web root. You may use Nginx, Apache, or any object storage service (AWS S3, Cloudflare R2, etc.) to serve these files.
+
+3. SERVER CONFIGURATION EXAMPLES
+
+If you are not using Cloudflare Pages and prefer a manual Nginx setup for the frontend, or if you are setting up a reverse proxy for the backend, use the following guidelines.
+
+A. Nginx Configuration (Frontend Static Files)
+   Map the root directive to your 'build' folder.
+
+   server {
+       listen 80;
+       server_name example.com;
+       
+       location / {
+           root /var/www/frontend/build;
+           index index.html;
+           try_files $uri $uri/ /index.html;
+       }
+   }
+
+B. Nginx Configuration (Backend Reverse Proxy)
+   If you need to expose the Dockerized backend through Nginx.
+
+   server {
+       listen 80;
+       server_name api.example.com;
+
+       location / {
+           proxy_pass http://localhost:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+       }
+   }
