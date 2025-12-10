@@ -3,7 +3,7 @@
 
 require('dotenv').config();
 
-const port = (() => {
+const getPort = () => {
     const args = process.argv;
 
     if (args.length !== 3) {
@@ -18,7 +18,7 @@ const port = (() => {
     }
 
     return num;
-})();
+};
 
 const express = require("express");
 const app = express();
@@ -1574,8 +1574,8 @@ app.post('/transactions', requireRole('cashier'), async (req, res) => {
             const currentPoints = user.points ?? 0;
             const newPoints = currentPoints + amount;
             if (newPoints < 0) {
-                return res.status(400).json({ 
-                    error: `Adjustment would result in negative points. Current points: ${currentPoints}, Adjustment: ${amount}, Result: ${newPoints}` 
+                return res.status(400).json({
+                    error: `Adjustment would result in negative points. Current points: ${currentPoints}, Adjustment: ${amount}, Result: ${newPoints}`
                 });
             }
 
@@ -2042,16 +2042,16 @@ app.get('/users/me/transactions', requireRole('regular'), async (req, res) => {
                 .filter(tx => tx.relatedId !== null && (tx.type === 'transfer' || tx.type === 'adjustment' || tx.type === 'event'))
                 .map(tx => tx.relatedId)
         );
-        
+
         const relatedUserIds = Array.from(relatedUserIdsSet);
-        
+
         const relatedUsers = relatedUserIds.length > 0
             ? await prisma.user.findMany({
                 where: { id: { in: relatedUserIds } },
                 select: { id: true, utorid: true }
             })
             : [];
-        
+
         const relatedUsersMap = new Map(relatedUsers.map(u => [u.id, u.utorid]));
 
         // Format results - for own transactions, we don't include createdBy and suspicious
@@ -2539,7 +2539,7 @@ app.get('/events/:eventId', requireRole('regular'), async (req, res) => {
 
         // Public view
         const userGuest = event.guests.find(g => g.userId === req.auth.sub);
-        
+
         res.json({
             id: event.id,
             name: event.name,
@@ -3811,12 +3811,18 @@ const initializeSuperuser = async () => {
     }
 };
 
-const server = app.listen(port, async () => {
-    console.log(`Server running on port ${port} `);
-    await initializeSuperuser();
-});
+if (require.main === module) {
+    const port = getPort();
 
-server.on('error', (err) => {
-    console.error(`cannot start server: ${err.message} `);
-    process.exit(1);
-});
+    const server = app.listen(port, async () => {
+        console.log(`Server running on port ${port} `);
+        await initializeSuperuser();
+    });
+
+    server.on('error', (err) => {
+        console.error(`cannot start server: ${err.message} `);
+        process.exit(1);
+    });
+}
+
+module.exports = { app, prisma };

@@ -47,7 +47,9 @@
     ],
     "testTimeout": 30000,
     "verbose": true,
-    "setupFilesAfterEnv": [],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupTestEnv.js"
+    ],
     "collectCoverageFrom": [
       "index.js",
       "src/**/*.js",
