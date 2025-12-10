@@ -17,10 +17,13 @@ const bcrypt = require('bcrypt');
 const prisma = new PrismaClient();
 
 async function main() {
-    // Only seed if ENV_TYPE environment variable is set to 'local'
-    if (process.env.ENV_TYPE !== 'local') {
-        console.log('Skipping database seed (ENV_TYPE not set to "local")');
-        return;
+    // Check environment and warn if not local
+    const isLocal = process.env.ENV_TYPE === 'local';
+    
+    if (!isLocal) {
+        console.log('WARNING: Running seed in non-local environment!');
+        console.log('WARNING: This will delete all existing data and replace with test data!');
+        console.log('WARNING: Make sure you have a database backup before proceeding!\n');
     }
 
     console.log('Clearing all database tables...');
