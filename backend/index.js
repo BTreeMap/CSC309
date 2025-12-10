@@ -8,7 +8,7 @@ const isTestEnv = process.env.NODE_ENV === 'test';
 
 const getPort = () => {
     if (isTestEnv) return 0; // Use any available port for tests
-    
+
     const args = process.argv;
 
     if (args.length !== 3) {
@@ -579,18 +579,18 @@ app.use('/auth', createAuthRouter({ prisma, validateRequest, JWT_SECRET }));
 
 // Users routes
 const createUsersRouter = require('./src/routes/users');
-app.use('/users', createUsersRouter({ 
-  prisma, 
-  validateRequest, 
-  requireRole, 
-  hasRoleManager, 
-  isDefined, 
-  RoleOrderMap, 
-  upload,
-  resolveRelativeUrl,
-  DEFAULT_AVATAR_URL,
-  isNonEmptyString,
-  isValidDate
+app.use('/users', createUsersRouter({
+    prisma,
+    validateRequest,
+    requireRole,
+    hasRoleManager,
+    isDefined,
+    RoleOrderMap,
+    upload,
+    resolveRelativeUrl,
+    DEFAULT_AVATAR_URL,
+    isNonEmptyString,
+    isValidDate
 }));
 
 
